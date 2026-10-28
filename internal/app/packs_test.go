@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	goruntime "runtime"
 	"strings"
 	"testing"
 
@@ -103,7 +104,8 @@ func TestPackCLIInstallRenderRunAndExport(t *testing.T) {
 	if !bytes.Contains(b, []byte("MIT License")) {
 		t.Fatal("export omitted upstream license")
 	}
-	if info, err := os.Stat(exported); err != nil || info.Mode().Perm() != 0600 {
+	// Windows reports compatibility mode bits; access control requires separate ACL validation.
+	if info, err := os.Stat(exported); err != nil || (goruntime.GOOS != "windows" && info.Mode().Perm() != 0600) {
 		t.Fatal("export permissions", err)
 	}
 	if err = withPacks(cfg, func(s *packs.Store, _ config.Config) error {
