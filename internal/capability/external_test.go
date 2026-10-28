@@ -111,6 +111,28 @@ func TestExternalCapabilityRunsFixtureThroughReadOnlyMount(t *testing.T) {
 	}
 }
 
+func TestCodeAuditFileDoesNotExpandGosecScope(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "single.go")
+	if err := os.WriteFile(path, []byte("package fixture\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	tools := registry.NewTools()
+	for _, id := range []string{"semgrep", "gosec"} {
+		if err := tools.Register(schema.Tool{ID: id, Kind: "native", Binary: id, Version: "fixture"}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	runner := &fixtureRunner{outputs: map[string][]byte{"semgrep": []byte(`{"results":[],"paths":{"scanned":["single.go"]},"errors":[]}`)}}
+	c := liveCapability(t, "code.audit")
+	r, err := c.Run(context.Background(), liveRequest(path), Dependencies{Tools: tools, Runner: runner, Evidence: evidence.New(t.TempDir())})
+	if err != nil || r.Status != "partial" || len(r.Errors) != 1 || r.Errors[0].Code != "DIRECTORY_REQUIRED" {
+		t.Fatalf("file scope limitation was not explicit: %+v %v", r, err)
+	}
+	if len(runner.specs) != 1 || runner.specs[0].Tool.ID != "semgrep" || runner.specs[0].Args[len(runner.specs[0].Args)-1] != path {
+		t.Fatal("file request escaped to its parent package", runner.specs)
+	}
+}
+
 func TestReportCapabilityLoadsNormalizedHistory(t *testing.T) {
 	def := capabilityDefinition("report.generate", "Report Generation", "reporting", nil, nil)
 	c := reportCapability{definition: def}

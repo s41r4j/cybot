@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "semgrep": {
+    "version": "1.172.0",
+    "image": "semgrep/semgrep:1.172.0@sha256:65dcd4408adda7c183a6b4550cb1e9b19f7f627a6fbb7e0559bd466bedc44d7b",
+    "source": "https://github.com/semgrep/semgrep/tree/v1.172.0"
+  },
+  "gosec": {
+    "version": "2.28.0",
+    "module": "github.com/securego/gosec/v2/cmd/gosec@v2.28.0",
+    "source": "https://github.com/securego/gosec/tree/v2.28.0"
+  },
+  "go": {
+    "version": "1.26.10",
+    "source": "https://go.dev/dl/?mode=json",
+    "assets": {
+      "amd64": {
+        "url": "https://go.dev/dl/go1.26.10.linux-amd64.tar.gz",
+        "size": 66936659,
+        "sha256": "ccfe7ae822d2c2f41f4fe7c956199967a4dac22d0ee0d2b2bfdb440aab3b20c5"
+      },
+      "arm64": {
+        "url": "https://go.dev/dl/go1.26.10.linux-arm64.tar.gz",
+        "size": 63827526,
+        "sha256": "3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797"
+      }
+    }
+  }
+}

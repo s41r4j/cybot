@@ -146,7 +146,7 @@ func decode(name string, v any) error {
 	return nil
 }
 func normalizeTool(t *schema.Tool) {
-	if t.Kind == "native" && len(t.SupportedOS) > 0 {
+	if t.Kind == "native" {
 		t.DockerImage = ""
 	} else if t.Kind == "" {
 		t.Kind = "docker"

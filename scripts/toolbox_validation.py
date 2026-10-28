@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import tempfile
 import toolbox
+from public_source import source_digest
 
 
 def validate_image(image, source_cli=False):
@@ -21,13 +22,27 @@ def validate_image(image, source_cli=False):
         if source_cli:
             toolbox.monitored(['go','build','-p','1','-trimpath','-ldflags=-s -w','-o',str(work/'cybot'),'./cmd/cybot'],env=env,timeout_seconds=300)
             mounts.append((work/'cybot','/opt/cybot/bin/cybot'))
-        output = toolbox.STATE / 'core-tests.txt'
+        analysis = toolbox.PROFILE == 'analysis'
+        prefix = 'analysis' if analysis else 'core'
+        output = toolbox.STATE / (prefix+'-tests.txt')
         output.unlink(missing_ok=True)
+        reports = toolbox.STATE / 'validation'
+        # Stale per-case reports must never survive a failed rerun.
+        if reports.exists():
+            import shutil
+            shutil.rmtree(reports)
+        reports.mkdir()
+        container_reports = '/workspace/' + str(reports.relative_to(toolbox.ROOT))
+        test_pattern = '^TestLiveAnalysis' if analysis else '^TestLive(Core|Assessment|CompactCertification)'
         succeeded = False
         try:
-            toolbox.run(['exec','env','CYBOT_LIVE_CORE=1','CYBOT_LIVE_ASSESSMENT=1','SYFT_CHECK_FOR_APP_UPDATE=false','/validation/core.test','-test.v','-test.run=^TestLive','-test.timeout=180s'],
+            toolbox.run(['exec','env','CYBOT_LIVE_CORE=1','CYBOT_LIVE_ASSESSMENT=1',
+                         'CYBOT_LIVE_ANALYSIS='+('1' if analysis else '0'),
+                         'CYBOT_VALIDATION_REPORTS='+container_reports,
+                         'CYBOT_VALIDATION_SOURCE='+source_digest(),
+                         'SYFT_CHECK_FOR_APP_UPDATE=false','/validation/core.test','-test.v','-test.run='+test_pattern,'-test.timeout=480s'],
                         image=image, network='none', mounts=mounts,
-                        output=output,timeout_seconds=200)
+                        output=output,timeout_seconds=500)
             succeeded = True
         finally:
             if output.exists():
@@ -39,4 +54,7 @@ def validate_image(image, source_cli=False):
                         'passed':re.findall(r'^--- PASS: (\S+)',text,re.M),
                         'failed':re.findall(r'^--- FAIL: (\S+)',text,re.M),
                         'scope':'Local fixtures with current-source adapters; fixture wordlists/templates/resolver. Subfinder startup only.'}
-                (toolbox.STATE/'core-tests.json').write_text(json.dumps(report,indent=2)+'\n')
+                (toolbox.STATE/(prefix+'-tests.json')).write_text(json.dumps(report,indent=2)+'\n')
+        if succeeded:
+            from operation_evidence import collect
+            collect(reports, toolbox.probe(image), source_digest(), toolbox.ARCH)

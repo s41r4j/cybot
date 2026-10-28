@@ -46,6 +46,12 @@ func TestLiveAssessmentGitleaks(t *testing.T) {
 	if err != nil || len(r.Errors) != 0 || len(r.Findings) != 0 {
 		t.Fatalf("clean fixture failed: %+v %v", r, err)
 	}
+	requireToolFailure(t, d, "gitleaks", gitleaksArgs(filepath.Join(dir, "missing-input"), schema.RunRequest{}))
+	certifyOperation(t, "gitleaks", "", []operationCase{
+		passedCase("positive", "Synthetic invalid token detected; secret absent from retained evidence."),
+		passedCase("negative", "Clean directory produces zero findings without scan errors."),
+		passedCase("failure", "Real Gitleaks rejects a nonexistent scan directory."),
+	})
 }
 
 func TestLiveAssessmentSyft(t *testing.T) {
@@ -85,6 +91,23 @@ func TestLiveAssessmentSyft(t *testing.T) {
 	if report.Format != "CycloneDX" || !found {
 		t.Fatalf("fixture dependency missing from SBOM: %s", data)
 	}
+	if err := os.Remove(filepath.Join(dir, "package-lock.json")); err != nil {
+		t.Fatal(err)
+	}
+	r, err = liveCapability(t, "sbom.generate").Run(context.Background(), liveRequest(dir), d)
+	if err != nil || len(r.Errors) != 0 || len(r.Evidence) != 1 {
+		t.Fatalf("empty directory SBOM failed: %+v %v", r, err)
+	}
+	clean, err := os.ReadFile(r.Evidence[0].Path)
+	if err != nil || strings.Contains(string(clean), "lodash") {
+		t.Fatal("SBOM retained removed package", err)
+	}
+	requireToolFailure(t, d, "syft", syftArgs(filepath.Join(dir, "missing-input"), schema.RunRequest{}))
+	certifyOperation(t, "syft", "sbom.generate", []operationCase{
+		passedCase("positive", "CycloneDX inventory contains the exact fixture dependency and version."),
+		passedCase("negative", "Removing the package lock removes the fixture dependency from the inventory."),
+		passedCase("failure", "Real Syft rejects a nonexistent scan path."),
+	})
 }
 
 func TestLiveAssessmentNaabu(t *testing.T) {
@@ -113,4 +136,15 @@ func TestLiveAssessmentNaabu(t *testing.T) {
 		t.Fatalf("local TCP service not discovered: %+v %v", r, err)
 	}
 	validateFixtureResult(t, r)
+	server.Close()
+	r, err = c.Run(context.Background(), liveRequest(u.Hostname()), d)
+	if err != nil || len(r.Errors) != 0 || len(r.Services) != 0 {
+		t.Fatalf("closed port reported open: %+v %v", r, err)
+	}
+	requireToolFailure(t, d, "naabu", []string{"--cybot-invalid-fixture-option"})
+	certifyOperation(t, "naabu", "service.enumerate", []operationCase{
+		passedCase("positive", "Single loopback TCP fixture is normalized as one open service."),
+		passedCase("negative", "The same port is absent after its listener is closed."),
+		passedCase("failure", "Real Naabu rejects an invalid invocation instead of producing a clean report."),
+	})
 }

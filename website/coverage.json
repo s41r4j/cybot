@@ -1,1 +1,2358 @@
-{"schema_version":1,"release_ready":false,"tools":[{"id":"agent-browser","version":"0.34.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["web.automate","web.browse","web.har"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"amass","version":"5.1.1","platforms":[],"normalization":"tool-specific","implementation":"not-implemented","resource_scope":"target","capabilities":["dns.enum"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","the pinned v5 release requires its engine/database workflow; the legacy adapter is incompatible and has not been implemented for v5"]},{"id":"amass-enum","version":"5.1.1","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"anew","version":"1.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"arjun","version":"2.2.1","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"bettercap","version":"2.33.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"interface","capabilities":["mitm.assess"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"bloodhound","version":"5.16.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["active-directory.attack","privilege.escalation"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"certipy","version":"4.8.2","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["post.adcs"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"chisel","version":"1.10.1","platforms":[],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["pivot.tunnel","port.forward"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","starting a reverse server does not implement a scoped forwarding/tunnel request","operation-specific normalization is unverified"]},{"id":"cloud_enum","version":"1.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["cloud.enum"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"cloudfox","version":"2.0.5","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"cmseek","version":"1.1.3","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["cms.detect"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"corscanner","version":"1.0.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["cors.audit"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"covenant","version":"0.7","platforms":["windows"],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["c2.covenant"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","adapter only displays help; C2 execution is not implemented","operation-specific normalization is unverified"]},{"id":"crackmapexec","version":"6.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["smb.test"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"dirsearch","version":"0.4.3","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"dnschef","version":"0.4.0","platforms":[],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["c2.setup"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","the current listener ignores the requested target; an explicit scoped DNS configuration is required","operation-specific normalization is unverified"]},{"id":"dnsrecon","version":"1.1.4","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["dns.enum"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"dnsx","version":"1.3.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["dns.analyse"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"enum4linux","version":"1.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["smb.test"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"evilginx","version":"3.3.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["credential.harvest","phishing.campaign"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"ffuf","version":"2.2.1","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["dir.bruteforce","web.content.discover"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"gf","version":"1.0.0","platforms":[],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["pattern.detect"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","adapter only lists patterns; target matching is not implemented","operation-specific normalization is unverified"]},{"id":"gitleaks","version":"8.30.1","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["secret.scan"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"gobuster","version":"3.6.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["dir.bruteforce"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"gophish","version":"0.12.1","platforms":[],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["phishing.campaign","social.engineer"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","starting a server does not create or scope a campaign; a campaign/configuration contract is required","operation-specific normalization is unverified"]},{"id":"gosec","version":"2.28.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["code.audit"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"grype","version":"0.116.1","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["container.scan","dependency.scan"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"hashcat","version":"6.2.6","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["hash.crack"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"havoc","version":"0.7","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["c2.havoc"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"httpx","version":"1.10.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["api.audit","tech.fingerprint","web.map"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"hydra","version":"9.6","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["password.bruteforce"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"impacket","version":"0.12.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["active-directory.attack","credential.dump","lateral.move","smb.test"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"john","version":"1.9.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["hash.crack"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"jsluice","version":"1.0.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["js.extract"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"katana","version":"1.6.1","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["web.map"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"kekeo","version":"2.2.0","platforms":["windows"],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["post.kerberos"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","adapter only exits; ticket operations are not implemented","operation-specific normalization is unverified"]},{"id":"knockpy","version":"7.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"linkfinder","version":"1.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["js.extract"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"linpeas","version":"3.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"local","capabilities":["post.recon"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"massdns","version":"1.1.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"merlin","version":"1.5.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["c2.merlin","c2.operate"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"metagoofil","version":"2.2.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"metasploit","version":"6.4.50","platforms":[],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["exploit.execute","exploit.framework","post.exploit"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","adapter only displays help; exploit execution is not implemented","operation-specific normalization is unverified"]},{"id":"mimikatz","version":"2.2.0","platforms":["windows"],"normalization":"observations-only","implementation":"adapter","resource_scope":"local","capabilities":["post.mimikatz"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","operation-specific normalization is unverified"]},{"id":"msfvenom","version":"6.4.50","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["c2.setup","payload.generate"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"mythic","version":"3.3.10","platforms":[],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["c2.mythic","c2.operate"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","adapter reports status; task execution is not implemented","operation-specific normalization is unverified"]},{"id":"naabu","version":"2.6.1","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["port.scan","service.enumerate"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"netexec","version":"1.3.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["active-directory.attack","credential.dump","lateral.move","smb.test"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"nikto","version":"2.5.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["vuln.scan"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"nmap","version":"7.93","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["port.scan"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"nuclei","version":"3.11.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["api.audit","vuln.scan","web.scan"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"pacu","version":"1.5.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"pcredz","version":"1.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["credential.harvest"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"powersploit","version":"3.0.0","platforms":["windows"],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["post.exploit"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","adapter only lists modules; post-exploitation execution is not implemented","operation-specific normalization is unverified"]},{"id":"responder","version":"3.1.5","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"interface","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"rubeus","version":"2.3.0","platforms":["windows"],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["post.kerberoast","post.kerberos"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","operation-specific normalization is unverified"]},{"id":"searchsploit","version":"2026.1","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["exploit.search"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"seatbelt","version":"1.1.0","platforms":["windows"],"normalization":"observations-only","implementation":"adapter","resource_scope":"local","capabilities":["post.recon"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","operation-specific normalization is unverified"]},{"id":"semgrep","version":"1.172.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["code.audit","js.analyse"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"sharphound","version":"5.16.0","platforms":["windows"],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["post.recon"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","operation-specific normalization is unverified"]},{"id":"sharppersist","version":"1.0.0","platforms":["windows"],"normalization":"observations-only","implementation":"not-implemented","resource_scope":"target","capabilities":["persist.install","post.persistence"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","adapter checks persistence; installation and rollback are not implemented","operation-specific normalization is unverified"]},{"id":"sharpup","version":"1.0.0","platforms":["windows"],"normalization":"observations-only","implementation":"adapter","resource_scope":"local","capabilities":["post.recon"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","operation-specific normalization is unverified"]},{"id":"sharpview","version":"1.0.0","platforms":["windows"],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["post.recon"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","operation-specific normalization is unverified"]},{"id":"sherlock","version":"0.14.4","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["personnel.osint","social.engineer"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"shodan","version":"1.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"sliver","version":"1.5.42","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["c2.operate","c2.sliver"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"smbmap","version":"1.10.4","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["smb.test"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"sqlmap","version":"1.8.12","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["sql.inject"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"subfinder","version":"2.14.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["dns.enum"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"swaks","version":"20240103.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"syft","version":"1.50.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["sbom.generate"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"system-dns-resolver","version":"go-runtime","platforms":["darwin","linux","windows"],"normalization":"built-in","implementation":"built-in","resource_scope":"target","capabilities":["asset.discover"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required"]},{"id":"testssl","version":"3.2.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["tls.audit"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"theharvester","version":"4.6.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["email.harvest","personnel.osint"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"trivy","version":"0.72.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["cloud.review","container.scan","dependency.scan"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"trufflehog","version":"3.96.0","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["secret.scan"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"wafw00f","version":"2.2.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["waf.detect"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"waybackurls","version":"1.0.0","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":[],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","catalog tool has no executable capability mapping","operation-specific normalization is unverified"]},{"id":"whatweb","version":"0.5.5","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["tech.fingerprint"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"winpeas","version":"3.0.0","platforms":["windows"],"normalization":"observations-only","implementation":"adapter","resource_scope":"local","capabilities":["post.recon"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","operation-specific normalization is unverified"]},{"id":"wpscan","version":"3.8.29","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["cms.detect"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]},{"id":"xsstrike","version":"3.1.6","platforms":[],"normalization":"observations-only","implementation":"adapter","resource_scope":"target","capabilities":["xss.detect"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared","operation-specific normalization is unverified"]},{"id":"zap","version":"2.16.1","platforms":[],"normalization":"tool-specific","implementation":"adapter","resource_scope":"target","capabilities":["web.zap"],"validation":"not-certified","blockers":["pinned binary/version and fresh real-operation evidence are required","supported operating systems have not been explicitly declared"]}],"capabilities":[{"id":"active-directory.attack","implementation":"adapter","tools":["bloodhound","impacket","netexec"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","impacket: operation-specific normalization is unverified","bloodhound: operation-specific normalization is unverified","netexec: operation-specific normalization is unverified"]},{"id":"api.audit","implementation":"adapter","tools":["httpx","nuclei"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"asset.discover","implementation":"adapter","tools":["system-dns-resolver"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"c2.covenant","implementation":"not-implemented","tools":["covenant"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","covenant: adapter only displays help; C2 execution is not implemented","covenant: operation-specific normalization is unverified"]},{"id":"c2.havoc","implementation":"adapter","tools":["havoc"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","havoc: operation-specific normalization is unverified"]},{"id":"c2.merlin","implementation":"adapter","tools":["merlin"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","merlin: operation-specific normalization is unverified"]},{"id":"c2.mythic","implementation":"not-implemented","tools":["mythic"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","mythic: adapter reports status; task execution is not implemented","mythic: operation-specific normalization is unverified"]},{"id":"c2.operate","implementation":"partial","tools":["merlin","mythic","sliver"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","sliver: operation-specific normalization is unverified","merlin: operation-specific normalization is unverified","mythic: adapter reports status; task execution is not implemented","mythic: operation-specific normalization is unverified"]},{"id":"c2.setup","implementation":"partial","tools":["dnschef","msfvenom"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","dnschef: the current listener ignores the requested target; an explicit scoped DNS configuration is required","dnschef: operation-specific normalization is unverified","msfvenom: operation-specific normalization is unverified"]},{"id":"c2.sliver","implementation":"adapter","tools":["sliver"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","sliver: operation-specific normalization is unverified"]},{"id":"classify.endpoint","implementation":"built-in","tools":[],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"cloud.enum","implementation":"adapter","tools":["cloud_enum"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","cloud_enum: operation-specific normalization is unverified"]},{"id":"cloud.review","implementation":"adapter","tools":["trivy"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"cms.detect","implementation":"adapter","tools":["cmseek","wpscan"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","cmseek: operation-specific normalization is unverified"]},{"id":"code.audit","implementation":"adapter","tools":["gosec","semgrep"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"container.scan","implementation":"adapter","tools":["grype","trivy"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"cors.audit","implementation":"adapter","tools":["corscanner"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"credential.dump","implementation":"adapter","tools":["impacket","netexec"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","impacket: operation-specific normalization is unverified","netexec: operation-specific normalization is unverified"]},{"id":"credential.harvest","implementation":"adapter","tools":["evilginx","pcredz"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","evilginx: operation-specific normalization is unverified","pcredz: operation-specific normalization is unverified"]},{"id":"cve.lookup","implementation":"built-in","tools":[],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"dependency.scan","implementation":"adapter","tools":["grype","trivy"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"dir.bruteforce","implementation":"adapter","tools":["ffuf","gobuster"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","gobuster: operation-specific normalization is unverified"]},{"id":"dns.analyse","implementation":"adapter","tools":["dnsx"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"dns.enum","implementation":"partial","tools":["amass","dnsrecon","subfinder"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","amass: the pinned v5 release requires its engine/database workflow; the legacy adapter is incompatible and has not been implemented for v5","dnsrecon: operation-specific normalization is unverified"]},{"id":"email.harvest","implementation":"adapter","tools":["theharvester"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","theharvester: operation-specific normalization is unverified"]},{"id":"exploit.execute","implementation":"not-implemented","tools":["metasploit"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","metasploit: adapter only displays help; exploit execution is not implemented","metasploit: operation-specific normalization is unverified"]},{"id":"exploit.framework","implementation":"not-implemented","tools":["metasploit"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","metasploit: adapter only displays help; exploit execution is not implemented","metasploit: operation-specific normalization is unverified"]},{"id":"exploit.search","implementation":"adapter","tools":["searchsploit"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","searchsploit: operation-specific normalization is unverified"]},{"id":"hash.crack","implementation":"adapter","tools":["hashcat","john"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","hashcat: operation-specific normalization is unverified","john: operation-specific normalization is unverified"]},{"id":"js.analyse","implementation":"adapter","tools":["semgrep"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"js.extract","implementation":"adapter","tools":["jsluice","linkfinder"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","linkfinder: operation-specific normalization is unverified"]},{"id":"lateral.move","implementation":"adapter","tools":["impacket","netexec"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","netexec: operation-specific normalization is unverified","impacket: operation-specific normalization is unverified"]},{"id":"mitm.assess","implementation":"adapter","tools":["bettercap"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","bettercap: operation-specific normalization is unverified"]},{"id":"mitre.map","implementation":"built-in","tools":[],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"password.bruteforce","implementation":"adapter","tools":["hydra"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","hydra: operation-specific normalization is unverified"]},{"id":"pattern.detect","implementation":"not-implemented","tools":["gf"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","gf: adapter only lists patterns; target matching is not implemented","gf: operation-specific normalization is unverified"]},{"id":"payload.generate","implementation":"adapter","tools":["msfvenom"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","msfvenom: operation-specific normalization is unverified"]},{"id":"persist.install","implementation":"not-implemented","tools":["sharppersist"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","sharppersist: adapter checks persistence; installation and rollback are not implemented","sharppersist: operation-specific normalization is unverified"]},{"id":"personnel.osint","implementation":"adapter","tools":["sherlock","theharvester"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","sherlock: operation-specific normalization is unverified","theharvester: operation-specific normalization is unverified"]},{"id":"phishing.campaign","implementation":"partial","tools":["evilginx","gophish"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","gophish: starting a server does not create or scope a campaign; a campaign/configuration contract is required","gophish: operation-specific normalization is unverified","evilginx: operation-specific normalization is unverified"]},{"id":"pivot.tunnel","implementation":"not-implemented","tools":["chisel"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","chisel: starting a reverse server does not implement a scoped forwarding/tunnel request","chisel: operation-specific normalization is unverified"]},{"id":"port.forward","implementation":"not-implemented","tools":["chisel"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","chisel: starting a reverse server does not implement a scoped forwarding/tunnel request","chisel: operation-specific normalization is unverified"]},{"id":"port.scan","implementation":"adapter","tools":["naabu","nmap"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"post.adcs","implementation":"adapter","tools":["certipy"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","certipy: operation-specific normalization is unverified"]},{"id":"post.exploit","implementation":"not-implemented","tools":["metasploit","powersploit"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","metasploit: adapter only displays help; exploit execution is not implemented","metasploit: operation-specific normalization is unverified","powersploit: adapter only lists modules; post-exploitation execution is not implemented","powersploit: operation-specific normalization is unverified"]},{"id":"post.kerberoast","implementation":"adapter","tools":["rubeus"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","rubeus: operation-specific normalization is unverified"]},{"id":"post.kerberos","implementation":"partial","tools":["kekeo","rubeus"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","kekeo: adapter only exits; ticket operations are not implemented","kekeo: operation-specific normalization is unverified","rubeus: operation-specific normalization is unverified"]},{"id":"post.mimikatz","implementation":"adapter","tools":["mimikatz"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","mimikatz: operation-specific normalization is unverified"]},{"id":"post.persistence","implementation":"not-implemented","tools":["sharppersist"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","sharppersist: adapter checks persistence; installation and rollback are not implemented","sharppersist: operation-specific normalization is unverified"]},{"id":"post.recon","implementation":"adapter","tools":["linpeas","seatbelt","sharphound","sharpup","sharpview","winpeas"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","linpeas: operation-specific normalization is unverified","winpeas: operation-specific normalization is unverified","seatbelt: operation-specific normalization is unverified","sharpview: operation-specific normalization is unverified","sharphound: operation-specific normalization is unverified","sharpup: operation-specific normalization is unverified"]},{"id":"privilege.escalation","implementation":"adapter","tools":["bloodhound"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","bloodhound: operation-specific normalization is unverified"]},{"id":"report.generate","implementation":"built-in","tools":[],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"sbom.generate","implementation":"adapter","tools":["syft"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"secret.scan","implementation":"adapter","tools":["gitleaks","trufflehog"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"service.enumerate","implementation":"adapter","tools":["naabu"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"smb.test","implementation":"adapter","tools":["crackmapexec","enum4linux","impacket","netexec","smbmap"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","crackmapexec: operation-specific normalization is unverified","impacket: operation-specific normalization is unverified","netexec: operation-specific normalization is unverified","enum4linux: operation-specific normalization is unverified","smbmap: operation-specific normalization is unverified"]},{"id":"social.engineer","implementation":"partial","tools":["gophish","sherlock"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","sherlock: operation-specific normalization is unverified","gophish: starting a server does not create or scope a campaign; a campaign/configuration contract is required","gophish: operation-specific normalization is unverified"]},{"id":"sql.inject","implementation":"adapter","tools":["sqlmap"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"tech.fingerprint","implementation":"adapter","tools":["httpx","whatweb"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"tls.audit","implementation":"adapter","tools":["testssl"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"validate.finding","implementation":"built-in","tools":[],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"vuln.scan","implementation":"adapter","tools":["nikto","nuclei"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","nikto: operation-specific normalization is unverified"]},{"id":"waf.detect","implementation":"adapter","tools":["wafw00f"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","wafw00f: operation-specific normalization is unverified"]},{"id":"web.automate","implementation":"adapter","tools":["agent-browser"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"web.browse","implementation":"adapter","tools":["agent-browser"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"web.content.discover","implementation":"adapter","tools":["ffuf"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"web.har","implementation":"adapter","tools":["agent-browser"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"web.map","implementation":"adapter","tools":["httpx","katana"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"web.scan","implementation":"adapter","tools":["nuclei"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"web.zap","implementation":"adapter","tools":["zap"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required"]},{"id":"xss.detect","implementation":"adapter","tools":["xsstrike"],"validation":"not-certified","blockers":["fresh platform-specific end-to-end evidence is required","xsstrike: operation-specific normalization is unverified"]}]}
+{
+  "schema_version": 1,
+  "release_ready": false,
+  "tools": [
+    {
+      "id": "agent-browser",
+      "version": "0.34.0",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "web.automate",
+        "web.browse",
+        "web.har"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "amass",
+      "version": "5.1.1",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "dns.enum"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "the pinned v5 release requires its engine/database workflow; the legacy adapter is incompatible and has not been implemented for v5"
+      ]
+    },
+    {
+      "id": "amass-enum",
+      "version": "5.1.1",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "anew",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "arjun",
+      "version": "2.2.1",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "bettercap",
+      "version": "2.33.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "interface",
+      "capabilities": [
+        "mitm.assess"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "bloodhound",
+      "version": "5.16.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "active-directory.attack",
+        "privilege.escalation"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "certipy",
+      "version": "4.8.2",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "post.adcs"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "chisel",
+      "version": "1.10.1",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "pivot.tunnel",
+        "port.forward"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "starting a reverse server does not implement a scoped forwarding/tunnel request",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "cloud_enum",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "cloud.enum"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "cloudfox",
+      "version": "2.0.5",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "cmseek",
+      "version": "1.1.3",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "cms.detect"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "corscanner",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "cors.audit"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "covenant",
+      "version": "0.7",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "c2.covenant"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "adapter only displays help; C2 execution is not implemented",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "crackmapexec",
+      "version": "6.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "smb.test"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "dirsearch",
+      "version": "0.4.3",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "dnschef",
+      "version": "0.4.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "c2.setup"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "the current listener ignores the requested target; an explicit scoped DNS configuration is required",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "dnsrecon",
+      "version": "1.1.4",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "dns.enum"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "dnsx",
+      "version": "1.3.0",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "dns.analyse"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "enum4linux",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "smb.test"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "evilginx",
+      "version": "3.3.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "credential.harvest",
+        "phishing.campaign"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "ffuf",
+      "version": "2.2.1",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "dir.bruteforce",
+        "web.content.discover"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "gf",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "pattern.detect"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "adapter only lists patterns; target matching is not implemented",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "gitleaks",
+      "version": "8.30.1",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "secret.scan"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "gobuster",
+      "version": "3.6.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "dir.bruteforce"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "gophish",
+      "version": "0.12.1",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "phishing.campaign",
+        "social.engineer"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "starting a server does not create or scope a campaign; a campaign/configuration contract is required",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "gosec",
+      "version": "2.28.0",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "code.audit"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "grype",
+      "version": "0.116.1",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "container.scan",
+        "dependency.scan"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "hashcat",
+      "version": "6.2.6",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "hash.crack"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "havoc",
+      "version": "0.7",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "c2.havoc"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "httpx",
+      "version": "1.10.0",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "api.audit",
+        "tech.fingerprint",
+        "web.map"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "hydra",
+      "version": "9.6",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "password.bruteforce"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "impacket",
+      "version": "0.12.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "active-directory.attack",
+        "credential.dump",
+        "lateral.move",
+        "smb.test"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "john",
+      "version": "1.9.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "hash.crack"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "jsluice",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "js.extract"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "katana",
+      "version": "1.6.1",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "web.map"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "kekeo",
+      "version": "2.2.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "post.kerberos"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "adapter only exits; ticket operations are not implemented",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "knockpy",
+      "version": "7.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "linkfinder",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "js.extract"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "linpeas",
+      "version": "3.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "local",
+      "capabilities": [
+        "post.recon"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "massdns",
+      "version": "1.1.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "merlin",
+      "version": "1.5.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "c2.merlin",
+        "c2.operate"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "metagoofil",
+      "version": "2.2.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "metasploit",
+      "version": "6.4.50",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "exploit.execute",
+        "exploit.framework",
+        "post.exploit"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "adapter only displays help; exploit execution is not implemented",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "mimikatz",
+      "version": "2.2.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "local",
+      "capabilities": [
+        "post.mimikatz"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "msfvenom",
+      "version": "6.4.50",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "c2.setup",
+        "payload.generate"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "mythic",
+      "version": "3.3.10",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "c2.mythic",
+        "c2.operate"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "adapter reports status; task execution is not implemented",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "naabu",
+      "version": "2.6.1",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "port.scan",
+        "service.enumerate"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "netexec",
+      "version": "1.3.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "active-directory.attack",
+        "credential.dump",
+        "lateral.move",
+        "smb.test"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "nikto",
+      "version": "2.5.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "vuln.scan"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "nmap",
+      "version": "7.93",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "port.scan"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "nuclei",
+      "version": "3.11.0",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "api.audit",
+        "vuln.scan",
+        "web.scan"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "pacu",
+      "version": "1.5.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "pcredz",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "credential.harvest"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "powersploit",
+      "version": "3.0.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "post.exploit"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "adapter only lists modules; post-exploitation execution is not implemented",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "responder",
+      "version": "3.1.5",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "interface",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "rubeus",
+      "version": "2.3.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "post.kerberoast",
+        "post.kerberos"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "searchsploit",
+      "version": "2026.1",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "exploit.search"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "seatbelt",
+      "version": "1.1.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "local",
+      "capabilities": [
+        "post.recon"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "semgrep",
+      "version": "1.172.0",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "code.audit",
+        "js.analyse"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "sharphound",
+      "version": "5.16.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "post.recon"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "sharppersist",
+      "version": "1.0.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "not-implemented",
+      "resource_scope": "target",
+      "capabilities": [
+        "persist.install",
+        "post.persistence"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "adapter checks persistence; installation and rollback are not implemented",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "sharpup",
+      "version": "1.0.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "local",
+      "capabilities": [
+        "post.recon"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "sharpview",
+      "version": "1.0.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "post.recon"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "sherlock",
+      "version": "0.14.4",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "personnel.osint",
+        "social.engineer"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "shodan",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "sliver",
+      "version": "1.5.42",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "c2.operate",
+        "c2.sliver"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "smbmap",
+      "version": "1.10.4",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "smb.test"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "sqlmap",
+      "version": "1.8.12",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "sql.inject"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "subfinder",
+      "version": "2.14.0",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "dns.enum"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "swaks",
+      "version": "20240103.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "syft",
+      "version": "1.50.0",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "sbom.generate"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "system-dns-resolver",
+      "version": "go-runtime",
+      "platforms": [
+        "darwin",
+        "linux",
+        "windows"
+      ],
+      "normalization": "built-in",
+      "implementation": "built-in",
+      "resource_scope": "target",
+      "capabilities": [
+        "asset.discover"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required"
+      ]
+    },
+    {
+      "id": "testssl",
+      "version": "3.2.0",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "tls.audit"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "theharvester",
+      "version": "4.6.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "email.harvest",
+        "personnel.osint"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "trivy",
+      "version": "0.72.0",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "cloud.review",
+        "container.scan",
+        "dependency.scan"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "trufflehog",
+      "version": "3.96.0",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "secret.scan"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "wafw00f",
+      "version": "2.2.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "waf.detect"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "waybackurls",
+      "version": "1.0.0",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "catalog tool has no executable capability mapping",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "whatweb",
+      "version": "0.5.5",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "tech.fingerprint"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "winpeas",
+      "version": "3.0.0",
+      "platforms": [
+        "windows"
+      ],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "local",
+      "capabilities": [
+        "post.recon"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "wpscan",
+      "version": "3.8.29",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "cms.detect"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "id": "xsstrike",
+      "version": "3.1.6",
+      "platforms": [],
+      "normalization": "observations-only",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "xss.detect"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared",
+        "operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "zap",
+      "version": "2.16.1",
+      "platforms": [],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
+      "resource_scope": "target",
+      "capabilities": [
+        "web.zap"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "pinned binary/version and fresh real-operation evidence are required",
+        "supported operating systems have not been explicitly declared"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "active-directory.attack",
+      "implementation": "adapter",
+      "tools": [
+        "bloodhound",
+        "impacket",
+        "netexec"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "impacket: operation-specific normalization is unverified",
+        "bloodhound: operation-specific normalization is unverified",
+        "netexec: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "api.audit",
+      "implementation": "adapter",
+      "tools": [
+        "httpx",
+        "nuclei"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "asset.discover",
+      "implementation": "adapter",
+      "tools": [
+        "system-dns-resolver"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "c2.covenant",
+      "implementation": "not-implemented",
+      "tools": [
+        "covenant"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "covenant: adapter only displays help; C2 execution is not implemented",
+        "covenant: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "c2.havoc",
+      "implementation": "adapter",
+      "tools": [
+        "havoc"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "havoc: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "c2.merlin",
+      "implementation": "adapter",
+      "tools": [
+        "merlin"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "merlin: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "c2.mythic",
+      "implementation": "not-implemented",
+      "tools": [
+        "mythic"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "mythic: adapter reports status; task execution is not implemented",
+        "mythic: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "c2.operate",
+      "implementation": "partial",
+      "tools": [
+        "merlin",
+        "mythic",
+        "sliver"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "sliver: operation-specific normalization is unverified",
+        "merlin: operation-specific normalization is unverified",
+        "mythic: adapter reports status; task execution is not implemented",
+        "mythic: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "c2.setup",
+      "implementation": "partial",
+      "tools": [
+        "dnschef",
+        "msfvenom"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "dnschef: the current listener ignores the requested target; an explicit scoped DNS configuration is required",
+        "dnschef: operation-specific normalization is unverified",
+        "msfvenom: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "c2.sliver",
+      "implementation": "adapter",
+      "tools": [
+        "sliver"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "sliver: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "classify.endpoint",
+      "implementation": "built-in",
+      "tools": [],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "cloud.enum",
+      "implementation": "adapter",
+      "tools": [
+        "cloud_enum"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "cloud_enum: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "cloud.review",
+      "implementation": "adapter",
+      "tools": [
+        "trivy"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "cms.detect",
+      "implementation": "adapter",
+      "tools": [
+        "cmseek",
+        "wpscan"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "cmseek: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "code.audit",
+      "implementation": "adapter",
+      "tools": [
+        "gosec",
+        "semgrep"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "container.scan",
+      "implementation": "adapter",
+      "tools": [
+        "grype",
+        "trivy"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "cors.audit",
+      "implementation": "adapter",
+      "tools": [
+        "corscanner"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "credential.dump",
+      "implementation": "adapter",
+      "tools": [
+        "impacket",
+        "netexec"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "impacket: operation-specific normalization is unverified",
+        "netexec: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "credential.harvest",
+      "implementation": "adapter",
+      "tools": [
+        "evilginx",
+        "pcredz"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "evilginx: operation-specific normalization is unverified",
+        "pcredz: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "cve.lookup",
+      "implementation": "built-in",
+      "tools": [],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "dependency.scan",
+      "implementation": "adapter",
+      "tools": [
+        "grype",
+        "trivy"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "dir.bruteforce",
+      "implementation": "adapter",
+      "tools": [
+        "ffuf",
+        "gobuster"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "gobuster: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "dns.analyse",
+      "implementation": "adapter",
+      "tools": [
+        "dnsx"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "dns.enum",
+      "implementation": "partial",
+      "tools": [
+        "amass",
+        "dnsrecon",
+        "subfinder"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "amass: the pinned v5 release requires its engine/database workflow; the legacy adapter is incompatible and has not been implemented for v5",
+        "dnsrecon: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "email.harvest",
+      "implementation": "adapter",
+      "tools": [
+        "theharvester"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "theharvester: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "exploit.execute",
+      "implementation": "not-implemented",
+      "tools": [
+        "metasploit"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "metasploit: adapter only displays help; exploit execution is not implemented",
+        "metasploit: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "exploit.framework",
+      "implementation": "not-implemented",
+      "tools": [
+        "metasploit"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "metasploit: adapter only displays help; exploit execution is not implemented",
+        "metasploit: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "exploit.search",
+      "implementation": "adapter",
+      "tools": [
+        "searchsploit"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "searchsploit: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "hash.crack",
+      "implementation": "adapter",
+      "tools": [
+        "hashcat",
+        "john"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "hashcat: operation-specific normalization is unverified",
+        "john: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "js.analyse",
+      "implementation": "adapter",
+      "tools": [
+        "semgrep"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "js.extract",
+      "implementation": "adapter",
+      "tools": [
+        "jsluice",
+        "linkfinder"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "linkfinder: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "lateral.move",
+      "implementation": "adapter",
+      "tools": [
+        "impacket",
+        "netexec"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "netexec: operation-specific normalization is unverified",
+        "impacket: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "mitm.assess",
+      "implementation": "adapter",
+      "tools": [
+        "bettercap"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "bettercap: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "mitre.map",
+      "implementation": "built-in",
+      "tools": [],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "password.bruteforce",
+      "implementation": "adapter",
+      "tools": [
+        "hydra"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "hydra: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "pattern.detect",
+      "implementation": "not-implemented",
+      "tools": [
+        "gf"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "gf: adapter only lists patterns; target matching is not implemented",
+        "gf: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "payload.generate",
+      "implementation": "adapter",
+      "tools": [
+        "msfvenom"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "msfvenom: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "persist.install",
+      "implementation": "not-implemented",
+      "tools": [
+        "sharppersist"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "sharppersist: adapter checks persistence; installation and rollback are not implemented",
+        "sharppersist: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "personnel.osint",
+      "implementation": "adapter",
+      "tools": [
+        "sherlock",
+        "theharvester"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "sherlock: operation-specific normalization is unverified",
+        "theharvester: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "phishing.campaign",
+      "implementation": "partial",
+      "tools": [
+        "evilginx",
+        "gophish"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "gophish: starting a server does not create or scope a campaign; a campaign/configuration contract is required",
+        "gophish: operation-specific normalization is unverified",
+        "evilginx: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "pivot.tunnel",
+      "implementation": "not-implemented",
+      "tools": [
+        "chisel"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "chisel: starting a reverse server does not implement a scoped forwarding/tunnel request",
+        "chisel: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "port.forward",
+      "implementation": "not-implemented",
+      "tools": [
+        "chisel"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "chisel: starting a reverse server does not implement a scoped forwarding/tunnel request",
+        "chisel: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "port.scan",
+      "implementation": "adapter",
+      "tools": [
+        "naabu",
+        "nmap"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "post.adcs",
+      "implementation": "adapter",
+      "tools": [
+        "certipy"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "certipy: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "post.exploit",
+      "implementation": "not-implemented",
+      "tools": [
+        "metasploit",
+        "powersploit"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "metasploit: adapter only displays help; exploit execution is not implemented",
+        "metasploit: operation-specific normalization is unverified",
+        "powersploit: adapter only lists modules; post-exploitation execution is not implemented",
+        "powersploit: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "post.kerberoast",
+      "implementation": "adapter",
+      "tools": [
+        "rubeus"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "rubeus: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "post.kerberos",
+      "implementation": "partial",
+      "tools": [
+        "kekeo",
+        "rubeus"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "kekeo: adapter only exits; ticket operations are not implemented",
+        "kekeo: operation-specific normalization is unverified",
+        "rubeus: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "post.mimikatz",
+      "implementation": "adapter",
+      "tools": [
+        "mimikatz"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "mimikatz: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "post.persistence",
+      "implementation": "not-implemented",
+      "tools": [
+        "sharppersist"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "sharppersist: adapter checks persistence; installation and rollback are not implemented",
+        "sharppersist: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "post.recon",
+      "implementation": "adapter",
+      "tools": [
+        "linpeas",
+        "seatbelt",
+        "sharphound",
+        "sharpup",
+        "sharpview",
+        "winpeas"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "linpeas: operation-specific normalization is unverified",
+        "winpeas: operation-specific normalization is unverified",
+        "seatbelt: operation-specific normalization is unverified",
+        "sharpview: operation-specific normalization is unverified",
+        "sharphound: operation-specific normalization is unverified",
+        "sharpup: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "privilege.escalation",
+      "implementation": "adapter",
+      "tools": [
+        "bloodhound"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "bloodhound: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "report.generate",
+      "implementation": "built-in",
+      "tools": [],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "sbom.generate",
+      "implementation": "adapter",
+      "tools": [
+        "syft"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "secret.scan",
+      "implementation": "adapter",
+      "tools": [
+        "gitleaks",
+        "trufflehog"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "service.enumerate",
+      "implementation": "adapter",
+      "tools": [
+        "naabu"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "smb.test",
+      "implementation": "adapter",
+      "tools": [
+        "crackmapexec",
+        "enum4linux",
+        "impacket",
+        "netexec",
+        "smbmap"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "crackmapexec: operation-specific normalization is unverified",
+        "impacket: operation-specific normalization is unverified",
+        "netexec: operation-specific normalization is unverified",
+        "enum4linux: operation-specific normalization is unverified",
+        "smbmap: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "social.engineer",
+      "implementation": "partial",
+      "tools": [
+        "gophish",
+        "sherlock"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "sherlock: operation-specific normalization is unverified",
+        "gophish: starting a server does not create or scope a campaign; a campaign/configuration contract is required",
+        "gophish: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "sql.inject",
+      "implementation": "adapter",
+      "tools": [
+        "sqlmap"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "tech.fingerprint",
+      "implementation": "adapter",
+      "tools": [
+        "httpx",
+        "whatweb"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "tls.audit",
+      "implementation": "adapter",
+      "tools": [
+        "testssl"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "validate.finding",
+      "implementation": "built-in",
+      "tools": [],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "vuln.scan",
+      "implementation": "adapter",
+      "tools": [
+        "nikto",
+        "nuclei"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "nikto: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "waf.detect",
+      "implementation": "adapter",
+      "tools": [
+        "wafw00f"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "wafw00f: operation-specific normalization is unverified"
+      ]
+    },
+    {
+      "id": "web.automate",
+      "implementation": "adapter",
+      "tools": [
+        "agent-browser"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "web.browse",
+      "implementation": "adapter",
+      "tools": [
+        "agent-browser"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "web.content.discover",
+      "implementation": "adapter",
+      "tools": [
+        "ffuf"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "web.har",
+      "implementation": "adapter",
+      "tools": [
+        "agent-browser"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "web.map",
+      "implementation": "adapter",
+      "tools": [
+        "httpx",
+        "katana"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "web.scan",
+      "implementation": "adapter",
+      "tools": [
+        "nuclei"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "web.zap",
+      "implementation": "adapter",
+      "tools": [
+        "zap"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required"
+      ]
+    },
+    {
+      "id": "xss.detect",
+      "implementation": "adapter",
+      "tools": [
+        "xsstrike"
+      ],
+      "validation": "not-certified",
+      "blockers": [
+        "fresh platform-specific end-to-end evidence is required",
+        "xsstrike: operation-specific normalization is unverified"
+      ]
+    }
+  ]
+}

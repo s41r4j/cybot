@@ -117,6 +117,19 @@ func TestLiveCoreFFUF(t *testing.T) {
 		t.Fatalf("unexpected normalized match: %+v", result.Endpoints)
 	}
 	validateFixtureResult(t, result)
+	if err := os.WriteFile(words, []byte("missing-fixture\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	result, err = c.Run(context.Background(), liveRequest(server.URL), d)
+	if err != nil || len(result.Errors) != 0 || len(result.Endpoints) != 0 {
+		t.Fatalf("nonexistent path reported present: %+v %v", result, err)
+	}
+	requireToolFailure(t, d, "ffuf", replaceArgument(ffufArgs(server.URL, schema.RunRequest{}), "-w", filepath.Join(t.TempDir(), "missing-wordlist")))
+	certifyOperation(t, "ffuf", "web.content.discover", []operationCase{
+		passedCase("positive", "Fixture wordlist finds /admin with HTTP 200 and ignores HTTP 404."),
+		passedCase("negative", "An all-missing wordlist produces zero endpoints."),
+		passedCase("failure", "Real FFUF rejects a nonexistent wordlist."),
+	})
 }
 func TestLiveCoreNuclei(t *testing.T) {
 	d := liveDeps(t)
@@ -156,6 +169,12 @@ http:
 	if err != nil || len(result.Findings) != 0 {
 		t.Fatalf("false positive: %+v %v", result, err)
 	}
+	requireToolFailure(t, d, "nuclei", replaceArgument(nucleiArgs(server.URL, schema.RunRequest{}), "-templates", filepath.Join(t.TempDir(), "missing-template.yaml")))
+	certifyOperation(t, "nuclei", "web.scan", []operationCase{
+		passedCase("positive", "Pinned scanner finds the local fixture template's marker."),
+		passedCase("negative", "A nonmatching fixture response produces zero findings."),
+		passedCase("failure", "Real Nuclei rejects a nonexistent template."),
+	})
 }
 func TestLiveCoreNmap(t *testing.T) {
 	d := liveDeps(t)
@@ -175,6 +194,21 @@ func TestLiveCoreNmap(t *testing.T) {
 		t.Fatalf("port missing: %+v %v", result, err)
 	}
 	validateFixtureResult(t, result)
+	server.Close()
+	out, err = d.Runner.Run(context.Background(), execution.Spec{Tool: tool, Args: []string{"-sT", "-n", "-Pn", "-p", port, "-oX", "-", "127.0.0.1"}, Timeout: 20 * time.Second})
+	if err != nil {
+		t.Fatal(err)
+	}
+	result, err = parseNmap(out.Stdout, liveRequest("127.0.0.1"))
+	if err != nil || len(result.Services) != 0 {
+		t.Fatalf("closed fixture port reported open: %+v %v", result, err)
+	}
+	requireToolFailure(t, d, "nmap", []string{"--cybot-invalid-fixture-option"})
+	certifyOperation(t, "nmap", "", []operationCase{
+		passedCase("positive", "Connect scan finds exactly the open loopback fixture port in Nmap XML."),
+		passedCase("negative", "Closed fixture port is absent from normalized open services."),
+		passedCase("failure", "Real Nmap rejects an invalid invocation."),
+	})
 }
 func TestLiveCoreDNS(t *testing.T) {
 	d := liveDeps(t)

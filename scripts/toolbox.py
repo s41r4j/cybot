@@ -29,6 +29,16 @@ ARCH = {'arm64': 'arm64', 'aarch64': 'arm64', 'x86_64': 'amd64', 'AMD64': 'amd64
 IMAGE = f'cybotainer:core-2026.10.22-{ARCH}'
 STATE = ROOT / '.cybot' / 'toolbox'
 GO_TOOLCHAIN = 'go1.26.10'
+PROFILE = 'core'
+
+
+def configure_profile(profile):
+    global PROFILE, IMAGE, STATE
+    PROFILE = profile
+    IMAGE = f'cybotainer:{profile}-2026.10.28-{ARCH}'
+    STATE = ROOT / '.cybot' / 'toolbox'
+    if profile != 'core':
+        STATE = STATE / profile
 
 
 def command(*args, capture=True, **kwargs):
@@ -161,6 +171,10 @@ def unpack_binary(archive, name, dest):
 
 
 def prepare(dest):
+    if PROFILE == 'analysis':
+        from analysis_profile import prepare as prepare_analysis
+        prepare_analysis(dest)
+        return
     lock = json.loads((ROOT / 'docker/toolbox/core.lock.json').read_text())
     for name, spec in lock['tools'].items():
         print('Preparing', name, spec['version'], flush=True)
@@ -201,7 +215,11 @@ def prepare(dest):
         notices.mkdir(parents=True, exist_ok=True)
         shutil.copy(ROOT / notice, notices / notice)
     (dest / 'entrypoint.sh').chmod(0o755)
-    # Local development build only. Users of published images need no Go runtime.
+    prepare_cli(dest)
+
+
+def prepare_cli(dest):
+    # CLI compilation and its third-party notices are shared by all profiles.
     # Keep the build cache private and remove it with the temporary context.
     cache = dest / '.go-cache'
     version = os.environ.get('CYBOT_VERSION', '0.1.0-dev')
@@ -211,6 +229,11 @@ def prepare(dest):
                GOMAXPROCS='1', GOMEMLIMIT='512MiB', GOCACHE=str(cache), GOTOOLCHAIN=GO_TOOLCHAIN)
     monitored(['go', 'build', '-p', '1', '-trimpath', f'-ldflags=-s -w -X main.version={version}', '-o', str(dest / 'bin/cybot'),
                './cmd/cybot'], env=env)
+    notices = dest / 'share/licenses/cybot'
+    notices.mkdir(parents=True, exist_ok=True)
+    for name in ('LICENSE', 'THIRD_PARTY_NOTICES.md'):
+        shutil.copy(ROOT / name, notices / name)
+    monitored([sys.executable, 'scripts/dependency_notices.py', '--output', str(notices / 'dependencies')], env=env, timeout_seconds=180)
     shutil.rmtree(cache)
     if directory_bytes(dest) > 2 * GB:
         raise RuntimeError('Prepared context exceeds 2 GB')
@@ -318,12 +341,13 @@ def run(args, image=None, network='bridge', mounts=(), output=None, timeout_seco
         extra += ['--mount', f'type=bind,src={Path(source).resolve()},dst={target},readonly']
     uid = os.getuid() if hasattr(os, 'getuid') else 10001
     gid = os.getgid() if hasattr(os, 'getgid') else 10001
+    cache_size = '512m' if PROFILE == 'analysis' else '128m'
     cid = docker('create', *extra, '--pull', 'never', '--name', ACTIVE_NAME, '--label', 'io.cybot.managed=true', '--user', f'{uid}:{gid}',
                  '--memory', '2g', '--memory-swap', '2g', '--cpus', '1', '--pids-limit', '256',
                  '--ulimit', 'fsize=67108864:67108864', '--log-driver', 'none', '--init', '--read-only',
                  '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
                  '--tmpfs', '/tmp:rw,noexec,nosuid,size=128m',
-                 '--tmpfs', f'/home/cybot/.cache:rw,noexec,nosuid,size=128m,uid={uid},gid={gid}',
+                 '--tmpfs', f'/home/cybot/.cache:rw,noexec,nosuid,size={cache_size},uid={uid},gid={gid}',
                  '--tmpfs', f'/home/cybot/.config:rw,noexec,nosuid,size=16m,uid={uid},gid={gid}',
                  '--mount', f'type=bind,src={ROOT / "data"},dst=/data,readonly',
                  '--mount', f'type=bind,src={ROOT / "reports"},dst=/reports',
@@ -355,6 +379,9 @@ def current_image():
 
 
 def probe(image):
+    if PROFILE == 'analysis':
+        from analysis_profile import probe as probe_analysis
+        return probe_analysis(image)
     STATE.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='probe-', dir=STATE) as temp:
         output = Path(temp) / 'result.txt'
@@ -432,9 +459,11 @@ def operation_lock():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--profile', choices=['core', 'analysis'], default='core')
     parser.add_argument('action', choices=['status', 'build', 'pull', 'run', 'verify', 'image'])
     parser.add_argument('args', nargs=argparse.REMAINDER)
     options = parser.parse_args()
+    configure_profile(options.profile)
     if options.action == 'image':
         print(current_image())
     elif options.action == 'status':

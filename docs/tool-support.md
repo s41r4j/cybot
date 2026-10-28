@@ -24,24 +24,24 @@ Generated from the executable command surface. All entries remain in the full-re
 | `dirsearch` | adapter | undeclared | **no executable mapping** |
 | `dnschef` | not-implemented | undeclared | c2.setup |
 | `dnsrecon` | adapter | undeclared | dns.enum |
-| `dnsx` | adapter | undeclared | dns.analyse |
+| `dnsx` | adapter | linux | dns.analyse |
 | `enum4linux` | adapter | undeclared | smb.test |
 | `evilginx` | adapter | undeclared | credential.harvest, phishing.campaign |
-| `ffuf` | adapter | undeclared | dir.bruteforce, web.content.discover |
+| `ffuf` | adapter | linux | dir.bruteforce, web.content.discover |
 | `gf` | not-implemented | undeclared | pattern.detect |
-| `gitleaks` | adapter | undeclared | secret.scan |
+| `gitleaks` | adapter | linux | secret.scan |
 | `gobuster` | adapter | undeclared | dir.bruteforce |
 | `gophish` | not-implemented | undeclared | phishing.campaign, social.engineer |
-| `gosec` | adapter | undeclared | code.audit |
+| `gosec` | adapter | linux | code.audit |
 | `grype` | adapter | undeclared | container.scan, dependency.scan |
 | `hashcat` | adapter | undeclared | hash.crack |
 | `havoc` | adapter | undeclared | c2.havoc |
-| `httpx` | adapter | undeclared | api.audit, tech.fingerprint, web.map |
+| `httpx` | adapter | linux | api.audit, tech.fingerprint, web.map |
 | `hydra` | adapter | undeclared | password.bruteforce |
 | `impacket` | adapter | undeclared | active-directory.attack, credential.dump, lateral.move, smb.test |
 | `john` | adapter | undeclared | hash.crack |
 | `jsluice` | adapter | undeclared | js.extract |
-| `katana` | adapter | undeclared | web.map |
+| `katana` | adapter | linux | web.map |
 | `kekeo` | not-implemented | windows | post.kerberos |
 | `knockpy` | adapter | undeclared | **no executable mapping** |
 | `linkfinder` | adapter | undeclared | js.extract |
@@ -53,11 +53,11 @@ Generated from the executable command surface. All entries remain in the full-re
 | `mimikatz` | adapter | windows | post.mimikatz |
 | `msfvenom` | adapter | undeclared | c2.setup, payload.generate |
 | `mythic` | not-implemented | undeclared | c2.mythic, c2.operate |
-| `naabu` | adapter | undeclared | port.scan, service.enumerate |
+| `naabu` | adapter | linux | port.scan, service.enumerate |
 | `netexec` | adapter | undeclared | active-directory.attack, credential.dump, lateral.move, smb.test |
 | `nikto` | adapter | undeclared | vuln.scan |
-| `nmap` | adapter | undeclared | port.scan |
-| `nuclei` | adapter | undeclared | api.audit, vuln.scan, web.scan |
+| `nmap` | adapter | linux | port.scan |
+| `nuclei` | adapter | linux | api.audit, vuln.scan, web.scan |
 | `pacu` | adapter | undeclared | **no executable mapping** |
 | `pcredz` | adapter | undeclared | credential.harvest |
 | `powersploit` | not-implemented | windows | post.exploit |
@@ -65,7 +65,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `rubeus` | adapter | windows | post.kerberoast, post.kerberos |
 | `searchsploit` | adapter | undeclared | exploit.search |
 | `seatbelt` | adapter | windows | post.recon |
-| `semgrep` | adapter | undeclared | code.audit, js.analyse |
+| `semgrep` | adapter | linux | code.audit, js.analyse |
 | `sharphound` | adapter | windows | post.recon |
 | `sharppersist` | not-implemented | windows | persist.install, post.persistence |
 | `sharpup` | adapter | windows | post.recon |
@@ -75,9 +75,9 @@ Generated from the executable command surface. All entries remain in the full-re
 | `sliver` | adapter | undeclared | c2.operate, c2.sliver |
 | `smbmap` | adapter | undeclared | smb.test |
 | `sqlmap` | adapter | undeclared | sql.inject |
-| `subfinder` | adapter | undeclared | dns.enum |
+| `subfinder` | adapter | linux | dns.enum |
 | `swaks` | adapter | undeclared | **no executable mapping** |
-| `syft` | adapter | undeclared | sbom.generate |
+| `syft` | adapter | linux | sbom.generate |
 | `system-dns-resolver` | built-in | darwin, linux, windows | asset.discover |
 | `testssl` | adapter | undeclared | tls.audit |
 | `theharvester` | adapter | undeclared | email.harvest, personnel.osint |
@@ -93,7 +93,7 @@ Generated from the executable command surface. All entries remain in the full-re
 
 ## Capabilities
 
-| Capability | Implementation | Executed adapters |
+| Capability | Implementation | Executable tools |
 | --- | --- | --- |
 | `active-directory.attack` | adapter | bloodhound, impacket, netexec |
 | `api.audit` | adapter | httpx, nuclei |

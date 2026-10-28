@@ -1,5 +1,14 @@
 # Third-party notices
 
+The optional analysis toolbox uses the pinned upstream Semgrep image and its
+bundled dependencies. Semgrep source for that image is available at
+https://github.com/semgrep/semgrep/tree/v1.172.0. Its upstream license files remain
+in the base image. Gosec is built from the verified Go module version v2.28.0;
+the image includes license/notice files for the scanner and its downloaded Go
+modules under `/opt/cybot/share/licenses/gosec`. The Go SDK includes its upstream
+license at `/opt/go/LICENSE`. CYBOT CLI dependency notices are included under
+`/opt/cybot/share/licenses/cybot/dependencies` in both toolbox profiles.
+
 CYBOT's own source is MIT licensed. External executables, data sets, rules,
 databases, fonts and prompt packs retain their respective licenses. Listing a
 tool in the catalog does not redistribute it or grant rights to its source.

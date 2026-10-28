@@ -26,7 +26,11 @@ These are source and contract checks, not 84-tool live certification.
 
 The local Docker daemon is unavailable. Historical 2026-10-22 compact-core
 results are retained as historical records and do not certify the changed source.
-CI builds/tests compact images on native Linux AMD64 and ARM64 runners. Windows,
+The complete source CI run at revision `cde3054` passed on Linux AMD64/ARM64,
+macOS and Windows, including both native Linux compact-toolbox fixture jobs.
+The expanded code-analysis profile and per-operation certification pipeline
+are being validated separately; they are not counted as passed in this snapshot.
+Windows,
 AD, cloud credentials, external providers and specialist runtimes need compatible
 authorized environments and real-operation tests.
 
@@ -54,3 +58,17 @@ release requirement and prevent a stable release while unfinished.
 
 No cloud resources, real credentials, public targets, messages or campaigns are
 created by the offline validation workflow.
+
+## Expanded operation evidence
+
+`python3 scripts/toolbox.py --profile analysis build` builds a separate pinned
+Semgrep/Gosec image with the Go SDK and local rules. Runtime networking and Go
+dependency downloads are disabled. The profile retains the same 2 GiB RAM,
+one-CPU, 3 GB image and 20 GB storage admission limits as the compact profile.
+Code with external Go dependencies needs those dependencies available locally.
+
+CI now produces individual positive/negative/failure operation reports, binds
+them to measured executable hashes and source fingerprints, and merges both
+architectures into a full-catalog gate artifact. A startup/help probe cannot
+produce these certificates. Missing or stale reports keep the relevant entries
+blocked; passing source CI does not override the full-product gate.

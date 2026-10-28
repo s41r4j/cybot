@@ -69,6 +69,12 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 	combined := emptyResult()
 	completed := 0
 	for _, step := range c.steps {
+		if step.ID == "gosec" {
+			if info, err := os.Stat(req.Target); err == nil && !info.IsDir() {
+				combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "DIRECTORY_REQUIRED", Message: "Gosec requires a package directory; scanning a file's parent would expand the requested scope."})
+				continue
+			}
+		}
 		if scopeErr := validateStepScope(step.ID, req); scopeErr != nil {
 			combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "RESOURCE_SCOPE_REQUIRED", Message: scopeErr.Error()})
 			if step.Required {
@@ -483,11 +489,13 @@ func gitleaksArgs(target string, _ schema.RunRequest) []string {
 func trufflehogArgs(target string, _ schema.RunRequest) []string {
 	return []string{"filesystem", target, "--json", "--no-update", "--no-verification"}
 }
-func gosecArgs(_ string, _ schema.RunRequest) []string {
-	return []string{"-no-fail", "-fmt", "json", "./..."}
+func gosecArgs(target string, _ schema.RunRequest) []string {
+	// Gosec scans packages, not individual files. Keep the package selection
+	// tied to the explicit target instead of scanning the caller's directory.
+	return []string{"-no-fail", "-fmt", "json", "-concurrency", "1", filepath.Join(target, "...")}
 }
 func semgrepArgs(target string, _ schema.RunRequest) []string {
-	return []string{"scan", "--json", "--metrics=off", "--disable-version-check", "--config", "/opt/cybot/rules/semgrep-security.yaml", target}
+	return []string{"scan", "--json", "--metrics=off", "--disable-version-check", "--jobs", "1", "--max-memory", "512", "--timeout", "30", "--config", "/opt/cybot/rules/semgrep-security.yaml", target}
 }
 func trivyFilesystemArgs(target string, _ schema.RunRequest) []string {
 	return []string{"filesystem", "--cache-dir", "/home/cybot/.cache/trivy", "--format", "json", "--scanners", "vuln,misconfig,secret", "--skip-db-update", "--skip-java-db-update", "--skip-check-update", "--skip-version-check", "--offline-scan", "--disable-telemetry", target}

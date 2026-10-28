@@ -80,3 +80,54 @@ jobs:
             .cybot/toolbox/core-tests.txt
             .cybot/toolbox/runtime.lock.json
             .cybot/toolbox/probe-error.txt
+            .cybot/toolbox/validation/
+  analysis-runtime:
+    name: Code analysis fixtures (${{ matrix.runner }})
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    env:
+      CYBOT_VERSION: 0.1.0-dev
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: '1.26.10'
+      - run: python3 scripts/toolbox.py --profile analysis build
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: analysis-validation-${{ matrix.runner }}
+          path: |
+            .cybot/toolbox/analysis/analysis-tests.json
+            .cybot/toolbox/analysis/analysis-tests.txt
+            .cybot/toolbox/analysis/runtime.lock.json
+            .cybot/toolbox/analysis/probe-error.txt
+            .cybot/toolbox/analysis/validation/
+  operation-readiness:
+    needs: [compact-runtime, analysis-runtime]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          pattern: '*-validation-*'
+          path: /tmp/cybot-validation
+      - name: Bind operation evidence to this source revision
+        run: python3 scripts/operation_evidence.py /tmp/cybot-validation --output /tmp/operation-evidence
+      - name: Evaluate the entire catalog
+        run: |
+          set +e
+          python3 scripts/release_gate.py --evidence /tmp/operation-evidence/evidence.json --output /tmp/operation-readiness.json
+          status=$?
+          set -e
+          if [ "$status" -gt 1 ]; then exit "$status"; fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: operation-readiness
+          path: |
+            /tmp/operation-readiness.json
+            /tmp/operation-evidence/
