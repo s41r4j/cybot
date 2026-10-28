@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net"
-	"net/url"
 	"os"
 	"path/filepath"
 	"sort"
@@ -108,7 +107,7 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 		if step.Args != nil {
 			args = step.Args(toolTarget, req)
 		}
-		out, runErr := d.Runner.Run(ctx, execution.Spec{Tool: tool, Args: args, Timeout: d.Timeout, Retries: 0, Network: tool.RequiresNetwork, WorkDir: hostWorkdir, ContainerWorkDir: containerWorkdir, Mounts: mounts, AcceptExitCodes: step.AcceptExitCodes})
+		out, runErr := d.Runner.Run(ctx, execution.Spec{Tool: tool, Args: args, EnvOverrides: toolEnvironment(step.ID), Timeout: d.Timeout, Retries: 0, Network: tool.RequiresNetwork, WorkDir: hostWorkdir, ContainerWorkDir: containerWorkdir, Mounts: mounts, AcceptExitCodes: step.AcceptExitCodes})
 		if runErr != nil {
 			combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "TOOL_EXECUTION_FAILED", Message: runErr.Error(), Retryable: false})
 			if step.Required {
@@ -222,6 +221,9 @@ func validateCapabilityTarget(id, target string) error {
 	if target == "" {
 		return fmt.Errorf("target is required")
 	}
+	if len(target) > 8192 || strings.ContainsAny(target, "\x00\r\n") || strings.HasPrefix(target, "-") {
+		return fmt.Errorf("target must be bounded data without control characters or a leading option prefix; use an absolute local path when necessary")
+	}
 	switch id {
 	case "dns.analyse", "dns.enum":
 		return validateHostname(target)
@@ -231,11 +233,7 @@ func validateCapabilityTarget(id, target string) error {
 		}
 		return validateHostname(target)
 	case "web.map", "web.scan", "web.content.discover", "api.audit", "tech.fingerprint", "waf.detect", "dir.bruteforce", "vuln.scan", "sql.inject", "xss.detect", "cors.audit", "cms.detect":
-		u, err := url.Parse(target)
-		if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Hostname() == "" || u.User != nil {
-			return fmt.Errorf("target must be an http or https URL without embedded credentials")
-		}
-		return nil
+		return validateBrowserTarget(target)
 	case "tls.audit":
 		if net.ParseIP(target) != nil {
 			return nil

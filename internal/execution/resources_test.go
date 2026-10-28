@@ -43,6 +43,34 @@ func TestOutputFixture(t *testing.T) {
 	os.Exit(0)
 }
 
+func TestNativeEnvironmentOverrides(t *testing.T) {
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("CYBOT_ENV_FIXTURE_VALUE", "inherited")
+	out, err := (LocalRunner{}).Run(context.Background(), Spec{
+		Tool:         schema.Tool{ID: "environment-fixture", Kind: "native", Binary: executable},
+		Args:         []string{"-test.run=^TestEnvironmentFixture$"},
+		EnvOverrides: []string{"CYBOT_ENV_FIXTURE=1", "CYBOT_ENV_FIXTURE_VALUE=override"},
+		Timeout:      5 * time.Second,
+	})
+	if err != nil || string(out.Stdout) != "override" {
+		t.Fatalf("tool inherited an overridden value: %q %v", out.Stdout, err)
+	}
+	if os.Getenv("CYBOT_ENV_FIXTURE_VALUE") != "inherited" {
+		t.Fatal("tool environment mutated the parent process")
+	}
+}
+
+func TestEnvironmentFixture(t *testing.T) {
+	if os.Getenv("CYBOT_ENV_FIXTURE") != "1" {
+		return
+	}
+	_, _ = os.Stdout.WriteString(os.Getenv("CYBOT_ENV_FIXTURE_VALUE"))
+	os.Exit(0)
+}
+
 func TestLimitedOutputAcceptsBoundaryAndCancelsOverflow(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()

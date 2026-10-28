@@ -91,6 +91,9 @@ func validateBrowserTarget(target string) error {
 	if target == "" {
 		return fmt.Errorf("target is required")
 	}
+	if len(target) > 8192 || strings.ContainsAny(target, " \t\r\n\x00\"'\\") {
+		return fmt.Errorf("URL must encode spaces and unsafe characters before browser/tool execution")
+	}
 	u, err := url.Parse(target)
 	if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Hostname() == "" || u.User != nil {
 		return fmt.Errorf("target must be an http or https URL without embedded credentials")

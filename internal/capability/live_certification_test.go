@@ -198,3 +198,56 @@ func TestLiveAnalysisCapabilities(t *testing.T) {
 		})
 	}
 }
+
+func TestLiveAnalysisSecrets(t *testing.T) {
+	if os.Getenv("CYBOT_LIVE_ANALYSIS") != "1" {
+		t.Skip("requires isolated full secret-scanning profile")
+	}
+	d := liveDeps(t)
+	dir := t.TempDir()
+	path := filepath.Join(dir, "fixture.env")
+	// Invalid synthetic token, deliberately assembled to avoid representing a
+	// static source-code credential. Network verification is disabled.
+	sentinel := "ghp_" + "r7M4zN8pQ2vK9tL5wH3sF6dJ1xC0bA4eY8uR"
+	write := func(value string) {
+		t.Helper()
+		if err := os.WriteFile(path, []byte(value), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	write("GITHUB_TOKEN=" + sentinel + "\n")
+	c := liveCapability(t, "secret.scan")
+	r, err := c.Run(context.Background(), liveRequest(dir), d)
+	if err != nil || len(r.Errors) != 0 || len(r.Evidence) != 2 {
+		t.Fatalf("full secret scan failed: %+v %v", r, err)
+	}
+	for _, tool := range []string{"gitleaks", "trufflehog"} {
+		found := false
+		for _, f := range r.Findings {
+			found = found || strings.HasPrefix(f.ID, tool+":")
+		}
+		if !found {
+			t.Fatal("scanner missed the synthetic token", tool)
+		}
+	}
+	for _, ev := range r.Evidence {
+		data, err := os.ReadFile(ev.Path)
+		if err != nil || strings.Contains(string(data), sentinel) {
+			t.Fatal("secret evidence was not redacted", err)
+		}
+	}
+	write("APP_NAME=clean-local-fixture\n")
+	r, err = c.Run(context.Background(), liveRequest(dir), d)
+	if err != nil || len(r.Errors) != 0 || len(r.Findings) != 0 || len(r.Evidence) != 2 {
+		t.Fatalf("clean full secret scan failed: %+v %v", r, err)
+	}
+	requireToolFailure(t, d, "trufflehog", []string{"--cybot-invalid-fixture-option"})
+	requireToolFailure(t, d, "gitleaks", gitleaksArgs(filepath.Join(dir, "missing-input"), schema.RunRequest{}))
+	cases := []operationCase{
+		passedCase("positive", "Gitleaks and TruffleHog both detect an invalid synthetic token; retained evidence is redacted."),
+		passedCase("negative", "Both scanners inspect clean source with no findings or errors."),
+		passedCase("failure", "Both real executables reject invalid configuration or missing input."),
+	}
+	certifyOperation(t, "gitleaks", "", cases)
+	certifyOperation(t, "trufflehog", "secret.scan", cases)
+}

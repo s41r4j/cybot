@@ -82,7 +82,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `testssl` | adapter | undeclared | tls.audit |
 | `theharvester` | adapter | undeclared | email.harvest, personnel.osint |
 | `trivy` | adapter | undeclared | cloud.review, container.scan, dependency.scan |
-| `trufflehog` | adapter | undeclared | secret.scan |
+| `trufflehog` | adapter | linux | secret.scan |
 | `wafw00f` | adapter | undeclared | waf.detect |
 | `waybackurls` | adapter | undeclared | **no executable mapping** |
 | `whatweb` | adapter | undeclared | tech.fingerprint |

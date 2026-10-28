@@ -46,6 +46,38 @@ func TestClassificationNeverInventsSecurityFindings(t *testing.T) {
 	}
 }
 
+func TestTruffleHogKeepsDistinctSecretsFromOneSource(t *testing.T) {
+	data := []byte(`[{"DetectorName":"Fixture","SourceID":1,"Raw":"synthetic-value-one","SourceMetadata":{"Data":{"Filesystem":{"file":"a.env","line":1}}}},{"DetectorName":"Fixture","SourceID":1,"Raw":"synthetic-value-two","SourceMetadata":{"Data":{"Filesystem":{"file":"a.env","line":2}}}}]`)
+	r, err := parseTool("trufflehog", data, schema.RunRequest{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	deduplicateResult(&r)
+	if len(r.Findings) != 2 || r.Findings[0].ID == r.Findings[1].ID {
+		t.Fatal("distinct secrets collapsed into one finding", r.Findings)
+	}
+	encoded, _ := json.Marshal(r)
+	if strings.Contains(string(encoded), "synthetic-value") {
+		t.Fatal("raw secret escaped into the normalized result")
+	}
+}
+
+func TestExternalTargetsCannotInjectOptionsOrBrowserBatchTokens(t *testing.T) {
+	for _, target := range []string{"--help", "fixture.invalid\n--help", "fixture.invalid\x00"} {
+		if err := validateCapabilityTarget("exploit.search", target); err == nil {
+			t.Fatal("accepted option/control data as target", target)
+		}
+	}
+	for _, target := range []string{"https://fixture.invalid/ wait 2000", "https://fixture.invalid/\"", "https://fixture.invalid/\\", "https://fixture.invalid/\t"} {
+		if err := validateBrowserTarget(target); err == nil {
+			t.Fatal("accepted unsafe browser batch URL", target)
+		}
+	}
+	if err := validateBrowserTarget("https://fixture.invalid/a%20b?q=%22quoted%22"); err != nil {
+		t.Fatal("rejected safely encoded URL", err)
+	}
+}
+
 func TestRemoteApprovalCannotRunInterfaceOrLocalOperations(t *testing.T) {
 	for tool, builder := range map[string]func(string, schema.RunRequest) []string{"bettercap": bettercapArgs, "mimikatz": mimikatzArgs, "linpeas": linpeasArgs, "winpeas": winpeasArgs, "seatbelt": seatbeltArgs, "sharpup": sharpupArgs} {
 		t.Run(tool, func(t *testing.T) {

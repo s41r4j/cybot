@@ -351,7 +351,14 @@ func parseTruffleHog(data []byte, _ schema.RunRequest) (schema.Result, error) {
 			severity = "critical"
 		}
 		desc := "Potential secret detected; raw and decoded secret values were not retained in the normalized finding."
-		result.Findings = append(result.Findings, finding("trufflehog", detector+fmt.Sprint(d["SourceID"]), "Potential secret: "+detector, desc, severity, confidence))
+		// SourceID identifies an ingestion job, not an individual secret. Hash
+		// the complete value and location so distinct secrets cannot collapse.
+		location, err := json.Marshal(d["SourceMetadata"])
+		if err != nil {
+			return result, err
+		}
+		key := detector + "\x00" + text(d["Raw"]) + "\x00" + text(d["RawV2"]) + "\x00" + string(location)
+		result.Findings = append(result.Findings, finding("trufflehog", key, "Potential secret: "+detector, desc, severity, confidence))
 	}
 	sortFindings(&result)
 	return result, nil

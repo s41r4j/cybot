@@ -1332,7 +1332,9 @@
     {
       "id": "trufflehog",
       "version": "3.96.0",
-      "platforms": [],
+      "platforms": [
+        "linux"
+      ],
       "normalization": "tool-specific",
       "implementation": "adapter",
       "resource_scope": "target",
@@ -1341,8 +1343,7 @@
       ],
       "validation": "not-certified",
       "blockers": [
-        "pinned binary/version and fresh real-operation evidence are required",
-        "supported operating systems have not been explicitly declared"
+        "pinned binary/version and fresh real-operation evidence are required"
       ]
     },
     {

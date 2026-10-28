@@ -25,5 +25,41 @@
         "sha256": "3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797"
       }
     }
+  },
+  "tools": {
+    "gitleaks": {
+      "version": "8.30.1",
+      "reported_version": "8.30.1",
+      "source_url": "https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_arm64.tar.gz",
+          "size": 7601421,
+          "sha256": "e4a487ee7ccd7d3a7f7ec08657610aa3606637dab924210b3aee62570fb4b080"
+        },
+        "amd64": {
+          "url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz",
+          "size": 8230402,
+          "sha256": "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+        }
+      }
+    },
+    "trufflehog": {
+      "version": "3.96.0",
+      "reported_version": "3.96.0",
+      "source_url": "https://github.com/trufflesecurity/trufflehog/releases/tag/v3.96.0",
+      "assets": {
+        "amd64": {
+          "url": "https://github.com/trufflesecurity/trufflehog/releases/download/v3.96.0/trufflehog_3.96.0_linux_amd64.tar.gz",
+          "size": 33744924,
+          "sha256": "7105f1cd6577f058a9e39d0578f1a99c8a1e481e4d3512cd8a09acfe22a0fdc0"
+        },
+        "arm64": {
+          "url": "https://github.com/trufflesecurity/trufflehog/releases/download/v3.96.0/trufflehog_3.96.0_linux_arm64.tar.gz",
+          "size": 28585928,
+          "sha256": "50acd4c7a3b8ebfe5083d8350956057030c44be3515dedd55b45263495c490b2"
+        }
+      }
+    }
   }
 }

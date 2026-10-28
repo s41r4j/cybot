@@ -16,9 +16,12 @@ import (
 )
 
 type Spec struct {
-	Tool             schema.Tool
-	Args             []string
-	Env              []string
+	Tool schema.Tool
+	Args []string
+	Env  []string
+	// EnvOverrides replace named variables for both native tools and containers.
+	// Env itself remains the environment of the launched host process.
+	EnvOverrides     []string
 	WorkDir          string
 	ContainerWorkDir string
 	Entrypoint       string
@@ -174,6 +177,9 @@ func (r LocalRunner) Run(ctx context.Context, s Spec) (Output, error) {
 				}
 				args = append(args, "--mount", fmt.Sprintf("type=bind,src=%s,dst=%s,%s", mount.Source, mount.Target, mode))
 			}
+			for _, variable := range s.EnvOverrides {
+				args = append(args, "--env", variable)
+			}
 			if s.ContainerWorkDir != "" {
 				args = append(args, "--workdir", s.ContainerWorkDir)
 			}
@@ -193,6 +199,12 @@ func (r LocalRunner) Run(ctx context.Context, s Spec) (Output, error) {
 			cmd.Dir = s.WorkDir
 		}
 		cmd.Env = s.Env
+		if len(s.EnvOverrides) > 0 {
+			if cmd.Env == nil {
+				cmd.Env = os.Environ()
+			}
+			cmd.Env = append(append([]string{}, cmd.Env...), s.EnvOverrides...)
+		}
 		stdout := limitedOutput{limit: 8 << 20, cancel: cancel}
 		stderr := limitedOutput{limit: 1 << 20, cancel: cancel}
 		cmd.Stdout = &stdout

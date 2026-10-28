@@ -31,6 +31,11 @@ def prepare(dest):
             target.chmod(0o755 if member.mode & 0o111 else 0o644)
     archive.unlink()
     (dest / 'bin').mkdir(exist_ok=True)
+    for name, tool in lock['tools'].items():
+        asset = dest / 'tool-download'
+        toolbox.download(tool['assets'][toolbox.ARCH], asset)
+        toolbox.unpack_binary(asset, name, dest)
+        asset.unlink()
     # Isolate downloads and compiler state from both the host and final image.
     cache = dest / '.build-cache'
     env = dict(os.environ, CGO_ENABLED='0', GOOS='linux', GOARCH=toolbox.ARCH,
@@ -52,6 +57,9 @@ def prepare(dest):
             target = notices / notice.relative_to(cache / 'modules')
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(notice, target)
+    # Go module directories are intentionally read-only. Let Go remove its
+    # temporary module cache before Python removes the remaining build state.
+    toolbox.monitored(['go', 'clean', '-modcache'], env=env, timeout_seconds=180)
     shutil.rmtree(cache)
     shutil.copytree(toolbox.ROOT / 'rules', dest / 'rules')
     shutil.copy(toolbox.ROOT / 'docker/toolbox/analysis.Dockerfile', dest / 'Dockerfile')
@@ -69,6 +77,8 @@ def probe(image):
         'semgrep': ('/usr/local/bin/semgrep', '--version'),
         'semgrep-core': ('/usr/local/bin/semgrep-core', '-version'),
         'go': ('/opt/go/bin/go', 'version'),
+        'gitleaks': ('/opt/cybot/bin/gitleaks', 'version'),
+        'trufflehog': ('/opt/cybot/bin/trufflehog', '--version'),
     }
     # Locate the core engine through the CLI's installed package rather than
     # assume its wheel layout. Hash both the launcher and real native engine.
@@ -96,7 +106,7 @@ def probe(image):
         version = re.search(r'(?<!\d)(\d+\.\d+\.\d+)(?!\d)', output[1]) if output else None
         if not digest or not version:
             raise RuntimeError('Incomplete analysis runtime measurement: '+name+'\n'+text[-4000:])
-        expected = lock['semgrep']['version'] if name in ('semgrep', 'semgrep-core') else lock.get(name, {}).get('version')
+        expected = lock['semgrep']['version'] if name in ('semgrep', 'semgrep-core') else lock.get(name, lock['tools'].get(name, {})).get('version')
         if expected and version[1] != expected:
             raise RuntimeError('Analysis runtime version mismatch: '+name)
         report['binaries'][name] = {'path': digest[2], 'sha256': digest[1], 'reported_version': version[1]}
