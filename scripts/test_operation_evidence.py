@@ -32,8 +32,13 @@ class OperationEvidenceTests(unittest.TestCase):
             records = operation_evidence.collect(incoming, runtime, 'a'*64, 'amd64')
             self.assertEqual(len(records), 1)
             evidence = incoming/'evidence.json'
+            merged = operation_evidence.merge([evidence, evidence], root/'duplicate', 'a'*64)
+            self.assertEqual(len(merged['records']), 1)
+            conflicting = json.loads(evidence.read_text())
+            conflicting['records'].append(dict(conflicting['records'][0], binary_sha256='c'*64))
+            other = incoming/'conflict.json'; other.write_text(json.dumps(conflicting))
             with self.assertRaisesRegex(RuntimeError, 'duplicate'):
-                operation_evidence.merge([evidence, evidence], root/'duplicate', 'a'*64)
+                operation_evidence.merge([other], root/'conflicting', 'a'*64)
             (incoming/'tool-fixture.json').write_text('{}')
             with self.assertRaisesRegex(RuntimeError, 'modified'):
                 operation_evidence.merge([evidence], root/'tampered', 'a'*64)

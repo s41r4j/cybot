@@ -39,20 +39,25 @@ def collect(directory, runtime, source, arch):
 def merge(inputs, destination, source):
     destination.mkdir(parents=True, exist_ok=True)
     records = []
-    seen = set()
+    seen = {}
     for index, path in enumerate(sorted(inputs)):
         evidence = json.loads(path.read_text())
         if evidence.get('source_sha256') != source:
             raise RuntimeError('Refusing stale validation artifact: '+str(path))
         for record in evidence['records']:
             key = (record['kind'], record['id'], record['platform'])
-            if key in seen:
-                raise RuntimeError('Conflicting duplicate validation record: '+str(key))
-            seen.add(key)
             original = path.parent / record['report']
             original.resolve().relative_to(path.parent.resolve())
             if hashlib.sha256(original.read_bytes()).hexdigest() != record['report_sha256']:
                 raise RuntimeError('Operation report was modified: '+str(original))
+            if key in seen:
+                previous = seen[key]
+                if any(previous[field] != record[field] for field in ('binary_sha256', 'version', 'status', 'mode', 'cases')):
+                    raise RuntimeError('Conflicting duplicate validation record: '+str(key))
+                # Profiles can independently test the same pinned executable.
+                # Retain one checked report; never count the item twice.
+                continue
+            seen[key] = record
             name = f'{index}-{original.name}'
             shutil.copy2(original, destination/name)
             records.append(dict(record, report=name))

@@ -74,7 +74,7 @@ def probe(image):
     commands = {
         'cybot': ('/opt/cybot/bin/cybot', '--version'),
         'gosec': ('/opt/cybot/bin/gosec', '-version'),
-        'semgrep': ('/usr/local/bin/semgrep', '--version'),
+        'semgrep': ('"$(command -v semgrep)"', '--version'),
         'semgrep-core': ('/usr/local/bin/semgrep-core', '-version'),
         'go': ('/opt/go/bin/go', 'version'),
         'gitleaks': ('/opt/cybot/bin/gitleaks', 'version'),

@@ -26,21 +26,23 @@ func applyReportDiagnostics(tool string, data []byte, result *schema.Result) {
 	}
 	if tool == "semgrep" {
 		var paths map[string]json.RawMessage
+		covered := false
 		if json.Unmarshal(root["paths"], &paths) == nil {
 			if scanned, exists := paths["scanned"]; exists {
 				var files []string
-				if json.Unmarshal(scanned, &files) != nil || len(files) == 0 {
-					result.Status = "partial"
-					result.Errors = append(result.Errors, schema.RunError{Tool: tool, Code: "NO_FILES_SCANNED", Message: "Semgrep did not report any scanned files."})
-				}
+				covered = json.Unmarshal(scanned, &files) == nil && len(files) > 0
 			}
+		}
+		if !covered {
+			result.Status = "partial"
+			result.Errors = append(result.Errors, schema.RunError{Tool: tool, Code: "NO_FILES_SCANNED", Message: "Semgrep did not report any scanned files; coverage is missing or empty."})
 		}
 	}
 	if tool == "gosec" {
 		var stats struct {
 			Files *int `json:"files"`
 		}
-		if json.Unmarshal(root["Stats"], &stats) == nil && stats.Files != nil && *stats.Files == 0 {
+		if json.Unmarshal(root["Stats"], &stats) != nil || stats.Files == nil || *stats.Files <= 0 {
 			result.Status = "partial"
 			result.Errors = append(result.Errors, schema.RunError{Tool: tool, Code: "NO_FILES_SCANNED", Message: "Gosec did not report any scanned files."})
 		}

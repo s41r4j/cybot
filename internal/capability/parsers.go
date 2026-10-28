@@ -10,6 +10,7 @@ import (
 	"github.com/s41r4j/cybot/internal/evidence"
 	"net/url"
 	"regexp"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -410,7 +411,18 @@ func parseSemgrep(data []byte, _ schema.RunRequest) (schema.Result, error) {
 			continue
 		}
 		loc := fmt.Sprintf("%s:%d", firstText(d, "path"), number(start["line"]))
-		result.Findings = append(result.Findings, finding("semgrep", check+loc, check, firstText(extra, "message")+" Location: "+loc+".", firstText(extra, "severity"), .8))
+		sev := "info"
+		switch strings.ToUpper(firstText(extra, "severity")) {
+		case "ERROR", "HIGH":
+			sev = "high"
+		case "WARNING", "MEDIUM":
+			sev = "medium"
+		case "LOW":
+			sev = "low"
+		case "CRITICAL":
+			sev = "critical"
+		}
+		result.Findings = append(result.Findings, finding("semgrep", check+loc, check, firstText(extra, "message")+" Location: "+loc+".", sev, .8))
 	}
 	sortFindings(&result)
 	return result, nil
@@ -476,9 +488,22 @@ func parseSBOM(data []byte, _ schema.RunRequest) (schema.Result, error) {
 	if err := json.Unmarshal(data, &root); err != nil {
 		return emptyResult(), err
 	}
-	if _, cyclonedx := root["bomFormat"]; !cyclonedx {
-		if _, syft := root["artifacts"]; !syft {
-			return emptyResult(), fmt.Errorf("output is neither CycloneDX nor Syft JSON")
+	if format, cyclonedx := root["bomFormat"]; cyclonedx {
+		if format != "CycloneDX" || !slices.Contains([]string{"1.4", "1.5", "1.6", "1.7"}, text(root["specVersion"])) {
+			return emptyResult(), fmt.Errorf("unsupported CycloneDX format or specification version")
+		}
+		components, ok := root["components"].([]any)
+		if !ok && len(object(object(root["metadata"])["component"])) == 0 {
+			return emptyResult(), fmt.Errorf("CycloneDX report lacks an inventory or root component")
+		}
+		for _, component := range components {
+			if firstText(object(component), "name") == "" || firstText(object(component), "type") == "" {
+				return emptyResult(), fmt.Errorf("malformed CycloneDX component")
+			}
+		}
+	} else {
+		if _, ok := root["artifacts"].([]any); !ok || text(object(root["descriptor"])["name"]) != "syft" {
+			return emptyResult(), fmt.Errorf("output is neither a CycloneDX nor a Syft inventory report")
 		}
 	}
 	return emptyResult(), nil

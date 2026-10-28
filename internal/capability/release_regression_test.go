@@ -62,6 +62,30 @@ func TestTruffleHogKeepsDistinctSecretsFromOneSource(t *testing.T) {
 	}
 }
 
+func TestScannerCoverageCannotBeOmitted(t *testing.T) {
+	for tool, data := range map[string]string{"gosec": `{"Issues":[]}`, "semgrep": `{"results":[]}`} {
+		r, err := parseTool(tool, []byte(data), schema.RunRequest{})
+		if err != nil || r.Status != "partial" || len(r.Errors) == 0 {
+			t.Fatalf("missing scan coverage was treated as clean: %s %+v %v", tool, r, err)
+		}
+	}
+}
+
+func TestSBOMRejectsHeaderOnlyAndMalformedInventories(t *testing.T) {
+	for _, data := range []string{`{"bomFormat":"wrong"}`, `{"bomFormat":"CycloneDX","specVersion":"1.6"}`, `{"bomFormat":"CycloneDX","specVersion":"1.6","components":[{}]}`, `{"artifacts":null}`} {
+		if _, err := parseTool("syft", []byte(data), schema.RunRequest{}); err == nil {
+			t.Fatal("accepted a malformed inventory", data)
+		}
+	}
+}
+
+func TestSemgrepRuleSeverityDoesNotImplyCriticalImpact(t *testing.T) {
+	r, err := parseTool("semgrep", []byte(`{"results":[{"check_id":"fixture","path":"a.go","extra":{"severity":"ERROR"}}],"paths":{"scanned":["a.go"]}}`), schema.RunRequest{})
+	if err != nil || len(r.Findings) != 1 || r.Findings[0].Severity != schema.SeverityHigh {
+		t.Fatalf("rule tier was promoted into critical impact: %+v %v", r, err)
+	}
+}
+
 func TestExternalTargetsCannotInjectOptionsOrBrowserBatchTokens(t *testing.T) {
 	for _, target := range []string{"--help", "fixture.invalid\n--help", "fixture.invalid\x00"} {
 		if err := validateCapabilityTarget("exploit.search", target); err == nil {

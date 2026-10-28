@@ -17,7 +17,8 @@ ENV PATH="/opt/cybot/bin:/opt/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
     CYBOT_TOOLBOX_INTERNAL=1 CYBOT_PACK_AUTO_UPDATE=0 GOMAXPROCS=1 GOMEMLIMIT=768MiB \
     GOTOOLCHAIN=local GOPROXY=off GOSUMDB=off GOTELEMETRY=off \
     GOCACHE=/home/cybot/.cache/go-build GOPATH=/home/cybot/.cache/go \
-    SEMGREP_SEND_METRICS=off SEMGREP_ENABLE_VERSION_CHECK=0
+    SEMGREP_SEND_METRICS=off SEMGREP_ENABLE_VERSION_CHECK=0 \
+    SEMGREP_SETTINGS_FILE=/home/cybot/.config/semgrep-settings.yml
 USER 10001:10001
 WORKDIR /workspace
 ENTRYPOINT ["/usr/local/bin/cybot-toolbox"]
