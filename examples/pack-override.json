@@ -1,0 +1,4 @@
+{
+  "content": "# CYBOT recon adaptation\n\nTarget: {{target}}\nScope: {{scope}}\n\nInspect `cybot capability help asset.discover` and `cybot capability help web.map`. Plan each applicable capability with an explicit compatible target, then invoke through CYBOT under configured policy. Preserve run IDs and evidence paths. Record a phase-summary and coverage-and-evidence handoff, including untested surfaces and missing dependencies. Discovery does not expand the supplied scope.\n",
+  "capabilities": ["asset.discover", "web.map"]
+}

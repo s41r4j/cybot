@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"cybot://schemas/run-error","title":"Run Error","type":"object","additionalProperties":false,"required":["code","message","retryable"],"properties":{"tool":{"type":"string"},"code":{"type":"string"},"message":{"type":"string"},"retryable":{"type":"boolean"}}}

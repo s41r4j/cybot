@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"cybot://schemas/workflow-plan","title":"Workflow Execution Plan","type":"object","additionalProperties":false,"required":["workflow","plans"],"properties":{"workflow":{"$ref":"cybot://schemas/workflow"},"plans":{"type":"array","items":{"$ref":"cybot://schemas/execution-plan"}}}}

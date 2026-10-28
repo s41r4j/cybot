@@ -1,0 +1,11 @@
+target: lab.example
+target_display: Local authorized lab
+target_norm: lab-example
+scope: Only lab.example; sibling hosts and third-party services are excluded.
+scope_full: Only lab.example; sibling hosts and third-party services are excluded.
+platform: local-lab
+handle: researcher
+# Add runtime references required by selected phases. Keep secret values outside
+# this file: engagement context is persisted in packs.db and included in exports.
+YOUR_WORKSPACE_ROOT: /absolute/path/to/lab-workspace
+YOUR_TARGET_ROOT: /absolute/path/to/lab-workspace

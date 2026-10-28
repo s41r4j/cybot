@@ -1,0 +1,100 @@
+name: Publish toolbox
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version matching the CLI release (for example 1.0.0)'
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  full-product-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: '1.26.10'
+      - name: Require the whole catalog to be certified before publishing
+        run: python3 scripts/release_gate.py
+  image:
+    needs: full-product-gate
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            arch: amd64
+          - runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    env:
+      CYBOT_VERSION: ${{ inputs.version }}
+      IMAGE: ghcr.io/s41r4j/cybot-core
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: '1.26.10'
+      - run: python3 scripts/toolbox.py build
+      - name: Push the validated image
+        id: publish
+        env:
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ARCH: ${{ matrix.arch }}
+        run: |
+          printf '%s' "$REGISTRY_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+          source_image=$(python3 scripts/toolbox.py image)
+          reference="$IMAGE:$CYBOT_VERSION-$ARCH"
+          docker tag "$source_image" "$reference"
+          docker push "$reference"
+          digest=$(docker image inspect "$reference" --format '{{index .RepoDigests 0}}' | cut -d@ -f2)
+          printf 'digest=%s\n' "$digest" >> "$GITHUB_OUTPUT"
+          printf '%s@%s\n' "$IMAGE" "$digest" > "image-$ARCH.txt"
+      - uses: actions/attest-build-provenance@43d14bc2b83dec42d39ecae14e916627a18bb661 # v3
+        with:
+          subject-name: ghcr.io/s41r4j/cybot-core
+          subject-digest: ${{ steps.publish.outputs.digest }}
+          push-to-registry: true
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: toolbox-${{ matrix.arch }}
+          path: |
+            image-${{ matrix.arch }}.txt
+            .cybot/toolbox/core-tests.json
+            .cybot/toolbox/runtime.lock.json
+  manifest:
+    needs: image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      VERSION: ${{ inputs.version }}
+      IMAGE: ghcr.io/s41r4j/cybot-core
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: toolbox-*
+          path: toolbox-evidence
+      - name: Create the manifest only after both native validations pass
+        env:
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          printf '%s' "$REGISTRY_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+          amd64=$(cat toolbox-evidence/toolbox-amd64/image-amd64.txt)
+          arm64=$(cat toolbox-evidence/toolbox-arm64/image-arm64.txt)
+          docker buildx imagetools create --tag "$IMAGE:$VERSION" "$amd64" "$arm64"
+          docker buildx imagetools inspect "$IMAGE:$VERSION" --raw > toolbox-evidence/manifest.json
+          printf 'Before advertising anonymous downloads, verify the GHCR package is public.\n' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: toolbox-compatibility-evidence
+          path: toolbox-evidence

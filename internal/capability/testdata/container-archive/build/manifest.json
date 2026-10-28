@@ -1,0 +1,7 @@
+[
+  {
+    "Config": "config.json",
+    "RepoTags": ["cybot-fixture:latest"],
+    "Layers": ["layer.tar"]
+  }
+]

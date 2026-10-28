@@ -1,0 +1,56 @@
+- id: projectdiscovery
+  title: ProjectDiscovery
+  url: https://github.com/projectdiscovery
+  kind: github
+  trust: official
+  license: per-repository
+  import_format: github-repositories
+  description: Official source for subfinder, dnsx, naabu, httpx, katana, and nuclei.
+- id: owasp-amass
+  title: OWASP Amass
+  url: https://github.com/owasp-amass/amass
+  kind: github
+  trust: official
+  license: Apache-2.0
+  import_format: github-repository
+  description: Official OWASP attack-surface mapping implementation.
+- id: anthropic-skills
+  title: Anthropic Agent Skills
+  url: https://github.com/anthropics/skills
+  kind: anthropic-skills
+  trust: official
+  license: per-skill
+  import_format: SKILL.md
+  description: Official Agent Skills examples and format reference.
+- id: mcp-go-sdk
+  title: Model Context Protocol Go SDK
+  url: https://github.com/modelcontextprotocol/go-sdk
+  kind: mcp
+  trust: official
+  license: Apache-2.0/MIT
+  import_format: go-module
+  description: Official MCP Go server and client SDK.
+- id: security-tools-curated
+  title: CYBOT Curated Security Tools
+  url: https://github.com/s41r4j/cybot
+  kind: yaml
+  trust: curated
+  license: per-tool
+  import_format: cybot-tool-v1
+  description: Reviewed tool metadata normalized from official upstream repositories.
+- id: mukul-cybersecurity-skills
+  title: Anthropic Cybersecurity Skills
+  url: https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  kind: github-agent-skills
+  trust: curated-community-source
+  license: Apache-2.0
+  import_format: SKILL.md
+  description: Reviewed at commit e612f4944c55d306bb75565022442d7da8cf2b9a; CYBOT curates defensive and authorized-recon compositions only.
+- id: wshobson-agent-skills
+  title: wshobson Agent Skills
+  url: https://github.com/wshobson/agents
+  kind: github-agent-skills
+  trust: curated-community-source
+  license: per-repository
+  import_format: SKILL.md
+  description: Reviewed at commit c4b82b0ad771190355eb8e204b1329732a18449a; CYBOT curates security-scanning and incident-response guidance only.

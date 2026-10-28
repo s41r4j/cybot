@@ -1,0 +1,7 @@
+# Generated assessment material and private development artifacts are never
+# included in public source archives. The publication helper uses an allowlist.
+nasa-recon export-ignore
+videos export-ignore
+reference export-ignore
+.cybot export-ignore
+backups export-ignore

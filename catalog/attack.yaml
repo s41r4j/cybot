@@ -1,0 +1,245 @@
+# MITRE ATT&CK technique catalog mapping techniques to CYBOT capabilities.
+# Each entry maps a technique to the capabilities that can detect or exercise it,
+# so agents can translate observed techniques into deterministic capability runs.
+
+techniques:
+  - id: T1589.002
+    name: Gather Victim Identity Information - Email Addresses
+    tactic: reconnaissance
+    description: Adversaries gather email addresses used by targets for phishing and credential attacks.
+    detection_capabilities: [email.harvest, personnel.osint]
+    action_capabilities: [social.engineer, phishing.campaign]
+  - id: T1596.001
+    name: Search Open Technical Databases - DNS/Passive DNS
+    tactic: reconnaissance
+    description: Adversaries search DNS records and passive DNS databases for target infrastructure.
+    detection_capabilities: [dns.enum, asset.discover, dns.analyse]
+    action_capabilities: []
+  - id: T1595
+    name: Active Scanning
+    tactic: reconnaissance
+    description: Adversaries actively scan victim infrastructure to discover services and weaknesses.
+    detection_capabilities: [port.scan, service.enumerate, web.map]
+    action_capabilities: [vuln.scan]
+  - id: T1595.002
+    name: Active Scanning - Vulnerability Scanning
+    tactic: reconnaissance
+    description: Adversaries scan for exploitable vulnerabilities on target systems.
+    detection_capabilities: [vuln.scan, web.scan, sql.inject, xss.detect]
+    action_capabilities: [exploit.search, exploit.execute]
+  - id: T1046
+    name: Network Service Discovery
+    tactic: discovery
+    description: Adversaries scan for services running on remote and local systems.
+    detection_capabilities: [port.scan, service.enumerate, tech.fingerprint]
+    action_capabilities: []
+  - id: T1049
+    name: System Network Connections Discovery
+    tactic: discovery
+    description: Adversaries discover connections to systems within the network.
+    detection_capabilities: [service.enumerate, cloud.enum]
+    action_capabilities: []
+  - id: T1083
+    name: File and Directory Discovery
+    tactic: discovery
+    description: Adversaries enumerate files and directories for sensitive information.
+    detection_capabilities: [web.content.discover, dir.bruteforce, js.extract]
+    action_capabilities: []
+  - id: T1087
+    name: Account Discovery
+    tactic: discovery
+    description: Adversaries enumerate accounts within a system or domain.
+    detection_capabilities: [personnel.osint, active-directory.attack]
+    action_capabilities: []
+  - id: T1018
+    name: Remote System Discovery
+    tactic: discovery
+    description: Adversaries identify systems where they can move laterally.
+    detection_capabilities: [asset.discover, service.enumerate, cloud.enum]
+    action_capabilities: [lateral.move]
+  - id: T1190
+    name: Exploit Public-Facing Application
+    tactic: initial-access
+    description: Adversaries exploit vulnerabilities in internet-facing applications.
+    detection_capabilities: [vuln.scan, web.scan, sql.inject, xss.detect, api.audit]
+    action_capabilities: [exploit.execute, payload.generate]
+  - id: T1133
+    name: External Remote Services
+    tactic: initial-access
+    description: Adversaries leverage external remote services like VPNs and RDP.
+    detection_capabilities: [port.scan, tls.audit, service.enumerate]
+    action_capabilities: [password.bruteforce]
+  - id: T1078
+    name: Valid Accounts
+    tactic: initial-access
+    description: Adversaries use valid credentials to access victim systems.
+    detection_capabilities: [password.bruteforce, smb.test]
+    action_capabilities: [credential.test, lateral.move]
+  - id: T1566
+    name: Phishing
+    tactic: initial-access
+    description: Adversaries send phishing messages to gain access to victim systems.
+    detection_capabilities: [email.harvest, swaks_test, smtp.test]
+    action_capabilities: [phishing.campaign, social.engineer]
+  - id: T1059
+    name: Command and Scripting Interpreter
+    tactic: execution
+    description: Adversaries abuse command and scripting interpreters for code execution.
+    detection_capabilities: [code.audit, js.analyse]
+    action_capabilities: [post.exploit, exploit.execute]
+  - id: T1203
+    name: Exploitation for Client Execution
+    tactic: execution
+    description: Adversaries exploit client-side vulnerabilities for code execution.
+    detection_capabilities: [js.analyse, js.extract, xss.detect]
+    action_capabilities: [payload.generate, exploit.execute]
+  - id: T1210
+    name: Exploitation of Remote Services
+    tactic: lateral-movement
+    description: Adversaries exploit remote services to move laterally.
+    detection_capabilities: [smb.test, service.enumerate]
+    action_capabilities: [exploit.execute, lateral.move]
+  - id: T1021
+    name: Remote Services
+    tactic: lateral-movement
+    description: Adversaries use valid accounts to interact with remote services.
+    detection_capabilities: [service.enumerate, smb.test]
+    action_capabilities: [lateral.move, credential.dump]
+  - id: T1558
+    name: Steal or Forge Kerberos Tickets
+    tactic: credential-access
+    description: Adversaries steal or forge Kerberos tickets for authentication.
+    detection_capabilities: [post.kerberoast, post.kerberos, active-directory.attack]
+    action_capabilities: [credential.dump, hash.crack]
+  - id: T1003
+    name: OS Credential Dumping
+    tactic: credential-access
+    description: Adversaries dump credentials from memory, files, and databases.
+    detection_capabilities: [post.mimikatz, credential.dump, post.recon]
+    action_capabilities: [credential.test, hash.crack]
+  - id: T1110
+    name: Brute Force
+    tactic: credential-access
+    description: Adversaries use brute force to gain valid credentials.
+    detection_capabilities: [password.bruteforce, smb.test]
+    action_capabilities: [credential.test]
+  - id: T1068
+    name: Exploitation for Privilege Escalation
+    tactic: privilege-escalation
+    description: Adversaries exploit vulnerabilities to gain higher privileges.
+    detection_capabilities: [privilege.escalation, post.recon, active-directory.attack]
+    action_capabilities: [exploit.execute, payload.generate]
+  - id: T1548
+    name: Abuse Elevation Control Mechanism
+    tactic: privilege-escalation
+    description: Adversaries abuse mechanisms like sudo and setuid for privilege escalation.
+    detection_capabilities: [privilege.escalation, post.recon]
+    action_capabilities: []
+  - id: T1090
+    name: Proxy
+    tactic: command-and-control
+    description: Adversaries use proxies to hide command-and-control traffic.
+    detection_capabilities: [pivot.tunnel, port.forward]
+    action_capabilities: [c2.setup]
+  - id: T1071
+    name: Application Layer Protocol
+    tactic: command-and-control
+    description: Adversaries use application-layer protocols for C2 communication.
+    detection_capabilities: [web.har, api.audit]
+    action_capabilities: [c2.setup, c2.operate]
+  - id: T1055
+    name: Process Injection
+    tactic: defense-evasion
+    description: Adversaries inject code into other processes for evasion.
+    detection_capabilities: [code.audit, js.analyse]
+    action_capabilities: [post.exploit]
+  - id: T1027
+    name: Obfuscated Files or Information
+    tactic: defense-evasion
+    description: Adversaries obfuscate payloads and artifacts to evade detection.
+    detection_capabilities: [secret.scan, dependency.scan]
+    action_capabilities: [payload.generate]
+  - id: T1195
+    name: Supply Chain Compromise
+    tactic: initial-access
+    description: Adversaries compromise third-party dependencies or suppliers.
+    detection_capabilities: [dependency.scan, sbom.generate, container.scan]
+    action_capabilities: []
+  - id: T1609
+    name: Container Administration Command
+    tactic: execution
+    description: Adversaries abuse container administration to execute commands.
+    detection_capabilities: [container.scan, cloud.review]
+    action_capabilities: [post.exploit]
+  - id: T1610
+    name: Deploy Container
+    tactic: defense-evasion
+    description: Adversaries deploy containers to execute and hide malicious activity.
+    detection_capabilities: [container.scan, cloud.review]
+    action_capabilities: []
+  - id: T1562
+    name: Impair Defenses
+    tactic: defense-evasion
+    description: Adversaries disable or impair security tooling.
+    detection_capabilities: [cloud.review, code.audit]
+    action_capabilities: [post.persistence]
+  - id: T1547
+    name: Boot or Logon Autostart Execution
+    tactic: persistence
+    description: Adversaries configure autostart mechanisms for persistence.
+    detection_capabilities: [post.persistence, post.recon]
+    action_capabilities: [persist.install]
+  - id: T1136
+    name: Create Account
+    tactic: persistence
+    description: Adversaries create accounts to maintain access.
+    detection_capabilities: [active-directory.attack, cloud.enum]
+    action_capabilities: [post.persistence]
+  - id: T1041
+    name: Exfiltration Over C2 Channel
+    tactic: exfiltration
+    description: Adversaries exfiltrate data over the command-and-control channel.
+    detection_capabilities: [web.har, secret.scan]
+    action_capabilities: [c2.operate]
+  - id: T1567
+    name: Exfiltration Over Web Service
+    tactic: exfiltration
+    description: Adversaries use web services to exfiltrate data.
+    detection_capabilities: [web.har, web.map]
+    action_capabilities: []
+  - id: T1095
+    name: Non-Application Layer Protocol
+    tactic: command-and-control
+    description: Adversaries use non-application layer protocols for C2.
+    detection_capabilities: [pivot.tunnel, port.forward]
+    action_capabilities: [c2.setup, c2.operate]
+  - id: T1132
+    name: Data Encoding
+    tactic: command-and-control
+    description: Adversaries encode C2 data to avoid detection.
+    detection_capabilities: [code.audit, js.analyse]
+    action_capabilities: [payload.generate]
+  - id: T1485
+    name: Data Destruction
+    tactic: impact
+    description: Adversaries destroy data to disrupt operations.
+    detection_capabilities: [cloud.review, code.audit]
+    action_capabilities: [post.exploit]
+  - id: T1486
+    name: Data Encrypted for Impact
+    tactic: impact
+    description: Adversaries encrypt data to extort victims (ransomware).
+    detection_capabilities: [cloud.review, dependency.scan]
+    action_capabilities: []
+  - id: T1526
+    name: Cloud Service Discovery
+    tactic: discovery
+    description: Adversaries enumerate cloud services and resources.
+    detection_capabilities: [cloud.enum, cloud.review]
+    action_capabilities: []
+  - id: T1552
+    name: Unsecured Credentials
+    tactic: credential-access
+    description: Adversaries search for credentials stored insecurely.
+    detection_capabilities: [secret.scan, js.extract, code.audit]
+    action_capabilities: [credential.test]

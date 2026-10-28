@@ -1,0 +1,1779 @@
+{
+  "validated_date": "2026-10-22",
+  "platform": "linux/arm64",
+  "image_id": "sha256:eceef2167360a0f75e1222824a69a9a2f0a988626e76d76d030b7f9caf206a39",
+  "runtime_hashes": "verified",
+  "portable_coverage": {
+    "parser_error_contracts": 83,
+    "external_missing_dependency_contracts": 61,
+    "python_tests": 13,
+    "go_suite": "passed",
+    "go_vet": "passed"
+  },
+  "live_tests": {
+    "platform": "linux/arm64",
+    "image_id": "sha256:eceef2167360a0f75e1222824a69a9a2f0a988626e76d76d030b7f9caf206a39",
+    "network": "none",
+    "status": "passed",
+    "cli": "installed-image",
+    "passed": [
+      "TestLiveAssessmentGitleaks",
+      "TestLiveAssessmentSyft",
+      "TestLiveAssessmentNaabu",
+      "TestLiveCoreWebMapping",
+      "TestLiveCoreFFUF",
+      "TestLiveCoreNuclei",
+      "TestLiveCoreNmap",
+      "TestLiveCoreDNS",
+      "TestLiveCoreSubfinderArguments",
+      "TestLiveCoreCLIPersistence",
+      "TestLiveCoreReadiness"
+    ],
+    "failed": [],
+    "scope": "Local fixtures with current-source adapters; fixture wordlists/templates/resolver. Subfinder startup only."
+  },
+  "amass": {
+    "version": "5.1.1",
+    "version_probe": "passed",
+    "enum_help": "timed out after attempting engine startup in offline container",
+    "installed": false
+  },
+  "inventory": {
+    "schema_version": 1,
+    "scope": "Binary availability and adapter implementation only; versions, credentials, target access and scan accuracy are not certified.",
+    "tools": [
+      {
+        "id": "agent-browser",
+        "declared_version": "0.34.0",
+        "availability": "unavailable",
+        "reason": "agent-browser: exec: \"agent-browser\": executable file not found in $PATH"
+      },
+      {
+        "id": "amass",
+        "declared_version": "5.1.1",
+        "availability": "unavailable",
+        "reason": "amass: exec: \"amass\": executable file not found in $PATH"
+      },
+      {
+        "id": "amass-enum",
+        "declared_version": "5.1.1",
+        "availability": "unavailable",
+        "reason": "amass: exec: \"amass\": executable file not found in $PATH"
+      },
+      {
+        "id": "anew",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "anew: exec: \"anew\": executable file not found in $PATH"
+      },
+      {
+        "id": "arjun",
+        "declared_version": "2.2.1",
+        "availability": "unavailable",
+        "reason": "arjun: exec: \"arjun\": executable file not found in $PATH"
+      },
+      {
+        "id": "bettercap",
+        "declared_version": "2.33.0",
+        "availability": "unavailable",
+        "reason": "bettercap: exec: \"bettercap\": executable file not found in $PATH"
+      },
+      {
+        "id": "bloodhound",
+        "declared_version": "5.16.0",
+        "availability": "unavailable",
+        "reason": "bloodhound: exec: \"bloodhound\": executable file not found in $PATH"
+      },
+      {
+        "id": "certipy",
+        "declared_version": "4.8.2",
+        "availability": "unavailable",
+        "reason": "certipy: exec: \"certipy\": executable file not found in $PATH"
+      },
+      {
+        "id": "chisel",
+        "declared_version": "1.10.1",
+        "availability": "unavailable",
+        "reason": "chisel: exec: \"chisel\": executable file not found in $PATH"
+      },
+      {
+        "id": "cloud_enum",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "cloud_enum: exec: \"cloud_enum\": executable file not found in $PATH"
+      },
+      {
+        "id": "cloudfox",
+        "declared_version": "2.0.5",
+        "availability": "unavailable",
+        "reason": "cloudfox: exec: \"cloudfox\": executable file not found in $PATH"
+      },
+      {
+        "id": "cmseek",
+        "declared_version": "1.1.3",
+        "availability": "unavailable",
+        "reason": "cmseek: exec: \"cmseek\": executable file not found in $PATH"
+      },
+      {
+        "id": "corscanner",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "corscanner: exec: \"corscanner\": executable file not found in $PATH"
+      },
+      {
+        "id": "covenant",
+        "declared_version": "0.7",
+        "availability": "unavailable",
+        "reason": "tool covenant does not support linux"
+      },
+      {
+        "id": "crackmapexec",
+        "declared_version": "6.0.0",
+        "availability": "unavailable",
+        "reason": "crackmapexec: exec: \"crackmapexec\": executable file not found in $PATH"
+      },
+      {
+        "id": "dirsearch",
+        "declared_version": "0.4.3",
+        "availability": "unavailable",
+        "reason": "dirsearch: exec: \"dirsearch\": executable file not found in $PATH"
+      },
+      {
+        "id": "dnschef",
+        "declared_version": "0.4.0",
+        "availability": "unavailable",
+        "reason": "dnschef: exec: \"dnschef\": executable file not found in $PATH"
+      },
+      {
+        "id": "dnsrecon",
+        "declared_version": "1.1.4",
+        "availability": "unavailable",
+        "reason": "dnsrecon: exec: \"dnsrecon\": executable file not found in $PATH"
+      },
+      {
+        "id": "dnsx",
+        "declared_version": "1.3.0",
+        "availability": "available"
+      },
+      {
+        "id": "enum4linux",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "enum4linux: exec: \"enum4linux\": executable file not found in $PATH"
+      },
+      {
+        "id": "evilginx",
+        "declared_version": "3.3.0",
+        "availability": "unavailable",
+        "reason": "evilginx: exec: \"evilginx\": executable file not found in $PATH"
+      },
+      {
+        "id": "ffuf",
+        "declared_version": "2.2.1",
+        "availability": "available"
+      },
+      {
+        "id": "gf",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "gf: exec: \"gf\": executable file not found in $PATH"
+      },
+      {
+        "id": "gitleaks",
+        "declared_version": "8.30.1",
+        "availability": "available"
+      },
+      {
+        "id": "gobuster",
+        "declared_version": "3.6.0",
+        "availability": "unavailable",
+        "reason": "gobuster: exec: \"gobuster\": executable file not found in $PATH"
+      },
+      {
+        "id": "gophish",
+        "declared_version": "0.12.1",
+        "availability": "unavailable",
+        "reason": "gophish: exec: \"gophish\": executable file not found in $PATH"
+      },
+      {
+        "id": "gosec",
+        "declared_version": "2.28.0",
+        "availability": "unavailable",
+        "reason": "gosec: exec: \"gosec\": executable file not found in $PATH"
+      },
+      {
+        "id": "grype",
+        "declared_version": "0.116.1",
+        "availability": "unavailable",
+        "reason": "grype: exec: \"grype\": executable file not found in $PATH"
+      },
+      {
+        "id": "hashcat",
+        "declared_version": "6.2.6",
+        "availability": "unavailable",
+        "reason": "hashcat: exec: \"hashcat\": executable file not found in $PATH"
+      },
+      {
+        "id": "havoc",
+        "declared_version": "0.7",
+        "availability": "unavailable",
+        "reason": "havoc: exec: \"havoc\": executable file not found in $PATH"
+      },
+      {
+        "id": "httpx",
+        "declared_version": "1.10.0",
+        "availability": "available"
+      },
+      {
+        "id": "hydra",
+        "declared_version": "9.6",
+        "availability": "unavailable",
+        "reason": "hydra: exec: \"hydra\": executable file not found in $PATH"
+      },
+      {
+        "id": "impacket",
+        "declared_version": "0.12.0",
+        "availability": "unavailable",
+        "reason": "impacket-secretsdump: exec: \"impacket-secretsdump\": executable file not found in $PATH"
+      },
+      {
+        "id": "john",
+        "declared_version": "1.9.0",
+        "availability": "unavailable",
+        "reason": "john: exec: \"john\": executable file not found in $PATH"
+      },
+      {
+        "id": "jsluice",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "jsluice: exec: \"jsluice\": executable file not found in $PATH"
+      },
+      {
+        "id": "katana",
+        "declared_version": "1.6.1",
+        "availability": "available"
+      },
+      {
+        "id": "kekeo",
+        "declared_version": "2.2.0",
+        "availability": "unavailable",
+        "reason": "tool kekeo does not support linux"
+      },
+      {
+        "id": "knockpy",
+        "declared_version": "7.0.0",
+        "availability": "unavailable",
+        "reason": "knockpy: exec: \"knockpy\": executable file not found in $PATH"
+      },
+      {
+        "id": "linkfinder",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "linkfinder: exec: \"linkfinder\": executable file not found in $PATH"
+      },
+      {
+        "id": "linpeas",
+        "declared_version": "3.0.0",
+        "availability": "unavailable",
+        "reason": "linpeas: exec: \"linpeas\": executable file not found in $PATH"
+      },
+      {
+        "id": "massdns",
+        "declared_version": "1.1.0",
+        "availability": "unavailable",
+        "reason": "massdns: exec: \"massdns\": executable file not found in $PATH"
+      },
+      {
+        "id": "merlin",
+        "declared_version": "1.5.0",
+        "availability": "unavailable",
+        "reason": "merlinServer: exec: \"merlinServer\": executable file not found in $PATH"
+      },
+      {
+        "id": "metagoofil",
+        "declared_version": "2.2.0",
+        "availability": "unavailable",
+        "reason": "metagoofil: exec: \"metagoofil\": executable file not found in $PATH"
+      },
+      {
+        "id": "metasploit",
+        "declared_version": "6.4.50",
+        "availability": "unavailable",
+        "reason": "msfconsole: exec: \"msfconsole\": executable file not found in $PATH"
+      },
+      {
+        "id": "mimikatz",
+        "declared_version": "2.2.0",
+        "availability": "unavailable",
+        "reason": "tool mimikatz does not support linux"
+      },
+      {
+        "id": "msfvenom",
+        "declared_version": "6.4.50",
+        "availability": "unavailable",
+        "reason": "msfvenom: exec: \"msfvenom\": executable file not found in $PATH"
+      },
+      {
+        "id": "mythic",
+        "declared_version": "3.3.10",
+        "availability": "unavailable",
+        "reason": "mythic-cli: exec: \"mythic-cli\": executable file not found in $PATH"
+      },
+      {
+        "id": "naabu",
+        "declared_version": "2.6.1",
+        "availability": "available"
+      },
+      {
+        "id": "netexec",
+        "declared_version": "1.3.0",
+        "availability": "unavailable",
+        "reason": "netexec: exec: \"netexec\": executable file not found in $PATH"
+      },
+      {
+        "id": "nikto",
+        "declared_version": "2.5.0",
+        "availability": "unavailable",
+        "reason": "nikto: exec: \"nikto\": executable file not found in $PATH"
+      },
+      {
+        "id": "nmap",
+        "declared_version": "7.93",
+        "availability": "available"
+      },
+      {
+        "id": "nuclei",
+        "declared_version": "3.11.0",
+        "availability": "available"
+      },
+      {
+        "id": "pacu",
+        "declared_version": "1.5.0",
+        "availability": "unavailable",
+        "reason": "pacu: exec: \"pacu\": executable file not found in $PATH"
+      },
+      {
+        "id": "pcredz",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "Pcredz: exec: \"Pcredz\": executable file not found in $PATH"
+      },
+      {
+        "id": "powersploit",
+        "declared_version": "3.0.0",
+        "availability": "unavailable",
+        "reason": "tool powersploit does not support linux"
+      },
+      {
+        "id": "responder",
+        "declared_version": "3.1.5",
+        "availability": "unavailable",
+        "reason": "responder: exec: \"responder\": executable file not found in $PATH"
+      },
+      {
+        "id": "rubeus",
+        "declared_version": "2.3.0",
+        "availability": "unavailable",
+        "reason": "tool rubeus does not support linux"
+      },
+      {
+        "id": "searchsploit",
+        "declared_version": "2026.1",
+        "availability": "unavailable",
+        "reason": "searchsploit: exec: \"searchsploit\": executable file not found in $PATH"
+      },
+      {
+        "id": "seatbelt",
+        "declared_version": "1.1.0",
+        "availability": "unavailable",
+        "reason": "tool seatbelt does not support linux"
+      },
+      {
+        "id": "semgrep",
+        "declared_version": "1.172.0",
+        "availability": "unavailable",
+        "reason": "semgrep: exec: \"semgrep\": executable file not found in $PATH"
+      },
+      {
+        "id": "sharphound",
+        "declared_version": "5.16.0",
+        "availability": "unavailable",
+        "reason": "tool sharphound does not support linux"
+      },
+      {
+        "id": "sharppersist",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "tool sharppersist does not support linux"
+      },
+      {
+        "id": "sharpup",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "tool sharpup does not support linux"
+      },
+      {
+        "id": "sharpview",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "tool sharpview does not support linux"
+      },
+      {
+        "id": "sherlock",
+        "declared_version": "0.14.4",
+        "availability": "unavailable",
+        "reason": "sherlock: exec: \"sherlock\": executable file not found in $PATH"
+      },
+      {
+        "id": "shodan",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "shodan: exec: \"shodan\": executable file not found in $PATH"
+      },
+      {
+        "id": "sliver",
+        "declared_version": "1.5.42",
+        "availability": "unavailable",
+        "reason": "sliver-server: exec: \"sliver-server\": executable file not found in $PATH"
+      },
+      {
+        "id": "smbmap",
+        "declared_version": "1.10.4",
+        "availability": "unavailable",
+        "reason": "smbmap: exec: \"smbmap\": executable file not found in $PATH"
+      },
+      {
+        "id": "sqlmap",
+        "declared_version": "1.8.12",
+        "availability": "unavailable",
+        "reason": "sqlmap: exec: \"sqlmap\": executable file not found in $PATH"
+      },
+      {
+        "id": "subfinder",
+        "declared_version": "2.14.0",
+        "availability": "available"
+      },
+      {
+        "id": "swaks",
+        "declared_version": "20240103.0",
+        "availability": "unavailable",
+        "reason": "swaks: exec: \"swaks\": executable file not found in $PATH"
+      },
+      {
+        "id": "syft",
+        "declared_version": "1.50.0",
+        "availability": "available"
+      },
+      {
+        "id": "system-dns-resolver",
+        "declared_version": "go-runtime",
+        "availability": "available"
+      },
+      {
+        "id": "testssl",
+        "declared_version": "3.2.0",
+        "availability": "unavailable",
+        "reason": "testssl.sh: exec: \"testssl.sh\": executable file not found in $PATH"
+      },
+      {
+        "id": "theharvester",
+        "declared_version": "4.6.0",
+        "availability": "unavailable",
+        "reason": "theHarvester: exec: \"theHarvester\": executable file not found in $PATH"
+      },
+      {
+        "id": "trivy",
+        "declared_version": "0.72.0",
+        "availability": "unavailable",
+        "reason": "trivy: exec: \"trivy\": executable file not found in $PATH"
+      },
+      {
+        "id": "trufflehog",
+        "declared_version": "3.96.0",
+        "availability": "unavailable",
+        "reason": "trufflehog: exec: \"trufflehog\": executable file not found in $PATH"
+      },
+      {
+        "id": "wafw00f",
+        "declared_version": "2.2.0",
+        "availability": "unavailable",
+        "reason": "wafw00f: exec: \"wafw00f\": executable file not found in $PATH"
+      },
+      {
+        "id": "waybackurls",
+        "declared_version": "1.0.0",
+        "availability": "unavailable",
+        "reason": "waybackurls: exec: \"waybackurls\": executable file not found in $PATH"
+      },
+      {
+        "id": "whatweb",
+        "declared_version": "0.5.5",
+        "availability": "unavailable",
+        "reason": "whatweb: exec: \"whatweb\": executable file not found in $PATH"
+      },
+      {
+        "id": "winpeas",
+        "declared_version": "3.0.0",
+        "availability": "unavailable",
+        "reason": "tool winpeas does not support linux"
+      },
+      {
+        "id": "wpscan",
+        "declared_version": "3.8.29",
+        "availability": "unavailable",
+        "reason": "wpscan: exec: \"wpscan\": executable file not found in $PATH"
+      },
+      {
+        "id": "xsstrike",
+        "declared_version": "3.1.6",
+        "availability": "unavailable",
+        "reason": "xsstrike: exec: \"xsstrike\": executable file not found in $PATH"
+      },
+      {
+        "id": "zap",
+        "declared_version": "2.16.1",
+        "availability": "unavailable",
+        "reason": "docker: exec: \"docker\": executable file not found in $PATH"
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "active-directory.attack",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "impacket",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "impacket-secretsdump: exec: \"impacket-secretsdump\": executable file not found in $PATH"
+          },
+          {
+            "tool": "bloodhound",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "bloodhound: exec: \"bloodhound\": executable file not found in $PATH"
+          },
+          {
+            "tool": "netexec",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "netexec: exec: \"netexec\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "api.audit",
+        "status": "ready-to-test",
+        "adapters": [
+          {
+            "tool": "httpx",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          },
+          {
+            "tool": "nuclei",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "asset.discover",
+        "status": "ready-to-test",
+        "adapters": [
+          {
+            "tool": "system-dns-resolver",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "built-in"
+          }
+        ]
+      },
+      {
+        "id": "c2.covenant",
+        "status": "not-implemented",
+        "adapters": [
+          {
+            "tool": "covenant",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "not-implemented",
+            "normalization": "observations-only",
+            "reason": "adapter only displays help; C2 execution is not implemented"
+          }
+        ]
+      },
+      {
+        "id": "c2.havoc",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "havoc",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "havoc: exec: \"havoc\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "c2.merlin",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "merlin",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "merlinServer: exec: \"merlinServer\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "c2.mythic",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "mythic",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "mythic-cli: exec: \"mythic-cli\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "c2.operate",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "sliver",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "sliver-server: exec: \"sliver-server\": executable file not found in $PATH"
+          },
+          {
+            "tool": "merlin",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "merlinServer: exec: \"merlinServer\": executable file not found in $PATH"
+          },
+          {
+            "tool": "mythic",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "mythic-cli: exec: \"mythic-cli\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "c2.setup",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "dnschef",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "dnschef: exec: \"dnschef\": executable file not found in $PATH"
+          },
+          {
+            "tool": "msfvenom",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "msfvenom: exec: \"msfvenom\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "c2.sliver",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "sliver",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "sliver-server: exec: \"sliver-server\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "classify.endpoint",
+        "status": "built-in",
+        "adapters": []
+      },
+      {
+        "id": "cloud.enum",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "cloud_enum",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "cloud_enum: exec: \"cloud_enum\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "cloud.review",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "trivy",
+            "required": true,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "trivy: exec: \"trivy\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "cms.detect",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "cmseek",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "cmseek: exec: \"cmseek\": executable file not found in $PATH"
+          },
+          {
+            "tool": "wpscan",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "wpscan: exec: \"wpscan\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "code.audit",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "semgrep",
+            "required": true,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "semgrep: exec: \"semgrep\": executable file not found in $PATH"
+          },
+          {
+            "tool": "gosec",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "gosec: exec: \"gosec\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "container.scan",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "trivy",
+            "required": true,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "trivy: exec: \"trivy\": executable file not found in $PATH"
+          },
+          {
+            "tool": "grype",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "grype: exec: \"grype\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "cors.audit",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "corscanner",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "corscanner: exec: \"corscanner\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "credential.dump",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "impacket",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "impacket-secretsdump: exec: \"impacket-secretsdump\": executable file not found in $PATH"
+          },
+          {
+            "tool": "netexec",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "netexec: exec: \"netexec\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "credential.harvest",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "evilginx",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "evilginx: exec: \"evilginx\": executable file not found in $PATH"
+          },
+          {
+            "tool": "pcredz",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "Pcredz: exec: \"Pcredz\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "cve.lookup",
+        "status": "built-in",
+        "adapters": []
+      },
+      {
+        "id": "dependency.scan",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "trivy",
+            "required": true,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "trivy: exec: \"trivy\": executable file not found in $PATH"
+          },
+          {
+            "tool": "grype",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "grype: exec: \"grype\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "dir.bruteforce",
+        "status": "partial",
+        "adapters": [
+          {
+            "tool": "gobuster",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "gobuster: exec: \"gobuster\": executable file not found in $PATH"
+          },
+          {
+            "tool": "ffuf",
+            "required": false,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "dns.analyse",
+        "status": "ready-to-test",
+        "adapters": [
+          {
+            "tool": "dnsx",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "dns.enum",
+        "status": "partial",
+        "adapters": [
+          {
+            "tool": "subfinder",
+            "required": false,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          },
+          {
+            "tool": "amass",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "not-implemented",
+            "normalization": "tool-specific",
+            "reason": "the pinned v5 release requires its engine/database workflow; the legacy adapter is incompatible and has not been implemented for v5"
+          },
+          {
+            "tool": "dnsrecon",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "dnsrecon: exec: \"dnsrecon\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "email.harvest",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "theharvester",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "theHarvester: exec: \"theHarvester\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "exploit.execute",
+        "status": "not-implemented",
+        "adapters": [
+          {
+            "tool": "metasploit",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "not-implemented",
+            "normalization": "observations-only",
+            "reason": "adapter only displays help; exploit execution is not implemented"
+          }
+        ]
+      },
+      {
+        "id": "exploit.framework",
+        "status": "not-implemented",
+        "adapters": [
+          {
+            "tool": "metasploit",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "not-implemented",
+            "normalization": "observations-only",
+            "reason": "adapter only displays help; exploit execution is not implemented"
+          }
+        ]
+      },
+      {
+        "id": "exploit.search",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "searchsploit",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "searchsploit: exec: \"searchsploit\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "hash.crack",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "hashcat",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "hashcat: exec: \"hashcat\": executable file not found in $PATH"
+          },
+          {
+            "tool": "john",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "john: exec: \"john\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "js.analyse",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "semgrep",
+            "required": true,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "semgrep: exec: \"semgrep\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "js.extract",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "jsluice",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "jsluice: exec: \"jsluice\": executable file not found in $PATH"
+          },
+          {
+            "tool": "linkfinder",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "linkfinder: exec: \"linkfinder\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "lateral.move",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "netexec",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "netexec: exec: \"netexec\": executable file not found in $PATH"
+          },
+          {
+            "tool": "impacket",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "impacket-secretsdump: exec: \"impacket-secretsdump\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "mitm.assess",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "bettercap",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "bettercap: exec: \"bettercap\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "mitre.map",
+        "status": "built-in",
+        "adapters": []
+      },
+      {
+        "id": "password.bruteforce",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "hydra",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "hydra: exec: \"hydra\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "pattern.detect",
+        "status": "not-implemented",
+        "adapters": [
+          {
+            "tool": "gf",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "not-implemented",
+            "normalization": "observations-only",
+            "reason": "adapter only lists patterns; target matching is not implemented"
+          }
+        ]
+      },
+      {
+        "id": "payload.generate",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "msfvenom",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "msfvenom: exec: \"msfvenom\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "persist.install",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "sharppersist",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool sharppersist does not support linux"
+          }
+        ]
+      },
+      {
+        "id": "personnel.osint",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "sherlock",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "sherlock: exec: \"sherlock\": executable file not found in $PATH"
+          },
+          {
+            "tool": "theharvester",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "theHarvester: exec: \"theHarvester\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "phishing.campaign",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "gophish",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "gophish: exec: \"gophish\": executable file not found in $PATH"
+          },
+          {
+            "tool": "evilginx",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "evilginx: exec: \"evilginx\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "pivot.tunnel",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "chisel",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "chisel: exec: \"chisel\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "port.forward",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "chisel",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "chisel: exec: \"chisel\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "port.scan",
+        "status": "ready-to-test",
+        "adapters": [
+          {
+            "tool": "nmap",
+            "required": false,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          },
+          {
+            "tool": "naabu",
+            "required": false,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "post.adcs",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "certipy",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "certipy: exec: \"certipy\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "post.exploit",
+        "status": "not-implemented",
+        "adapters": [
+          {
+            "tool": "metasploit",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "not-implemented",
+            "normalization": "observations-only",
+            "reason": "adapter only displays help; exploit execution is not implemented"
+          },
+          {
+            "tool": "powersploit",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "not-implemented",
+            "normalization": "observations-only",
+            "reason": "adapter only lists modules; post-exploitation execution is not implemented"
+          }
+        ]
+      },
+      {
+        "id": "post.kerberoast",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "rubeus",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool rubeus does not support linux"
+          }
+        ]
+      },
+      {
+        "id": "post.kerberos",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "kekeo",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "not-implemented",
+            "normalization": "observations-only",
+            "reason": "adapter only exits; ticket operations are not implemented"
+          },
+          {
+            "tool": "rubeus",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool rubeus does not support linux"
+          }
+        ]
+      },
+      {
+        "id": "post.mimikatz",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "mimikatz",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool mimikatz does not support linux"
+          }
+        ]
+      },
+      {
+        "id": "post.persistence",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "sharppersist",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool sharppersist does not support linux"
+          }
+        ]
+      },
+      {
+        "id": "post.recon",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "linpeas",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "linpeas: exec: \"linpeas\": executable file not found in $PATH"
+          },
+          {
+            "tool": "winpeas",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool winpeas does not support linux"
+          },
+          {
+            "tool": "seatbelt",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool seatbelt does not support linux"
+          },
+          {
+            "tool": "sharpview",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool sharpview does not support linux"
+          },
+          {
+            "tool": "sharphound",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool sharphound does not support linux"
+          },
+          {
+            "tool": "sharpup",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "tool sharpup does not support linux"
+          }
+        ]
+      },
+      {
+        "id": "privilege.escalation",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "bloodhound",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "bloodhound: exec: \"bloodhound\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "report.generate",
+        "status": "built-in",
+        "adapters": []
+      },
+      {
+        "id": "sbom.generate",
+        "status": "ready-to-test",
+        "adapters": [
+          {
+            "tool": "syft",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "secret.scan",
+        "status": "partial",
+        "adapters": [
+          {
+            "tool": "gitleaks",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          },
+          {
+            "tool": "trufflehog",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "trufflehog: exec: \"trufflehog\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "service.enumerate",
+        "status": "ready-to-test",
+        "adapters": [
+          {
+            "tool": "naabu",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "smb.test",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "crackmapexec",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "crackmapexec: exec: \"crackmapexec\": executable file not found in $PATH"
+          },
+          {
+            "tool": "impacket",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "impacket-secretsdump: exec: \"impacket-secretsdump\": executable file not found in $PATH"
+          },
+          {
+            "tool": "netexec",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "netexec: exec: \"netexec\": executable file not found in $PATH"
+          },
+          {
+            "tool": "enum4linux",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "enum4linux: exec: \"enum4linux\": executable file not found in $PATH"
+          },
+          {
+            "tool": "smbmap",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "smbmap: exec: \"smbmap\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "social.engineer",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "sherlock",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "sherlock: exec: \"sherlock\": executable file not found in $PATH"
+          },
+          {
+            "tool": "gophish",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "gophish: exec: \"gophish\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "sql.inject",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "sqlmap",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "sqlmap: exec: \"sqlmap\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "tech.fingerprint",
+        "status": "partial",
+        "adapters": [
+          {
+            "tool": "whatweb",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "whatweb: exec: \"whatweb\": executable file not found in $PATH"
+          },
+          {
+            "tool": "httpx",
+            "required": false,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "tls.audit",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "testssl",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "testssl.sh: exec: \"testssl.sh\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "validate.finding",
+        "status": "built-in",
+        "adapters": []
+      },
+      {
+        "id": "vuln.scan",
+        "status": "partial",
+        "adapters": [
+          {
+            "tool": "nuclei",
+            "required": false,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          },
+          {
+            "tool": "nikto",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "nikto: exec: \"nikto\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "waf.detect",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "wafw00f",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "wafw00f: exec: \"wafw00f\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "web.automate",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "agent-browser",
+            "required": true,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "agent-browser: exec: \"agent-browser\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "web.browse",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "agent-browser",
+            "required": true,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "agent-browser: exec: \"agent-browser\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "web.content.discover",
+        "status": "ready-to-test",
+        "adapters": [
+          {
+            "tool": "ffuf",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "web.har",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "agent-browser",
+            "required": true,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "agent-browser: exec: \"agent-browser\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "web.map",
+        "status": "ready-to-test",
+        "adapters": [
+          {
+            "tool": "httpx",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          },
+          {
+            "tool": "katana",
+            "required": false,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "web.scan",
+        "status": "ready-to-test",
+        "adapters": [
+          {
+            "tool": "nuclei",
+            "required": true,
+            "availability": "available",
+            "implementation": "adapter",
+            "normalization": "tool-specific"
+          }
+        ]
+      },
+      {
+        "id": "web.zap",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "zap",
+            "required": true,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "tool-specific",
+            "reason": "docker: exec: \"docker\": executable file not found in $PATH"
+          }
+        ]
+      },
+      {
+        "id": "xss.detect",
+        "status": "unavailable",
+        "adapters": [
+          {
+            "tool": "xsstrike",
+            "required": false,
+            "availability": "unavailable",
+            "implementation": "adapter",
+            "normalization": "observations-only",
+            "reason": "xsstrike: exec: \"xsstrike\": executable file not found in $PATH"
+          }
+        ]
+      }
+    ],
+    "counts": {
+      "capabilities_built-in": 5,
+      "capabilities_not-implemented": 5,
+      "capabilities_partial": 5,
+      "capabilities_ready-to-test": 9,
+      "capabilities_unavailable": 47,
+      "tools_available": 11,
+      "tools_unavailable": 73
+    }
+  }
+}

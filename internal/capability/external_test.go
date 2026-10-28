@@ -1,0 +1,130 @@
+package capability
+
+import (
+	"context"
+	"errors"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+
+	"github.com/s41r4j/cybot/internal/evidence"
+	"github.com/s41r4j/cybot/internal/execution"
+	"github.com/s41r4j/cybot/internal/registry"
+	"github.com/s41r4j/cybot/pkg/schema"
+)
+
+type fixtureRunner struct {
+	outputs map[string][]byte
+	specs   []execution.Spec
+}
+
+func TestVulnerabilityAdaptersAreOfflineAndUseBundledDatabases(t *testing.T) {
+	req := schema.RunRequest{Capability: "dependency.scan", Target: t.TempDir()}
+	trivy := strings.Join(trivyFilesystemArgs("/input", req), " ")
+	for _, required := range []string{"--cache-dir /home/cybot/.cache/trivy", "--skip-db-update", "--offline-scan", "--disable-telemetry"} {
+		if !strings.Contains(trivy, required) {
+			t.Fatalf("trivy arguments missing %q: %s", required, trivy)
+		}
+	}
+	grype := strings.Join(grypeArgs("/input", req), " ")
+	if !strings.HasPrefix(grype, "dir:/input ") || !strings.Contains(grype, "-o json") {
+		t.Fatalf("unexpected grype arguments: %s", grype)
+	}
+}
+
+func TestContainerArchiveUsesTrivyInput(t *testing.T) {
+	archive := filepath.Join(t.TempDir(), "image.tar")
+	if err := os.WriteFile(archive, []byte("fixture"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	req := schema.RunRequest{Capability: "container.scan", Target: archive}
+	args := strings.Join(trivyImageArgs("/input", req), " ")
+	if !strings.Contains(args, "--input /input") {
+		t.Fatalf("local container archive was not passed as input: %s", args)
+	}
+	if err := validateCapabilityTarget("container.scan", archive); err != nil {
+		t.Fatal(err)
+	}
+	if err := validateCapabilityTarget("container.scan", t.TempDir()); err == nil {
+		t.Fatal("container directory should be rejected; an archive file is required")
+	}
+}
+
+func (f *fixtureRunner) Health(context.Context, schema.Tool) error { return nil }
+func (f *fixtureRunner) Run(_ context.Context, s execution.Spec) (execution.Output, error) {
+	f.specs = append(f.specs, s)
+	out, ok := f.outputs[s.Tool.ID]
+	if !ok {
+		return execution.Output{}, errors.New("missing fixture")
+	}
+	return execution.Output{Stdout: out, ExitCode: 0, Attempts: 1}, nil
+}
+
+func TestAllCapabilitiesDeclareTheirActualImplementation(t *testing.T) {
+	r := NewRegistry()
+	if err := RegisterBuiltins(r); err != nil {
+		t.Fatal(err)
+	}
+	if got := len(r.List()); got != 71 {
+		t.Fatalf("capability count=%d", got)
+	}
+	for _, c := range r.List() {
+		if external, ok := c.(externalCapability); ok {
+			d := external.Definition()
+			if d.Validation != "not-certified" || d.Implementation == "" {
+				t.Errorf("%s lacks support metadata", c.ID())
+			}
+			if d.Implementation != "adapter" && d.Stability == "stable" {
+				t.Errorf("%s advertises an unfinished implementation as stable", c.ID())
+			}
+		}
+		switch c.(type) {
+		case AssetDiscover, externalCapability, reportCapability, ValidateFinding, ClassifyEndpoint, browserCapability, CVELookup, MitreMap, ZAPBaseline:
+		default:
+			t.Errorf("%s has an unexpected implementation type %T", c.ID(), c)
+		}
+	}
+}
+
+func TestExternalCapabilityRunsFixtureThroughReadOnlyMount(t *testing.T) {
+	target := t.TempDir()
+	tools := registry.NewTools()
+	if err := tools.Register(schema.Tool{ID: "semgrep", Version: "1.172.0", Kind: "docker", Binary: "semgrep", DockerImage: "cybotainer:2026.08.9-arm64", Parser: "semgrep.v1"}); err != nil {
+		t.Fatal(err)
+	}
+	runner := &fixtureRunner{outputs: map[string][]byte{"semgrep": []byte(`{"results":[{"check_id":"cybot.eval","path":"app.js","start":{"line":1},"extra":{"message":"eval","severity":"ERROR"}}]}`)}}
+	c := external("js.analyse", "JavaScript Analysis", "web-security", []string{"semgrep"}, []string{"secret.scan"}, toolStep{ID: "semgrep", Required: true, Args: semgrepArgs})
+	result, err := c.Run(context.Background(), schema.RunRequest{RunID: "run-fixture", Target: target}, Dependencies{Tools: tools, Runner: runner, Evidence: evidence.New(filepath.Join(t.TempDir(), "evidence")), Timeout: time.Second})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(result.Findings) != 1 || len(result.Evidence) != 1 {
+		t.Fatalf("unexpected result: %#v", result)
+	}
+	if len(runner.specs) != 1 || len(runner.specs[0].Mounts) != 1 || !runner.specs[0].Mounts[0].ReadOnly {
+		t.Fatalf("missing read-only mount: %#v", runner.specs)
+	}
+	if result.Findings[0].EvidenceIDs[0] != result.Evidence[0].ID {
+		t.Fatal("finding is not linked to evidence")
+	}
+}
+
+func TestReportCapabilityLoadsNormalizedHistory(t *testing.T) {
+	def := capabilityDefinition("report.generate", "Report Generation", "reporting", nil, nil)
+	c := reportCapability{definition: def}
+	store := evidence.New(filepath.Join(t.TempDir(), "evidence"))
+	result, err := c.Run(context.Background(), schema.RunRequest{RunID: "report-run", Target: "source-run"}, Dependencies{Evidence: store, LoadResult: func(context.Context, string) (schema.Result, error) {
+		return schema.Result{RunID: "source-run", Capability: "asset.discover", Status: "completed", Summary: "ok"}, nil
+	}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(result.Evidence) != 1 || result.Confidence != 1 {
+		t.Fatalf("unexpected report result: %#v", result)
+	}
+	if _, err := os.Stat(result.Evidence[0].Path); err != nil {
+		t.Fatal(err)
+	}
+}

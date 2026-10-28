@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "phases": [
+    {
+      "id": "surface-map",
+      "title": "Map the authorized surface",
+      "path": "prompts/recon.md",
+      "dependencies": [],
+      "capabilities": ["asset.discover", "web.map"],
+      "required_inputs": ["target", "scope"],
+      "expected_artifacts": ["phase-summary", "coverage-and-evidence"],
+      "integration_gaps": [],
+      "optional": false
+    },
+    {
+      "id": "review",
+      "title": "Review the recorded evidence",
+      "path": "prompts/review.md",
+      "dependencies": ["surface-map"],
+      "capabilities": [],
+      "required_inputs": ["target", "scope"],
+      "expected_artifacts": ["phase-summary", "coverage-and-evidence"],
+      "integration_gaps": ["Independent evidence review is performed by the researcher."],
+      "optional": false
+    }
+  ],
+  "documents": ["docs/research-notes.md"]
+}

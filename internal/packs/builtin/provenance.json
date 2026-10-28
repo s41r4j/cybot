@@ -1,0 +1,25 @@
+{
+  "repository": "mdpsec/bug-bounty-hunting-prompts",
+  "commit": "5ed41580564c978417d5f0105f9c92457d77f3b5",
+  "ref": "main",
+  "sha256": {
+    "ADAPTATION.md": "0564ad2d33bc04bd069a6714d87db2ef4c2c7c5a03b29851f80d59abfbfd3590",
+    "LICENSE": "3bc58654057893c3cb993b49872b5f863493f0801d6ec3d5616788a3565957cd",
+    "README.md": "5892ecb0037700d0af6b9789d7b4311ea1e22b8fbc31bfe6c5a1d3dc551ed983",
+    "SECURITY.md": "438cc18212640d13f471529215a41e80383b2ca10b2db93f7ef8413fb450ac8f",
+    "phases/phase-00-recon.md": "0ad37df64e08b52b78eb271b920a98b33dfec43a1ee703396ecec916c55739c9",
+    "phases/phase-01-access.md": "09231bc03589c7206ee5cce13dd2b204d8bcfb0b82c111f15758dce393d76854",
+    "phases/phase-02-sweep.md": "e1670904bcaea84de942e0d40b36b4a5385ef462e460e45804021e065c4e2e0b",
+    "phases/phase-03-closeout.md": "f456a5864857a34a64802e71c42a0a8b1ee8845294bf853ec032fbec1df0ea6e",
+    "phases/phase-04a-scope.md": "2a91e511fa2472a2b6dfd92a1fd7f541d4639cde335ae4f779f08721b743d05c",
+    "phases/phase-04b-browser-walk.md": "4f8ac17b5799984c398151370747a427526fadfe36749137bf707de48b93eea3",
+    "phases/phase-05a-scope.md": "2a91e511fa2472a2b6dfd92a1fd7f541d4639cde335ae4f779f08721b743d05c",
+    "phases/phase-05b-critical.md": "dfee0cc7c130d703878b6bfda2165087b82072587c767b2711a95a967f857ffb",
+    "phases/phase-06-triage.md": "2ff9b33f6e2eec7709c6e044df3d9c08b33c129c456531c4104546ad6b66bdf5",
+    "phases/phase-07-validate-escalate.md": "ccc6f3d19c7d64ca639182cc731e29895002f67ac26f9afde9ae745966aa0f01",
+    "phases/phase-08-verify-escalate.md": "891d27e8440f5671439c627eb7f93a96d3b6a09d6566b150fef2eba713b2cc18",
+    "phases/phase-08a-independent-escalation.md": "8269dd09b552e9910a921baa88770a0e5e522d69377fc1e0d5df3fbcd01f4bc5",
+    "phases/phase-09-triage-gate.md": "9f890344a7219d55289828d22d92ed464a693a9f481528410787fdf19f41f849",
+    "phases/phase-10-self-duplicate-check.md": "7f550ebd8a637806b6f88fffe5ee09906b738f6e6145317f8de66cab05fb98d5"
+  }
+}

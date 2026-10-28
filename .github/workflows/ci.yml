@@ -1,0 +1,77 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: '1.26.10'
+          cache: true
+      - run: go test -race ./...
+      - run: go vet ./...
+      - run: go build ./cmd/cybot
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: '1.26.10'
+      - run: python3 -m unittest discover -s scripts -p 'test_*.py'
+      - run: for script in scripts/*.sh; do bash -n "$script"; done
+      - name: Scan public source and history for secrets
+        run: python3 scripts/secret_scan.py . --history
+      - name: Build coverage from the actual command surface
+        run: |
+          go build -o /tmp/cybot ./cmd/cybot
+          /tmp/cybot capability coverage > /tmp/coverage.json
+          python3 scripts/check_inventory.py /tmp/coverage.json
+      - name: Record full-product release status
+        run: |
+          set +e
+          python3 scripts/release_gate.py --coverage /tmp/coverage.json --output /tmp/release-readiness.json
+          status=$?
+          set -e
+          if [ "$status" -gt 1 ]; then exit "$status"; fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: full-catalog-readiness
+          path: /tmp/release-readiness.json
+  compact-runtime:
+    name: Compact real-tool fixtures (${{ matrix.runner }})
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    env:
+      CYBOT_VERSION: 0.1.0-dev
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: '1.26.10'
+      - name: Build and validate before promoting a runtime pin
+        run: python3 scripts/toolbox.py build
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: compact-validation-${{ matrix.runner }}
+          path: |
+            .cybot/toolbox/core-tests.json
+            .cybot/toolbox/core-tests.txt
+            .cybot/toolbox/runtime.lock.json

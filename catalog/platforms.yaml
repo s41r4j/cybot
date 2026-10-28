@@ -1,0 +1,208 @@
+# Enterprise Platform Attack Chain Intelligence
+# Current 2024-2026 CVE chains and platform-specific tradecraft for external red-team engagements.
+
+platforms:
+  - id: m365-entra
+    title: Microsoft 365 / Entra ID Attack Matrix
+    category: enterprise-identity
+    description: "Full attack chain against M365/Entra ID tenants from external perspective."
+    references:
+      - "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-redundant-codes"
+      - "AADSTS error code reference for user enumeration"
+    chains:
+      - phase: recon
+        techniques:
+          - "User enumeration via AADSTS error codes (AADSTS50034: user not found, AADSTS50053: account locked, AADSTS50055: expired password)"
+          - "Tenant discovery via openid-configuration"
+          - "Device code phishing via common tenant"
+          - "Password spray with Smart Lockout math (1 attempt per account, rotate targets)"
+      - phase: auth-bypass
+        techniques:
+          - "Conditional Access bypass via legacy auth protocols"
+          - "ROPC (Resource Owner Password Credentials) grant abuse"
+          - "SAML SSO browser flow manipulation"
+          - "Primary Refresh Token (PRT) theft via device join"
+      - phase: post-auth
+        techniques:
+          - "Token replay across M365 services"
+          - "Cross-tenant lateral via guest accounts"
+          - "Entra ID Connect password hash sync (on-prem → cloud)"
+    known_cves:
+      - "CVE-2024-49040: Microsoft Entra ID elevation of privilege"
+      - "CVE-2023-36439: Microsoft Exchange Server remote code execution"
+    tool_mapping:
+      - "cybot capability plan cloud.enum --target DOMAIN"
+      - "cybot capability plan password.bruteforce --target DOMAIN"
+    cvss_context: "Identity-based, typically AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N"
+
+  - id: okta-idp
+    title: Okta Identity Provider Attack Matrix
+    category: enterprise-identity
+    description: "Attacks against organizations using Okta as external IdP."
+    chains:
+      - phase: recon
+        techniques:
+          - "Tenant discovery: subdomain.{okta,oktapreview,okta-emea}.com"
+          - "OpenID configuration: /.well-known/openid-configuration"
+          - "Factor enumeration via login flow analysis"
+      - phase: factor-bypass
+        techniques:
+          - "MFA push fatigue (repeated push until accepted)"
+          - "FastPass device trust abuse"
+          - "OIDC redirect_uri tampering"
+          - "SAML assertion replay"
+          - "Okta ThreatInsight evasion patterns"
+      - phase: post-credential
+        techniques:
+          - "Session token replay across integrated apps"
+          - "Admin API key extraction from Okta Workflows"
+    known_cves:
+      - "CVE-2024-0981: Okta cross-tenant impersonation"
+      - "CVE-2023-34046: Okta Classic Engine session fixation"
+    tool_mapping:
+      - "cybot capability plan service.enumerate --target TARGET"
+
+  - id: vmware-vcenter
+    title: VMware vSphere / vCenter Attack Chain
+    category: infrastructure-appliance
+    description: "External attack chain against VMware vCenter and ESXi infrastructure."
+    chains:
+      - phase: discovery
+        techniques:
+          - "vCenter host detection via /ui/, /vsphere-client/, /sdk endpoints"
+          - "Version enumeration via /sdk/vimServiceVersions.xml"
+          - "Workspace ONE / Aria Operations detection"
+      - phase: exploitation
+        techniques:
+          - "CVE-2021-21972: vCenter Server unauthenticated RCE (vropspluginui)"
+          - "CVE-2024-37085: ESXi authentication bypass (Active Directory group membership)"
+          - "CVE-2023-34048: vCenter out-of-bounds write (DCERPC)"
+          - "CVE-2022-22954: Workspace ONE Access SSTI"
+      - phase: post-exploitation
+        techniques:
+          - "VM snapshot theft via vSphere API"
+          - "ESXi host credential extraction from vCenter"
+          - "VM migration/manipulation"
+    known_cves:
+      - "CVE-2021-21972: CVSS 9.8 — vCenter unauthenticated RCE"
+      - "CVE-2024-37085: CVSS 7.2 — ESXi auth bypass"
+      - "CVE-2023-34048: CVSS 9.8 — vCenter RCE"
+      - "CVE-2022-22954: CVSS 9.8 — Workspace ONE SSTI"
+    tool_mapping:
+      - "cybot capability plan vuln.scan --target https://vcenter.target"
+      - "cybot capability plan service.enumerate --target vcenter.target"
+    cvss_context: "Infrastructure takeover, typically AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"
+
+  - id: enterprise-vpn
+    title: SSL VPN Appliance Attack Matrix
+    category: infrastructure-appliance
+    description: "Attacks against enterprise SSL VPN appliances from external perspective."
+    platforms:
+      - vendor: Cisco
+        appliances:
+          - "ASA (Adaptive Security Appliance)"
+          - "FTD (Firepower Threat Defense)"
+          - "CVE-2023-20269: ASA/FTD remote access VPN brute force"
+          - "CVE-2024-20353: ASA/FTD DoS via crafted HTTP request"
+          - "CVE-2024-20359: ASA/FTD persistent local code execution"
+      - vendor: Fortinet
+        appliances:
+          - "FortiGate SSL VPN"
+          - "CVE-2024-21762: FortiOS out-of-bounds write (SSL VPN)"
+          - "CVE-2023-27997: FortiOS heap overflow (SSL VPN)"
+          - "CVE-2024-23113: FortiOS format string vulnerability"
+      - vendor: Citrix
+        appliances:
+          - "NetScaler ADC / Gateway"
+          - "CVE-2023-4966: Citrix NetScaler sensitive information disclosure"
+          - "CVE-2023-3519: Citrix NetScaler unauthenticated RCE"
+          - "CVE-2024-33871: Citrix NetScaler Gateway N-day plugin"
+      - vendor: Palo Alto
+        appliances:
+          - "GlobalProtect Portal/Gateway"
+          - "CVE-2024-3400: PAN-OS GlobalProtect command injection"
+          - "CVE-2024-5910: PAN-OS missing authentication"
+      - vendor: Ivanti
+        appliances:
+          - "Pulse Connect Secure → Ivanti Connect Secure"
+          - "CVE-2024-21887: Ivanti Connect Secure command injection"
+          - "CVE-2024-21893: Ivanti Connect Secure SSRF (SAML)"
+          - "CVE-2023-46805: Ivanti Connect Secure auth bypass"
+      - vendor: SonicWall
+        appliances:
+          - "SMA (Secure Mobile Access)"
+          - "CVE-2024-40766: SonicWall improper access control"
+          - "CVE-2022-22274: SonicWall SMA stack-based overflow"
+      - vendor: F5
+        appliances:
+          - "BIG-IP APM (Access Policy Manager)"
+          - "CVE-2023-46747: F5 BIG-IP unauthenticated RCE"
+          - "CVE-2024-21793: F5 BIG-IP DoS (APM)"
+    tool_mapping:
+      - "cybot capability plan service.enumerate --target vpn.target"
+      - "cybot capability plan vuln.scan --target https://vpn.target"
+      - "cybot capability plan tls.audit --target vpn.target"
+    cvss_context: "Perimeter breach, typically AV:N/AC:L"
+
+  - id: sharepoint-onprem
+    title: SharePoint On-Premises Attack Chain
+    category: enterprise-webapp
+    description: "Attacks against on-premises SharePoint Server farms."
+    chains:
+      - phase: recon
+        techniques:
+          - "SharePoint version via /_layouts/15/ and /_vti_bin/ paths"
+          - "Web services discovery via /_vti_bin/ListData.svc"
+          - "Anonymous SOAP endpoint enumeration"
+      - phase: exploitation
+        techniques:
+          - "ToolShell chain: CVE-2023-29357 (auth bypass) → CVE-2023-24955 (RCE)"
+          - "SafeControl assembly enumeration"
+          - "FormDigest validation bypass"
+          - "ViewState deserialization (machineKey extraction required)"
+          - "NTLM Type-2 info leak for AD topology mapping"
+      - phase: post-exploitation
+        techniques:
+          - "NTLM relay from SharePoint to internal services"
+          - "SharePoint App Catalog takeover"
+          - "SQL Server linked-database lateral movement"
+    known_cves:
+      - "CVE-2023-29357: CVSS 9.8 — SharePoint elevation of privilege"
+      - "CVE-2023-24955: CVSS 7.2 — SharePoint RCE"
+    tool_mapping:
+      - "cybot capability plan web.map --target https://sharepoint.target"
+      - "cybot capability plan web.scan --target https://sharepoint.target"
+
+  - id: cloud-iam
+    title: Cloud IAM Privilege Escalation
+    category: cloud-identity
+    description: "Post-credential escalation model for AWS, Azure, and GCP."
+    chains:
+      - platform: AWS
+        techniques:
+          - "IAM policy enumeration (iam:List*, iam:Get*)"
+          - "STS AssumeRole chaining (confused deputy)"
+          - "EC2 IMDSv1/v2 access → instance profile credentials"
+          - "Lambda function policy modification → cross-account access"
+          - "S3 bucket policy misconfig → cross-account read/write"
+          - "EKS pod service account → K8s RBAC → node compromise"
+          - "CloudFormation drift detection abuse"
+          - "CodeBuild/CodePipeline artifact injection"
+      - platform: Azure
+        techniques:
+          - "Managed Identity abuse (IMDS → access token)"
+          - "AAD role activation (Privileged Identity Management bypass)"
+          - "Key Vault access enumeration"
+          - "Automation Account runbook execution"
+          - "Logic App HTTP trigger abuse"
+          - "Storage account key rotation → persistence"
+      - platform: GCP
+        techniques:
+          - "Service account key creation"
+          - "IAM policy binding modification"
+          - "Cloud Functions source code access"
+          - "GCS bucket enumeration (storage.objects.list)"
+          - "Compute Engine default service account abuse"
+    tool_mapping:
+      - "cybot capability plan cloud.review --target PATH/TO/CONFIG"
+      - "cybot capability plan cloud.enum --target DOMAIN"

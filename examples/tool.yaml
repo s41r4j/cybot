@@ -1,0 +1,36 @@
+id: example-scanner
+title: Example Scanner
+description: Example metadata for a native scanner plugin.
+purpose: Demonstrate strict tool imports; capabilities decide whether to use it.
+version: 1.0.0
+kind: native
+binary: example-scanner
+supported_os: [linux, darwin, windows]
+health_check: ["--version"]
+source_url: https://github.com/example/example-scanner
+license: MIT
+capabilities: [code.audit]
+default_args: [--json]
+output_format: json
+parser: example.v1
+risk: local-read
+requires_network: false
+input_schema:
+  type: object
+  additionalProperties: false
+output_schema:
+  type: object
+documentation:
+  description: Example scanner plugin metadata.
+  purpose: Demonstrate the documented tool contract.
+  arguments: []
+  examples:
+    - description: Import plugin metadata
+      command: cybot tool import examples/tool.yaml
+  expected_output: A validated tool definition.
+  output_schema: cybot://schemas/tool
+  limitations: [This example has no installed binary.]
+  required_permissions: [Read access to the metadata file.]
+  related_commands: [cybot tool list]
+  common_mistakes: [Attempting to run the raw tool directly.]
+  best_practices: [Reference tools from capability implementations.]

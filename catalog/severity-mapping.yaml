@@ -1,0 +1,88 @@
+# VRT-Aware Severity Mapping — per-platform severity rubrics and reporting intelligence
+# Maps finding types to platform-specific severity classifications.
+
+platforms:
+  - id: bugcrowd
+    name: Bugcrowd
+    vrt_categories:
+      - id: server_security_misconfiguration
+        label: "Server Security Misconfiguration"
+        vrt: "server_security_misconfiguration"
+        severity_default: P4
+      - id: sensitive_data_exposure
+        label: "Sensitive Data Exposure"
+        vrt: "sensitive_data_exposure"
+        severity_default: P2
+      - id: broken_access_control
+        label: "Broken Access Control (BAC)"
+        vrt: "broken_authentication_and_session_management"
+        severity_default: P3
+      - id: cross_site_scripting_xss
+        label: "Cross-Site Scripting (XSS)"
+        vrt: "cross_site_scripting_xss"
+        severity_default: P3
+      - id: server_side_injection
+        label: "Server-Side Injection"
+        vrt: "server_side_injection"
+        severity_default: P1
+      - id: cross_site_request_forgery_csrf
+        label: "Cross-Site Request Forgery"
+        vrt: "cross_site_request_forgery_csrf"
+        severity_default: P4
+      - id: open_redirect
+        label: "Open Redirect"
+        vrt: "unvalidated_redirects_and_forwards"
+        severity_default: P5
+    severity_request_patterns:
+      - "This finding demonstrates <impact> which constitutes a <level> severity under VRT category <vrt_category>. Requesting re-evaluation from P4 to P3 based on concrete <evidence_type>."
+    oos_rebuttal_templates:
+      - "The submitted vulnerability meets the program's impact criteria as defined in section <ref>. While the triage team classified this as informational, the finding demonstrates <concrete_impact> that directly affects <user_data|system_integrity|business_logic>."
+    never_submit:
+      - "Self-XSS (user must paste code into their own console)"
+      - "Missing security headers (without concrete exploit demonstration)"
+      - "Clickjacking on non-sensitive pages"
+      - "Rate limiting only (without demonstrated business impact)"
+      - "CSV/formula injection in exports"
+      - "Logout CSRF"
+      - "Session timeout issues (without account takeover)"
+
+  - id: hackerone
+    name: HackerOne
+    severity_scale:
+      none: 0.0
+      low: 2.5
+      medium: 5.0
+      high: 7.5
+      critical: 10.0
+    cvss_preference: "CVSS 3.1"
+    report_structure:
+      - "Summary (1-2 sentences)"
+      - "Description (detailed technical explanation)"
+      - "Steps to Reproduce (numbered list)"
+      - "Impact (business/technical impact)"
+      - "Supporting Material (screenshots, PoC code, video)"
+    never_submit:
+      - "Missing SPF/DKIM/DMARC records"
+      - "Banner grabbing / version disclosure without exploit"
+      - "Theoretical vulnerabilities without PoC"
+
+  - id: intigriti
+    name: Intigriti
+    cvss_preference: "CVSS 3.1"
+    report_structure:
+      - "Title (vulnerability type + affected endpoint)"
+      - "CVSS 3.1 Vector"
+      - "Description"
+      - "Steps to Reproduce"
+      - "Impact"
+      - "Remediation"
+
+  - id: immunefi
+    name: Immunefi
+    cvss_preference: "CVSS 4.0"
+    poc_requirement: "Foundry test (forge test --match-test)"
+    report_structure:
+      - "Vulnerability Summary"
+      - "Proof of Concept (Foundry test code)"
+      - "Impact Assessment"
+      - "Suggested Fix"

@@ -1,0 +1,15 @@
+.git
+.cybot
+backups
+data
+reports
+cybot
+*.tar
+*.tar.gz
+*.tar.zst
+reference
+nasa-recon
+docs/images
+.agents
+.codex
+.aws

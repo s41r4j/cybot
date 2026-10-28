@@ -1,0 +1,1266 @@
+- id: subfinder
+  title: Subfinder
+  description: Passive subdomain enumeration.
+  purpose: Supply passive hostname candidates to asset discovery.
+  version: 2.14.0
+  kind: native
+  binary: subfinder
+  docker_image: projectdiscovery/subfinder:latest
+  source_url: https://github.com/projectdiscovery/subfinder
+  license: MIT
+  capabilities: [dns.enum, asset.discover]
+  default_args: [-silent, -json]
+  output_format: jsonl
+  parser: projectdiscovery.subfinder.v1
+  risk: passive-network
+  requires_network: true
+- id: amass
+  title: OWASP Amass
+  description: Attack-surface mapping and external asset discovery.
+  purpose: Corroborate and expand authorized asset discovery.
+  version: 5.1.1
+  kind: native
+  binary: amass
+  source_url: https://github.com/owasp-amass/amass
+  license: Apache-2.0
+  capabilities: [asset.discover]
+  default_args: []
+  output_format: json
+  parser: owasp.amass.v5
+  risk: active-or-passive-network
+  requires_network: true
+- id: dnsx
+  title: dnsx
+  description: Structured DNS resolution and record analysis.
+  purpose: Validate discovered hostnames and normalize DNS records.
+  version: 1.3.0
+  kind: native
+  binary: dnsx
+  docker_image: projectdiscovery/dnsx:latest
+  source_url: https://github.com/projectdiscovery/dnsx
+  license: MIT
+  capabilities: [dns.analyse, asset.discover]
+  default_args: [-silent, -json]
+  output_format: jsonl
+  parser: projectdiscovery.dnsx.v1
+  risk: active-network
+  requires_network: true
+- id: naabu
+  title: Naabu
+  description: Reliable TCP port discovery.
+  purpose: Produce candidate services for bounded enumeration.
+  version: 2.6.1
+  kind: native
+  binary: naabu
+  docker_image: projectdiscovery/naabu:latest
+  source_url: https://github.com/projectdiscovery/naabu
+  license: MIT
+  capabilities: [service.enumerate]
+  default_args: [-silent, -json]
+  output_format: jsonl
+  parser: projectdiscovery.naabu.v1
+  risk: active-network
+  requires_network: true
+- id: httpx
+  title: httpx
+  description: HTTP service probing and technology metadata collection.
+  purpose: Convert authorized service candidates into normalized web endpoints.
+  version: 1.10.0
+  kind: native
+  binary: httpx
+  docker_image: projectdiscovery/httpx:latest
+  source_url: https://github.com/projectdiscovery/httpx
+  license: MIT
+  capabilities: [web.map]
+  default_args: [-silent, -json]
+  output_format: jsonl
+  parser: projectdiscovery.httpx.v1
+  risk: active-http
+  requires_network: true
+- id: katana
+  title: Katana
+  description: Web crawling and endpoint discovery.
+  purpose: Map authorized web applications into normalized endpoints.
+  version: 1.6.1
+  kind: native
+  binary: katana
+  docker_image: projectdiscovery/katana:latest
+  source_url: https://github.com/projectdiscovery/katana
+  license: MIT
+  capabilities: [web.map]
+  default_args: [-silent, -jsonl]
+  output_format: jsonl
+  parser: projectdiscovery.katana.v1
+  risk: active-http
+  requires_network: true
+- id: nuclei
+  title: Nuclei
+  description: Template-based vulnerability scanning.
+  purpose: Validate known vulnerability and misconfiguration patterns on scoped endpoints.
+  version: 3.11.0
+  kind: native
+  binary: nuclei
+  docker_image: projectdiscovery/nuclei:latest
+  source_url: https://github.com/projectdiscovery/nuclei
+  license: MIT
+  capabilities: [web.scan]
+  default_args: [-silent, -jsonl]
+  output_format: jsonl
+  parser: projectdiscovery.nuclei.v1
+  risk: active-http-high
+  requires_network: true
+- id: ffuf
+  title: ffuf
+  description: Controlled web content discovery.
+  purpose: Discover authorized paths using policy-bounded wordlists and rates.
+  version: 2.2.1
+  kind: native
+  binary: ffuf
+  source_url: https://github.com/ffuf/ffuf
+  license: MIT
+  capabilities: [web.content.discover]
+  default_args: [-json, -noninteractive]
+  output_format: jsonl
+  parser: ffuf.jsonl.v1
+  risk: active-http-high
+  requires_network: true
+- id: gitleaks
+  title: Gitleaks
+  description: Secret detection for Git history and files.
+  purpose: Produce redacted, normalized secret findings.
+  version: 8.30.1
+  kind: native
+  binary: gitleaks
+  docker_image: ghcr.io/gitleaks/gitleaks:latest
+  source_url: https://github.com/gitleaks/gitleaks
+  license: MIT
+  capabilities: [secret.scan]
+  default_args: [dir, --report-format, json, --redact=100, --no-banner]
+  output_format: json
+  parser: gitleaks.v8
+  risk: local-read-sensitive
+  requires_network: false
+- id: trufflehog
+  title: TruffleHog
+  description: Verified secret discovery across code and data sources.
+  purpose: Corroborate secret findings while preventing secret disclosure.
+  version: 3.96.0
+  kind: native
+  binary: trufflehog
+  source_url: https://github.com/trufflesecurity/trufflehog
+  license: AGPL-3.0
+  capabilities: [secret.scan]
+  default_args: [filesystem, --json, --no-update]
+  output_format: jsonl
+  parser: trufflehog.v3
+  risk: local-read-sensitive
+  requires_network: false
+- id: gosec
+  title: gosec
+  description: Go-focused static security analysis.
+  purpose: Produce CWE-linked findings for Go source.
+  version: 2.28.0
+  kind: native
+  binary: gosec
+  source_url: https://github.com/securego/gosec
+  license: Apache-2.0
+  capabilities: [code.audit]
+  default_args: [-no-fail, -fmt, json]
+  output_format: json
+  parser: gosec.v2
+  risk: local-read
+  requires_network: false
+- id: semgrep
+  title: Semgrep
+  description: Multi-language static analysis.
+  purpose: Detect code-security patterns with pinned rulesets.
+  version: 1.172.0
+  kind: native
+  binary: semgrep
+  source_url: https://github.com/semgrep/semgrep
+  license: LGPL-2.1
+  capabilities: [code.audit]
+  default_args: [scan, --json]
+  output_format: json
+  parser: semgrep.v1
+  risk: local-read
+  requires_network: false
+- id: trivy
+  title: Trivy
+  description: Vulnerability, misconfiguration, secret, and container scanning.
+  purpose: Normalize dependency and container risk into CYBOT findings.
+  version: 0.72.0
+  kind: native
+  binary: trivy
+  docker_image: aquasec/trivy:0.70.0
+  source_url: https://github.com/aquasecurity/trivy
+  license: Apache-2.0
+  capabilities: [dependency.scan, container.scan, cloud.review]
+  default_args: [--format, json]
+  output_format: json
+  parser: trivy.v2
+  risk: local-read-and-registry
+  requires_network: true
+- id: syft
+  title: Syft
+  description: Software Bill of Materials generation.
+  purpose: Generate normalized CycloneDX or SPDX inventories before vulnerability analysis.
+  version: 1.50.0
+  kind: native
+  binary: syft
+  source_url: https://github.com/anchore/syft
+  license: Apache-2.0
+  capabilities: [sbom.generate]
+  default_args: [-o, cyclonedx-json]
+  output_format: cyclonedx-json
+  parser: cyclonedx.v1.6
+  risk: local-read
+  requires_network: false
+- id: grype
+  title: Grype
+  description: Vulnerability scanner for container images, filesystems, and SBOMs.
+  purpose: Correlate SBOM packages with normalized vulnerability findings.
+  version: 0.116.1
+  kind: docker
+  binary: grype
+  source_url: https://github.com/anchore/grype
+  license: Apache-2.0
+  capabilities: [dependency.scan, container.scan]
+  default_args: [-o, json]
+  output_format: json
+  parser: grype.v6
+  risk: local-read-and-registry
+  requires_network: true
+- id: nmap
+  title: Nmap
+  description: Network discovery and security auditing.
+  purpose: Comprehensive port scanning, service detection, OS fingerprinting, and NSE script execution.
+  version: 7.93
+  kind: native
+  binary: nmap
+  source_url: https://github.com/nmap/nmap
+  license: GPL-2.0
+  capabilities: [port.scan, service.enumerate]
+  default_args: [-sV, -sC, -oX, -]
+  output_format: xml
+  parser: nmap.xml.v1
+  risk: active-network-high
+  requires_network: true
+- id: whatweb
+  title: WhatWeb
+  description: Web technology fingerprinting and identification.
+  purpose: Identify web technologies, CMS, frameworks, and server software on targets.
+  version: 0.5.5
+  kind: native
+  binary: whatweb
+  source_url: https://github.com/urbanadventurer/WhatWeb
+  license: GPL-2.0
+  capabilities: [tech.fingerprint, web.map]
+  default_args: [--log-json, /dev/stdout, --no-errors, -q]
+  output_format: json
+  parser: whatweb.json.v1
+  risk: active-http
+  requires_network: true
+- id: wafw00f
+  title: WAFW00F
+  description: Web Application Firewall detection.
+  purpose: Identify and fingerprint WAF/IDS/IPS/CDN products protecting web applications.
+  version: 2.2.0
+  kind: native
+  binary: wafw00f
+  source_url: https://github.com/EnableSecurity/wafw00f
+  license: BSD-3-Clause
+  capabilities: [waf.detect]
+  default_args: [-a]
+  output_format: text
+  parser: wafw00f.text.v1
+  risk: active-http
+  requires_network: true
+- id: gobuster
+  title: Gobuster
+  description: Directory, file, DNS, and VHOST brute forcing.
+  purpose: Discover hidden paths, files, subdomains, and virtual hosts on web servers.
+  version: 3.6.0
+  kind: native
+  binary: gobuster
+  source_url: https://github.com/OJ/gobuster
+  license: Apache-2.0
+  capabilities: [dir.bruteforce, web.content.discover, dns.enum]
+  default_args: [dir, --no-error, -q]
+  output_format: text
+  parser: gobuster.text.v1
+  risk: active-http-high
+  requires_network: true
+- id: testssl
+  title: testssl.sh
+  description: TLS/SSL protocol and cipher suite testing.
+  purpose: Audit TLS configuration, detect weak ciphers, protocol downgrades, and certificate issues.
+  version: 3.2.0
+  kind: native
+  binary: testssl.sh
+  source_url: https://github.com/drwetter/testssl.sh
+  license: GPL-2.0
+  capabilities: [tls.audit]
+  default_args: [--jsonfile-pretty, /dev/stdout, --quiet]
+  output_format: json
+  parser: testssl.json.v1
+  risk: active-network
+  requires_network: true
+- id: nikto
+  title: Nikto
+  description: Web server vulnerability scanner.
+  purpose: Identify misconfigurations, outdated software, and known vulnerabilities on web servers.
+  version: 2.5.0
+  kind: native
+  binary: nikto
+  source_url: https://github.com/sullo/nikto
+  license: GPL-2.0
+  capabilities: [vuln.scan, web.scan]
+  default_args: [-Format, json, -nointeractive]
+  output_format: json
+  parser: nikto.json.v1
+  risk: active-http-high
+  requires_network: true
+- id: dirsearch
+  title: Dirsearch
+  description: Web path brute forcing with advanced features.
+  purpose: Discover hidden directories and files through intelligent wordlist-based enumeration.
+  version: 0.4.3
+  kind: native
+  binary: dirsearch
+  source_url: https://github.com/maurosoria/dirsearch
+  license: GPL-2.0
+  capabilities: [dir.bruteforce, web.content.discover]
+  default_args: [--format, json, -q]
+  output_format: json
+  parser: dirsearch.json.v1
+  risk: active-http-high
+  requires_network: true
+- id: sqlmap
+  title: SQLMap
+  description: Automated SQL injection detection and exploitation.
+  purpose: Detect and exploit SQL injection vulnerabilities in web applications.
+  version: 1.8.12
+  kind: native
+  binary: sqlmap
+  source_url: https://github.com/sqlmapproject/sqlmap
+  license: GPL-2.0
+  capabilities: [sql.inject]
+  default_args: [--batch, --random-agent, --level, "1", --risk, "1"]
+  output_format: text
+  parser: sqlmap.text.v1
+  risk: active-http-critical
+  requires_network: true
+- id: xsstrike
+  title: XSStrike
+  description: Advanced XSS detection and exploitation.
+  purpose: Detect and analyze XSS vulnerabilities with advanced fuzzing and WAF bypass techniques.
+  version: 3.1.6
+  kind: native
+  binary: xsstrike
+  source_url: https://github.com/s0md3v/XSStrike
+  license: GPL-3.0
+  capabilities: [xss.detect]
+  default_args: [--crawl, --blind]
+  output_format: text
+  parser: xsstrike.text.v1
+  risk: active-http-high
+  requires_network: true
+- id: cloud_enum
+  title: Cloud Enum
+  description: Multi-cloud resource enumeration.
+  purpose: Enumerate public AWS S3 buckets, Azure blobs, and GCP storage resources.
+  version: 1.0.0
+  kind: native
+  binary: cloud_enum
+  source_url: https://github.com/initstring/cloud_enum
+  license: MIT
+  capabilities: [cloud.enum, asset.discover]
+  default_args: []
+  output_format: text
+  parser: cloudenum.text.v1
+  risk: passive-network
+  requires_network: true
+- id: linkfinder
+  title: LinkFinder
+  description: JavaScript endpoint discovery.
+  purpose: Extract URLs and endpoints from JavaScript files for API reconnaissance.
+  version: 1.0.0
+  kind: native
+  binary: linkfinder
+  source_url: https://github.com/GerbenJavado/LinkFinder
+  license: MIT
+  capabilities: [js.analyse, web.map]
+  default_args: [-o, cli]
+  output_format: text
+  parser: linkfinder.text.v1
+  risk: local-read
+  requires_network: false
+- id: jsluice
+  title: JSLuice
+  description: JavaScript URL and secret extraction.
+  purpose: Extract URLs, paths, secrets, and endpoints from JavaScript source code.
+  version: 1.0.0
+  kind: native
+  binary: jsluice
+  source_url: https://github.com/BishopFox/jsluice
+  license: MIT
+  capabilities: [js.analyse, secret.scan, web.map]
+  default_args: []
+  output_format: json
+  parser: jsluice.json.v1
+  risk: local-read
+  requires_network: false
+- id: massdns
+  title: MassDNS
+  description: High-performance DNS resolver.
+  purpose: Mass DNS resolution for large subdomain lists with high throughput.
+  version: 1.1.0
+  kind: native
+  binary: massdns
+  source_url: https://github.com/blechschmidt/massdns
+  license: GPL-3.0
+  capabilities: [dns.enum, asset.discover]
+  default_args: [-o, S, -q]
+  output_format: text
+  parser: massdns.text.v1
+  risk: active-network
+  requires_network: true
+- id: corscanner
+  title: CORScanner
+  description: CORS misconfiguration scanner.
+  purpose: Detect Cross-Origin Resource Sharing misconfigurations on web applications.
+  version: 1.0.0
+  kind: native
+  binary: corscanner
+  source_url: https://github.com/chenjj/CORScanner
+  license: MIT
+  capabilities: [cors.audit]
+  default_args: []
+  output_format: json
+  parser: cors.json.v1
+  risk: active-http
+  requires_network: true
+- id: cmseek
+  title: CMSeeK
+  description: CMS detection and exploitation suite.
+  purpose: Detect CMS platforms and identify vulnerabilities through version fingerprinting.
+  version: 1.1.3
+  kind: native
+  binary: cmseek
+  source_url: https://github.com/Tuhinshubhra/CMSeeK
+  license: GPL-3.0
+  capabilities: [cms.detect, tech.fingerprint]
+  default_args: [--random-agent, --batch, --follow-redirect]
+  output_format: json
+  parser: cmseek.json.v1
+  risk: active-http
+  requires_network: true
+- id: waybackurls
+  title: Waybackurls
+  description: Fetch URLs from Wayback Machine archives.
+  purpose: Discover historical endpoints and parameters from archived web pages for reconnaissance.
+  version: 1.0.0
+  kind: native
+  binary: waybackurls
+  source_url: https://github.com/tomnomnom/waybackurls
+  license: MIT
+  capabilities: [web.map, asset.discover]
+  default_args: []
+  output_format: text
+  parser: waybackurls.text.v1
+  risk: passive-network
+  requires_network: true
+- id: gf
+  title: gf
+  description: Grep wrapper for finding interesting patterns.
+  purpose: Find potential vulnerabilities by matching patterns in URLs and responses.
+  version: 1.0.0
+  kind: native
+  binary: gf
+  source_url: https://github.com/tomnomnom/gf
+  license: MIT
+  capabilities: [pattern.detect, web.map]
+  default_args: []
+  output_format: text
+  parser: gf.text.v1
+  risk: local-read
+  requires_network: false
+- id: anew
+  title: anew
+  description: Append new lines to files without duplicates.
+  purpose: Stream processing tool for deduplicating and appending unique results.
+  version: "1.0.0"
+  kind: native
+  binary: anew
+  source_url: https://github.com/tomnomnom/anew
+  license: MIT
+  capabilities: [pipeline.util]
+  default_args: []
+  output_format: text
+  parser: anew.text.v1
+  risk: local-read
+  requires_network: false
+- id: hydra
+  title: Hydra
+  description: Network login brute-force tool supporting 50+ protocols.
+  purpose: Test credential strength against network services (HTTP, SSH, FTP, RDP, SMB, etc.).
+  version: "9.6"
+  kind: native
+  binary: hydra
+  source_url: https://github.com/vanhauser-thc/thc-hydra
+  license: AGPL-3.0
+  capabilities: [password.bruteforce, credential.test]
+  default_args: [-o, /dev/stdout, -f]
+  output_format: text
+  parser: hydra.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: hashcat
+  title: Hashcat
+  description: GPU-accelerated password recovery and hash cracking.
+  purpose: Crack password hashes using dictionary, rule-based, and brute-force attacks.
+  version: "6.2.6"
+  kind: native
+  binary: hashcat
+  source_url: https://github.com/hashcat/hashcat
+  license: MIT
+  capabilities: [hash.crack, credential.test]
+  default_args: [--status, --status-timer, "1"]
+  output_format: text
+  parser: hashcat.text.v1
+  risk: local-compute-critical
+  requires_network: false
+- id: john
+  title: John the Ripper
+  description: Fast password cracker with extensive hash format support.
+  purpose: Crack password hashes and audit password strength across 400+ hash types.
+  version: "1.9.0"
+  kind: native
+  binary: john
+  source_url: https://github.com/openwall/john
+  license: GPL-2.0
+  capabilities: [hash.crack, credential.test]
+  default_args: []
+  output_format: text
+  parser: john.text.v1
+  risk: local-compute-critical
+  requires_network: false
+- id: theharvester
+  title: theHarvester
+  description: Email, subdomain, and personnel OSINT gathering tool.
+  purpose: Collect emails, names, hosts, and IPs from public sources for reconnaissance.
+  version: "4.6.0"
+  kind: native
+  binary: theHarvester
+  source_url: https://github.com/laramies/theHarvester
+  license: GPL-2.0
+  capabilities: [email.harvest, asset.discover, personnel.osint]
+  default_args: [-b, all]
+  output_format: json
+  parser: theharvester.json.v1
+  risk: passive-network
+  requires_network: true
+- id: bettercap
+  title: Bettercap
+  description: Swiss army knife for 802.11, BLE, and Ethernet MITM attacks.
+  purpose: Perform network attacks, monitoring, and credential interception.
+  version: "2.33.0"
+  kind: native
+  binary: bettercap
+  source_url: https://github.com/bettercap/bettercap
+  license: GPL-3.0
+  capabilities: [mitm.assess, credential.sniff, network.attack]
+  default_args: [-eval, net.probe on]
+  output_format: json
+  parser: bettercap.json.v1
+  risk: active-network-critical
+  requires_network: true
+- id: pcredz
+  title: PCredz
+  description: Credential and credit card extraction from network captures.
+  purpose: Extract credentials, hashes, credit cards, and sensitive data from PCAP files.
+  version: "1.0.0"
+  kind: native
+  binary: Pcredz
+  source_url: https://github.com/lgandx/PCredz
+  license: GPL-3.0
+  capabilities: [credential.extract, secret.scan]
+  default_args: [--json]
+  output_format: json
+  parser: pcredz.json.v1
+  risk: local-read-sensitive
+  requires_network: false
+- id: msfvenom
+  title: msfvenom
+  description: Metasploit payload generator and encoder.
+  purpose: Generate and encode payloads for exploitation, reverse shells, and persistence.
+  version: "6.4.50"
+  kind: native
+  binary: msfvenom
+  source_url: https://github.com/rapid7/metasploit-framework
+  license: BSD-3-Clause
+  capabilities: [payload.generate]
+  default_args: [--smallest]
+  output_format: raw
+  parser: msfvenom.text.v1
+  risk: local-offensive-critical
+  requires_network: false
+- id: impacket
+  title: Impacket
+  description: Python library for Windows network protocol attacks.
+  purpose: Execute SMB/RPC/WMI attacks, dump hashes, and perform Kerberos attacks.
+  version: "0.12.0"
+  kind: native
+  binary: impacket-secretsdump
+  source_url: https://github.com/fortra/impacket
+  license: Apache-2.0
+  capabilities: [credential.dump, lateral.move, active-directory.attack]
+  default_args: []
+  output_format: text
+  parser: impacket.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: bloodhound
+  title: BloodHound CE
+  description: Active Directory attack path analysis and privilege escalation discovery.
+  purpose: Map AD trust relationships, find attack paths, and identify privilege escalation routes.
+  version: "5.16.0"
+  kind: native
+  binary: bloodhound
+  source_url: https://github.com/SpecterOps/BloodHound
+  license: BSL-1.0
+  capabilities: [active-directory.audit, privilege.escalation]
+  default_args: [--no-sandbox]
+  output_format: json
+  parser: bloodhound.json.v1
+  risk: local-offensive-high
+  requires_network: false
+- id: dnschef
+  title: DNSChef
+  description: DNS proxy for red team operations and phishing campaigns.
+  purpose: Intercept and modify DNS responses for credential harvesting and C2 redirection.
+  version: "0.4.0"
+  kind: native
+  binary: dnschef
+  source_url: https://github.com/iphelix/dnschef
+  license: MIT
+  capabilities: [dns.spoof, phishing.infra, c2.dns]
+  default_args: [--fakeip, 127.0.0.1]
+  output_format: text
+  parser: dnschef.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: netexec
+  title: NetExec
+  description: Network execution and lateral movement tool for Windows environments.
+  purpose: Execute commands, dump credentials, and move laterally across Windows networks.
+  version: "1.3.0"
+  kind: native
+  binary: netexec
+  source_url: https://github.com/Pennyw0rth/NetExec
+  license: BSD-2-Clause
+  capabilities: [lateral.move, credential.dump, active-directory.attack]
+  default_args: []
+  output_format: text
+  parser: netexec.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: gophish
+  title: GoPhish
+  description: Open-source phishing framework and campaign manager.
+  purpose: Manage phishing campaigns, landing pages, email templates, and tracking.
+  version: "0.12.1"
+  kind: native
+  binary: gophish
+  source_url: https://github.com/gophish/gophish
+  license: MIT
+  capabilities: [phishing.campaign, social.engineer]
+  default_args: []
+  output_format: json
+  parser: gophish.json.v1
+  risk: offensive-phishing
+  requires_network: true
+- id: sherlock
+  title: Sherlock
+  description: Social media username enumeration across 350+ platforms.
+  purpose: Hunt down social media accounts by username for OSINT and social engineering recon.
+  version: "0.14.4"
+  kind: native
+  binary: sherlock
+  source_url: https://github.com/sherlock-project/sherlock
+  license: MIT
+  capabilities: [personnel.osint, social.engineer]
+  default_args: [--print-found]
+  output_format: text
+  parser: sherlock.text.v1
+  risk: passive-network
+  requires_network: true
+- id: shodan
+  title: Shodan CLI
+  description: Search engine for Internet-connected devices and services.
+  purpose: Discover exposed services, IoT devices, and vulnerable systems via Shodan.
+  version: "1.0.0"
+  kind: native
+  binary: shodan
+  source_url: https://github.com/achillean/shodan-python
+  license: MIT
+  capabilities: [asset.discover, service.enumerate, exposed.device]
+  default_args: [search]
+  output_format: json
+  parser: shodan.json.v1
+  risk: passive-network
+  requires_network: true
+- id: swaks
+  title: Swaks
+  description: Swiss Army Knife for SMTP testing and email delivery.
+  purpose: Test SMTP servers, spoof emails, and test anti-spoofing controls.
+  version: "20240103.0"
+  kind: native
+  binary: swaks
+  source_url: https://github.com/jetmore/swaks
+  license: GPL-2.0
+  capabilities: [smtp.test, phishing.infra, email.spoof]
+  default_args: [--data, -]
+  output_format: text
+  parser: swaks.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: amass-enum
+  title: Amass Enum
+  description: Full-scope Amass enumeration with active DNS, cert transparency, and scraping.
+  purpose: Deep subdomain and asset enumeration with all active sources enabled.
+  version: "5.1.1"
+  kind: native
+  binary: amass
+  source_url: https://github.com/owasp-amass/amass
+  license: Apache-2.0
+  capabilities: [asset.discover, dns.enum]
+  default_args: [enum, -passive]
+  output_format: text
+  parser: amass.text.v1
+  risk: active-network
+  requires_network: true
+- id: knockpy
+  title: KnockPy
+  description: Subdomain enumeration through wordlist-based DNS brute-force.
+  purpose: Discover subdomains by brute-forcing DNS with extensive wordlists.
+  version: "7.0.0"
+  kind: native
+  binary: knockpy
+  source_url: https://github.com/guelfoweb/knock
+  license: GPL-3.0
+  capabilities: [dns.enum, asset.discover]
+  default_args: [--json]
+  output_format: json
+  parser: knockpy.json.v1
+  risk: active-network
+  requires_network: true
+- id: metagoofil
+  title: Metagoofil
+  description: Metadata extraction from public documents for OSINT.
+  purpose: Extract usernames, paths, software versions from documents found via search engines.
+  version: "2.2.0"
+  kind: native
+  binary: metagoofil
+  source_url: https://github.com/laramies/metagoofil
+  license: GPL-2.0
+  capabilities: [personnel.osint, email.harvest]
+  default_args: [-d, "", -t, "pdf,doc,xls,ppt,docx,xlsx,pptx"]
+  output_format: text
+  parser: metagoofil.text.v1
+  risk: passive-network
+  requires_network: true
+- id: evilginx
+  title: Evilginx
+  description: Advanced man-in-the-middle attack framework for credential phishing.
+  purpose: Bypass 2FA/MFA by proxying sessions and capturing credentials and tokens.
+  version: "3.3.0"
+  kind: native
+  binary: evilginx
+  source_url: https://github.com/kgretzky/evilginx2
+  license: BSD-3-Clause
+  capabilities: [phishing.campaign, credential.harvest, mitm.assess]
+  default_args: []
+  output_format: text
+  parser: evilginx.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: sliver
+  title: Sliver
+  description: Cross-platform adversary emulation and C2 framework from Bishop Fox.
+  purpose: Generate multi-platform implants, manage C2 beacons, and perform post-exploitation operations.
+  version: "1.5.42"
+  kind: native
+  binary: sliver-server
+  source_url: https://github.com/BishopFox/sliver
+  license: GPL-3.0
+  capabilities: [c2.sliver, c2.operate, payload.generate, post.recon, credential.dump]
+  default_args: []
+  output_format: json
+  parser: sliver.json.v1
+  risk: offensive-c2-critical
+  requires_network: true
+- id: havoc
+  title: Havoc
+  description: Modern post-exploitation and C2 framework with teamserver collaboration.
+  purpose: Manage implants, execute commands, and coordinate red team operations via Havoc C2.
+  version: "0.7"
+  kind: native
+  binary: havoc
+  source_url: https://github.com/HavocFramework/Havoc
+  license: GPL-3.0
+  capabilities: [c2.havoc, c2.operate, payload.generate, lateral.move, privilege.escalation]
+  default_args: []
+  output_format: json
+  parser: havoc.json.v1
+  risk: offensive-c2-critical
+  requires_network: true
+- id: merlin
+  title: Merlin
+  description: Cross-platform post-exploitation and C2 framework using HTTP/2.
+  purpose: Deploy encrypted C2 channels over HTTP/2 with cross-platform agent support.
+  version: "1.5.0"
+  kind: native
+  binary: merlinServer
+  source_url: https://github.com/Ne0nd0g/merlin
+  license: GPL-3.0
+  capabilities: [c2.merlin, c2.operate, payload.generate, post.recon]
+  default_args: []
+  output_format: json
+  parser: merlin.json.v1
+  risk: offensive-c2-critical
+  requires_network: true
+- id: mythic
+  title: Mythic
+  description: Collaborative red teaming and C2 framework with cross-platform agents.
+  purpose: Orchestrate multi-agent C2 operations with Docker-based payload containers.
+  version: "3.3.10"
+  kind: native
+  binary: mythic-cli
+  source_url: https://github.com/its-a-feature/Mythic
+  license: BSD-3-Clause
+  capabilities: [c2.mythic, c2.operate, payload.generate, credential.dump, lateral.move]
+  default_args: []
+  output_format: json
+  parser: mythic.json.v1
+  risk: offensive-c2-critical
+  requires_network: true
+- id: mimikatz
+  title: Mimikatz
+  description: Windows credential extraction and manipulation toolkit.
+  purpose: Dump plaintext passwords, hashes, PINs, and Kerberos tickets from memory.
+  version: "2.2.0"
+  kind: native
+  binary: mimikatz
+  supported_os: [windows]
+  source_url: https://github.com/gentilkiwi/mimikatz
+  license: GPL-3.0
+  capabilities: [credential.dump, post.mimikatz, privilege.escalation]
+  default_args: []
+  output_format: text
+  parser: mimikatz.text.v1
+  risk: offensive-credential-critical
+  requires_network: false
+- id: certipy
+  title: Certipy
+  description: Active Directory Certificate Services exploitation framework.
+  purpose: Enumerate, abuse, and exploit AD CS misconfigurations for privilege escalation.
+  version: "4.8.2"
+  kind: native
+  binary: certipy
+  source_url: https://github.com/ly4k/Certipy
+  license: MIT
+  capabilities: [post.adcs, privilege.escalation, active-directory.attack, credential.dump]
+  default_args: []
+  output_format: text
+  parser: certipy.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: responder
+  title: Responder
+  description: LLMNR, NBT-NS, and MDNS poisoner for credential harvesting.
+  purpose: Capture NTLMv2 hashes, cleartext credentials, and perform SMB relay attacks.
+  version: "3.1.5"
+  kind: native
+  binary: responder
+  source_url: https://github.com/lgandx/Responder
+  license: GPL-3.0
+  capabilities: [credential.harvest, mitm.assess, credential.dump, lateral.move]
+  default_args: [-A]
+  output_format: text
+  parser: responder.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: rubeus
+  title: Rubeus
+  description: C# toolkit for raw Kerberos interaction and ticket attacks.
+  purpose: Perform Kerberos ticket attacks including kerberoasting, AS-REP roasting, and ticket manipulation.
+  version: "2.3.0"
+  kind: native
+  binary: Rubeus
+  supported_os: [windows]
+  source_url: https://github.com/GhostPack/Rubeus
+  license: BSD-3-Clause
+  capabilities: [post.kerberoast, active-directory.attack, credential.dump, privilege.escalation]
+  default_args: []
+  output_format: json
+  parser: rubeus.json.v1
+  risk: active-network-critical
+  requires_network: true
+- id: sharphound
+  title: SharpHound
+  description: BloodHound data collector for Active Directory.
+  purpose: Collect AD object, session, ACL, and trust data for BloodHound analysis.
+  version: "5.16.0"
+  kind: native
+  binary: SharpHound
+  supported_os: [windows]
+  source_url: https://github.com/BloodHoundAD/SharpHound
+  license: BSL-1.0
+  capabilities: [active-directory.audit, post.recon, privilege.escalation]
+  default_args: [-c, All]
+  output_format: json
+  parser: sharphound.json.v1
+  risk: local-offensive-high
+  requires_network: false
+- id: winpeas
+  title: winPEAS
+  description: Windows privilege escalation enumeration script.
+  purpose: Enumerate Windows systems for privilege escalation vectors and misconfigurations.
+  version: "3.0.0"
+  kind: native
+  binary: winpeas
+  supported_os: [windows]
+  source_url: https://github.com/peass-ng/PEASS-ng
+  license: MIT
+  capabilities: [privilege.escalation, post.recon]
+  default_args: []
+  output_format: text
+  parser: winpeas.text.v1
+  risk: local-offensive-medium
+  requires_network: false
+- id: linpeas
+  title: linPEAS
+  description: Linux privilege escalation enumeration script.
+  purpose: Enumerate Linux systems for privilege escalation vectors, SUID binaries, and misconfigurations.
+  version: "3.0.0"
+  kind: native
+  binary: linpeas
+  source_url: https://github.com/peass-ng/PEASS-ng
+  license: MIT
+  capabilities: [privilege.escalation, post.recon]
+  default_args: []
+  output_format: text
+  parser: linpeas.text.v1
+  risk: local-offensive-medium
+  requires_network: false
+- id: seatbelt
+  title: Seatbelt
+  description: C# post-exploitation enumeration tool for Windows.
+  purpose: Perform comprehensive host security enumeration including patches, credentials, and misconfigurations.
+  version: "1.1.0"
+  kind: native
+  binary: Seatbelt
+  supported_os: [windows]
+  source_url: https://github.com/GhostPack/Seatbelt
+  license: BSD-3-Clause
+  capabilities: [post.recon, credential.dump]
+  default_args: [-group, all, -full]
+  output_format: json
+  parser: seatbelt.json.v1
+  risk: local-offensive-medium
+  requires_network: false
+- id: sharpview
+  title: SharpView
+  description: C# Active Directory enumeration and situational awareness tool.
+  purpose: Enumerate AD users, groups, computers, sessions, GPOs, and trust relationships.
+  version: "1.0.0"
+  kind: native
+  binary: SharpView
+  supported_os: [windows]
+  source_url: https://github.com/tevora-threat/SharpView
+  license: BSD-3-Clause
+  capabilities: [active-directory.audit, post.recon, privilege.escalation]
+  default_args: []
+  output_format: json
+  parser: sharpview.json.v1
+  risk: local-offensive-medium
+  requires_network: false
+- id: sharppersist
+  title: SharPersist
+  description: Windows persistence toolkit with multiple persistence techniques.
+  purpose: Establish persistent access through scheduled tasks, registry, WMI, startup folders, and services.
+  version: "1.0.0"
+  kind: native
+  binary: SharPersist
+  supported_os: [windows]
+  source_url: https://github.com/fireeye/SharPersist
+  license: Apache-2.0
+  capabilities: [post.persistence, persist.install]
+  default_args: []
+  output_format: text
+  parser: sharppersist.text.v1
+  risk: local-offensive-critical
+  requires_network: false
+- id: covenant
+  title: Covenant
+  description: .NET C2 framework with collaborative red teaming capabilities.
+  purpose: Deploy .NET implants, manage grunts, and execute post-exploitation through a web UI.
+  version: "0.7"
+  kind: native
+  binary: Covenant
+  supported_os: [windows]
+  source_url: https://github.com/cobbr/Covenant
+  license: GPL-3.0
+  capabilities: [c2.covenant, c2.operate, payload.generate, lateral.move, credential.dump]
+  default_args: []
+  output_format: json
+  parser: covenant.json.v1
+  risk: offensive-c2-critical
+  requires_network: true
+- id: crackmapexec
+  title: CrackMapExec
+  description: Swiss army knife for pentesting Windows/Active Directory environments.
+  purpose: Enumerate, attack, and pivot through Windows domains with integrated protocol support.
+  version: "6.0.0"
+  kind: native
+  binary: crackmapexec
+  source_url: https://github.com/byt3bl33d3r/CrackMapExec
+  license: BSD-2-Clause
+  capabilities: [lateral.move, credential.dump, active-directory.attack, smb.test]
+  default_args: []
+  output_format: text
+  parser: cme.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: metasploit
+  title: Metasploit Framework
+  description: World's most used penetration testing framework with extensive exploit database.
+  purpose: Full exploitation framework with 2000+ exploits, auxiliary modules, and post-exploitation tools.
+  version: "6.4.50"
+  kind: native
+  binary: msfconsole
+  source_url: https://github.com/rapid7/metasploit-framework
+  license: BSD-3-Clause
+  capabilities: [exploit.framework, exploit.execute, post.exploit, credential.dump, lateral.move, payload.generate]
+  default_args: [-q]
+  output_format: json
+  parser: metasploit.json.v1
+  risk: offensive-framework-critical
+  requires_network: true
+- id: powersploit
+  title: PowerSploit
+  description: PowerShell post-exploitation framework with modules for recon, persistence, and exfiltration.
+  purpose: Execute PowerShell-based attacks for reconnaissance, code execution, and privilege escalation.
+  version: "3.0.0"
+  kind: native
+  binary: powershell
+  supported_os: [windows]
+  source_url: https://github.com/PowerShellMafia/PowerSploit
+  license: BSD-3-Clause
+  capabilities: [post.exploit, post.recon, credential.dump, lateral.move, privilege.escalation]
+  default_args: [-ep, bypass]
+  output_format: text
+  parser: powersploit.text.v1
+  risk: local-offensive-critical
+  requires_network: false
+- id: kekeo
+  title: Kekeo
+  description: Kerberos exploitation toolkit for ticket manipulation and forgery.
+  purpose: Forge Kerberos tickets, perform overpass-the-hash, and generate silver/golden tickets.
+  version: "2.2.0"
+  kind: native
+  binary: kekeo
+  supported_os: [windows]
+  source_url: https://github.com/gentilkiwi/kekeo
+  license: GPL-3.0
+  capabilities: [post.kerberos, active-directory.attack, credential.dump, privilege.escalation]
+  default_args: []
+  output_format: text
+  parser: kekeo.text.v1
+  risk: local-offensive-critical
+  requires_network: false
+- id: sharpup
+  title: SharpUp
+  description: C# privilege escalation audit tool for common Windows misconfigurations.
+  purpose: Check for privilege escalation vectors including unquoted paths, service permissions, and DLL hijacking.
+  version: "1.0.0"
+  kind: native
+  binary: SharpUp
+  supported_os: [windows]
+  source_url: https://github.com/GhostPack/SharpUp
+  license: BSD-3-Clause
+  capabilities: [privilege.escalation, post.recon]
+  default_args: [audit]
+  output_format: json
+  parser: sharpup.json.v1
+  risk: local-offensive-medium
+  requires_network: false
+- id: chisel
+  title: Chisel
+  description: Fast TCP/UDP tunnel over HTTP with SSH-like SOCKS proxy support.
+  purpose: Create reverse tunnels and pivot through compromised hosts for lateral movement.
+  version: "1.10.1"
+  kind: native
+  binary: chisel
+  source_url: https://github.com/jpillora/chisel
+  license: MIT
+  capabilities: [pivot.tunnel, lateral.move, port.forward]
+  default_args: []
+  output_format: text
+  parser: chisel.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: searchsploit
+  title: SearchSploit
+  description: Command-line search tool for the Exploit-DB archive.
+  purpose: Search the pinned local Exploit-DB copy for exploits, shells, and paper matches.
+  version: "2026.1"
+  kind: native
+  binary: searchsploit
+  source_url: https://gitlab.com/exploit-database/exploitdb
+  license: MIT
+  capabilities: [exploit.search]
+  default_args: [--colour]
+  output_format: text
+  parser: searchsploit.text.v1
+  risk: local-read
+  requires_network: false
+- id: enum4linux
+  title: Enum4linux
+  description: Active Directory and Windows/SMB enumeration over the null session.
+  purpose: Enumerate SMB shares, users, groups, and policies on Windows targets.
+  version: "1.0.0"
+  kind: native
+  binary: enum4linux
+  source_url: https://github.com/CiscoCXSecurity/enum4linux
+  license: GPL-3.0
+  capabilities: [smb.test, active-directory.attack]
+  default_args: [-a]
+  output_format: text
+  parser: enum4linux.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: wpscan
+  title: WPScan
+  description: WordPress vulnerability scanner.
+  purpose: Enumerate WordPress plugins, themes, users, and known vulnerabilities.
+  version: "3.8.29"
+  kind: native
+  binary: wpscan
+  source_url: https://github.com/wpscanteam/wpscan
+  license: GPL-3.0
+  capabilities: [cms.detect, vuln.scan]
+  default_args: []
+  output_format: json
+  parser: wpscan.json.v1
+  risk: active-http
+  requires_network: true
+- id: dnsrecon
+  title: DNSRecon
+  description: DNS enumeration and reverse lookup tool.
+  purpose: Enumerate records, brute-force subdomains, and perform zone transfers.
+  version: "1.1.4"
+  kind: native
+  binary: dnsrecon
+  source_url: https://github.com/darkoperator/dnsrecon
+  license: GPL-2.0
+  capabilities: [dns.enum, dns.analyse]
+  default_args: [-t, std]
+  output_format: text
+  parser: dnsrecon.text.v1
+  risk: active-network
+  requires_network: true
+- id: smbmap
+  title: SMBMap
+  description: SMB share enumeration and access-checking tool.
+  purpose: Enumerate SMB shares, check access, and recurse share contents.
+  version: "1.10.4"
+  kind: native
+  binary: smbmap
+  source_url: https://github.com/ShawnDEvans/smbmap
+  license: GPL-3.0
+  capabilities: [smb.test, active-directory.attack]
+  default_args: []
+  output_format: text
+  parser: smbmap.text.v1
+  risk: active-network-critical
+  requires_network: true
+- id: cloudfox
+  title: CloudFox
+  description: Cloud attack-surface enumeration and exploitation toolkit.
+  purpose: Discover attackable cloud services and IAM paths in AWS/Azure/GCP.
+  version: "2.0.5"
+  kind: native
+  binary: cloudfox
+  source_url: https://github.com/BishopFox/cloudfox
+  license: Apache-2.0
+  capabilities: [cloud.enum, cloud.review]
+  default_args: []
+  output_format: text
+  parser: cloudfox.text.v1
+  risk: local-read-sensitive
+  requires_network: true
+- id: pacu
+  title: Pacu
+  description: AWS exploitation framework.
+  purpose: Automate AWS privilege escalation, backdooring, and post-exploitation modules.
+  version: "1.5.0"
+  kind: native
+  binary: pacu
+  source_url: https://github.com/RhinoSecurityLabs/pacu
+  license: GPL-3.0
+  capabilities: [cloud.enum, cloud.review, credential.dump]
+  default_args: []
+  output_format: text
+  parser: pacu.text.v1
+  risk: local-read-sensitive
+  requires_network: true
+- id: arjun
+  title: Arjun
+  description: HTTP parameter discovery scanner.
+  purpose: Discover hidden HTTP parameters on web endpoints.
+  version: "2.2.1"
+  kind: native
+  binary: arjun
+  source_url: https://github.com/s0md3v/Arjun
+  license: AGPL-3.0
+  capabilities: [web.content.discover, web.scan]
+  default_args: []
+  output_format: text
+  parser: arjun.text.v1
+  risk: active-http
+  requires_network: true
+- id: agent-browser
+  title: Agent Browser
+  description: CDP-driven Chrome automation CLI for AI agents (snapshot, click, fill, HAR, refs).
+  purpose: Drive a real browser for JS-rendered endpoints, interaction automation, and network capture.
+  version: "0.34.0"
+  kind: native
+  binary: agent-browser
+  source_url: https://github.com/cyberful/agent-browser
+  license: Apache-2.0
+  capabilities: [web.browse, web.automate, web.har]
+  default_args: []
+  output_format: json
+  parser: agent-browser.batch.v1
+  risk: active-http
+  requires_network: true
+- id: zap
+  title: OWASP ZAP
+  description: OWASP ZAP baseline scanner with passive and active web scanning.
+  purpose: Run a deterministic ZAP baseline scan against a target to surface common web vulnerabilities.
+  version: "2.16.1"
+  kind: docker
+  binary: zap-baseline.py
+  docker_image: ghcr.io/zaproxy/zaproxy:stable
+  writable_paths: [/zap/wrk, /home/zap/.ZAP]
+  source_url: https://github.com/zaproxy/zaproxy
+  license: Apache-2.0
+  capabilities: [web.zap]
+  default_args: []
+  output_format: json
+  parser: zap.baseline.v1
+  risk: active-http-high
+  requires_network: true

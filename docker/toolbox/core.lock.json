@@ -1,0 +1,180 @@
+{
+  "schema": 1,
+  "profile": "core",
+  "tools": {
+    "httpx": {
+      "version": "v1.10.0",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/projectdiscovery/httpx/releases/download/v1.10.0/httpx_1.10.0_linux_arm64.zip",
+          "sha256": "7f3eaf5a6839504f5e2ce29c3ce94aa2ddeeaa7619d9a497e017232c6dc49b1c",
+          "size": 17897332
+        },
+        "amd64": {
+          "url": "https://github.com/projectdiscovery/httpx/releases/download/v1.10.0/httpx_1.10.0_linux_amd64.zip",
+          "sha256": "63eac4dcd6e5c9867c94765fdaaf66e7b4eeae3474a1f06e600e266a1c81a53e",
+          "size": 19132519
+        }
+      },
+      "reported_version": "1.10.0"
+    },
+    "katana": {
+      "version": "v1.6.1",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/projectdiscovery/katana/releases/download/v1.6.1/katana_1.6.1_linux_arm64.zip",
+          "sha256": "663b4ed2c6559a7dacc819e816889940d567ff554ac3f543c8c8f9b50245cd45",
+          "size": 30074972
+        },
+        "amd64": {
+          "url": "https://github.com/projectdiscovery/katana/releases/download/v1.6.1/katana_1.6.1_linux_amd64.zip",
+          "sha256": "503754f1bd370c3ef287df6998e317baed2dd75bdd13ea64034f09b80ca393f3",
+          "size": 31373279
+        }
+      },
+      "reported_version": "1.6.1"
+    },
+    "nuclei": {
+      "version": "v3.11.0",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/projectdiscovery/nuclei/releases/download/v3.11.0/nuclei_3.11.0_linux_arm64.zip",
+          "sha256": "78401fc570ed60a48b8a659f65f6645015a8b3b3097a5e50fc6fbe106a4b108a",
+          "size": 39136868
+        },
+        "amd64": {
+          "url": "https://github.com/projectdiscovery/nuclei/releases/download/v3.11.0/nuclei_3.11.0_linux_amd64.zip",
+          "sha256": "dc238d6040813e14fc30514dac5a2eb1b430c694f3ca99eee2a5097e55076283",
+          "size": 43591010
+        }
+      },
+      "reported_version": "3.11.0"
+    },
+    "dnsx": {
+      "version": "v1.3.0",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/projectdiscovery/dnsx/releases/download/v1.3.0/dnsx_1.3.0_linux_arm64.zip",
+          "sha256": "94dc2d96aed1ae3e680dc09f070e67e48bd796583b8144c1de5bd3425a318847",
+          "size": 8954120
+        },
+        "amd64": {
+          "url": "https://github.com/projectdiscovery/dnsx/releases/download/v1.3.0/dnsx_1.3.0_linux_amd64.zip",
+          "sha256": "1415020474886151a4820c62b9e68a315cc062f7f111a2fd13fda99047a809a6",
+          "size": 9820070
+        }
+      },
+      "reported_version": "1.2.3",
+      "version_note": "Official v1.3.0 release archive embeds a binary reporting 1.2.3; identity is pinned by SHA-256."
+    },
+    "subfinder": {
+      "version": "v2.14.0",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/projectdiscovery/subfinder/releases/download/v2.14.0/subfinder_2.14.0_linux_arm64.zip",
+          "sha256": "e3dc19f1e1b1f01840989e5d2501fd59069e3fd6fc2387ca78fbe246ef5e0680",
+          "size": 10260510
+        },
+        "amd64": {
+          "url": "https://github.com/projectdiscovery/subfinder/releases/download/v2.14.0/subfinder_2.14.0_linux_amd64.zip",
+          "sha256": "6529294788f56a20ed96a9b70e71f8f3c247f1d6104ba1e2c2e9e58d8a32c6cb",
+          "size": 11128476
+        }
+      },
+      "reported_version": "2.14.0"
+    },
+    "ffuf": {
+      "version": "v2.2.1",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/ffuf/ffuf/releases/download/v2.2.1/ffuf_2.2.1_linux_arm64.tar.gz",
+          "sha256": "89ad4f50345e6a9a48ecc8d241811d582cedf96279276b48d666b12b31260484",
+          "size": 3709316
+        },
+        "amd64": {
+          "url": "https://github.com/ffuf/ffuf/releases/download/v2.2.1/ffuf_2.2.1_linux_amd64.tar.gz",
+          "sha256": "86307885810d3c36ba4a3e9ba5178c2d9027bba0dd7f4ea39e39e7c972b62396",
+          "size": 4078669
+        }
+      },
+      "reported_version": "2.2.1"
+    },
+    "gitleaks": {
+      "version": "8.30.1",
+      "reported_version": "8.30.1",
+      "source_url": "https://github.com/gitleaks/gitleaks/releases/tag/v8.30.1",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_arm64.tar.gz",
+          "size": 7601421,
+          "sha256": "e4a487ee7ccd7d3a7f7ec08657610aa3606637dab924210b3aee62570fb4b080"
+        },
+        "amd64": {
+          "url": "https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz",
+          "size": 8230402,
+          "sha256": "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
+        }
+      }
+    },
+    "syft": {
+      "version": "1.50.0",
+      "reported_version": "1.50.0",
+      "source_url": "https://github.com/anchore/syft/releases/tag/v1.50.0",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/anchore/syft/releases/download/v1.50.0/syft_1.50.0_linux_arm64.tar.gz",
+          "size": 26228491,
+          "sha256": "887c57cbcc2d0e8c5c110a4571a3fc7150058b24d74f993ee4663516e5c8ce86"
+        },
+        "amd64": {
+          "url": "https://github.com/anchore/syft/releases/download/v1.50.0/syft_1.50.0_linux_amd64.tar.gz",
+          "size": 28722052,
+          "sha256": "bf7b29ff57f06da30918266a0e1c2885a8f99784798d1bdb1628886aa015d788"
+        }
+      }
+    },
+    "naabu": {
+      "version": "2.6.1",
+      "reported_version": "2.6.1",
+      "source_url": "https://github.com/projectdiscovery/naabu/releases/tag/v2.6.1",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/projectdiscovery/naabu/releases/download/v2.6.1/naabu_2.6.1_linux_arm64.zip",
+          "size": 10945734,
+          "sha256": "3adc2bb2395c3efff89623499b20eea66ef54924c485d3ae86762393a31736ea"
+        },
+        "amd64": {
+          "url": "https://github.com/projectdiscovery/naabu/releases/download/v2.6.1/naabu_2.6.1_linux_amd64.zip",
+          "size": 11858775,
+          "sha256": "018c4c9884dea971eda860435ede3021d1150732f34cfd245498c6726d8cab90"
+        }
+      }
+    }
+  },
+  "data": {
+    "nuclei-templates": {
+      "url": "https://codeload.github.com/projectdiscovery/nuclei-templates/tar.gz/7d66fa06cc0a5ad85f7bf35f18cf8ee9218fa9a5",
+      "sha256": "bb519f9fe89bfc37ae4bf5590c82507536aa1fc7fa00268d15589a0314643aa7",
+      "size": 9517294,
+      "revision": "7d66fa06cc0a5ad85f7bf35f18cf8ee9218fa9a5"
+    },
+    "common-wordlist": {
+      "url": "https://raw.githubusercontent.com/danielmiessler/SecLists/190c6f7bd58c847ceadfe57d9853592737f059e8/Discovery/Web-Content/common.txt",
+      "sha256": "fc320bacd30d93f5080029912b93667cd739401f81634579a7125fc0c027e6d5",
+      "size": 38506,
+      "revision": "190c6f7bd58c847ceadfe57d9853592737f059e8"
+    },
+    "wordlist-license": {
+      "url": "https://raw.githubusercontent.com/danielmiessler/SecLists/190c6f7bd58c847ceadfe57d9853592737f059e8/LICENSE",
+      "sha256": "3dbdc93d5f8829de0941744841730a09c106d0732e5ae0e98ca1d77be7ded66c",
+      "size": 1072
+    }
+  },
+  "packages": {
+    "nmap": "7.93+dfsg1-1",
+    "nmap-common": "7.93+dfsg1-1",
+    "ca-certificates": "20250419~deb12u2",
+    "jq": "1.6-2.1+deb12u3",
+    "libpcap0.8": "1.10.3-1"
+  }
+}

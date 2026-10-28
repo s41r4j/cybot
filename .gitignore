@@ -1,0 +1,34 @@
+# Local CYBOT runtime state and generated outputs
+.cybot/
+data/
+reports/
+
+# Local build artifacts
+/cybot
+*.test
+coverage.out
+
+# Docker image exports are retained locally for upload/restore, not versioned.
+/backups/
+
+# Third-party reference clones for comparison
+/reference/
+
+# Editor and OS metadata
+.DS_Store
+.idea/
+.vscode/
+
+# Python tooling caches
+__pycache__/
+*.pyc
+
+# Private assessment/research outputs must not enter public source snapshots.
+/nasa-recon/
+/release-notices/
+/dist/
+/videos/
+/docs/images/
+/docs/deepseek-cybot-assessment.md
+/docker/toolbox/build-result*.json
+/docker/toolbox/core-runtime.lock.json

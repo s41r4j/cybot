@@ -1,0 +1,205 @@
+FROM golang:1.26.4-bookworm@sha256:b305420a68d0f229d91eb3b3ed9e519fcf2cf5461da4bef997bf927e8c0bfd2b
+
+LABEL org.opencontainers.image.title="CYBOT Toolbox" \
+      org.opencontainers.image.description="Pinned monolithic cybersecurity toolchain for deterministic CYBOT capabilities" \
+      org.opencontainers.image.source="https://github.com/s41r4j/cybot" \
+      org.opencontainers.image.version="2026.08.9" \
+      io.cybot.toolbox.schema="1"
+
+ARG SUBFINDER_VERSION=v2.14.0
+ARG DNSX_VERSION=v1.3.0
+ARG NAABU_VERSION=v2.6.1
+ARG HTTPX_VERSION=v1.10.0
+ARG KATANA_VERSION=v1.6.1
+ARG NUCLEI_VERSION=v3.11.0
+ARG AMASS_VERSION=v5.1.1
+ARG FFUF_VERSION=v2.2.1
+ARG GITLEAKS_VERSION=v8.30.1
+ARG TRUFFLEHOG_VERSION=v3.96.0
+ARG GOSEC_VERSION=v2.28.0
+ARG SEMGREP_VERSION=1.172.0
+ARG TRIVY_VERSION=v0.72.0
+ARG SYFT_VERSION=v1.50.0
+ARG GRYPE_VERSION=v0.116.1
+ARG NUCLEI_TEMPLATES_VERSION=v10.4.6
+ARG SECLISTS_VERSION=2026.1
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    GOBIN=/opt/cybot/bin \
+    GOPATH=/opt/cybot/go \
+    PATH=/opt/cybot/bin:/opt/cybot/venv/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    NUCLEI_TEMPLATES_DIRECTORY=/opt/cybot/share/nuclei-templates \
+    SECLISTS_DIRECTORY=/opt/cybot/share/seclists \
+    CHROME_PATH=/usr/bin/chromium \
+    CGO_ENABLED=1
+
+SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential ca-certificates chromium curl dnsutils file git jq libmagic1 \
+      libpcap-dev nmap pkg-config python3 python3-dev python3-pip python3-venv unzip xz-utils zip \
+      hydra hashcat john swaks ruby ruby-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /opt/cybot/bin /opt/cybot/go /opt/cybot/share /opt/cybot/manifest /workspace
+
+# searchsploit (exploitdb) and enum4linux are not in Debian bookworm; fetch them.
+RUN git clone --depth 1 https://gitlab.com/exploit-database/exploitdb.git /opt/cybot/share/exploitdb \
+    && ln -s /opt/cybot/share/exploitdb/searchsploit /opt/cybot/bin/searchsploit \
+    && git clone --depth 1 https://github.com/CiscoCXSecurity/enum4linux.git /opt/cybot/share/enum4linux \
+    && ln -s /opt/cybot/share/enum4linux/enum4linux.pl /opt/cybot/bin/enum4linux \
+    && chmod +x /opt/cybot/bin/searchsploit /opt/cybot/bin/enum4linux
+
+RUN go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@${SUBFINDER_VERSION}
+RUN go install github.com/projectdiscovery/dnsx/cmd/dnsx@${DNSX_VERSION}
+RUN go install github.com/projectdiscovery/naabu/v2/cmd/naabu@${NAABU_VERSION}
+RUN go install github.com/projectdiscovery/httpx/cmd/httpx@${HTTPX_VERSION}
+RUN go install github.com/projectdiscovery/katana/cmd/katana@${KATANA_VERSION}
+RUN go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@${NUCLEI_VERSION}
+RUN go install github.com/owasp-amass/amass/v5/cmd/amass@${AMASS_VERSION}
+RUN go install github.com/ffuf/ffuf/v2@${FFUF_VERSION}
+RUN go install github.com/zricethezav/gitleaks/v8@${GITLEAKS_VERSION}
+RUN git clone --depth 1 --branch ${TRUFFLEHOG_VERSION} https://github.com/trufflesecurity/trufflehog.git /tmp/trufflehog-source \
+    && cd /tmp/trufflehog-source \
+    && go build -trimpath -ldflags="-s -w" -o /opt/cybot/bin/trufflehog . \
+    && rm -rf /tmp/trufflehog-source
+RUN go install github.com/securego/gosec/v2/cmd/gosec@${GOSEC_VERSION}
+RUN GOEXPERIMENT=jsonv2 go install github.com/aquasecurity/trivy/cmd/trivy@${TRIVY_VERSION}
+RUN go install github.com/anchore/syft/cmd/syft@${SYFT_VERSION}
+RUN go install github.com/anchore/grype/cmd/grype@${GRYPE_VERSION}
+RUN go install github.com/jpillora/chisel@v1.10.1
+RUN go install github.com/OJ/gobuster/v3@v3.6.0
+RUN go install github.com/tomnomnom/waybackurls@latest
+RUN go install github.com/BishopFox/jsluice/cmd/jsluice@latest
+RUN go install github.com/tomnomnom/gf@latest
+RUN go install github.com/tomnomnom/anew@latest
+
+# massdns is C; build from source.
+RUN git clone --depth 1 --branch v1.1.0 https://github.com/blechschmidt/massdns.git /tmp/massdns \
+    && make -C /tmp/massdns \
+    && cp /tmp/massdns/bin/massdns /opt/cybot/bin/massdns \
+    && rm -rf /tmp/massdns
+
+ARG CLOUDFOX_VERSION=2.0.5
+RUN curl -fsSL "https://github.com/BishopFox/cloudfox/releases/download/v${CLOUDFOX_VERSION}/cloudfox-linux-arm64.zip" -o /tmp/cloudfox.zip \
+    && unzip -o /tmp/cloudfox.zip -d /tmp/cloudfox-unzip \
+    && mv /tmp/cloudfox-unzip/cloudfox/cloudfox /opt/cybot/bin/cloudfox \
+    && chmod +x /opt/cybot/bin/cloudfox \
+    && rm -rf /tmp/cloudfox.zip /tmp/cloudfox-unzip
+
+ARG AGENT_BROWSER_VERSION=0.34.0
+# Upstream Apache-2.0 agent-browser (cyberful fork has no releases yet; pin the
+# cyberful fork binary tag here once it publishes one).
+RUN curl -fsSL "https://github.com/vercel-labs/agent-browser/releases/download/v${AGENT_BROWSER_VERSION}/agent-browser-linux-arm64" -o /opt/cybot/bin/agent-browser \
+    && chmod +x /opt/cybot/bin/agent-browser \
+    && agent-browser --version
+
+RUN python3 -m venv /opt/cybot/venv \
+    && /opt/cybot/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel \
+    && /opt/cybot/venv/bin/pip install --no-cache-dir semgrep==${SEMGREP_VERSION} \
+    && /opt/cybot/venv/bin/pip install --no-cache-dir sherlock-project impacket certipy-ad shodan dnsrecon smbmap arjun \
+    && /opt/cybot/venv/bin/pip install --no-cache-dir sqlmap dirsearch wafw00f \
+    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain stable \
+    && export PATH="/root/.cargo/bin:$PATH" \
+    && /opt/cybot/venv/bin/pip install --no-cache-dir 'arc4>=0.5.0' \
+    && /opt/cybot/venv/bin/pip install --no-cache-dir "netexec @ git+https://github.com/Pennyw0rth/NetExec.git@v1.5.1" \
+    && ln -s /opt/cybot/venv/bin/secretsdump.py /opt/cybot/venv/bin/impacket-secretsdump \
+    && ln -s /opt/cybot/venv/bin/psexec.py /opt/cybot/venv/bin/impacket-psexec \
+    && ln -s /opt/cybot/venv/bin/smbclient.py /opt/cybot/venv/bin/impacket-smbclient
+
+# metagoofil is a standalone Python tool (no setup.py on PyPI or GitHub).
+RUN git clone --depth 1 https://github.com/laramies/metagoofil.git /opt/cybot/share/metagoofil \
+    && /opt/cybot/venv/bin/pip install --no-cache-dir hachoir beautifulsoup4 \
+    && ln -s /opt/cybot/share/metagoofil/metagoofil.py /opt/cybot/bin/metagoofil \
+    && chmod +x /opt/cybot/bin/metagoofil
+
+# GitHub-only Python tools: xsstrike, linkfinder, corscanner, cmseek, knockpy, dnschef
+# Each pip requirements install is best-effort (a transitive conflict must not
+# abort the image build); the symlinked entrypoint still works without them.
+RUN git clone --depth 1 https://github.com/s0md3v/XSStrike.git /opt/cybot/share/xsstrike \
+    && (/opt/cybot/venv/bin/pip install --no-cache-dir -r /opt/cybot/share/xsstrike/requirements.txt || true) \
+    && ln -s /opt/cybot/share/xsstrike/xsstrike.py /opt/cybot/bin/xsstrike \
+    && chmod +x /opt/cybot/bin/xsstrike \
+    && git clone --depth 1 https://github.com/GerbenJavado/LinkFinder.git /opt/cybot/share/linkfinder \
+    && (/opt/cybot/venv/bin/pip install --no-cache-dir -r /opt/cybot/share/linkfinder/requirements.txt || true) \
+    && ln -s /opt/cybot/share/linkfinder/linkfinder.py /opt/cybot/bin/linkfinder \
+    && chmod +x /opt/cybot/bin/linkfinder \
+    && git clone --depth 1 https://github.com/chenjj/CORScanner.git /opt/cybot/share/corscanner \
+    && (/opt/cybot/venv/bin/pip install --no-cache-dir -r /opt/cybot/share/corscanner/requirements.txt || true) \
+    && ln -s /opt/cybot/share/corscanner/cors_scan.py /opt/cybot/bin/corscanner \
+    && chmod +x /opt/cybot/bin/corscanner \
+    && git clone --depth 1 https://github.com/Tuhinshubhra/CMSeeK.git /opt/cybot/share/cmseek \
+    && (/opt/cybot/venv/bin/pip install --no-cache-dir -r /opt/cybot/share/cmseek/requirements.txt || true) \
+    && ln -s /opt/cybot/share/cmseek/cmseek.py /opt/cybot/bin/cmseek \
+    && chmod +x /opt/cybot/bin/cmseek \
+    && git clone --depth 1 https://github.com/guelfoweb/knock.git /opt/cybot/share/knockpy \
+    && (/opt/cybot/venv/bin/pip install --no-cache-dir -r /opt/cybot/share/knockpy/requirements.txt || true) \
+    && ln -s /opt/cybot/share/knockpy/knockpy.py /opt/cybot/bin/knockpy \
+    && chmod +x /opt/cybot/bin/knockpy \
+    && git clone --depth 1 https://github.com/iphelix/dnschef.git /opt/cybot/share/dnschef \
+    && ln -s /opt/cybot/share/dnschef/dnschef.py /opt/cybot/bin/dnschef \
+    && chmod +x /opt/cybot/bin/dnschef \
+    && git clone --depth 1 https://github.com/drwetter/testssl.sh.git /opt/cybot/share/testssl \
+    && ln -s /opt/cybot/share/testssl/testssl.sh /opt/cybot/bin/testssl.sh \
+    && chmod +x /opt/cybot/bin/testssl.sh \
+    && git clone --depth 1 https://github.com/sullo/nikto.git /opt/cybot/share/nikto \
+    && ln -s /opt/cybot/share/nikto/program/nikto.pl /opt/cybot/bin/nikto \
+    && chmod +x /opt/cybot/bin/nikto \
+    && git clone --depth 1 https://github.com/urbanadventurer/WhatWeb.git /opt/cybot/share/whatweb \
+    && ln -s /opt/cybot/share/whatweb/whatweb /opt/cybot/bin/whatweb \
+    && chmod +x /opt/cybot/bin/whatweb \
+    && git clone --depth 1 https://github.com/lgandx/Responder.git /opt/cybot/share/responder \
+    && ln -s /opt/cybot/share/responder/Responder.py /opt/cybot/bin/responder \
+    && chmod +x /opt/cybot/bin/responder \
+    && curl -fsSL "https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh" -o /opt/cybot/bin/linpeas \
+    && chmod +x /opt/cybot/bin/linpeas
+
+# wpscan is a Ruby application requiring native build libraries.
+RUN apt-get update && apt-get install -y --no-install-recommends zlib1g-dev liblzma-dev libcurl4-openssl-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && gem install --no-document wpscan
+
+# theHarvester is not on PyPI at version 4.6.0; install the pinned GitHub checkout.
+RUN /opt/cybot/venv/bin/pip install --no-cache-dir "theHarvester @ git+https://github.com/laramies/theHarvester.git@4.6.0"
+
+RUN git clone --depth 1 --branch ${NUCLEI_TEMPLATES_VERSION} https://github.com/projectdiscovery/nuclei-templates.git /opt/cybot/share/nuclei-templates \
+    && rm -rf /opt/cybot/share/nuclei-templates/.git
+RUN git clone --depth 1 --branch ${SECLISTS_VERSION} https://github.com/danielmiessler/SecLists.git /opt/cybot/share/seclists \
+    && rm -rf /opt/cybot/share/seclists/.git
+
+ENV TRIVY_CACHE_DIR=/opt/cybot/share/trivy-cache \
+    GRYPE_DB_CACHE_DIR=/opt/cybot/share/grype-db \
+    GRYPE_DB_AUTO_UPDATE=false \
+    GRYPE_DB_VALIDATE_AGE=false \
+    GRYPE_CHECK_FOR_APP_UPDATE=false \
+    CYBOT_TOOLBOX_INTERNAL=1
+
+RUN mkdir -p "${TRIVY_CACHE_DIR}" "${GRYPE_DB_CACHE_DIR}" \
+    && trivy image --cache-dir "${TRIVY_CACHE_DIR}" --download-db-only --no-progress \
+    && GRYPE_DB_AUTO_UPDATE=true grype db update \
+    && grype db status
+
+RUN chmod -R a+rX "${TRIVY_CACHE_DIR}" "${GRYPE_DB_CACHE_DIR}" || true
+
+ENV TRIVY_BUNDLED_CACHE_DIR=/opt/cybot/share/trivy-cache \
+    TRIVY_CACHE_DIR=/home/cybot/.cache/trivy
+
+WORKDIR /src/cybot
+COPY . /src/cybot
+RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w -X main.version=2026.08.9-toolbox" -o /opt/cybot/bin/cybot ./cmd/cybot
+
+COPY docker/toolbox/tool-versions.lock.json /opt/cybot/manifest/tool-versions.lock.json
+COPY rules /opt/cybot/rules
+COPY scripts/toolbox-healthcheck.sh /usr/local/bin/cybot-toolbox-health
+COPY scripts/toolbox-entrypoint.sh /usr/local/bin/cybot-toolbox
+
+RUN chmod 0755 /usr/local/bin/cybot-toolbox-health /usr/local/bin/cybot-toolbox \
+    && useradd --create-home --uid 10001 --shell /bin/bash cybot \
+    && mkdir -p /home/cybot/.cache /home/cybot/.config /home/cybot/.local/share /workspace/.cybot /data /reports \
+    && chown -R cybot:cybot /home/cybot /workspace /data /reports \
+    && /usr/local/bin/cybot-toolbox-health --build
+
+USER cybot
+WORKDIR /workspace
+VOLUME ["/data", "/reports", "/home/cybot/.cache"]
+ENTRYPOINT ["/usr/local/bin/cybot-toolbox"]
+CMD ["help"]

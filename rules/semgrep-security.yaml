@@ -1,0 +1,42 @@
+rules:
+  - id: cybot.javascript.dynamic-eval
+    message: Dynamic code evaluation can execute attacker-controlled JavaScript.
+    severity: ERROR
+    languages: [javascript, typescript]
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: new Function(...)
+    metadata:
+      category: security
+      cwe: CWE-95
+
+  - id: cybot.javascript.command-execution
+    message: Review command execution and ensure arguments cannot be attacker controlled.
+    severity: WARNING
+    languages: [javascript, typescript]
+    pattern-either:
+      - pattern: $CP.exec(...)
+      - pattern: $CP.execSync(...)
+    metadata:
+      category: security
+      cwe: CWE-78
+
+  - id: cybot.go.insecure-tls
+    message: TLS certificate verification is disabled.
+    severity: ERROR
+    languages: [go]
+    pattern: 'tls.Config{..., InsecureSkipVerify: true, ...}'
+    metadata:
+      category: security
+      cwe: CWE-295
+
+  - id: cybot.go.shell-command
+    message: Review shell command construction and prevent untrusted input from reaching the shell.
+    severity: WARNING
+    languages: [go]
+    pattern-either:
+      - pattern: exec.Command("sh", "-c", ...)
+      - pattern: exec.Command("bash", "-c", ...)
+    metadata:
+      category: security
+      cwe: CWE-78

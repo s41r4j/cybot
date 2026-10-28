@@ -1,0 +1,31 @@
+version: 2
+project_name: cybot
+before:
+  hooks:
+    - python3 scripts/dependency_notices.py
+builds:
+  - id: cybot
+    main: ./cmd/cybot
+    binary: cybot
+    env: [CGO_ENABLED=0]
+    flags: [-trimpath]
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+archives:
+  - formats: [tar.gz]
+    files:
+      - LICENSE
+      - SECURITY.md
+      - THIRD_PARTY_NOTICES.md
+      - README.md
+      - configs/cybot.strict.yaml
+      - release-notices/**
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+checksum:
+  name_template: checksums.txt
+changelog:
+  use: git

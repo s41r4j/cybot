@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="CYBOT is a deterministic cybersecurity capability layer for AI agents. Discover, plan, execute, and retain structured evidence. Open source. MIT licensed. In active development.">
+  <meta name="theme-color" content="#11140e">
+  <meta property="og:title" content="CYBOT — Security work. With a trace.">
+  <meta property="og:description" content="A deterministic cybersecurity capability layer for AI agents. Every capability has a contract. Every result has a trail.">
+  <meta property="og:type" content="website">
+  <title>CYBOT — Security work. With a trace.</title>
+  <link rel="icon" href="./mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav wrap">
+  <a class="brand" href="#" aria-label="CYBOT home"><img src="./mark.svg" alt="" width="28" height="28">CYBOT</a>
+  <button class="menu-toggle" aria-expanded="false" aria-controls="nav-links">Menu <span>+</span></button>
+  <nav id="nav-links" aria-label="Main navigation"><a href="#architecture">How it works</a><a href="#catalog">The catalog</a><a href="https://github.com/s41r4j/cybot#quick-start">Docs ↗</a><a class="nav-github" href="https://github.com/s41r4j/cybot">GitHub <span>↗</span></a></nav>
+</header>
+<main id="main">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <a class="eyebrow development" href="#readiness"><span class="status-dot"></span> OPEN SOURCE / ACTIVE DEVELOPMENT <span>↗</span></a>
+      <h1 id="hero-title">Security work.<br>With a <span class="trace-word">trace<svg viewBox="0 0 370 18" aria-hidden="true"><path d="M2 13C87 3 194 2 365 7"/></svg></span>.</h1>
+      <p class="hero-description">Give your AI agent a security workflow it can explain. Discover a capability, inspect the plan, run the operation, keep the evidence.</p>
+      <div class="hero-actions"><a class="button primary" href="https://github.com/s41r4j/cybot#quick-start">Explore CYBOT <span>↗</span></a><a class="text-link" href="#architecture">See the architecture <span>↓</span></a></div>
+      <div class="hero-footnote"><span>GO BUILT.</span><span>SCHEMA FIRST.</span><span>MIT LICENSED.</span></div>
+    </div>
+    <div class="terminal" aria-label="Illustrative CYBOT CLI example">
+      <div class="terminal-bar"><div class="window-dots"><i></i><i></i><i></i></div><span>cybot / agent session</span><span class="terminal-plus">+</span></div>
+      <div class="terminal-tabs" role="tablist" aria-label="Example step"><button role="tab" aria-selected="true" aria-controls="terminal-output" id="tab-discover" data-step="discover">01 Discover</button><button role="tab" aria-selected="false" aria-controls="terminal-output" id="tab-plan" data-step="plan" tabindex="-1">02 Plan</button><button role="tab" aria-selected="false" aria-controls="terminal-output" id="tab-run" data-step="run" tabindex="-1">03 Run</button></div>
+      <div id="terminal-output" role="tabpanel" aria-labelledby="tab-discover" tabindex="0"><div class="terminal-command"><span>❯</span> <code id="demo-command">cybot capability help asset.discover</code></div><pre id="demo-output">{
+  "id": "asset.discover",
+  "title": "Asset Discovery",
+  "output_schema": "cybot://schemas/result",
+  "operation": "Resolve one hostname",
+  "evidence": "Hashed, sanitized artifacts"
+}</pre><div class="terminal-result"><span class="terminal-result-icon">↳</span><span id="demo-note">A documented operation. Before execution.</span></div></div>
+      <div class="terminal-bottom"><span><i class="status-dot"></i> ILLUSTRATIVE OUTPUT</span><span>NO LIVE SCAN</span></div>
+      <div class="evidence-stamp"><span class="stamp-icon">✳</span><div>Evidence retained.<small>SHA-256 · normalized JSON</small></div></div>
+    </div>
+  </section>
+  <div class="ticker" aria-label="Project principles"><div class="wrap"><span>CAPABILITIES OVER RAW COMMANDS</span><b>✳</b><span>STRUCTURED RESULTS</span><b>✳</b><span>INSPECTABLE EXECUTION</span><b>✳</b><span>EVIDENCE THAT STAYS WITH THE WORK</span></div></div>
+  <section class="architecture wrap section" id="architecture" aria-labelledby="architecture-title">
+    <div class="section-intro"><p class="eyebrow">01 / THE EXECUTION LAYER</p><h2 id="architecture-title">Your agent reasons.<br>CYBOT handles the contract.</h2><p>One interface between an agent and a security toolchain. Explicit inputs, bounded execution, normalized outputs, and a record you can inspect.</p></div>
+    <div class="architecture-flow" aria-label="Architecture: agent, CYBOT, tool adapters, evidence"><div class="flow-node"><span class="node-icon">&gt;_</span><strong>Your agent</strong><small>CLI + JSON</small></div><div class="flow-connector">→</div><div class="flow-node flow-core"><img src="./mark.svg" width="40" height="40" alt=""><strong>CYBOT</strong><small>Plan · policy · execute</small></div><div class="flow-connector">→</div><div class="flow-node"><span class="node-icon">{ }</span><strong>Tool adapters</strong><small>Inputs + parsers</small></div><div class="flow-connector">→</div><div class="flow-node"><span class="node-icon">#</span><strong>Evidence</strong><small>Hashes + run history</small></div></div>
+    <div class="principles"><article><span>01</span><h3>Know what will run.</h3><p>Discover capabilities and inspect plans before executing. Installation and validation status stay separate from catalog registration.</p></article><article><span>02</span><h3>Keep the context.</h3><p>Normalized JSON ties results to decisions, sanitized evidence, and persistent run history. Review findings with their supporting artifacts.</p></article><article><span>03</span><h3>Make boundaries explicit.</h3><p>Strict configuration enforces target scope and approval. Local and interface-wide operations identify the resource they actually inspect.</p></article></div>
+  </section>
+  <section class="catalog-section section" id="catalog" aria-labelledby="catalog-title"><div class="wrap">
+    <div class="catalog-top"><div><p class="eyebrow">02 / EXPLORE THE SURFACE</p><h2 id="catalog-title">A broad catalog.<br>An honest status.</h2></div><p>Explore every registered tool and capability. A catalog entry is a starting point; real-operation validation determines release readiness.</p></div>
+    <div class="inventory-stats"><div><strong id="tool-count">84</strong><span>cataloged tools</span></div><div><strong id="capability-count">71</strong><span>registered capabilities</span></div><div><strong>49</strong><span>skill definitions</span></div><div><strong>22</strong><span>JSON schemas</span></div></div>
+    <div class="explorer-controls"><div class="explorer-tabs" role="group" aria-label="Catalog type"><button class="selected" data-kind="capabilities" aria-pressed="true">Capabilities</button><button data-kind="tools" aria-pressed="false">Tools</button></div><label class="search-label"><span aria-hidden="true">⌕</span><span class="sr-only">Search catalog</span><input id="catalog-search" type="search" placeholder="Search the full catalog…" autocomplete="off"></label><label class="sr-only" for="catalog-filter">Implementation status</label><select id="catalog-filter"><option value="all">All implementation states</option><option value="built-in">Built-in</option><option value="adapter">Adapter</option><option value="partial">Partial</option><option value="not-implemented">Not implemented</option></select></div>
+    <p id="catalog-message" class="catalog-message" role="status" aria-live="polite">Loading the complete catalog…</p>
+    <div id="catalog-items" class="catalog-grid"></div><button id="show-more" class="button secondary" hidden>Show more entries <span>↓</span></button>
+    <noscript><p>JavaScript enables the catalog explorer. The complete inventory is available in <a href="https://github.com/s41r4j/cybot/blob/main/release/catalog-coverage.json">the repository's coverage report</a>.</p></noscript>
+  </div></section>
+  <section class="readiness wrap section" id="readiness" aria-labelledby="readiness-title"><div><p class="eyebrow">03 / BUILT IN THE OPEN</p><h2 id="readiness-title">Readiness is earned.<br>Per operation.</h2><p>CYBOT is in active development. Full-catalog certification is still in progress. The public release gate requires validation evidence for every tool and capability.</p><a class="text-link" href="https://github.com/s41r4j/cybot/blob/main/docs/release-status.md">Read the release status <span>↗</span></a></div><div class="readiness-panel"><div class="readiness-panel-title"><span>RELEASE CHECKPOINT</span><span class="badge">DEVELOPMENT</span></div><div class="checkpoint"><span>✳</span><div><strong>Traceable core</strong><p>Schema checks, bounded output, sanitized evidence, and persistent history.</p></div></div><div class="checkpoint"><span>↗</span><div><strong>Whole-catalog validation</strong><p>Every entry has a visible implementation status. Missing evidence blocks full-release certification.</p></div></div><div class="checkpoint"><span>↗</span><div><strong>Environment-specific proof</strong><p>Windows, cloud, AD, and specialist operations require their own compatible, authorized test environments.</p></div></div></div></section>
+  <section class="start-section"><div class="wrap start-inner"><div><p class="eyebrow">YOUR NEXT MOVE</p><h2>Start with the contract.</h2><p>Build the CLI, inspect a capability, and review the current limitations.</p></div><div class="start-command"><div><span>❯</span><code id="install-command">go install github.com/s41r4j/cybot/cmd/cybot@latest</code></div><button id="copy-install" aria-label="Copy install command">Copy</button></div><a href="https://github.com/s41r4j/cybot#quick-start" class="text-link">Setup instructions + strict configuration ↗</a><small class="install-note">Installs the development CLI. Security tools and specialist runtimes are separate dependencies.</small></div></section>
+</main>
+<footer class="wrap footer"><a href="#" class="brand"><img src="./mark.svg" alt="" width="25" height="25">CYBOT</a><p>Deterministic execution. Inspectable evidence.</p><div><a href="https://github.com/s41r4j/cybot">Source ↗</a><a href="https://github.com/s41r4j/cybot/blob/main/SECURITY.md">Security ↗</a><a href="https://github.com/s41r4j/cybot/blob/main/LICENSE">MIT license ↗</a></div><small>Only assess systems you own or are explicitly authorized to test.</small></footer>
+</body>
+</html>

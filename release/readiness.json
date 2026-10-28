@@ -1,0 +1,1441 @@
+{
+  "schema_version": 1,
+  "source_sha256": "c9a68daaf04b62157a816c0746a3f72852868f5c514a8c98c75a0709eba1c592",
+  "release_ready": false,
+  "counts": {
+    "tools": 84,
+    "capabilities": 71
+  },
+  "validated_items": 0,
+  "blockers": [
+    "Missing or stale validation: evidence must match the current product source digest"
+  ],
+  "items": [
+    {
+      "kind": "tool",
+      "id": "agent-browser",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "amass",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "amass-enum",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "anew",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "arjun",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "bettercap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "bloodhound",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "certipy",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "chisel",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "cloud_enum",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "cloudfox",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "cmseek",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "corscanner",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "covenant",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "crackmapexec",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "dirsearch",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "dnschef",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "dnsrecon",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "dnsx",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "enum4linux",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "evilginx",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "ffuf",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "gf",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "gitleaks",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "gobuster",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "gophish",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "gosec",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "grype",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "hashcat",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "havoc",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "httpx",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "hydra",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "impacket",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "john",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "jsluice",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "katana",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "kekeo",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "knockpy",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "linkfinder",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "linpeas",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "massdns",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "merlin",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "metagoofil",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "metasploit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "mimikatz",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "msfvenom",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "mythic",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "naabu",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "netexec",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "nikto",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "nmap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "nuclei",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "pacu",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "pcredz",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "powersploit",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "responder",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "rubeus",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "searchsploit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "seatbelt",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "semgrep",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "sharphound",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "sharppersist",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "sharpup",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "sharpview",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "sherlock",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "shodan",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "sliver",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "smbmap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "sqlmap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "subfinder",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "swaks",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "syft",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "system-dns-resolver",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: darwin/arm64",
+        "missing required platform evidence: linux/amd64",
+        "missing required platform evidence: linux/arm64",
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "testssl",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "theharvester",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "trivy",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "trufflehog",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "wafw00f",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "waybackurls",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "whatweb",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "winpeas",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "wpscan",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "xsstrike",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "zap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "active-directory.attack",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "api.audit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "asset.discover",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "c2.covenant",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "c2.havoc",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "c2.merlin",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "c2.mythic",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "c2.operate",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "c2.setup",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "c2.sliver",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "classify.endpoint",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "cloud.enum",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "cloud.review",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "cms.detect",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "code.audit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "container.scan",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "cors.audit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "credential.dump",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "credential.harvest",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "cve.lookup",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "dependency.scan",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "dir.bruteforce",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "dns.analyse",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "dns.enum",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "email.harvest",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "exploit.execute",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "exploit.framework",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "exploit.search",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "hash.crack",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "js.analyse",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "js.extract",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "lateral.move",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "mitm.assess",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "mitre.map",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "password.bruteforce",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "pattern.detect",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "payload.generate",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "persist.install",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "personnel.osint",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "phishing.campaign",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "pivot.tunnel",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "port.forward",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "port.scan",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "post.adcs",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "post.exploit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "post.kerberoast",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "post.kerberos",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "post.mimikatz",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "post.persistence",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "post.recon",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "privilege.escalation",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "report.generate",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "sbom.generate",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "secret.scan",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "service.enumerate",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "smb.test",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "social.engineer",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "sql.inject",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "tech.fingerprint",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "tls.audit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "validate.finding",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "vuln.scan",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "waf.detect",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.automate",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.browse",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.content.discover",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.har",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.map",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.scan",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.zap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "xss.detect",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ]
+    }
+  ]
+}

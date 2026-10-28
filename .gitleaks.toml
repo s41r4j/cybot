@@ -1,0 +1,14 @@
+[extend]
+useDefault = true
+
+# This exact value is a public SHA-256 of an embedded upstream prompt file,
+# not a credential. Keep the path AND full-hash constraint; do not exempt the
+# provenance file or generic key rule as a whole.
+[[rules]]
+id = "generic-api-key"
+  [[rules.allowlists]]
+  description = "Verified upstream phase-01 prompt checksum"
+  condition = "AND"
+  regexTarget = "secret"
+  regexes = ['''^09231bc03589c7206ee5cce13dd2b204d8bcfb0b82c111f15758dce393d76854$''']
+  paths = ['''(^|/)internal/packs/builtin/provenance\.json$''']

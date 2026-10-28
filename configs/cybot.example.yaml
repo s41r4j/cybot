@@ -1,0 +1,16 @@
+data_dir: .cybot
+packs:
+  auto_update: true
+  update_interval: 24h
+  update_timeout: 45s
+policy:
+  allowed_targets:
+    - "*"
+  blocked_targets: []
+  approval_required: false
+  max_rate: 100
+  concurrency: 1
+  timeout: 30m
+  allowed_capabilities:
+    - "*"
+  enforcement_mode: suggestive

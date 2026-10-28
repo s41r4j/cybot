@@ -1,0 +1,2157 @@
+- id: recon-baseline
+  title: Reconnaissance baseline
+  description: Full external reconnaissance pipeline for bug bounty and pentesting targets.
+  purpose: Establish asset inventory, DNS records, open ports, and web services before deeper testing.
+  tags: [reconnaissance, osint, bug-bounty, pentest, offensive]
+  category: offensive-reconnaissance
+  steps:
+    - capability: asset.discover
+    - capability: dns.analyse
+    - capability: dns.enum
+    - capability: service.enumerate
+    - capability: port.scan
+  requirements:
+    - Target scope confirmed for authorized testing.
+    - Network connectivity to target.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/conducting-external-reconnaissance-with-osint
+  confidence: 0.9
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: A full-stack reconnaissance pipeline using CYBOT capabilities for bug bounty and pentesting.
+    purpose: Provide complete asset and service discovery before vulnerability assessment.
+    arguments: []
+    examples:
+      - description: Run against a target domain
+        command: cybot workflow plan recon-baseline --target example.com
+    expected_output: Comprehensive asset, DNS, service, and port inventory with normalized evidence.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - DNS resolution and port scanning are rate-limited.
+      - Results depend on target network posture and firewall rules.
+    required_permissions:
+      - Bug bounty program authorization or written pentest approval.
+    related_commands:
+      - cybot skill list
+      - cybot capability help asset.discover
+      - cybot capability help port.scan
+    common_mistakes:
+      - Running recon without confirming scope boundaries.
+      - Treating discovered assets as definitively owned by target.
+    best_practices:
+      - Review scope before each run.
+      - Cross-reference findings with program policy.
+  content: Full reconnaissance pipeline for bug bounty programs and authorized pentesting. Covers DNS enumeration, subdomain discovery, port scanning, and service identification.
+- id: web-attack-surface-mapping
+  title: Web attack surface mapping
+  description: Maps a web target's technology stack, WAF presence, CMS, and JavaScript endpoints.
+  purpose: Understand the full web attack surface before launching targeted vulnerability scans.
+  tags: [web, technology-fingerprint, offensive, bug-bounty]
+  category: offensive-reconnaissance
+  steps:
+    - capability: web.map
+    - capability: tech.fingerprint
+    - capability: waf.detect
+    - capability: cms.detect
+    - capability: js.extract
+  requirements:
+    - Valid HTTP/HTTPS target URL.
+    - Bug bounty or pentest authorization.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-api-inventory-and-discovery
+  confidence: 0.87
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Maps web attack surface including technology fingerprints, WAF, CMS, and JavaScript endpoints.
+    purpose: Enable targeted vulnerability assessment by understanding the target's web stack.
+    arguments: []
+    examples:
+      - description: Map attack surface
+        command: cybot workflow plan web-attack-surface-mapping --target https://example.com
+    expected_output: Technology inventory, WAF detection, CMS version, and JavaScript endpoints.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - WAF detection may produce false negatives with custom/deceptive configurations.
+      - JS extraction is limited to publicly accessible scripts.
+    required_permissions:
+      - HTTP requests to target allowed by scope.
+    related_commands:
+      - cybot capability help tech.fingerprint
+      - cybot capability help waf.detect
+      - cybot capability help js.extract
+    common_mistakes:
+      - Assuming technology version fingerprinting is 100% accurate.
+    best_practices:
+      - Cross-validate technology results with multiple sources.
+  content: Comprehensive web attack surface mapping for bug bounty targets. Identifies technologies, security appliances, CMS platforms, and extracts JavaScript endpoints for further analysis.
+- id: subdomain-discovery-deep
+  title: Subdomain discovery deep
+  description: Multi-tool subdomain enumeration using passive and active sources.
+  purpose: Discover hidden, forgotten, or misconfigured subdomains for expanded attack surface.
+  tags: [subdomain, dns, enumeration, offensive, bug-bounty]
+  category: offensive-reconnaissance
+  steps:
+    - capability: dns.enum
+    - capability: asset.discover
+    - capability: dns.analyse
+  requirements:
+    - Domain within bug bounty scope.
+    - Respect rate limits of DNS services.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/conducting-external-reconnaissance-with-osint
+  confidence: 0.85
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Deep subdomain enumeration using passive APIs, certificate transparency, and active brute-force.
+    purpose: Expand target scope by discovering additional subdomains and associated assets.
+    arguments: []
+    examples:
+      - description: Enumerate subdomains
+        command: cybot workflow plan subdomain-discovery-deep --target example.com
+    expected_output: Sorted, deduplicated subdomain list with DNS records.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Passive enumeration may miss recently deployed subdomains.
+      - Wildcard DNS can cause false positives.
+    required_permissions:
+      - DNS queries and passive API access for target domain.
+    related_commands:
+      - cybot capability help dns.enum
+      - cybot capability help dns.analyse
+    common_mistakes:
+      - Assuming private subdomains from passive sources.
+    best_practices:
+      - Verify discovered subdomains with DNS resolution.
+  content: Multi-source subdomain enumeration combining passive APIs, certificate transparency logs, and active DNS brute-force for comprehensive discovery.
+- id: api-attack-surface-discovery
+  title: API attack surface discovery
+  description: Discover and inventory API endpoints through web crawling and JavaScript analysis.
+  purpose: Map all API endpoints for vulnerability assessment and authentication testing.
+  tags: [api, javascript, endpoint-discovery, offensive, bug-bounty]
+  category: offensive-reconnaissance
+  steps:
+    - capability: web.map
+    - capability: js.extract
+    - capability: pattern.detect
+    - capability: api.audit
+  requirements:
+    - Target web application with JavaScript assets.
+    - API endpoints within scope.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-api-inventory-and-discovery
+  confidence: 0.84
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Discovers API endpoints by crawling pages, extracting JS endpoints, pattern matching, and auditing discovered APIs.
+    purpose: Build a complete API inventory for security testing.
+    arguments: []
+    examples:
+      - description: Discover API endpoints
+        command: cybot workflow plan api-attack-surface-discovery --target https://api.example.com
+    expected_output: API endpoint inventory with methods, parameters, and technology details.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Internal APIs behind authentication are not reachable.
+      - Rate-limited crawling may miss deep endpoints.
+    required_permissions:
+      - Crawling and API requests to target endpoints.
+    related_commands:
+      - cybot capability help api.audit
+      - cybot capability help js.extract
+      - cybot capability help web.map
+    common_mistakes:
+      - Testing production APIs without authorization during business hours.
+    best_practices:
+      - Review OpenAPI/Swagger specs if available.
+  content: API endpoint discovery combining web crawling, JavaScript parsing, pattern matching, and automated API auditing for comprehensive API inventory.
+- id: deep-content-discovery
+  title: Deep content discovery
+  description: Brute-force directories and files using multiple wordlists and techniques.
+  purpose: Discover hidden admin panels, backup files, debug endpoints, and config leaks.
+  tags: [content-discovery, directory-bruteforce, offensive, bug-bounty]
+  category: offensive-reconnaissance
+  steps:
+    - capability: web.content.discover
+    - capability: dir.bruteforce
+    - capability: js.extract
+  requirements:
+    - HTTP/HTTPS target with web server.
+    - Rate limiting compliance.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-api-inventory-and-discovery
+  confidence: 0.82
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Multi-engine content discovery using ffuf and gobuster with multiple wordlists.
+    purpose: Find hidden paths, backup files, configs, and admin panels.
+    arguments: []
+    examples:
+      - description: Discover hidden content
+        command: cybot workflow plan deep-content-discovery --target https://example.com
+    expected_output: Discovered endpoints, status codes, content types, and response sizes.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Rate-limited to avoid DoS.
+      - Custom 404 responses can cause false positives.
+    required_permissions:
+      - HTTP requests to target within scope.
+    related_commands:
+      - cybot capability help dir.bruteforce
+      - cybot capability help web.content.discover
+    common_mistakes:
+      - Running aggressive scans during peak traffic.
+    best_practices:
+      - Filter results by interesting status codes.
+  content: Deep directory and file brute-forcing combining multiple engines and wordlists to discover hidden web resources.
+- id: cloud-resource-hunting
+  title: Cloud resource hunting
+  description: Enumerate public cloud storage and assets across AWS, Azure, and GCP.
+  purpose: Discover exposed cloud resources like S3 buckets, Azure blobs, and GCP storage.
+  tags: [cloud, enumeration, s3-bucket, offensive, bug-bounty]
+  category: offensive-reconnaissance
+  steps:
+    - capability: cloud.enum
+    - capability: cloud.review
+  requirements:
+    - Target organization name or keywords.
+    - Compliance with cloud provider ToS.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/auditing-cloud-with-cis-benchmarks
+  confidence: 0.78
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Enumerate public cloud resources by keyword, including S3 buckets, Azure blobs, and GCP storage.
+    purpose: Find exposed cloud assets that may contain sensitive data.
+    arguments: []
+    examples:
+      - description: Hunt cloud resources
+        command: cybot workflow plan cloud-resource-hunting --target mycompany
+    expected_output: Discovered cloud resources with access assessment.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Only discovers publicly accessible or predictable resources.
+      - Does not perform actual data access.
+    required_permissions:
+      - Read-only enumeration of public cloud resources.
+    related_commands:
+      - cybot capability help cloud.enum
+      - cybot capability help cloud.review
+    common_mistakes:
+      - Accessing private resources bucket contents.
+    best_practices:
+      - Report findings without accessing data.
+  content: Multi-cloud resource enumeration discovering publicly exposed storage, databases, and services across AWS, Azure, and GCP.
+- id: web-vulnerability-assessment
+  title: Web vulnerability assessment
+  description: Full web vulnerability scanning with WAF bypass awareness and TLS auditing.
+  purpose: Identify SQL injection, XSS, CSRF, misconfigurations, and TLS weaknesses.
+  tags: [vulnerability-scan, web, nuclei, offensive, bug-bounty]
+  category: offensive-assessment
+  steps:
+    - capability: web.map
+    - capability: waf.detect
+    - capability: tls.audit
+    - capability: vuln.scan
+    - capability: cors.audit
+  requirements:
+    - Target URL with confirmed scope.
+    - Non-destructive scanning mode.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/conducting-external-reconnaissance-with-osint
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-api-inventory-and-discovery
+  confidence: 0.86
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Full web vulnerability scan including WAF detection, TLS audit, vulnerability scanning, and CORS analysis.
+    purpose: Provide comprehensive vulnerability assessment for bug bounty and pentesting.
+    arguments: []
+    examples:
+      - description: Assess web vulnerabilities
+        command: cybot workflow plan web-vulnerability-assessment --target https://example.com
+    expected_output: Findings with severity, evidence, and remediation guidance.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Nuclei templates may have false positives.
+      - Not a replacement for manual pentesting.
+    required_permissions:
+      - Non-destructive vulnerability scanning authorization.
+    related_commands:
+      - cybot capability help vuln.scan
+      - cybot capability help tls.audit
+      - cybot capability help cors.audit
+    common_mistakes:
+      - Scanning production during peak hours.
+    best_practices:
+      - Run initial recon before vulnerability scanning.
+      - Verify critical findings manually.
+  content: Comprehensive web vulnerability assessment combining WAF detection, TLS auditing, multi-engine vulnerability scanning, and CORS misconfiguration analysis.
+- id: sql-injection-hunting
+  title: SQL injection hunting
+  description: Targeted SQL injection detection across discovered endpoints.
+  purpose: Find and validate SQL injection vulnerabilities in web applications.
+  tags: [sqli, injection, offensive, bug-bounty, critical]
+  category: offensive-assessment
+  steps:
+    - capability: web.map
+    - capability: dir.bruteforce
+    - capability: sql.inject
+    - capability: report.generate
+  requirements:
+    - Target with dynamic parameters/forms.
+    - Non-destructive injection testing.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/implementing-semgrep-for-custom-sast-rules
+  confidence: 0.84
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Endpoint-to-endpoint SQL injection testing using SQLMap with conservative settings.
+    purpose: Discover injectable parameters in web applications.
+    arguments: []
+    examples:
+      - description: Hunt SQL injection
+        command: cybot workflow plan sql-injection-hunting --target https://example.com/page?id=1
+    expected_output: Injectable parameters with database type and injection technique details.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Level 1/risk 1 testing may miss complex injections.
+      - WAFs may block or skew results.
+    required_permissions:
+      - Explicit authorization for injection testing.
+    related_commands:
+      - cybot capability help sql.inject
+      - cybot capability help web.map
+    common_mistakes:
+      - Running aggressive tests on production databases.
+    best_practices:
+      - Start with conservative settings, escalate only if needed.
+      - Never extract production data during testing.
+  content: Targeted SQL injection detection combining endpoint discovery, parameter brute-forcing, and controlled SQLMap execution with non-destructive settings.
+- id: xss-hunting
+  title: XSS hunting
+  description: Cross-site scripting detection with advanced fuzzing and WAF bypass.
+  purpose: Identify reflected, stored, and DOM-based XSS vulnerabilities.
+  tags: [xss, injection, offensive, bug-bounty, high]
+  category: offensive-assessment
+  steps:
+    - capability: web.map
+    - capability: js.extract
+    - capability: xss.detect
+    - capability: report.generate
+  requirements:
+    - Web application with user-input vectors.
+    - Authorization for XSS testing.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/implementing-semgrep-for-custom-sast-rules
+  confidence: 0.82
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Advanced XSS detection using XSStrike with crawling, fuzzing, and WAF bypass techniques.
+    purpose: Find exploitable XSS vulnerabilities in web applications.
+    arguments: []
+    examples:
+      - description: Hunt XSS
+        command: cybot workflow plan xss-hunting --target https://example.com/search?q=test
+    expected_output: XSS findings with payload evidence and exploitation context.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - DOM-based XSS requires browser analysis beyond automated scanning.
+      - Blind XSS requires out-of-band callback infrastructure.
+    required_permissions:
+      - Authorization for XSS testing.
+    related_commands:
+      - cybot capability help xss.detect
+      - cybot capability help js.extract
+    common_mistakes:
+      - Assuming low-severity reflected XSS is not exploitable.
+    best_practices:
+      - Combine automated scanning with manual verification.
+  content: Comprehensive XSS detection pipeline combining endpoint discovery, JavaScript extraction, and advanced fuzzing with WAF bypass techniques.
+- id: full-penetration-test
+  title: Full penetration test
+  description: End-to-end offensive penetration test combining recon, mapping, and vulnerability assessment.
+  purpose: Execute a complete security assessment workflow from discovery to findings.
+  tags: [pentest, offensive, full-assessment, bug-bounty]
+  category: offensive-assessment
+  steps:
+    - capability: asset.discover
+    - capability: dns.enum
+    - capability: service.enumerate
+    - capability: port.scan
+    - capability: web.map
+    - capability: tech.fingerprint
+    - capability: waf.detect
+    - capability: cms.detect
+    - capability: js.extract
+    - capability: vuln.scan
+    - capability: tls.audit
+    - capability: cors.audit
+    - capability: report.generate
+  requirements:
+    - Full authorization for comprehensive security assessment.
+    - Defined scope and testing window.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/conducting-external-reconnaissance-with-osint
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-api-inventory-and-discovery
+  confidence: 0.88
+  version: 1.0.0
+  author: CYBOT curated from Anthropic-Cybersecurity-Skills & wshobson/agents
+  documentation:
+    description: Complete offensive penetration test from reconnaissance through vulnerability assessment and reporting.
+    purpose: Execute a full-scope security assessment workflow.
+    arguments: []
+    examples:
+      - description: Run full pentest
+        command: cybot workflow plan full-penetration-test --target example.com
+    expected_output: Comprehensive findings report with evidence and remediation guidance.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Cannot replace manual pentesting expertise and intuition.
+      - Rate-limited throughout.
+    required_permissions:
+      - Full authorization for security assessment.
+    related_commands:
+      - cybot skill list
+      - cybot capability list
+    common_mistakes:
+      - Running full test without confirming scope.
+    best_practices:
+      - Use plan mode first to review selected tools.
+      - Execute in phases to avoid overwhelming target.
+  content: Complete penetration testing workflow from initial reconnaissance through vulnerability assessment, combining all CYBOT offensive capabilities into a single comprehensive assessment.
+- id: bug-bounty-recon-quick
+  title: Bug bounty quick recon
+  description: Fast reconnaissance pipeline optimized for bug bounty hunting efficiency.
+  purpose: Rapidly assess a bounty target's attack surface for high-value findings.
+  tags: [bug-bounty, recon, quick, offensive]
+  category: offensive-reconnaissance
+  steps:
+    - capability: dns.enum
+    - capability: service.enumerate
+    - capability: web.map
+    - capability: tech.fingerprint
+    - capability: waf.detect
+    - capability: js.extract
+    - capability: pattern.detect
+  requirements:
+    - Active bug bounty program on HackerOne or Bugcrowd.
+    - Target within program scope.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/conducting-external-reconnaissance-with-osint
+  confidence: 0.86
+  version: 1.0.0
+  author: CYBOT curated from Anthropic-Cybersecurity-Skills
+  documentation:
+    description: Optimized bug bounty reconnaissance pipeline combining the most effective discovery capabilities.
+    purpose: Maximize bug bounty findings with efficient resource usage.
+    arguments: []
+    examples:
+      - description: Quick recon for bounty target
+        command: cybot workflow plan bug-bounty-recon-quick --target example.com
+    expected_output: Subdomains, services, web technology stack, and potential vulnerability patterns.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Skipped deep brute-forcing for speed.
+      - Does not perform vulnerability scanning.
+    required_permissions:
+      - Bug bounty program participation.
+    related_commands:
+      - cybot skill search recon
+      - cybot capability list
+    common_mistakes:
+      - Not checking program policy for prohibited techniques.
+    best_practices:
+      - Run quick recon first, then deep dive interesting targets.
+  content: "Streamlined bug bounty reconnaissance focusing on high-yield techniques: subdomain discovery, service scanning, technology fingerprinting, and JavaScript analysis."
+- id: api-security-audit
+  title: API security audit
+  description: Comprehensive API security testing with endpoint discovery, analysis, and auditing.
+  purpose: Identify API vulnerabilities including auth bypass, injection, and data exposure.
+  tags: [api, security-audit, offensive, bug-bounty]
+  category: offensive-assessment
+  steps:
+    - capability: web.map
+    - capability: js.analyse
+    - capability: js.extract
+    - capability: api.audit
+    - capability: cors.audit
+    - capability: report.generate
+  requirements:
+    - API endpoints within assessment scope.
+    - Authorization for API testing.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-api-inventory-and-discovery
+  confidence: 0.85
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Complete API security assessment combining endpoint discovery, JavaScript analysis, API auditing, and CORS testing.
+    purpose: Find API vulnerabilities through automated analysis and targeted testing.
+    arguments: []
+    examples:
+      - description: Audit API security
+        command: cybot workflow plan api-security-audit --target https://api.example.com
+    expected_output: API findings with severity ratings and evidence.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - GraphQL introspection may be disabled.
+      - Authenticated endpoints require credentials.
+    required_permissions:
+      - API endpoint testing authorization.
+    related_commands:
+      - cybot capability help api.audit
+      - cybot capability help cors.audit
+      - cybot capability help js.analyse
+    common_mistakes:
+      - Testing production APIs without coordinating with DevOps.
+    best_practices:
+      - Capture API documentation before testing.
+  content: Full API security audit workflow discovering endpoints, analyzing JavaScript for hidden APIs, running automated API vulnerability scans, and checking CORS configurations.
+- id: secure-code-review
+  title: Secure code review
+  description: Comprehensive static analysis and secret detection for source code repositories.
+  purpose: Identify code-level vulnerabilities, hardcoded secrets, and insecure patterns.
+  tags: [sast, secrets, code-review, defensive]
+  category: code-security
+  steps:
+    - capability: code.audit
+    - capability: js.analyse
+    - capability: secret.scan
+    - capability: report.generate
+  requirements:
+    - Read access to source repository.
+    - Project source code on disk.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/implementing-secret-scanning-with-gitleaks
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/implementing-semgrep-for-custom-sast-rules
+  confidence: 0.88
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Multi-tool static analysis combining gosec, Semgrep, and secret detection for comprehensive code review.
+    purpose: Find code-level security issues before deployment.
+    arguments: []
+    examples:
+      - description: Review code security
+        command: cybot workflow plan secure-code-review --target /path/to/repo
+    expected_output: Code findings with CWE references, secret detection results, and severity ratings.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Static analysis cannot detect business logic flaws.
+      - Requires human validation for complex findings.
+    required_permissions:
+      - Read access to source code.
+    related_commands:
+      - cybot capability help code.audit
+      - cybot capability help secret.scan
+      - cybot capability help js.analyse
+    common_mistakes:
+      - Treating every SAST finding as exploitable.
+    best_practices:
+      - Integrate into CI/CD pipeline for continuous scanning.
+      - Prioritize findings by severity and exploitability.
+  content: Complete secure code review combining Go-specific SAST, multi-language Semgrep rules, verified secret scanning, and JavaScript analysis with normalized reporting.
+- id: supply-chain-security-review
+  title: Supply chain security review
+  description: Full software supply chain assessment from SBOM generation to vulnerability analysis.
+  purpose: Identify vulnerable dependencies, container risks, and supply chain threats.
+  tags: [supply-chain, sbom, dependencies, container, defensive]
+  category: supply-chain
+  steps:
+    - capability: sbom.generate
+    - capability: dependency.scan
+    - capability: container.scan
+    - capability: report.generate
+  requirements:
+    - Access to build artifacts, container images, or source tree.
+    - Registry access for container scanning.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/analyzing-sbom-for-supply-chain-vulnerabilities
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-container-security-scanning-with-trivy
+  confidence: 0.87
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Complete supply chain security assessment with SBOM generation, dependency scanning, and container image analysis.
+    purpose: Provide release owners with comprehensive supply chain risk evidence.
+    arguments: []
+    examples:
+      - description: Review supply chain
+        command: cybot workflow plan supply-chain-security-review --target /path/to/project
+    expected_output: SBOM artifact, dependency vulnerability report, and container scanning results.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Vulnerability databases may lag behind latest disclosures.
+      - Reachability analysis requires additional tooling.
+    required_permissions:
+      - Read access to software artifacts and registries.
+    related_commands:
+      - cybot capability help sbom.generate
+      - cybot capability help dependency.scan
+      - cybot capability help container.scan
+    common_mistakes:
+      - Treating CVSS scores as absolute risk indicators.
+    best_practices:
+      - Generate SBOMs on every build.
+      - Track dependency drift between releases.
+  content: Comprehensive supply chain security review generating SBOMs, scanning dependencies for known vulnerabilities, and analyzing container images for configuration and package risks.
+- id: secret-exposure-assessment
+  title: Secret exposure assessment
+  description: Multi-engine secret detection across code, Git history, and files.
+  purpose: Find exposed API keys, tokens, credentials, and private keys before attackers do.
+  tags: [secrets, credentials, gitleaks, trufflehog, defensive]
+  category: defensive-detection
+  steps:
+    - capability: secret.scan
+    - capability: report.generate
+  requirements:
+    - Read access to target repository or filesystem.
+    - Process for rotating discovered secrets.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/implementing-secret-scanning-with-gitleaks
+  confidence: 0.9
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Combined Gitleaks and TruffleHog secret scanning with verified detection and redacted evidence.
+    purpose: Discover and remediate hardcoded secrets in code and Git history.
+    arguments: []
+    examples:
+      - description: Scan for secrets
+        command: cybot workflow plan secret-exposure-assessment --target /path/to/repo
+    expected_output: Secret findings with type, location, and verification status (redacted evidence).
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Secrets in binary files or encrypted content are not detected.
+      - Test credentials and revoked tokens may trigger false positives.
+    required_permissions:
+      - Read access to target filesystem.
+    related_commands:
+      - cybot capability help secret.scan
+    common_mistakes:
+      - Exposing secret evidence in reports or logs.
+    best_practices:
+      - Rotate all discovered secrets immediately.
+      - Use pre-commit hooks to prevent future leaks.
+  content: Defense-focused secret scanning with both Gitleaks (Git history-aware) and TruffleHog (verified detection) producing redacted, secure findings.
+- id: dependency-risk-assessment
+  title: Dependency risk assessment
+  description: Vulnerability analysis across project dependencies with SBOM correlation.
+  purpose: Identify and prioritize dependency vulnerabilities for remediation.
+  tags: [dependencies, vulnerabilities, sbom, trivy, defensive]
+  category: defensive-detection
+  steps:
+    - capability: dependency.scan
+    - capability: sbom.generate
+    - capability: report.generate
+  requirements:
+    - Project dependencies installed or build artifacts available.
+    - Network access for vulnerability database updates.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/analyzing-sbom-for-supply-chain-vulnerabilities
+  confidence: 0.89
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Combined Trivy and Grype dependency scanning with SBOM correlation for comprehensive vulnerability analysis.
+    purpose: Provide actionable dependency vulnerability intelligence.
+    arguments: []
+    examples:
+      - description: Assess dependency risks
+        command: cybot workflow plan dependency-risk-assessment --target /path/to/project
+    expected_output: Vulnerability findings with CVE IDs, severity, fixed versions, and SBOM.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - CVSS scores alone do not reflect exploitability.
+      - Reachable vs. unreachable analysis may differ.
+    required_permissions:
+      - Read access to project filesystem.
+    related_commands:
+      - cybot capability help dependency.scan
+      - cybot capability help sbom.generate
+    common_mistakes:
+      - Upgrading dependencies without testing.
+    best_practices:
+      - Prioritize fixable vulnerabilities first.
+      - Correlate CVEs with runtime reachability.
+  content: Dual-engine dependency vulnerability scanning with SBOM generation for complete software supply chain transparency.
+- id: cloud-security-posture-review
+  title: Cloud security posture review
+  description: Infrastructure-as-code and cloud configuration security assessment.
+  purpose: Detect misconfigurations, exposed secrets, and compliance violations in cloud deployments.
+  tags: [cloud, configuration, misconfig, defensive, compliance]
+  category: defensive-infrastructure
+  steps:
+    - capability: cloud.review
+    - capability: cloud.enum
+    - capability: secret.scan
+    - capability: report.generate
+  requirements:
+    - Read access to cloud configuration files or IaC.
+    - Infrastructure-as-code or configuration files on disk.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/auditing-cloud-with-cis-benchmarks
+  confidence: 0.83
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Cloud security assessment scanning IaC and configuration files for misconfigurations, exposed secrets, and compliance issues.
+    purpose: Shift-left cloud security by catching issues in configuration before deployment.
+    arguments: []
+    examples:
+      - description: Review cloud posture
+        command: cybot workflow plan cloud-security-posture-review --target /path/to/terraform
+    expected_output: Misconfiguration findings, secret findings, and CIS benchmark results.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Does not change cloud state or access live resources.
+      - Static analysis of IaC; runtime validation separate.
+    required_permissions:
+      - Read access to configuration and IaC files.
+    related_commands:
+      - cybot capability help cloud.review
+      - cybot capability help cloud.enum
+    common_mistakes:
+      - Assuming static analysis covers all runtime configurations.
+    best_practices:
+      - Run before every IaC deployment.
+      - Combine with runtime CSPM for defense-in-depth.
+  content: Infrastructure security review scanning Terraform, CloudFormation, Kubernetes manifests, and cloud configs for misconfigurations, secrets, and CIS benchmark compliance.
+- id: container-security-audit
+  title: Container security audit
+  description: Container image vulnerability and misconfiguration scanning.
+  purpose: Identify vulnerable packages, misconfigurations, and secrets in container images.
+  tags: [container, docker, kubernetes, trivy, defensive]
+  category: defensive-infrastructure
+  steps:
+    - capability: container.scan
+    - capability: sbom.generate
+    - capability: report.generate
+  requirements:
+    - Container image reference or OCI archive.
+    - Registry access for remote images.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-container-security-scanning-with-trivy
+  confidence: 0.88
+  version: 1.0.0
+  author: CYBOT curated from mukul975/Anthropic-Cybersecurity-Skills@e612f494
+  documentation:
+    description: Dual-engine container image scanning with vulnerability detection, misconfiguration analysis, and SBOM generation.
+    purpose: Secure container images before deployment.
+    arguments: []
+    examples:
+      - description: Audit container image
+        command: cybot workflow plan container-security-audit --target myapp:latest
+    expected_output: Vulnerability findings, misconfiguration issues, and SBOM artifact.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Does not scan running container runtime security.
+      - Base image vulnerabilities inherited from upstream.
+    required_permissions:
+      - Registry or local image access.
+    related_commands:
+      - cybot capability help container.scan
+      - cybot capability help sbom.generate
+    common_mistakes:
+      - Accepting :latest images without pinned digests.
+    best_practices:
+      - Pin image digests in deployment manifests.
+      - Scan images in CI before pushing to registry.
+  content: Container image scanning with Trivy and Grype for vulnerabilities, misconfigurations, exposed secrets, and complete SBOM generation.
+- id: tls-security-audit
+  title: TLS security audit
+  description: SSL/TLS configuration analysis with cipher suite and protocol assessment.
+  purpose: Detect weak TLS configurations, expired certificates, and protocol vulnerabilities.
+  tags: [tls, ssl, encryption, defensive, hardening]
+  category: defensive-infrastructure
+  steps:
+    - capability: tls.audit
+    - capability: report.generate
+  requirements:
+    - Target hostname or IP with TLS-enabled service.
+    - Network access to target.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/conducting-external-reconnaissance-with-osint
+  confidence: 0.9
+  version: 1.0.0
+  author: CYBOT curated from Anthropic-Cybersecurity-Skills
+  documentation:
+    description: Comprehensive TLS/SSL audit using testssl.sh to assess cipher suites, protocol versions, certificate validity, and known vulnerabilities.
+    purpose: Harden TLS configurations against known attacks.
+    arguments: []
+    examples:
+      - description: Audit TLS configuration
+        command: cybot workflow plan tls-security-audit --target example.com
+    expected_output: TLS findings with severity ratings, weak cipher details, and remediation guidance.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Intermediate proxies may affect TLS negotiation results.
+      - Requires network access to target port 443.
+    required_permissions:
+      - Network access to target TLS endpoint.
+    related_commands:
+      - cybot capability help tls.audit
+    common_mistakes:
+      - Fixing only the server-side without checking intermediaries.
+    best_practices:
+      - Audit regularly as part of infrastructure hardening.
+      - Use Mozilla SSL Configuration Generator for remediation.
+  content: TLS/SSL security audit checking cipher suites, protocol support, certificate validity, and known vulnerabilities like POODLE, BEAST, and Heartbleed.
+- id: incident-response-evidence-collection
+  title: Incident response evidence collection
+  description: Collect and preserve code, secret, and dependency evidence during incident response.
+  purpose: Provide reproducible, hash-verified security evidence for incident coordinators.
+  tags: [incident-response, evidence, forensics, defensive]
+  category: defensive-incident-response
+  steps:
+    - capability: code.audit
+    - capability: secret.scan
+    - capability: dependency.scan
+    - capability: report.generate
+  requirements:
+    - Read access to affected systems and repositories.
+    - Chain-of-custody documentation.
+  references:
+    - https://github.com/wshobson/agents/tree/c4b82b0ad771190355eb8e204b1329732a18449a/skills/incident-runbook-templates
+  confidence: 0.85
+  version: 1.0.0
+  author: CYBOT curated from wshobson/agents@c4b82b0a
+  documentation:
+    description: Incident response evidence collection producing hash-verified, normalized evidence for incident coordination.
+    purpose: Preserve reproducible facts during incident response.
+    arguments: []
+    examples:
+      - description: Collect IR evidence
+        command: cybot workflow plan incident-response-evidence-collection --target /path/to/affected/repo
+    expected_output: Normalized findings with SHA-256 evidence, secret detection, and dependency state.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Does not perform memory forensics or disk imaging.
+      - Requires access to source artifacts.
+    required_permissions:
+      - Incident response authorization.
+    related_commands:
+      - cybot capability help code.audit
+      - cybot capability help secret.scan
+    common_mistakes:
+      - Sharing raw evidence outside the incident team.
+    best_practices:
+      - Preserve evidence timestamps and hashes.
+      - Document the collection process for chain of custody.
+  content: Incident response workflow collecting code analysis, secret detection, and dependency state evidence with cryptographic hashing for chain of custody.
+- id: vulnerability-triage-workflow
+  title: Vulnerability triage workflow
+  description: Multi-scanner vulnerability triage with severity normalization and prioritization.
+  purpose: Aggregate and prioritize findings from multiple scanning engines for efficient remediation.
+  tags: [vulnerability-management, triage, prioritization, defensive]
+  category: defensive-vulnerability-management
+  steps:
+    - capability: dependency.scan
+    - capability: container.scan
+    - capability: vuln.scan
+    - capability: report.generate
+  requirements:
+    - Access to codebase, containers, and deployment targets.
+    - Vuln management process in place.
+  references:
+    - https://github.com/wshobson/agents/tree/c4b82b0ad771190355eb8e204b1329732a18449a/skills/threat-mitigation-mapping
+  confidence: 0.84
+  version: 1.0.0
+  author: CYBOT curated from wshobson/agents@c4b82b0a
+  documentation:
+    description: Aggregates findings from multiple vulnerability scanners, normalizes severities, and produces a prioritized report.
+    purpose: Streamline vulnerability triage and remediation planning.
+    arguments: []
+    examples:
+      - description: Triage vulnerabilities
+        command: cybot workflow plan vulnerability-triage-workflow --target /path/to/project
+    expected_output: Prioritized vulnerability report with normalized severities and CVSS correlations.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Automated triage cannot replace human risk assessment.
+      - CVSS scores may not reflect exploitability in context.
+    required_permissions:
+      - Read access to all assessment targets.
+    related_commands:
+      - cybot capability help dependency.scan
+      - cybot capability help vuln.scan
+    common_mistakes:
+      - Treating all critical findings as equally urgent.
+    best_practices:
+      - Combine automated triage with manual risk assessment.
+      - Focus on fixable, reachable vulnerabilities first.
+  content: Automated vulnerability triage aggregating findings from dependency scanners, container analyzers, and vulnerability scanners into a normalized, prioritized report.
+- id: compliance-audit-trail
+  title: Compliance audit trail
+  description: Generate compliance evidence for security audits and regulatory requirements.
+  purpose: Produce reproducible audit artifacts demonstrating security controls and practices.
+  tags: [compliance, audit, evidence, governance, defensive]
+  category: defensive-compliance
+  steps:
+    - capability: sbom.generate
+    - capability: secret.scan
+    - capability: cloud.review
+    - capability: code.audit
+    - capability: report.generate
+  requirements:
+    - Access to all relevant system artifacts.
+    - Defined compliance framework (SOC2, HIPAA, PCI, etc.).
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/auditing-cloud-with-cis-benchmarks
+  confidence: 0.86
+  version: 1.0.0
+  author: CYBOT curated from Anthropic-Cybersecurity-Skills
+  documentation:
+    description: Multi-faceted compliance audit trail generating SBOMs, secret scan results, cloud posture evidence, and code audit findings.
+    purpose: Support regulatory compliance with reproducible security evidence.
+    arguments: []
+    examples:
+      - description: Generate compliance evidence
+        command: cybot workflow plan compliance-audit-trail --target /path/to/project
+    expected_output: Comprehensive audit evidence package with SBOM, findings, and normalized reports.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Does not assess organizational processes or policies.
+      - Evidence must be reviewed by qualified auditors.
+    required_permissions:
+      - Read access to all audited systems.
+    related_commands:
+      - cybot capability help sbom.generate
+      - cybot capability help cloud.review
+      - cybot capability help report.generate
+    common_mistakes:
+      - Assuming automated scans satisfy all compliance requirements.
+    best_practices:
+      - Archive audit evidence with timestamps and hashes.
+      - Map findings to specific control frameworks.
+  content: Compliance-oriented workflow generating SBOMs, cloud posture evidence, secret scanning results, and code audit findings for regulatory and audit requirements.
+- id: ransomware-preparedness-check
+  title: Ransomware preparedness check
+  description: Pre-incident assessment of code, dependencies, containers, and cloud for ransomware resilience.
+  purpose: Identify and remediate weaknesses that ransomware actors commonly exploit.
+  tags: [ransomware, hardening, preparedness, defensive, critical]
+  category: defensive-hardening
+  steps:
+    - capability: code.audit
+    - capability: dependency.scan
+    - capability: container.scan
+    - capability: cloud.review
+    - capability: report.generate
+  requirements:
+    - Access to all system components.
+    - BCDR plan in place.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-container-security-scanning-with-trivy
+  confidence: 0.83
+  version: 1.0.0
+  author: CYBOT curated from Anthropic-Cybersecurity-Skills
+  documentation:
+    description: Ransomware preparedness assessment scanning code, dependencies, containers, and cloud configuration for common attack vectors.
+    purpose: Identify and remediate weaknesses before ransomware actors exploit them.
+    arguments: []
+    examples:
+      - description: Check ransomware preparedness
+        command: cybot workflow plan ransomware-preparedness-check --target /path/to/project
+    expected_output: Findings report with prioritized remediation actions ranked by ransomware risk.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Does not test backup/restore procedures.
+      - Cannot assess social engineering susceptibility.
+    required_permissions:
+      - Read access to all assessed assets.
+    related_commands:
+      - cybot capability help code.audit
+      - cybot capability help container.scan
+    common_mistakes:
+      - Assuming clean scans mean ransomware-proof.
+    best_practices:
+      - Run regularly as part of security hygiene.
+      - Combine with tabletop exercises and BCDR testing.
+  content: Proactive ransomware defense assessment scanning code vulnerabilities, dependency risks, container misconfigurations, and cloud posture for common ransomware entry vectors.
+- id: threat-hunting-recon
+  title: Threat hunting reconnaissance
+  description: Proactive external reconnaissance from a defender's perspective.
+  purpose: Discover exposed assets, shadow IT, and unknown services before attackers do.
+  tags: [threat-hunting, blue-team, exposure, defensive]
+  category: defensive-threat-hunting
+  steps:
+    - capability: dns.enum
+    - capability: service.enumerate
+    - capability: port.scan
+    - capability: tech.fingerprint
+    - capability: vuln.scan
+  requirements:
+    - Authorization to scan owned infrastructure.
+    - Comprehensive asset inventory for comparison.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/conducting-external-reconnaissance-with-osint
+  confidence: 0.82
+  version: 1.0.0
+  author: CYBOT curated from Anthropic-Cybersecurity-Skills
+  documentation:
+    description: Blue-team reconnaissance pipeline discovering exposed assets, unknown services, and forgotten infrastructure.
+    purpose: Find and secure exposed assets before attackers discover them.
+    arguments: []
+    examples:
+      - description: Hunt threats from defender perspective
+        command: cybot workflow plan threat-hunting-recon --target mycompany.com
+    expected_output: Exposed assets, services, technologies, and vulnerabilities on owned infrastructure.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Only discovers externally visible assets.
+      - Cannot scan internal networks without access.
+    required_permissions:
+      - Authorization to scan owned infrastructure.
+    related_commands:
+      - cybot capability help dns.enum
+      - cybot capability help port.scan
+      - cybot capability help vuln.scan
+    common_mistakes:
+      - Scanning external IPs not owned by the organization.
+    best_practices:
+      - Compare findings to asset inventory to identify shadow IT.
+      - Run regularly as part of continuous monitoring.
+  content: Defensive reconnaissance pipeline that discovers exposed assets, unknown services, and configuration issues from the attacker's perspective to enable proactive remediation.
+- id: remediation-verification
+  title: Remediation verification
+  description: Post-fix validation scanning to confirm vulnerabilities have been properly addressed.
+  purpose: Provide repeatable evidence that security remediations were effective.
+  tags: [remediation, validation, verification, defensive]
+  category: defensive-remediation
+  steps:
+    - capability: code.audit
+    - capability: secret.scan
+    - capability: dependency.scan
+    - capability: container.scan
+    - capability: cloud.review
+  requirements:
+    - Access to remediated artifacts.
+    - Baseline scan results for comparison.
+  references:
+    - https://github.com/wshobson/agents/tree/c4b82b0ad771190355eb8e204b1329732a18449a/skills/threat-mitigation-mapping
+    - https://github.com/wshobson/agents/tree/c4b82b0ad771190355eb8e204b1329732a18449a/skills/sast-configuration
+  confidence: 0.87
+  version: 1.0.0
+  author: CYBOT curated from wshobson/agents@c4b82b0a
+  documentation:
+    description: Post-remediation validation scanning all security dimensions to confirm fix effectiveness.
+    purpose: Verify that remediations properly addressed identified vulnerabilities.
+    arguments: []
+    examples:
+      - description: Verify remediation
+        command: cybot workflow plan remediation-verification --target /path/to/fixed/project
+    expected_output: Comparison-ready findings showing resolved vs. remaining issues.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - A clean scan is not a security guarantee.
+      - May not detect regression in areas not covered by scanners.
+    required_permissions:
+      - Read access to remediated artifacts.
+    related_commands:
+      - cybot capability help code.audit
+      - cybot history list
+    common_mistakes:
+      - Treating clean re-scans as complete security assurance.
+    best_practices:
+      - Compare pre- and post-remediation reports.
+      - Document fix verification for audit trail.
+  content: Remediation validation workflow re-scanning code, secrets, dependencies, containers, and cloud configuration after fixes to confirm vulnerability resolution.
+- id: javascript-security-review
+  title: JavaScript security review
+  description: Deep JavaScript analysis for vulnerabilities, secrets, and hidden endpoints.
+  purpose: Uncover client-side vulnerabilities, exposed APIs, and hardcoded credentials in JS.
+  tags: [javascript, client-side, secret-extraction, offensive, defensive]
+  category: offensive-assessment
+  steps:
+    - capability: js.analyse
+    - capability: js.extract
+    - capability: secret.scan
+    - capability: pattern.detect
+    - capability: report.generate
+  requirements:
+    - Access to JavaScript files or web application with JS assets.
+    - Understanding of client-side security risks.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/implementing-semgrep-for-custom-sast-rules
+  confidence: 0.83
+  version: 1.0.0
+  author: CYBOT curated from Anthropic-Cybersecurity-Skills
+  documentation:
+    description: Comprehensive JavaScript security review combining SAST, endpoint extraction, secret detection, and pattern analysis.
+    purpose: Find client-side vulnerabilities and exposed data in JavaScript code.
+    arguments: []
+    examples:
+      - description: Review JS security
+        command: cybot workflow plan javascript-security-review --target /path/to/js/app
+    expected_output: JS findings with vulnerabilities, extracted endpoints, secrets, and interesting patterns.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Minified/obfuscated JS reduces analysis accuracy.
+      - Cannot detect server-side impact of client-side issues.
+    required_permissions:
+      - Read access to JavaScript files.
+    related_commands:
+      - cybot capability help js.analyse
+      - cybot capability help js.extract
+      - cybot capability help pattern.detect
+    common_mistakes:
+      - Underestimating the impact of client-side vulnerabilities.
+    best_practices:
+      - Combine with CSP analysis for comprehensive client-side security.
+  content: JavaScript security deep-dive analyzing source code for vulnerabilities, extracting endpoints and secrets, and detecting patterns indicative of security issues.
+- id: waf-bypass-assessment
+  title: WAF bypass assessment
+  description: Test WAF effectiveness by probing with known bypass techniques and blind spots.
+  purpose: Evaluate whether WAF protections can be circumvented by attackers.
+  tags: [waf, bypass, evasion, offensive, assessment]
+  category: offensive-assessment
+  steps:
+    - capability: waf.detect
+    - capability: tech.fingerprint
+    - capability: vuln.scan
+    - capability: sql.inject
+    - capability: xss.detect
+    - capability: report.generate
+  requirements:
+    - Target with WAF/IDS protection.
+    - Authorization for evasion testing.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/performing-api-inventory-and-discovery
+  confidence: 0.8
+  version: 1.0.0
+  author: CYBOT curated from Anthropic-Cybersecurity-Skills
+  documentation:
+    description: WAF effectiveness assessment that first identifies the WAF product, then tests with known bypasses for injection and XSS.
+    purpose: Validate WAF configuration effectiveness against real attack patterns.
+    arguments: []
+    examples:
+      - description: Assess WAF bypass potential
+        command: cybot workflow plan waf-bypass-assessment --target https://example.com
+    expected_output: WAF detection, bypass test results, and findings that passed through protections.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - WAF rules may change between scans.
+      - Custom WAF signatures may not be detected.
+    required_permissions:
+      - Explicit authorization for WAF evasion testing.
+    related_commands:
+      - cybot capability help waf.detect
+      - cybot capability help sql.inject
+      - cybot capability help xss.detect
+    common_mistakes:
+      - Testing WAF bypass without notifying security operations.
+    best_practices:
+      - Coordinate with SOC to avoid false incident alerts.
+      - Document which bypasses succeeded for WAF rule tuning.
+  content: WAF effectiveness testing pipeline that fingerprints the security appliance, then tests with SQL injection and XSS payloads designed to evade common WAF signatures.
+- id: cms-security-assessment
+  title: CMS security assessment
+  description: WordPress, Drupal, Joomla, and other CMS-specific vulnerability scanning.
+  purpose: Identify outdated plugins, themes, core vulnerabilities, and misconfigurations.
+  tags: [cms, wordpress, drupal, joomla, offensive, defensive]
+  category: offensive-assessment
+  steps:
+    - capability: cms.detect
+    - capability: tech.fingerprint
+    - capability: vuln.scan
+    - capability: dir.bruteforce
+    - capability: report.generate
+  requirements:
+    - Web application running a detectable CMS.
+    - Authorization for CMS-specific testing.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills/tree/e612f4944c55d306bb75565022442d7da8cf2b9a/skills/conducting-external-reconnaissance-with-osint
+  confidence: 0.85
+  version: 1.0.0
+  author: CYBOT curated from Anthropic-Cybersecurity-Skills
+  documentation:
+    description: CMS-focused security assessment detecting the platform, fingerprinting versions, scanning for known vulns, and brute-forcing common paths.
+    purpose: Find CMS-specific vulnerabilities in plugin, theme, and core installations.
+    arguments: []
+    examples:
+      - description: Assess CMS security
+        command: cybot workflow plan cms-security-assessment --target https://example.com
+    expected_output: CMS version, plugin inventory, vulnerability findings, and discovered paths.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Plugin detection limited to common/identifiable patterns.
+      - Cannot assess custom-developed plugins.
+    required_permissions:
+      - Authorization for CMS security testing.
+    related_commands:
+      - cybot capability help cms.detect
+      - cybot capability help vuln.scan
+      - cybot capability help dir.bruteforce
+    common_mistakes:
+      - Attempting exploitation of identified vulnerabilities.
+    best_practices:
+      - Cross-reference findings with WPScan/CMSmap for validation.
+  content: CMS security workflow that detects the platform and version, fingerprints the technology stack, runs vulnerability scans against known CMS issues, and discovers hidden admin panels.
+- id: application-threat-model
+  title: Application threat model evidence
+  description: Collects code and API evidence to support a human-led STRIDE threat model.
+  purpose: Make threat-model inputs reproducible and traceable to CYBOT evidence.
+  tags: [threat-model, stride, api, defensive]
+  category: defensive-architecture
+  steps:
+    - capability: code.audit
+    - capability: js.analyse
+    - capability: api.audit
+  requirements:
+    - Read access to architecture and source materials.
+    - Threat modeling methodology defined.
+  references:
+    - https://github.com/wshobson/agents/tree/c4b82b0ad771190355eb8e204b1329732a18449a/skills/stride-analysis-patterns
+    - https://github.com/wshobson/agents/tree/c4b82b0ad771190355eb8e204b1329732a18449a/skills/attack-tree-construction
+  confidence: 0.78
+  version: 1.0.0
+  author: CYBOT curated from wshobson/agents@c4b82b0a
+  documentation:
+    description: Collects code audit, JavaScript analysis, and API audit evidence to support STRIDE threat modeling.
+    purpose: Provide reproducible inputs for human-led threat modeling exercises.
+    arguments: []
+    examples:
+      - description: Collect threat model evidence
+        command: cybot workflow plan application-threat-model --target /path/to/repo
+    expected_output: Normalized code, JS, and API findings for threat model analysis.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Does not produce a complete threat model.
+      - Requires human review of system boundary, data flow, and trust assumptions.
+    required_permissions:
+      - Read access to architecture and code.
+    related_commands:
+      - cybot capability help code.audit
+      - cybot capability help api.audit
+    common_mistakes:
+      - Treating automated evidence as a complete threat model.
+    best_practices:
+      - Combine with manual STRIDE sessions and attack tree construction.
+  content: Threat modeling evidence collection producing reproducible code audit, JavaScript, and API findings to support STRIDE and attack tree analysis.
+- id: incident-evidence-handoff
+  title: Incident evidence handoff
+  description: Produces a structured report from selected CYBOT evidence for incident handoff.
+  purpose: Preserve reproducible facts, confidence, and follow-up actions during incident coordination.
+  tags: [incident-response, reporting, evidence, defensive]
+  category: defensive-incident-response
+  steps:
+    - capability: report.generate
+  requirements:
+    - Access to stored CYBOT run evidence.
+    - Incident owner identified.
+  references:
+    - https://github.com/wshobson/agents/tree/c4b82b0ad771190355eb8e204b1329732a18449a/skills/incident-runbook-templates
+    - https://github.com/wshobson/agents/tree/c4b82b0ad771190355eb8e204b1329732a18449a/skills/postmortem-writing
+  confidence: 0.8
+  version: 1.0.0
+  author: CYBOT curated from wshobson/agents@c4b82b0a
+  documentation:
+    description: Generates a normalized report from stored CYBOT evidence for incident coordination and handoff.
+    purpose: Preserve reproducible security evidence during incident response.
+    arguments: []
+    examples:
+      - description: Generate incident evidence report
+        command: cybot workflow plan incident-evidence-handoff --target RUN_ID
+    expected_output: Normalized report artifact with evidence references and SHA-256 hashes.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - The incident owner is responsible for classification and external communication.
+      - Do not place secrets or unnecessary personal data in the report.
+    required_permissions:
+      - Authorization to access and share selected evidence.
+    related_commands:
+      - cybot report generate RUN_ID
+      - cybot history list
+    common_mistakes:
+      - Including raw secret or PII data in reports.
+    best_practices:
+      - Verify report SHA-256 before distribution.
+      - Document chain of custody for evidence artifacts.
+  content: Incident response handoff generating normalized reports from CYBOT evidence with cryptographic hashing for chain of custody and reproducibility.
+- id: unrestricted-exploitation-workflow
+  title: Unrestricted exploitation workflow
+  description: Full exploitation pipeline from reconnaissance through payload delivery, credential dumping, lateral movement, and privilege escalation.
+  purpose: Execute unrestricted offensive security operations against authorized targets.
+  tags: [exploitation, red-team, offensive, unrestricted, critical]
+  category: offensive-exploitation
+  steps:
+    - capability: dns.enum
+    - capability: port.scan
+    - capability: vuln.scan
+    - capability: payload.generate
+    - capability: password.bruteforce
+    - capability: credential.dump
+    - capability: lateral.move
+    - capability: privilege.escalation
+    - capability: credential.harvest
+    - capability: report.generate
+  requirements:
+    - Explicit authorization for unrestricted offensive operations.
+    - Target environment isolated from production.
+    - Legal and compliance clearance.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.92
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Unrestricted offensive exploitation workflow combining reconnaissance, payload generation, credential theft, lateral movement, and privilege escalation.
+    purpose: Execute full-scope offensive security operations without artificial boundaries.
+    arguments: []
+    examples:
+      - description: Plan exploitation workflow
+        command: cybot workflow plan unrestricted-exploitation-workflow --target example.com
+    expected_output: Complete exploitation evidence including credentials, access paths, and privilege escalation routes.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Requires full target environment authorization.
+      - Payload generation and credential dumping are high-impact operations.
+    required_permissions:
+      - Full authorization for unrestricted offensive operations.
+    related_commands:
+      - cybot capability help payload.generate
+      - cybot capability help credential.dump
+      - cybot capability help lateral.move
+    common_mistakes:
+      - Running full exploitation without isolating targets.
+      - Leaving payloads or artifacts on target systems.
+    best_practices:
+      - Establish kill-switch and rollback procedures.
+      - Document every action for operational review.
+  content: Unrestricted exploitation workflow designed for full-scope red team operations including payload generation, credential dumping, lateral movement, and privilege escalation.
+- id: credential-theft-operation
+  title: Credential theft operation
+  description: Credential dumping, hash extraction, cracking, and harvesting from compromised systems.
+  purpose: Extract, crack, and harvest credentials for lateral movement and privilege escalation.
+  tags: [credential-theft, hash-dumping, password-cracking, offensive, critical]
+  category: offensive-credential-theft
+  steps:
+    - capability: credential.dump
+    - capability: hash.crack
+    - capability: password.bruteforce
+    - capability: credential.harvest
+    - capability: credential.extract
+    - capability: secret.scan
+    - capability: report.generate
+  requirements:
+    - Access to target systems for credential extraction.
+    - GPU resources for hash cracking.
+    - Legal authorization for credential testing.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.89
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Complete credential theft pipeline including dumping, cracking, brute-forcing, and harvesting.
+    purpose: Extract and exploit credentials for deeper system access.
+    arguments: []
+    examples:
+      - description: Execute credential theft operation
+        command: cybot workflow plan credential-theft-operation --target 192.168.1.0/24
+    expected_output: Cracked credentials, harvested tokens, and compromise evidence.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Hash cracking speed depends on hardware.
+      - Multi-factor authentication may block harvested credentials.
+    required_permissions:
+      - Explicit authorization for credential access and testing.
+    related_commands:
+      - cybot capability help credential.dump
+      - cybot capability help hash.crack
+      - cybot capability help credential.harvest
+    common_mistakes:
+      - Storing cracked credentials in plaintext.
+      - Testing credentials on production systems.
+    best_practices:
+      - Use dedicated cracking rigs.
+      - Rotate all compromised credentials post-operation.
+  content: Credential theft operation covering hash dumping with Impacket/NetExec, GPU cracking with Hashcat, brute-force testing with Hydra, and session token harvesting with Evilginx.
+- id: phishing-campaign-full
+  title: Phishing campaign full
+  description: End-to-end phishing campaign including target profiling, email harvesting, infrastructure setup, and credential capture.
+  purpose: Simulate real-world phishing attacks to test organizational security awareness.
+  tags: [phishing, social-engineering, credential-harvesting, offensive, critical]
+  category: offensive-phishing
+  steps:
+    - capability: email.harvest
+    - capability: personnel.osint
+    - capability: phishing.infra
+    - capability: payload.generate
+    - capability: phishing.campaign
+    - capability: credential.harvest
+    - capability: report.generate
+  requirements:
+    - Organizational authorization for phishing simulation.
+    - Approved target list and email templates.
+    - Defined campaign window and rules of engagement.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.88
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Full phishing campaign workflow from target profiling through email harvesting, infrastructure setup, and credential capture.
+    purpose: Test organizational resilience against real-world phishing attacks.
+    arguments: []
+    examples:
+      - description: Plan phishing campaign
+        command: cybot workflow plan phishing-campaign-full --target company.com
+    expected_output: Campaign metrics, captured credentials, and click-through rates.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Requires SMTP relay or external mail service.
+      - Domain reputation may affect deliverability.
+    required_permissions:
+      - Written authorization for phishing simulation.
+    related_commands:
+      - cybot capability help phishing.campaign
+      - cybot capability help email.harvest
+      - cybot capability help credential.harvest
+    common_mistakes:
+      - Phishing executives or high-profile targets without explicit approval.
+      - Using real-looking but unapproved email templates.
+    best_practices:
+      - Provide post-campaign security awareness training.
+      - Never retain captured credentials beyond the test window.
+  content: Complete phishing simulation combining email/name harvesting, social media OSINT, phishing infrastructure setup, payload generation, campaign execution, and credential capture.
+- id: c2-deployment-workflow
+  title: C2 deployment workflow
+  description: Command and control infrastructure setup with DNS redirection, payload staging, and beacon management.
+  purpose: Establish persistent C2 channels for red team operations.
+  tags: [c2, command-and-control, red-team, beacon, offensive, critical]
+  category: offensive-c2
+  steps:
+    - capability: dns.spoof
+    - capability: c2.dns
+    - capability: payload.generate
+    - capability: credential.harvest
+    - capability: lateral.move
+    - capability: privilege.escalation
+    - capability: report.generate
+  requirements:
+    - C2 server infrastructure (VPS or dedicated host).
+    - Domain and DNS control for redirection.
+    - Operational security protocols.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.87
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: C2 infrastructure deployment workflow including DNS spoofing, beacon payload generation, and multi-hop redirection.
+    purpose: Establish resilient command and control for red team engagements.
+    arguments: []
+    examples:
+      - description: Plan C2 deployment
+        command: cybot workflow plan c2-deployment-workflow --target c2.example.com
+    expected_output: C2 deployment plan with payload configuration and beacon endpoints.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Requires external C2 server infrastructure.
+      - Payload detection by EDR may compromise operations.
+    required_permissions:
+      - Authorization for C2 operations within engagement scope.
+    related_commands:
+      - cybot capability help c2.setup
+      - cybot capability help payload.generate
+      - cybot capability help dns.spoof
+    common_mistakes:
+      - Using default C2 configurations detectable by defenders.
+      - Neglecting operational security during setup.
+    best_practices:
+      - Use domain fronting or CDN for C2 traffic obfuscation.
+      - Rotate C2 infrastructure between engagements.
+  content: C2 deployment workflow covering DNS-based C2 channels, payload staging with msfvenom, beacon generation, and multi-hop redirection for resilient command and control.
+- id: malware-analysis-full
+  title: Malware analysis full
+  description: Static and dynamic malware analysis with code auditing, sandboxing, and behavioral analysis.
+  purpose: Reverse-engineer and analyze malware samples to understand capabilities and IOCs.
+  tags: [malware, reverse-engineering, analysis, offensive, defensive]
+  category: offensive-malware
+  steps:
+    - capability: code.audit
+    - capability: container.scan
+    - capability: secret.scan
+    - capability: dependency.scan
+    - capability: sbom.generate
+    - capability: report.generate
+  requirements:
+    - Malware sample in isolated environment.
+    - Sandbox or VM for dynamic analysis.
+    - Disassembly/decompilation tools.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.85
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Multi-stage malware analysis combining static code analysis, container-based sandboxing, and behavioral analysis.
+    purpose: Understand malware capabilities and extract indicators of compromise.
+    arguments: []
+    examples:
+      - description: Analyze malware sample
+        command: cybot workflow plan malware-analysis-full --target /path/to/malware/sample
+    expected_output: Malware analysis report with IOCs, capabilities, and mitigation recommendations.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Anti-analysis techniques may evade detection.
+      - Requires isolated analysis environment.
+    required_permissions:
+      - Secure handling of malicious samples.
+    related_commands:
+      - cybot capability help code.audit
+      - cybot capability help container.scan
+    common_mistakes:
+      - Analyzing malware on production systems.
+      - Connecting analysis VM to production networks.
+    best_practices:
+      - Use air-gapped analysis environments.
+      - Preserve sample hashes for threat intelligence sharing.
+  content: Malware analysis workflow combining static code analysis, container-based sandbox execution, dependency mapping, and SBOM generation for comprehensive IOC extraction.
+- id: active-directory-total-compromise
+  title: Active Directory total compromise
+  description: Full AD attack chain including enumeration, Kerberos attacks, credential dumping, and domain dominance.
+  purpose: Demonstrate complete Active Directory compromise from initial access to domain admin.
+  tags: [active-directory, kerberos, domain-dominance, offensive, critical]
+  category: offensive-credential-theft
+  steps:
+    - capability: port.scan
+    - capability: service.enumerate
+    - capability: active-directory.attack
+    - capability: credential.dump
+    - capability: privilege.escalation
+    - capability: lateral.move
+    - capability: report.generate
+  requirements:
+    - Domain-joined testing environment.
+    - Domain admin or equivalent authorization.
+    - Isolated from production AD.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.91
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Complete Active Directory compromise workflow from reconnaissance through Kerberos attacks, credential dumping, and domain dominance.
+    purpose: Demonstrate full AD compromise capability for authorized red team assessments.
+    arguments: []
+    examples:
+      - description: Execute AD compromise
+        command: cybot workflow plan active-directory-total-compromise --target dc.corp.local
+    expected_output: Domain admin access evidence, dumped credentials, and attack path visualization.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Requires domain environment and credentials.
+      - Some attacks may be detected by EDR.
+    required_permissions:
+      - Full authorization for AD security testing.
+    related_commands:
+      - cybot capability help active-directory.attack
+      - cybot capability help credential.dump
+      - cybot capability help privilege.escalation
+    common_mistakes:
+      - Running Kerberos attacks on production DCs.
+      - Leaving golden tickets in AD environment.
+    best_practices:
+      - Use dedicated testing domains.
+      - Clean up all artifacts post-assessment.
+  content: Active Directory total compromise covering BloodHound enumeration, Impacket Kerberos attacks, credential dumping, lateral movement with NetExec, and privilege escalation to domain admin.
+- id: osint-personnel-profiling
+  title: OSINT personnel profiling
+  description: Comprehensive personnel and organizational OSINT gathering from public sources.
+  purpose: Build detailed personnel profiles for social engineering targeting and security assessment.
+  tags: [osint, personnel, social-engineering, profiling, offensive]
+  category: offensive-osint
+  steps:
+    - capability: email.harvest
+    - capability: personnel.osint
+    - capability: dns.enum
+    - capability: social.engineer
+    - capability: report.generate
+  requirements:
+    - Target organization name or domain.
+    - Compliance with OSINT collection laws and ethics.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.84
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Comprehensive OSINT personnel profiling using email harvesting, social media enumeration, and document metadata extraction.
+    purpose: Gather intelligence for authorized social engineering assessments.
+    arguments: []
+    examples:
+      - description: Profile target organization
+        command: cybot workflow plan osint-personnel-profiling --target company.com
+    expected_output: Personnel list with emails, roles, social media profiles, and document metadata.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Information accuracy depends on public source data.
+      - Some profiles may be private or restricted.
+    required_permissions:
+      - Authorized OSINT collection within assessment scope.
+    related_commands:
+      - cybot capability help email.harvest
+      - cybot capability help personnel.osint
+    common_mistakes:
+      - Collecting personal data outside assessment scope.
+      - Using harvested data for unauthorized contact.
+    best_practices:
+      - Limit collection to organization-affiliated individuals.
+      - Delete collected PII after assessment completion.
+  content: Personnel OSINT profiling using theHarvester for email collection, Sherlock for social media enumeration, Metagoofil for document metadata, and social engineering profiling tools.
+- id: ransomware-simulation
+  title: Ransomware simulation
+  description: End-to-end ransomware attack simulation including initial access, payload delivery, encryption, and exfiltration testing.
+  purpose: Test organizational ransomware detection, response, and recovery capabilities.
+  tags: [ransomware, simulation, red-team, offensive, critical]
+  category: offensive-exploitation
+  steps:
+    - capability: phishing.campaign
+    - capability: payload.generate
+    - capability: credential.harvest
+    - capability: lateral.move
+    - capability: credential.dump
+    - capability: privilege.escalation
+    - capability: report.generate
+  requirements:
+    - Isolated testing environment or approved production segment.
+    - Backup verification before simulation.
+    - Executive and legal approval.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.9
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Full ransomware attack simulation from initial phishing access through payload delivery, lateral movement, and simulated encryption.
+    purpose: Validate organizational ransomware preparedness and response capabilities.
+    arguments: []
+    examples:
+      - description: Plan ransomware simulation
+        command: cybot workflow plan ransomware-simulation --target company.com
+    expected_output: Simulation report with attack timeline, detection gaps, and response recommendations.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Does not actually encrypt files.
+      - Simulation scope must be strictly controlled.
+    required_permissions:
+      - Executive and legal approval for ransomware simulation.
+    related_commands:
+      - cybot capability help phishing.campaign
+      - cybot capability help payload.generate
+      - cybot capability help lateral.move
+    common_mistakes:
+      - Running simulation without backup verification.
+      - Not notifying incident response team before testing.
+    best_practices:
+      - Conduct tabletop exercise before technical simulation.
+      - Have incident response team on standby during simulation.
+  content: Ransomware attack simulation replicating real-world ransomware TTPs including phishing-based initial access, payload delivery, credential harvesting, lateral movement, and simulated encryption.
+- id: credential-breach-correlation
+  title: Credential breach correlation
+  description: Correlate leaked credentials from breach databases against target organizations.
+  purpose: Identify compromised credentials that could enable unauthorized access.
+  tags: [credential, breach, correlation, offensive, credential-theft]
+  category: offensive-credential-theft
+  steps:
+    - capability: email.harvest
+    - capability: secret.scan
+    - capability: pattern.detect
+    - capability: report.generate
+  requirements:
+    - Access to breach data or breach notification APIs.
+    - Organization authorization for credential testing.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.83
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Correlate email addresses against known breach databases to identify compromised credentials.
+    purpose: Find compromised credentials before attackers exploit them.
+    arguments: []
+    examples:
+      - description: Check breach exposure
+        command: cybot workflow plan credential-breach-correlation --target company.com
+    expected_output: Compromised credential report with breach source and exposure details.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Breach database completeness varies.
+      - Password data must be handled with extreme care.
+    required_permissions:
+      - Authorization for credential research.
+    related_commands:
+      - cybot capability help email.harvest
+      - cybot capability help secret.scan
+    common_mistakes:
+      - Storing compromised passwords in plaintext.
+      - Using breach data for unauthorized access.
+    best_practices:
+      - Notify users of compromised credentials.
+      - Enforce password resets for exposed accounts.
+  content: Breach credential correlation combining email harvesting, pattern matching, and secret detection to identify compromised credentials from public breach databases.
+- id: reverse-shell-deployment
+  title: Reverse shell deployment
+  description: Multi-platform reverse shell generation and deployment for remote access.
+  purpose: Generate and deploy reverse shells across Windows, Linux, and macOS targets.
+  tags: [reverse-shell, payload, remote-access, offensive, critical]
+  category: offensive-exploitation
+  steps:
+    - capability: payload.generate
+    - capability: port.scan
+    - capability: web.map
+    - capability: vuln.scan
+    - capability: credential.dump
+    - capability: report.generate
+  requirements:
+    - Listener infrastructure ready.
+    - Target system access.
+    - Legal authorization for remote access.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.88
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Multi-platform reverse shell generation and deployment using msfvenom with encoded, staged, and stageless payloads.
+    purpose: Establish remote access on compromised systems.
+    arguments: []
+    examples:
+      - description: Generate reverse shell
+        command: cybot workflow plan reverse-shell-deployment --target 10.0.0.5
+    expected_output: Generated payload artifacts and deployment instructions.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Payloads may be detected by antivirus.
+      - Firewall rules may block reverse connections.
+    required_permissions:
+      - Authorization for remote access deployment.
+    related_commands:
+      - cybot capability help payload.generate
+      - cybot capability help port.scan
+    common_mistakes:
+      - Using unencoded payloads detectable by AV.
+      - Connecting back to production IPs without OPSEC.
+    best_practices:
+      - Use staged payloads with encoding.
+      - Route connections through red team infrastructure.
+  content: Reverse shell deployment generating encoded, staged payloads for Windows, Linux, and macOS targets with msfvenom, supporting reverse TCP, HTTPS, and DNS-based shells.
+- id: mitm-credential-sniffing
+  title: MITM credential sniffing
+  description: Man-in-the-middle attack for network credential interception and session hijacking.
+  purpose: Capture credentials, session tokens, and sensitive data from network traffic.
+  tags: [mitm, sniffing, credential-interception, offensive, critical]
+  category: offensive-exploitation
+  steps:
+    - capability: mitm.assess
+    - capability: credential.sniff
+    - capability: credential.extract
+    - capability: credential.harvest
+    - capability: report.generate
+  requirements:
+    - Network access to target segment.
+    - Authorization for MITM operations.
+    - Legal compliance with wiretap laws.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.87
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Network-based credential sniffing using Bettercap for ARP/DNS spoofing, PCredz for PCAP extraction, and Evilginx for session hijacking.
+    purpose: Demonstrate credential exposure through network-level attacks.
+    arguments: []
+    examples:
+      - description: Start MITM credential sniffing
+        command: cybot workflow plan mitm-credential-sniffing --target 192.168.1.0/24
+    expected_output: Captured credentials, session tokens, and network exposure report.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Modern HTTPS and HSTS may prevent interception.
+      - Requires privileged network access.
+    required_permissions:
+      - Explicit authorization for MITM operations.
+    related_commands:
+      - cybot capability help mitm.assess
+      - cybot capability help credential.sniff
+      - cybot capability help credential.extract
+    common_mistakes:
+      - Sniffing networks without legal authorization.
+      - Capturing credentials of uninvolved parties.
+    best_practices:
+      - Restrict sniffing to authorized target segments.
+      - Wipe captured data after assessment.
+  content: MITM credential sniffing using ARP/DNS spoofing with Bettercap, PCAP credential extraction with PCredz, and session token harvesting with Evilginx for comprehensive network credential interception.
+- id: hash-dumping-extraction
+  title: Hash dumping and extraction
+  description: Extract NTLM, Kerberos, and cached credential hashes from Windows systems.
+  purpose: Obtain password hashes for offline cracking and pass-the-hash attacks.
+  tags: [hash-dumping, ntlm, kerberos, credential-theft, offensive, critical]
+  category: offensive-credential-theft
+  steps:
+    - capability: active-directory.attack
+    - capability: credential.dump
+    - capability: hash.crack
+    - capability: report.generate
+  requirements:
+    - Administrative access to target Windows systems.
+    - Domain context or local admin credentials.
+    - GPU resources for offline cracking.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.9
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Windows hash dumping and extraction using Impacket secretsdump, NTDS.dit extraction, and LSASS memory dumping.
+    purpose: Extract password hashes for cracking and pass-the-hash lateral movement.
+    arguments: []
+    examples:
+      - description: Dump domain hashes
+        command: cybot workflow plan hash-dumping-extraction --target dc.corp.local
+    expected_output: Extracted NTLM/Kerberos hashes with cracking results.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Requires domain admin or equivalent privileges.
+      - EDR may detect LSASS access patterns.
+    required_permissions:
+      - Authorization for hash extraction operations.
+    related_commands:
+      - cybot capability help credential.dump
+      - cybot capability help hash.crack
+    common_mistakes:
+      - Storing extracted hashes insecurely.
+      - Using pass-the-hash on production systems.
+    best_practices:
+      - Use dedicated cracking infrastructure.
+      - Document hash sources and extraction methods.
+  content: Hash dumping workflow using Impacket secretsdump for NTDS extraction, NetExec for SAM/SYSTEM dumping, and Hashcat for GPU-accelerated NTLM/Kerberos cracking.
+- id: email-spoofing-assessment
+  title: Email spoofing assessment
+  description: Test SPF, DKIM, and DMARC configurations through active email spoofing attempts.
+  purpose: Identify email authentication weaknesses enabling business email compromise.
+  tags: [email-spoofing, bec, phishing, spf, dmarc, offensive, critical]
+  category: offensive-phishing
+  steps:
+    - capability: smtp.test
+    - capability: dns.analyse
+    - capability: email.spoof
+    - capability: email.harvest
+    - capability: report.generate
+  requirements:
+    - Target domain with email infrastructure.
+    - Authorization for email security testing.
+    - Non-production email testing addresses.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.86
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Email spoofing assessment testing SPF, DKIM, and DMARC configurations through active spoofing attempts.
+    purpose: Identify email authentication weaknesses exploitable by BEC attackers.
+    arguments: []
+    examples:
+      - description: Test email spoofing
+        command: cybot workflow plan email-spoofing-assessment --target company.com
+    expected_output: SPF/DKIM/DMARC findings with successful spoof attempts and remediation guidance.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Email gateways may block spoofed messages.
+      - Requires compliant SMTP relay.
+    required_permissions:
+      - Authorization for email security testing.
+    related_commands:
+      - cybot capability help smtp.test
+      - cybot capability help dns.analyse
+    common_mistakes:
+      - Spoofing real executive emails.
+      - Sending spoofed emails to production addresses.
+    best_practices:
+      - Use clearly marked test emails.
+      - Test against dedicated mailboxes.
+  content: Email spoofing assessment testing SPF/DKIM/DMARC controls with Swaks, identifying authentication gaps, and demonstrating BEC risk through controlled spoofing attempts.
+- id: exposed-device-discovery
+  title: Exposed device discovery
+  description: Discover Internet-exposed devices, IoT systems, and vulnerable services via Shodan.
+  purpose: Find exposed assets including webcams, industrial systems, databases, and vulnerable services.
+  tags: [shodan, iot, exposed-devices, offensive, reconnaissance]
+  category: offensive-reconnaissance
+  steps:
+    - capability: exposed.device
+    - capability: asset.discover
+    - capability: service.enumerate
+    - capability: vuln.scan
+    - capability: report.generate
+  requirements:
+    - Shodan API key or CLI access.
+    - Authorized reconnaissance scope.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.82
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Shodan-based exposed device discovery for identifying vulnerable Internet-facing assets.
+    purpose: Find exposed devices and services before attackers discover them.
+    arguments: []
+    examples:
+      - description: Discover exposed devices
+        command: cybot workflow plan exposed-device-discovery --target company.com
+    expected_output: Exposed device inventory with service details and vulnerability findings.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Requires Shodan API subscription.
+      - May not discover devices behind non-standard configurations.
+    required_permissions:
+      - Authorized Internet scanning and reconnaissance.
+    related_commands:
+      - cybot capability help asset.discover
+      - cybot capability help vuln.scan
+    common_mistakes:
+      - Accessing discovered devices without authorization.
+    best_practices:
+      - Correlate findings with internal asset inventory.
+      - Prioritize critical infrastructure exposures.
+  content: Exposed device discovery using Shodan for Internet-wide scanning, identifying exposed IoT, ICS, databases, webcams, and vulnerable services for remediation.
+- id: social-engineering-recon
+  title: Social engineering reconnaissance
+  description: Build detailed target profiles through social media scraping, OSINT, and public data aggregation.
+  purpose: Gather intelligence for targeted social engineering and spear-phishing campaigns.
+  tags: [social-engineering, osint, profiling, personnel, offensive]
+  category: offensive-osint
+  steps:
+    - capability: personnel.osint
+    - capability: email.harvest
+    - capability: social.engineer
+    - capability: pattern.detect
+    - capability: report.generate
+  requirements:
+    - Target organization or individual identifiers.
+    - Ethical OSINT collection practices.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.81
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Social engineering reconnaissance combining Sherlock, theHarvester, and pattern analysis for comprehensive target profiling.
+    purpose: Enable targeted social engineering through deep OSINT collection.
+    arguments: []
+    examples:
+      - description: Profile target for social engineering
+        command: cybot workflow plan social-engineering-recon --target "John Smith"
+    expected_output: Target profile with social media accounts, email addresses, interests, and relationships.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Profile completeness varies by social media presence.
+      - Private profiles limit data collection.
+    required_permissions:
+      - Ethical OSINT collection authorization.
+    related_commands:
+      - cybot capability help personnel.osint
+      - cybot capability help social.engineer
+    common_mistakes:
+      - Harassing or contacting identified individuals.
+      - Collecting data on persons not affiliated with target.
+    best_practices:
+      - Restrict collection to professional/public data.
+      - Anonymize profiles in reports.
+  content: Social engineering reconnaissance using Sherlock for 350+ platform username enumeration, theHarvester for email discovery, and pattern matching for relationship and interest mapping.
+- id: password-audit-cracking
+  title: Password audit cracking
+  description: Audit password strength by cracking extracted hashes with dictionaries, rules, and brute-force.
+  purpose: Identify weak passwords and demonstrate credential risk to stakeholders.
+  tags: [password-audit, hash-cracking, credential-strength, offensive]
+  category: offensive-credential-theft
+  steps:
+    - capability: credential.dump
+    - capability: hash.crack
+    - capability: password.bruteforce
+    - capability: report.generate
+  requirements:
+    - Extracted password hashes from target systems.
+    - Wordlists and rule sets for cracking.
+    - GPU or cloud compute for acceleration.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.9
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Password audit workflow extracting hashes from systems and cracking them with dictionary, rule-based, and brute-force attacks.
+    purpose: Demonstrate weak password risk and enforce stronger policies.
+    arguments: []
+    examples:
+      - description: Audit password strength
+        command: cybot workflow plan password-audit-cracking --target /path/to/hashes.txt
+    expected_output: Cracked password list with strength metrics and policy recommendations.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Cracking speed depends on hardware and hash algorithm.
+      - Strong, unique passwords may not be cracked.
+    required_permissions:
+      - Authorization for password auditing.
+    related_commands:
+      - cybot capability help hash.crack
+      - cybot capability help password.bruteforce
+    common_mistakes:
+      - Storing cracked passwords in access-controlled systems.
+      - Sharing cracked passwords with unauthorized personnel.
+    best_practices:
+      - Report only password strength metrics, not actual passwords.
+      - Implement multi-factor authentication for critical accounts.
+  content: Password audit using Hashcat and John the Ripper with rockyou, SecLists, and custom rules for comprehensive password strength assessment.
+- id: domain-escalation-attack
+  title: Domain escalation attack
+  description: Executes privilege escalation from standard user to domain admin using Kerberos attacks and token manipulation.
+  purpose: Demonstrate the full privilege escalation chain in Active Directory environments.
+  tags: [domain-escalation, kerberos, golden-ticket, offensive, critical]
+  category: offensive-exploitation
+  steps:
+    - capability: active-directory.attack
+    - capability: credential.dump
+    - capability: privilege.escalation
+    - capability: lateral.move
+    - capability: report.generate
+  requirements:
+    - Standard domain user credentials.
+    - Domain environment with known attack paths.
+    - Full authorization for privilege escalation.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.9
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Complete domain escalation chain from standard user to domain admin using Kerberos attacks and BloodHound attack paths.
+    purpose: Demonstrate real-world privilege escalation risk in Active Directory.
+    arguments: []
+    examples:
+      - description: Execute domain escalation
+        command: cybot workflow plan domain-escalation-attack --target corp.local
+    expected_output: Domain admin access evidence, attack path visualization, and mitigation recommendations.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Requires domain user access.
+      - Kerberos attacks may trigger SIEM alerts.
+    required_permissions:
+      - Authorization for privilege escalation testing.
+    related_commands:
+      - cybot capability help privilege.escalation
+      - cybot capability help active-directory.attack
+    common_mistakes:
+      - Creating persistent backdoors during testing.
+      - Modifying production AD without approval.
+    best_practices:
+      - Document all attack paths for remediation.
+      - Clean up Kerberos tickets post-assessment.
+  content: Domain escalation using BloodHound for attack path analysis, Impacket for Kerberoasting/AS-REP roasting, and token manipulation for domain admin access.
+- id: credential-harvesting-framework
+  title: Credential harvesting framework
+  description: Comprehensive credential collection from browsers, email, network traffic, and memory.
+  purpose: Extract and consolidate credentials from all available sources on compromised systems.
+  tags: [credential-harvesting, browser, memory, network, offensive, critical]
+  category: offensive-credential-theft
+  steps:
+    - capability: credential.extract
+    - capability: credential.sniff
+    - capability: credential.harvest
+    - capability: secret.scan
+    - capability: report.generate
+  requirements:
+    - System or network access for credential extraction.
+    - Authorization for comprehensive credential harvesting.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.88
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Multi-source credential harvesting from browsers, network captures, memory dumps, and file systems.
+    purpose: Collect all available credentials to maximize lateral movement potential.
+    arguments: []
+    examples:
+      - description: Harvest credentials comprehensively
+        command: cybot workflow plan credential-harvesting-framework --target /path/to/pcaps
+    expected_output: Consolidated credential report with source attribution and validation status.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Encrypted credential stores may block extraction.
+      - Browser-based credentials require master password bypass.
+    required_permissions:
+      - Authorization for complete credential harvesting.
+    related_commands:
+      - cybot capability help credential.extract
+      - cybot capability help credential.harvest
+      - cybot capability help credential.sniff
+    common_mistakes:
+      - Extracting credentials from non-target systems.
+      - Storing harvested credentials without encryption.
+    best_practices:
+      - Encrypt credential storage at rest.
+      - Delete harvested data post-engagement.
+  content: Comprehensive credential harvesting using PCredz for PCAP extraction, Evilginx for session hijacking, and file system scanning for stored credentials, cookies, and tokens.
+- id: red-team-full-engagement
+  title: Red team full engagement
+  description: Complete red team operation from initial reconnaissance through exploitation, persistence, C2, and data exfiltration.
+  purpose: Execute a full-scope adversary simulation testing all security controls.
+  tags: [red-team, adversary-simulation, full-scope, offensive, critical]
+  category: offensive-exploitation
+  steps:
+    - capability: dns.enum
+    - capability: email.harvest
+    - capability: personnel.osint
+    - capability: phishing.campaign
+    - capability: payload.generate
+    - capability: c2.setup
+    - capability: credential.dump
+    - capability: credential.harvest
+    - capability: lateral.move
+    - capability: privilege.escalation
+    - capability: active-directory.attack
+    - capability: report.generate
+  requirements:
+    - Full-scope red team authorization.
+    - Defined rules of engagement.
+    - Executive and legal approval.
+    - Isolated or production-adjacent testing environment.
+  references:
+    - https://github.com/mukul975/Anthropic-Cybersecurity-Skills
+  confidence: 0.93
+  version: 1.0.0
+  author: CYBOT offensive capability composition
+  documentation:
+    description: Complete red team engagement covering the full attack lifecycle from reconnaissance to data exfiltration.
+    purpose: Simulate a real adversary to test organizational detection and response capabilities.
+    arguments: []
+    examples:
+      - description: Execute full red team engagement
+        command: cybot workflow plan red-team-full-engagement --target company.com
+    expected_output: Complete engagement report with attack timeline, TTPs used, detection gaps, and remediation roadmap.
+    output_schema: cybot://schemas/skill
+    limitations:
+      - Some phases require manual operator decisions.
+      - Detection by blue team may alter engagement course.
+    required_permissions:
+      - Full-scope red team authorization with executive approval.
+    related_commands:
+      - cybot skill list
+      - cybot capability list
+    common_mistakes:
+      - Exceeding rules of engagement boundaries.
+      - Causing production impact during testing.
+    best_practices:
+      - Maintain constant communication with white cell.
+      - Document all actions for After Action Review.
+  content: Complete red team engagement covering OSINT recon, phishing-based initial access, C2 deployment, credential theft, lateral movement, privilege escalation, and active directory compromise.

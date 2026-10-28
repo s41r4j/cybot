@@ -1,0 +1,44 @@
+import hashlib
+import json
+import tempfile
+from pathlib import Path
+import unittest
+
+import public_source
+import release_gate
+
+class PublicationTests(unittest.TestCase):
+    def test_export_never_copies_private_state_or_history(self):
+        with tempfile.TemporaryDirectory() as source, tempfile.TemporaryDirectory() as output:
+            root = Path(source)
+            for name in ('README.md', '.git/config', '.cybot/token', 'nasa-recon/findings.txt', 'videos/private.txt', 'internal/app/main.go'):
+                path = root/name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text('fixture')
+            public_source.export(Path(output), root)
+            copied = {str(path.relative_to(output)) for path in Path(output).rglob('*') if path.is_file()}
+            self.assertEqual(copied, {'README.md', 'internal/app/main.go'})
+
+    def test_missing_evidence_and_inventory_deletions_fail_closed(self):
+        coverage = {'tools': [{'id':'fixture','implementation':'adapter','normalization':'tool-specific','capabilities':['fixture.run'],'platforms':['linux'],'version':'1'}], 'capabilities':[]}
+        baseline = {'tools':['fixture','missing-tool'], 'capabilities':['missing-capability']}
+        report = release_gate.evaluate(coverage, baseline, {}, 'a'*64, Path(tempfile.gettempdir()))
+        self.assertFalse(report['release_ready'])
+        self.assertEqual(report['validated_items'], 0)
+        self.assertTrue(any('baseline' in reason for reason in report['blockers']))
+
+    def test_presence_or_help_is_not_operation_validation(self):
+        with tempfile.TemporaryDirectory() as output:
+            root=Path(output)
+            report_data={'kind':'tool','id':'fixture','source_sha256':'a'*64,'binary_sha256':'b'*64,'platform':'linux/amd64','cases':[{'type':kind,'status':'passed','mode':'real-operation'} for kind in ('positive','negative','failure')]}
+            data=json.dumps(report_data).encode(); (root/'report.json').write_bytes(data)
+            coverage={'tools':[{'id':'fixture','implementation':'adapter','normalization':'tool-specific','capabilities':['fixture.run'],'platforms':['linux'],'version':'1'}],'capabilities':[]}
+            baseline={'tools':['fixture'],'capabilities':[]}
+            record={'kind':'tool','id':'fixture','status':'passed','mode':'binary-presence','platform':'linux/amd64','version':'1','binary_sha256':'b'*64,'cases':['positive','negative','failure'],'report':'report.json','report_sha256':hashlib.sha256(data).hexdigest()}
+            evidence={'source_sha256':'a'*64,'records':[record]}
+            report=release_gate.evaluate(coverage,baseline,evidence,'a'*64,root)
+            self.assertFalse(report['release_ready'])
+            record['mode']='real-operation'
+            self.assertTrue(release_gate.evaluate(coverage,baseline,evidence,'a'*64,root)['release_ready'])
+            record['report']='../outside.json'
+            self.assertFalse(release_gate.evaluate(coverage,baseline,evidence,'a'*64,root)['release_ready'])
+
+if __name__ == '__main__': unittest.main()

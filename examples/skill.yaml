@@ -1,0 +1,25 @@
+id: web-baseline
+title: Authorized web baseline
+description: Discover assets before mapping an explicitly authorized web target.
+purpose: Compose deterministic discovery capabilities for an authorized baseline.
+tags: [web, discovery]
+category: reconnaissance
+steps:
+  - capability: asset.discover
+confidence: 0.9
+version: 1.0.0
+author: CYBOT
+documentation:
+  description: Authorized web baseline skill.
+  purpose: Demonstrate deterministic capability composition.
+  arguments: []
+  examples:
+    - description: Import the skill
+      command: cybot skill import examples/skill.yaml
+  expected_output: A validated skill definition.
+  output_schema: cybot://schemas/skill
+  limitations: [Only currently installed capabilities can execute.]
+  required_permissions: [Authorization for the target.]
+  related_commands: [cybot skill list, cybot capability list]
+  common_mistakes: [Assuming the skill bypasses policy.]
+  best_practices: [Inspect every capability before execution.]

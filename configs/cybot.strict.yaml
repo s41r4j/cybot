@@ -1,0 +1,15 @@
+data_dir: .cybot
+packs:
+  auto_update: false
+  update_interval: 24h
+  update_timeout: 45s
+policy:
+  # Replace with the exact assets covered by your authorization.
+  allowed_targets: [authorized.example, '*.authorized.example']
+  blocked_targets: []
+  approval_required: true
+  max_rate: 10
+  concurrency: 1
+  timeout: 10m
+  allowed_capabilities: ['*']
+  enforcement_mode: strict

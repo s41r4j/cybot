@@ -1,0 +1,13 @@
+{
+  "architecture": "arm64",
+  "os": "linux",
+  "config": {
+    "Env": ["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],
+    "Cmd": ["/bin/true"]
+  },
+  "rootfs": {
+    "type": "layers",
+    "diff_ids": ["sha256:7b471d6f1022475c909cbb2f0659734ae769bed56b77a0f8c9e3a744ea2ab406"]
+  },
+  "history": [{"created_by": "CYBOT offline container capability fixture"}]
+}

@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"cybot://schemas/command","title":"Command Definition","type":"object","additionalProperties":false,"required":["path","documentation"],"properties":{"path":{"type":"string"},"documentation":{"$ref":"cybot://schemas/documentation"}}}
