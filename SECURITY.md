@@ -24,3 +24,7 @@ suggestive policy emits advisories and does not enforce target denials.
 Local and interface-wide adapters require typed resource targets and explicit
 approval even in suggestive mode. Review sanitized evidence before sharing;
 redaction cannot recognize every encoded or unlabeled secret.
+
+Unix storage uses restricted file/directory modes. Windows storage ACLs and
+specialist security tools remain outside the certified scope; a successful
+Windows CLI build/test run does not establish private NTFS access control.

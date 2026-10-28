@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -117,7 +118,7 @@ func TestStagingActivationRollbackAndPersistence(t *testing.T) {
 	if err != nil || len(h) != 2 {
 		t.Fatalf("history: %v %v", h, err)
 	}
-	if info, err := os.Stat(filename); err != nil || info.Mode().Perm() != 0600 {
+	if info, err := os.Stat(filename); err != nil || runtime.GOOS != "windows" && info.Mode().Perm() != 0600 {
 		t.Fatalf("database permissions: %v %v", info, err)
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -63,7 +64,9 @@ func TestStoredEvidenceHashMatchesRedactedBytes(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if info.Mode().Perm() != 0600 {
+	// Windows FileMode reports writable/read-only bits, not the NTFS ACL.
+	// The redaction/hash assertions above still run on every platform.
+	if runtime.GOOS != "windows" && info.Mode().Perm() != 0600 {
 		t.Fatalf("permissions %o", info.Mode().Perm())
 	}
 	if _, err := store.Put("../escape", "fixture", "text/plain", []byte("test")); err == nil {

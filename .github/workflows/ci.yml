@@ -11,6 +11,7 @@ concurrency:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
@@ -78,3 +79,4 @@ jobs:
             .cybot/toolbox/core-tests.json
             .cybot/toolbox/core-tests.txt
             .cybot/toolbox/runtime.lock.json
+            .cybot/toolbox/probe-error.txt

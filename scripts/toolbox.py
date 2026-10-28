@@ -358,7 +358,14 @@ def probe(image):
     STATE.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='probe-', dir=STATE) as temp:
         output = Path(temp) / 'result.txt'
-        run(['exec', 'sh', '-c', toolbox_probe.script()], image=image, network='none', output=output, timeout_seconds=120)
+        try:
+            run(['exec', 'sh', '-c', toolbox_probe.script()], image=image, network='none', output=output, timeout_seconds=120)
+        except (RuntimeError, subprocess.SubprocessError):
+            if output.exists():
+                diagnostic = STATE / 'probe-error.txt'
+                diagnostic.write_bytes(output.read_bytes()[-65536:])
+                raise RuntimeError('Runtime version probe failed; diagnostic retained at '+str(diagnostic)) from None
+            raise
         measured = toolbox_probe.parse(output.read_text())
     toolbox_probe.validate_source(measured, json.loads((ROOT / 'docker/toolbox/core.lock.json').read_text()))
     return measured

@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -11,18 +12,40 @@ import (
 	"github.com/s41r4j/cybot/pkg/schema"
 )
 
+func TestMain(m *testing.M) {
+	if os.Getenv("CYBOT_TEST_PROCESS") == "docker" {
+		if err := os.WriteFile(os.Getenv("CYBOT_TEST_CAPTURE"), []byte(strings.Join(os.Args[1:], "\n")+"\n"), 0600); err != nil {
+			os.Exit(1)
+		}
+		os.Exit(0)
+	}
+	os.Exit(m.Run())
+}
+
 func TestDockerCommandUsesImageSpecificEntrypoint(t *testing.T) {
 	dir := t.TempDir()
 	capture := filepath.Join(dir, "args")
-	script := `#!/bin/sh
-printf '%s\n' "$@" > "$CYBOT_TEST_CAPTURE"
-exit 0
-`
-	if err := os.WriteFile(filepath.Join(dir, "docker"), []byte(script), 0700); err != nil {
+	// Copy the native test helper instead of relying on a Unix shebang. On
+	// Windows a file named docker without .exe accidentally invoked real Docker.
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := os.ReadFile(executable)
+	if err != nil {
+		t.Fatal(err)
+	}
+	name := "docker"
+	if runtime.GOOS == "windows" {
+		name += ".exe"
+	}
+	if err := os.WriteFile(filepath.Join(dir, name), program, 0700); err != nil {
 		t.Fatal(err)
 	}
 	t.Setenv("PATH", dir+string(os.PathListSeparator)+os.Getenv("PATH"))
 	t.Setenv("CYBOT_TEST_CAPTURE", capture)
+	t.Setenv("CYBOT_TEST_PROCESS", "docker")
+	t.Setenv("GORACE", os.Getenv("GORACE")+" atexit_sleep_ms=0")
 	for _, tc := range []struct {
 		image, entrypoint string
 		want              []string

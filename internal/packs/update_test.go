@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -300,7 +301,7 @@ func TestUpdateMigrationKeepsExistingDatabaseAndOverrides(t *testing.T) {
 	if err != nil || len(localOverrides) != 1 || *localOverrides[0].Content != local {
 		t.Fatal("migration lost data", err)
 	}
-	if info, err := os.Stat(file); err != nil || info.Mode().Perm() != 0600 {
+	if info, err := os.Stat(file); err != nil || runtime.GOOS != "windows" && info.Mode().Perm() != 0600 {
 		t.Fatal("database permissions changed", err)
 	}
 }

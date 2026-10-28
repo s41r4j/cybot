@@ -38,7 +38,7 @@ def public_files(root=ROOT):
 def source_digest(root=ROOT):
     digest = hashlib.sha256()
     for path, rel in public_files(root):
-        if rel.parts[0] not in {'.github', 'cmd', 'internal', 'pkg', 'catalog', 'schemas', 'rules', 'configs', 'docker', 'scripts'} and path.name not in {'go.mod', 'go.sum', 'docker-compose.toolbox.yml', '.gitleaks.toml', '.goreleaser.yaml'}:
+        if rel.parts[0] not in {'.github', 'cmd', 'internal', 'pkg', 'catalog', 'schemas', 'rules', 'configs', 'docker', 'scripts'} and path.name not in {'go.mod', 'go.sum', 'docker-compose.toolbox.yml', '.gitattributes', '.dockerignore', '.gitignore', '.gitleaks.toml', '.goreleaser.yaml'}:
             continue
         digest.update(str(rel).replace('\\', '/').encode() + b'\0')
         digest.update(hashlib.sha256(path.read_bytes()).digest())
