@@ -1,0 +1,34 @@
+# For budget monitoring and a cross-process launch lock, prefer:
+# python3 scripts/toolbox.py run cybot <arguments>
+services:
+  toolbox:
+    image: ${CYBOT_IMAGE:?Set CYBOT_IMAGE from python3 scripts/toolbox.py image}
+    pull_policy: never
+    container_name: cybot-toolbox-active
+    command: ["help"]
+    init: true
+    read_only: true
+    mem_limit: 2g
+    memswap_limit: 2g
+    cpus: 1.0
+    pids_limit: 256
+    labels:
+      io.cybot.managed: "true"
+    logging:
+      driver: "none"
+    ulimits:
+      fsize:
+        soft: 67108864
+        hard: 67108864
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    volumes:
+      - ./data:/data:ro
+      - ./reports:/reports:rw
+      - ./.cybot:/workspace/.cybot:rw
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=128m
+      - /home/cybot/.cache:rw,noexec,nosuid,size=128m,uid=10001,gid=10001
+      - /home/cybot/.config:rw,noexec,nosuid,size=16m,uid=10001,gid=10001

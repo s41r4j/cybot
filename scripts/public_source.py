@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DIRECTORIES = {'.github', 'catalog', 'cmd', 'configs', 'docker', 'docs', 'examples',
                'internal', 'pkg', 'release', 'rules', 'schemas', 'scripts', 'website'}
 FILES = {'.dockerignore', '.gitattributes', '.gitignore', '.gitleaks.toml', '.goreleaser.yaml',
-         'go.mod', 'go.sum', 'README.md', 'ROADMAP.md', 'LICENSE', 'SECURITY.md',
+         'go.mod', 'go.sum', 'docker-compose.toolbox.yml', 'README.md', 'ROADMAP.md', 'LICENSE', 'SECURITY.md',
          'THIRD_PARTY_NOTICES.md', 'CONTRIBUTING.md'}
 PRIVATE_PARTS = {'.git', '.cybot', '.aws', '.codex', '.agents', 'node_modules',
                  '__pycache__', 'videos', 'nasa-recon', 'reference', 'backups'}
@@ -38,7 +38,7 @@ def public_files(root=ROOT):
 def source_digest(root=ROOT):
     digest = hashlib.sha256()
     for path, rel in public_files(root):
-        if rel.parts[0] not in {'.github', 'cmd', 'internal', 'pkg', 'catalog', 'schemas', 'rules', 'configs', 'docker', 'scripts'} and path.name not in {'go.mod', 'go.sum', '.gitleaks.toml', '.goreleaser.yaml'}:
+        if rel.parts[0] not in {'.github', 'cmd', 'internal', 'pkg', 'catalog', 'schemas', 'rules', 'configs', 'docker', 'scripts'} and path.name not in {'go.mod', 'go.sum', 'docker-compose.toolbox.yml', '.gitleaks.toml', '.goreleaser.yaml'}:
             continue
         digest.update(str(rel).replace('\\', '/').encode() + b'\0')
         digest.update(hashlib.sha256(path.read_bytes()).digest())
