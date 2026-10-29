@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/s41r4j/cybot/pkg/schema"
@@ -24,13 +25,22 @@ func TestLiveSupplyChainVulnerabilities(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	c := external("dependency.scan", "Fixture", "supply-chain", []string{"trivy"}, nil, toolStep{ID: "trivy", Required: true, Args: trivyFilesystemArgs})
+	c := liveCapability(t, "dependency.scan")
 	write("4.17.20")
 	r, err := c.Run(context.Background(), liveRequest(dir), d)
-	if err != nil || len(r.Errors) != 0 || len(r.Findings) == 0 || len(r.Evidence) != 1 || r.Status == "partial" {
+	if err != nil || len(r.Errors) != 0 || len(r.Findings) == 0 || len(r.Evidence) != 2 || r.Status == "partial" {
 		t.Fatalf("known vulnerable package missed: %+v %v", r, err)
 	}
 	validateFixtureResult(t, r)
+	for _, tool := range []string{"trivy", "grype"} {
+		found := false
+		for _, finding := range r.Findings {
+			found = found || strings.HasPrefix(finding.ID, tool+":")
+		}
+		if !found {
+			t.Fatal("dependency scanner missed vulnerable package", tool)
+		}
+	}
 	// Deliberately synthetic version outside the known vulnerable range. No
 	// package is downloaded or claimed to exist in a public package registry.
 	write("9999.0.0")
@@ -39,11 +49,14 @@ func TestLiveSupplyChainVulnerabilities(t *testing.T) {
 		t.Fatalf("nonvulnerable control failed: %+v %v", r, err)
 	}
 	requireToolFailure(t, d, "trivy", []string{"filesystem", "--cybot-invalid-fixture-option"})
-	certifyOperation(t, "trivy", "", []operationCase{
-		passedCase("positive", "Pinned offline database identifies vulnerable lodash 4.17.20 from a local lockfile."),
+	requireToolFailure(t, d, "grype", []string{"--cybot-invalid-fixture-option"})
+	cases := []operationCase{
+		passedCase("positive", "Both pinned offline databases identify vulnerable lodash 4.17.20 from a local lockfile."),
 		passedCase("negative", "A synthetic package version outside the vulnerable range produces no vulnerability finding."),
-		passedCase("failure", "Real Trivy rejects an invalid scan option."),
-	})
+		passedCase("failure", "Both real scanners reject invalid scan options."),
+	}
+	certifyOperation(t, "trivy", "", cases)
+	certifyOperation(t, "grype", "dependency.scan", cases)
 }
 
 func TestLiveSupplyChainCloudConfig(t *testing.T) {

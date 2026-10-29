@@ -234,8 +234,9 @@
   description: Vulnerability scanner for container images, filesystems, and SBOMs.
   purpose: Correlate SBOM packages with normalized vulnerability findings.
   version: 0.116.1
-  kind: docker
+  kind: native
   binary: grype
+  supported_os: [linux]
   source_url: https://github.com/anchore/grype
   license: Apache-2.0
   capabilities: [dependency.scan, container.scan]

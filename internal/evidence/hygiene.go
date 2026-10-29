@@ -49,7 +49,7 @@ var DefaultHygieneRules = HygieneRules{
 func sensitiveKey(key string) bool {
 	key = strings.ToLower(strings.NewReplacer("-", "", "_", "", " ", "").Replace(key))
 	switch key {
-	case "cookie", "setcookie", "authorization", "proxyauthorization", "apikey", "xapikey", "password", "passwd", "secret", "raw", "rawv2", "match", "extradata", "privatekey", "clientsecret", "token", "accesstoken", "refreshtoken", "idtoken", "session", "sessionid", "jwt":
+	case "cookie", "setcookie", "authorization", "proxyauthorization", "apikey", "xapikey", "password", "passwd", "secret", "raw", "rawv2", "match", "redacted", "extradata", "privatekey", "clientsecret", "token", "accesstoken", "refreshtoken", "idtoken", "session", "sessionid", "jwt":
 		return true
 	}
 	return strings.HasPrefix(key, "x") && (strings.Contains(key, "auth") || strings.Contains(key, "token") || strings.Contains(key, "csrf"))

@@ -5,6 +5,7 @@ packs:
   update_timeout: 45s
 policy:
   # Replace with the exact assets covered by your authorization.
+  # For local scans, add explicit filesystem paths, e.g. './source/*'.
   allowed_targets: [authorized.example, '*.authorized.example']
   blocked_targets: []
   approval_required: true

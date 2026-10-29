@@ -33,7 +33,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `gobuster` | adapter | undeclared | dir.bruteforce |
 | `gophish` | not-implemented | undeclared | phishing.campaign, social.engineer |
 | `gosec` | adapter | linux | code.audit |
-| `grype` | adapter | undeclared | container.scan, dependency.scan |
+| `grype` | adapter | linux | container.scan, dependency.scan |
 | `hashcat` | adapter | undeclared | hash.crack |
 | `havoc` | adapter | undeclared | c2.havoc |
 | `httpx` | adapter | linux | api.audit, tech.fingerprint, web.map |

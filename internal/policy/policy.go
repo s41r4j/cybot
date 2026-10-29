@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"net/url"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -59,18 +60,87 @@ func (e *Engine) evaluate(req schema.RunRequest) Decision {
 		return Decision{Reason: "capability is not allowed by policy"}
 	}
 	if req.Target != "" {
-		t := canonicalTarget(req.Target)
-		if len(e.config.BlockedTargets) > 0 && matchesAny(t, e.config.BlockedTargets) {
-			return Decision{Reason: "target is blocked by policy"}
-		}
-		if len(e.config.AllowedTargets) > 0 && !matchesAny(t, e.config.AllowedTargets) {
-			return Decision{Reason: "target is outside the allowed scope"}
+		if filesystemTarget(req) {
+			logical, err := filepath.Abs(req.Target)
+			if err != nil {
+				return Decision{Reason: "local target cannot be made absolute for scope validation"}
+			}
+			resolved, err := filepath.EvalSymlinks(logical)
+			if err != nil {
+				return Decision{Reason: "local target cannot be resolved for scope validation"}
+			}
+			if len(e.config.BlockedTargets) > 0 && (matchesPaths(resolved, e.config.BlockedTargets) || matchesPaths(logical, e.config.BlockedTargets)) {
+				return Decision{Reason: "local target is blocked by policy"}
+			}
+			if len(e.config.AllowedTargets) > 0 && !matchesPaths(resolved, e.config.AllowedTargets) {
+				return Decision{Reason: "resolved local target is outside the allowed scope"}
+			}
+		} else {
+			t := canonicalTarget(req.Target)
+			if len(e.config.BlockedTargets) > 0 && matchesAny(t, e.config.BlockedTargets) {
+				return Decision{Reason: "target is blocked by policy"}
+			}
+			if len(e.config.AllowedTargets) > 0 && !matchesAny(t, e.config.AllowedTargets) {
+				return Decision{Reason: "target is outside the allowed scope"}
+			}
 		}
 	}
 	if e.config.ApprovalRequired && !req.Approved {
 		return Decision{RequiresApproval: true, Reason: "explicit approval is missing"}
 	}
 	return Decision{Allowed: true, Reason: "allowed"}
+}
+
+func filesystemTarget(req schema.RunRequest) bool {
+	switch req.Capability {
+	case "code.audit", "secret.scan", "dependency.scan", "cloud.review", "js.analyse", "js.extract", "hash.crack", "pattern.detect":
+		return true
+	case "container.scan", "credential.harvest":
+		_, err := os.Stat(req.Target)
+		return err == nil
+	default:
+		return false
+	}
+}
+
+func matchesPaths(value string, patterns []string) bool {
+	for _, pattern := range patterns {
+		if pattern == "*" {
+			return true
+		}
+		// Hostname patterns must not grant filesystem access to similarly
+		// named local files. Relative file scopes must explicitly name a path.
+		if strings.Contains(pattern, "://") || (!filepath.IsAbs(pattern) && pattern != "." && pattern != ".." && !strings.ContainsAny(pattern, `/\`)) {
+			continue
+		}
+		abs, err := filepath.Abs(pattern)
+		if err != nil {
+			continue
+		}
+		if matched, _ := filepath.Match(abs, value); matched {
+			return true
+		}
+		// Resolve the non-glob prefix so explicitly scoped symlink directories
+		// work, while links from an allowed tree into an unallowed tree fail.
+		prefix, suffix := abs, ""
+		if wildcard := strings.IndexAny(abs, "*?["); wildcard >= 0 {
+			separator := strings.LastIndexAny(abs[:wildcard], `/\`)
+			if separator < 0 {
+				continue
+			}
+			prefix, suffix = abs[:separator+1], abs[separator+1:]
+		}
+		if resolved, err := filepath.EvalSymlinks(prefix); err == nil {
+			abs = filepath.Join(resolved, suffix)
+		}
+		if value == abs {
+			return true
+		}
+		if matched, _ := filepath.Match(abs, value); matched {
+			return true
+		}
+	}
+	return false
 }
 
 func (e *Engine) Authorize(req schema.RunRequest) error {

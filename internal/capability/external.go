@@ -61,6 +61,10 @@ func (c externalCapability) Definition() schema.CapabilityDefinition {
 }
 
 func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d Dependencies) (schema.Result, error) {
+	if req.Capability != "" && req.Capability != c.ID() {
+		return emptyResult(), fmt.Errorf("request capability does not match %s", c.ID())
+	}
+	req.Capability = c.ID()
 	target := strings.TrimSpace(req.Target)
 	if err := validateCapabilityTarget(c.ID(), target); err != nil {
 		return emptyResult(), err
@@ -261,6 +265,31 @@ func validateCapabilityTarget(id, target string) error {
 }
 
 func evidenceOutput(tool string, data []byte) ([]byte, string, error) {
+	if tool == "trufflehog" {
+		docs, err := decodeDocuments(data)
+		if err != nil {
+			return nil, "", err
+		}
+		lines := make([]string, 0, len(docs))
+		for _, doc := range docs {
+			known := []string{}
+			for key, value := range doc {
+				if strings.EqualFold(key, "Raw") || strings.EqualFold(key, "RawV2") {
+					if secret, ok := value.(string); ok && secret != "" {
+						known = append(known, secret)
+					}
+				}
+			}
+			sort.Slice(known, func(i, j int) bool { return len(known[i]) > len(known[j]) })
+			redactValue(doc)
+			encoded, err := json.Marshal(redactKnownSecretCopies(doc, known))
+			if err != nil {
+				return nil, "", err
+			}
+			lines = append(lines, string(encoded))
+		}
+		return []byte(strings.Join(lines, "\n")), "application/x-ndjson", nil
+	}
 	if tool != "gitleaks" && tool != "trufflehog" && tool != "trivy" {
 		if json.Valid(data) {
 			return data, "application/json", nil
@@ -298,7 +327,7 @@ func redactValue(v any) {
 	case map[string]any:
 		for k, child := range x {
 			lower := strings.ToLower(k)
-			if lower == "raw" || lower == "rawv2" || lower == "secret" || lower == "match" || lower == "extra_data" {
+			if lower == "raw" || lower == "rawv2" || lower == "secret" || lower == "match" || lower == "extra_data" || lower == "extradata" || lower == "redacted" || lower == "structureddata" {
 				x[k] = "[REDACTED]"
 				continue
 			}
@@ -308,6 +337,35 @@ func redactValue(v any) {
 		for _, child := range x {
 			redactValue(child)
 		}
+	}
+}
+
+// Scanner-produced labels such as "Redacted" are not a redaction guarantee.
+// Known secret values can also recur in context, errors, metadata or object keys.
+func redactKnownSecretCopies(value any, secrets []string) any {
+	replace := func(text string) string {
+		for _, secret := range secrets {
+			text = strings.ReplaceAll(text, secret, "[REDACTED]")
+		}
+		return text
+	}
+	switch item := value.(type) {
+	case string:
+		return replace(item)
+	case map[string]any:
+		out := make(map[string]any, len(item))
+		for key, child := range item {
+			out[replace(key)] = redactKnownSecretCopies(child, secrets)
+		}
+		return out
+	case []any:
+		out := make([]any, len(item))
+		for i, child := range item {
+			out[i] = redactKnownSecretCopies(child, secrets)
+		}
+		return out
+	default:
+		return value
 	}
 }
 func byteStrings(xs [][]byte) []string {
@@ -519,8 +577,8 @@ func syftArgs(target string, _ schema.RunRequest) []string {
 	return []string{"scan", target, "-o", "cyclonedx-json"}
 }
 func grypeArgs(target string, req schema.RunRequest) []string {
-	if _, err := os.Stat(req.Target); err == nil {
-		if req.Capability == "dependency.scan" {
+	if info, err := os.Stat(req.Target); err == nil {
+		if info.IsDir() {
 			target = "dir:" + target
 		}
 	} else if req.Capability == "container.scan" {

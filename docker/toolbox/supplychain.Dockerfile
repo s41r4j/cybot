@@ -14,7 +14,9 @@ COPY entrypoint.sh /usr/local/bin/cybot-toolbox
 ENV PATH="/opt/cybot/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
     HOME=/home/cybot XDG_CACHE_HOME=/home/cybot/.cache XDG_CONFIG_HOME=/home/cybot/.config \
     CYBOT_TOOLBOX_INTERNAL=1 CYBOT_PACK_AUTO_UPDATE=0 GOMAXPROCS=1 GOMEMLIMIT=768MiB \
-    SYFT_CHECK_FOR_APP_UPDATE=false CYBOT_TRIVY_CACHE_DIR=/opt/cybot/share/trivy
+    SYFT_CHECK_FOR_APP_UPDATE=false CYBOT_TRIVY_CACHE_DIR=/opt/cybot/datasets/@DATABASE_SHA256@/trivy \
+    GRYPE_DB_CACHE_DIR=/opt/cybot/datasets/@GRYPE_DATABASE_SHA256@/grype \
+    GRYPE_DB_AUTO_UPDATE=false GRYPE_CHECK_FOR_APP_UPDATE=false
 USER 10001:10001
 WORKDIR /workspace
 ENTRYPOINT ["/usr/local/bin/cybot-toolbox"]

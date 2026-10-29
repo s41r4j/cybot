@@ -67,14 +67,19 @@ dependency downloads are disabled. The profile retains the same 2 GiB RAM,
 one-CPU, 3 GB image and 20 GB storage admission limits as the compact profile.
 Code with external Go dependencies needs those dependencies available locally.
 
-`python3 scripts/toolbox.py --profile supplychain build` prepares Trivy, Syft
-and an immutable upstream Trivy database. Filesystem scans use a memory-backed
-artifact cache while the bundled vulnerability database stays read-only.
-Terraform/IaC fixture tests require no cloud account. The separate Grype database,
-Java database and account-level cloud operations are not supplied by this profile.
+`python3 scripts/toolbox.py --profile supplychain build` prepares Trivy, Grype,
+Syft and immutable upstream vulnerability databases. The databases live in checksummed,
+read-only mounted dataset outside the image layers. Filesystem scans use a
+memory-backed artifact cache. Dataset storage remains inside the 20 GB budget.
+Terraform/IaC fixture tests require no cloud account. Java database and
+account-level cloud operations are not supplied by this profile. Grype hydrates
+its own database with its pinned executable in a bounded, network-isolated import
+container; CYBOT does not fabricate its import/checksum metadata.
 
 CI now produces individual positive/negative/failure operation reports, binds
 them to measured executable hashes and source fingerprints, and merges both
 architectures into a full-catalog gate artifact. A startup/help probe cannot
 produce these certificates. Missing or stale reports keep the relevant entries
 blocked; passing source CI does not override the full-product gate.
+Independent passed operations remain available in the evidence artifact even
+when another profile test fails. A failed suite never promotes its candidate image.

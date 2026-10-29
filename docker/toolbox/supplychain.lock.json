@@ -34,6 +34,23 @@
           "sha256": "bf7b29ff57f06da30918266a0e1c2885a8f99784798d1bdb1628886aa015d788"
         }
       }
+    },
+    "grype": {
+      "version": "0.116.1",
+      "reported_version": "0.116.1",
+      "source_url": "https://github.com/anchore/grype/releases/tag/v0.116.1",
+      "assets": {
+        "amd64": {
+          "url": "https://github.com/anchore/grype/releases/download/v0.116.1/grype_0.116.1_linux_amd64.tar.gz",
+          "size": 29919260,
+          "sha256": "0122df7b655981abe547ad3d2190d65551dac6a2bfc80b4dc2a989b5d0587458"
+        },
+        "arm64": {
+          "url": "https://github.com/anchore/grype/releases/download/v0.116.1/grype_0.116.1_linux_arm64.tar.gz",
+          "size": 27306814,
+          "sha256": "a8d7504a149629324eb5f4ce3dc25dfd211bbfe047e64ee2bf7844b466c3d84d"
+        }
+      }
     }
   },
   "packages": {},
@@ -44,6 +61,14 @@
       "sha256": "65a9491288410e43d64adea0b81659e36bb7435dda543774c4255356f2f3cd60",
       "oci_repository": "aquasecurity/trivy-db",
       "created": "2026-10-28T13:09:55Z"
+    },
+    "grype-db": {
+      "url": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-10-28T00:24:28Z_1793168610.tar.zst",
+      "size": 196243021,
+      "sha256": "b08902b91738f1a9bc7fd61942f331d8e5e76a5df0c0b5f8c17c18bd787ee278",
+      "user_agent": "grype/0.116.1",
+      "created": "2026-10-28T06:23:30Z",
+      "schema_version": "v6.1.10"
     }
   }
 }

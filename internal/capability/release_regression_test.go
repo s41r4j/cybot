@@ -62,6 +62,30 @@ func TestTruffleHogKeepsDistinctSecretsFromOneSource(t *testing.T) {
 	}
 }
 
+func TestTruffleHogRedactsAliasesAndMetadataCopies(t *testing.T) {
+	for _, secret := range []string{"synthetic-token-value", "1", `synthetic-quote-\"-value`} {
+		data, err := json.Marshal(map[string]any{"DetectorName": "Fixture", "Raw": secret, "RawV2": secret, "Redacted": secret, "StructuredData": map[string]any{"copy": secret}, "SourceMetadata": map[string]any{"context": "before " + secret + " after", secret: "named by secret", "line": 123}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		output, _, err := evidenceOutput("trufflehog", data)
+		if err != nil || !json.Valid(output) {
+			t.Fatalf("invalid redacted report: %s %v", output, err)
+		}
+		var report map[string]any
+		if err := json.Unmarshal(output, &report); err != nil {
+			t.Fatal(err)
+		}
+		metadata := report["SourceMetadata"].(map[string]any)
+		if metadata["line"] != float64(123) || strings.Contains(metadata["context"].(string), secret) || report["Redacted"] != "[REDACTED]" {
+			t.Fatal("secret copy survived or numeric metadata was corrupted", report)
+		}
+		if _, exists := metadata[secret]; exists {
+			t.Fatal("secret survived as an object key")
+		}
+	}
+}
+
 func TestScannerCoverageCannotBeOmitted(t *testing.T) {
 	for tool, data := range map[string]string{"gosec": `{"Issues":[]}`, "semgrep": `{"results":[]}`} {
 		r, err := parseTool(tool, []byte(data), schema.RunRequest{})

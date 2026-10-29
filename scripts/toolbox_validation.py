@@ -44,6 +44,7 @@ def validate_image(image, source_cli=False):
                          'CYBOT_VALIDATION_SOURCE='+source_digest(),
                          'SYFT_CHECK_FOR_APP_UPDATE=false','/validation/core.test','-test.v','-test.run='+test_pattern,'-test.timeout=480s'],
                         image=image, network='none', mounts=mounts,
+                        extra_hosts=[('registry.cybot.invalid', '127.0.0.1')] if supplychain else (),
                         output=output,timeout_seconds=500)
             succeeded = True
         finally:
@@ -57,6 +58,9 @@ def validate_image(image, source_cli=False):
                         'failed':re.findall(r'^--- FAIL: (\S+)',text,re.M),
                         'scope':'Local fixtures with current-source adapters; fixture wordlists/templates/resolver. Subfinder startup only.'}
                 (toolbox.STATE/(prefix+'-tests.json')).write_text(json.dumps(report,indent=2)+'\n')
-        if succeeded:
-            from operation_evidence import collect
-            collect(reports, toolbox.probe(image), source_digest(), toolbox.ARCH)
+                # A failed capability must not erase independent operations
+                # whose positive/negative/failure assertions all passed. The
+                # candidate image still cannot be promoted on a suite failure.
+                if any(reports.glob('*.json')):
+                    from operation_evidence import collect
+                    collect(reports, toolbox.probe(image), source_digest(), toolbox.ARCH)

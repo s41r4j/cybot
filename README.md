@@ -314,8 +314,8 @@ python3 scripts/toolbox.py --profile supplychain run cybot run cloud.review --ta
 ```
 
 Analysis includes Semgrep, local rules, Gosec, Go, Gitleaks and TruffleHog.
-Supply-chain includes Trivy, Syft, embedded configuration checks and a locked
-vulnerability database. Runtime dependency/database downloads are disabled;
+Supply-chain includes Trivy, Grype, Syft, embedded configuration checks and locked
+read-only vulnerability datasets. Runtime dependency/database downloads are disabled;
 Go modules must be available locally. `cloud.review` checks local IaC files and
 does not authenticate to a cloud account. Each profile has its own validated
 runtime pin under `.cybot/toolbox/`; failed builds never replace a working pin.

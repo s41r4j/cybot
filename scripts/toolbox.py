@@ -124,14 +124,14 @@ def preflight(reserve=2 * GB):
 def download(asset, target):
     digest = hashlib.sha256()
     size = 0
-    request = asset['url']
+    request = urllib.request.Request(asset['url'], headers={'User-Agent': asset.get('user_agent', 'CYBOT/0.1.0')})
     if repository := asset.get('oci_repository'):
-        if not re.fullmatch(r'[a-z0-9_-]+/[a-z0-9_-]+', repository) or not request.startswith('https://ghcr.io/v2/'+repository+'/blobs/sha256:'):
+        if not re.fullmatch(r'[a-z0-9_-]+/[a-z0-9_-]+', repository) or not asset['url'].startswith('https://ghcr.io/v2/'+repository+'/blobs/sha256:'):
             raise RuntimeError('Unsupported OCI database source')
         token_url = 'https://ghcr.io/token?service=ghcr.io&scope=repository:'+repository+':pull'
         with urllib.request.urlopen(token_url, timeout=30) as response:
             token = json.load(response)['token']
-        request = urllib.request.Request(request, headers={'Authorization': 'Bearer '+token})
+        request = urllib.request.Request(asset['url'], headers={'Authorization': 'Bearer '+token, 'User-Agent': 'CYBOT/0.1.0'})
     with urllib.request.urlopen(request, timeout=60) as source, target.open('wb') as dest:
         while block := source.read(1024 * 1024):
             size += len(block)
@@ -314,6 +314,9 @@ def build():
             size = image_bytes(candidate)
             if size > IMAGE_LIMIT:
                 raise RuntimeError(f'Image {size} exceeds 3 GB acceptance limit')
+            if PROFILE == 'supplychain':
+                from supplychain_profile import finalize_dataset
+                finalize_dataset(candidate)
             run(['health'], image=candidate, network='none')
             measured = probe(candidate)
             # Keep the active/previous image untouched if any local behavior test fails.
@@ -337,7 +340,9 @@ def build():
             subprocess.run(['docker', 'image', 'rm', 'moby/buildkit:buildx-stable-1'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
-def run(args, image=None, network='bridge', mounts=(), output=None, timeout_seconds=1800):
+def run(args, image=None, network=None, mounts=(), writable_mounts=(), output=None, timeout_seconds=1800, file_size_limit=67108864, extra_hosts=()):
+    if network is None:
+        network = 'bridge' if PROFILE == 'core' else 'none'
     if image is None:
         image = current_image()
     preflight()
@@ -349,14 +354,25 @@ def run(args, image=None, network='bridge', mounts=(), output=None, timeout_seco
     # An engine-wide name is the cross-process lock. Do not remove a conflicting
     # name: it may be someone else's active CYBOT run.
     extra = ['--network', network]
+    for host, address in extra_hosts:
+        extra += ['--add-host', host+':'+address]
+    if PROFILE == 'supplychain':
+        datasets = STATE/'datasets'
+        if not datasets.is_dir():
+            raise RuntimeError('Supply-chain profile requires its verified immutable dataset; build the profile first')
+        extra += ['--mount', f'type=bind,src={datasets.resolve()},dst=/opt/cybot/datasets,readonly']
     for source, target in mounts:
         extra += ['--mount', f'type=bind,src={Path(source).resolve()},dst={target},readonly']
+    for source, target in writable_mounts:
+        if not Path(source).resolve().is_relative_to(STATE.resolve()):
+            raise RuntimeError('Writable validation mounts must stay inside this profile state')
+        extra += ['--mount', f'type=bind,src={Path(source).resolve()},dst={target}']
     uid = os.getuid() if hasattr(os, 'getuid') else 10001
     gid = os.getgid() if hasattr(os, 'getgid') else 10001
     cache_size = '512m' if PROFILE == 'analysis' else '128m'
     cid = docker('create', *extra, '--pull', 'never', '--name', ACTIVE_NAME, '--label', 'io.cybot.managed=true', '--user', f'{uid}:{gid}',
                  '--memory', '2g', '--memory-swap', '2g', '--cpus', '1', '--pids-limit', '256',
-                 '--ulimit', 'fsize=67108864:67108864', '--log-driver', 'none', '--init', '--read-only',
+                 '--ulimit', f'fsize={file_size_limit}:{file_size_limit}', '--log-driver', 'none', '--init', '--read-only',
                  '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
                  '--tmpfs', '/tmp:rw,noexec,nosuid,size=128m',
                  '--tmpfs', f'/home/cybot/.cache:rw,noexec,nosuid,size={cache_size},uid={uid},gid={gid}',
@@ -433,6 +449,10 @@ def pull(reference):
         raise RuntimeError('Provide a registry image pinned by @sha256:<64 hex digits>')
     preflight(4 * GB)
     monitored(['docker', 'pull', '--platform', f'linux/{ARCH}', reference], timeout_seconds=900)
+    if PROFILE == 'supplychain':
+        from supplychain_profile import prepare_runtime_data, finalize_dataset
+        prepare_runtime_data()
+        finalize_dataset(reference)
     measured = probe(reference)
     from toolbox_validation import validate_image
     validate_image(reference)

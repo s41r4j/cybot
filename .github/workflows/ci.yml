@@ -109,6 +109,7 @@ jobs:
             .cybot/toolbox/analysis/validation/
   operation-readiness:
     needs: [compact-runtime, analysis-runtime, supplychain-runtime]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -155,7 +156,8 @@ jobs:
           import json, urllib.request
           from pathlib import Path
           url = 'https://grype.anchore.io/databases/v6/latest.json'
-          with urllib.request.urlopen(url, timeout=30) as response:
+          request = urllib.request.Request(url, headers={'User-Agent': 'grype/0.116.1', 'Accept': 'application/json'})
+          with urllib.request.urlopen(request, timeout=30) as response:
               metadata = json.load(response)
           Path('.cybot/toolbox/supplychain/grype-db-metadata.json').write_text(json.dumps(metadata, indent=2)+'\n')
           PY
