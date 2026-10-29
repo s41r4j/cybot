@@ -88,7 +88,10 @@ func fixtureTar(t *testing.T, files map[string][]byte) []byte {
 func fixtureOCIImage(t *testing.T, version string) fixtureOCI {
 	t.Helper()
 	lock := fmt.Sprintf(`{"name":"fixture","version":"1.0.0","lockfileVersion":3,"packages":{"":{"name":"fixture","version":"1.0.0","dependencies":{"lodash":%q}},"node_modules/lodash":{"name":"lodash","version":%q}}}`, version, version)
-	layer := fixtureTar(t, map[string][]byte{"app/package-lock.json": []byte(lock)})
+	// Image scanners inspect installed packages; a source lockfile alone is
+	// not evidence that the package was installed in a container layer.
+	installed := fmt.Sprintf(`{"name":"lodash","version":%q,"license":"MIT"}`, version)
+	layer := fixtureTar(t, map[string][]byte{"app/package-lock.json": []byte(lock), "app/node_modules/lodash/package.json": []byte(installed)})
 	var compressed bytes.Buffer
 	writer := gzip.NewWriter(&compressed)
 	if _, err := writer.Write(layer); err != nil {

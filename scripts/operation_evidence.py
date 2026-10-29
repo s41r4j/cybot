@@ -29,7 +29,8 @@ def collect(directory, runtime, source, arch):
         path.write_text(json.dumps(report, indent=2)+'\n')
         records.append({'kind': report['kind'], 'id': report['id'], 'status': 'passed',
                         'mode': 'real-operation', 'platform': report['platform'],
-                        'version': measured['reported_version'], 'binary_sha256': measured['sha256'],
+                        'version': measured.get('release_version', measured['reported_version']),
+                        'reported_tool_version': measured['reported_version'], 'binary_sha256': measured['sha256'],
                         'cases': sorted(case['type'] for case in cases), 'report': path.name,
                         'report_sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
     (directory/'evidence.json').write_text(json.dumps({'source_sha256': source, 'records': records}, indent=2)+'\n')

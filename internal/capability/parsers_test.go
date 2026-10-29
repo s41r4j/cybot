@@ -15,7 +15,7 @@ func TestLockedParsersAcceptFixtures(t *testing.T) {
 	}{
 		{"subfinder", `{"host":"api.example.com","source":"crtsh"}`, func(r schema.Result) int { return len(r.Assets) }},
 		{"amass", `{"name":"api.example.com","addresses":[{"ip":"192.0.2.10"}]}`, func(r schema.Result) int { return len(r.Assets) }},
-		{"dnsx", `{"host":"api.example.com","a":["192.0.2.10"],"aaaa":["2001:db8::10"]}`, func(r schema.Result) int { return len(r.Assets) }},
+		{"dnsx", `{"host":"api.example.com","status_code":"NOERROR","a":["192.0.2.10"],"aaaa":["2001:db8::10"]}`, func(r schema.Result) int { return len(r.Assets) }},
 		{"naabu", `{"host":"192.0.2.10","port":443,"protocol":"tcp"}`, func(r schema.Result) int { return len(r.Services) }},
 		{"httpx", `{"url":"https://example.com","status_code":200,"tech":["nginx"]}`, func(r schema.Result) int { return len(r.Endpoints) }},
 		{"katana", `{"request":{"endpoint":"https://example.com/login"},"method":"GET"}`, func(r schema.Result) int { return len(r.Endpoints) }},

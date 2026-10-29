@@ -93,3 +93,16 @@ when another profile test fails. A failed suite never promotes its candidate ima
 Profile runtime histories live under `.cybot/runtimes/PROFILE`; validation writes
 only to its separately mounted report directory. Private research and unrelated
 root state remain outside the toolbox's state mount.
+
+HTTP mapping controls distinguish a reachable page without links from an
+unreachable target. DNS controls distinguish NXDOMAIN and successful empty
+A/AAAA answers from SERVFAIL, missing response status and resolver silence.
+The DNS adapter retains response codes without expanding its queries beyond
+A/AAAA. Official DNSx release 1.3.0 still self-reports 1.2.3; certificates retain
+both values and bind the executable hash to its release archive.
+
+The external-executable dependency audit is also in progress. Verified upstream
+HTTPx, Katana and DNSx diagnostic binaries contain affected compiled dependencies
+and older Go runtimes. Passing functional fixtures does not clear those findings
+or certify the final toolbox security. Patched rebuilds need their own dependency
+audit and fresh platform operation evidence before release.

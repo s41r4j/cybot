@@ -38,6 +38,30 @@ func TestReportDiagnosticsPreserveFindingsAndFailures(t *testing.T) {
 	}
 }
 
+func TestDNSResponsesDistinguishAbsenceFromFailure(t *testing.T) {
+	for _, data := range []string{`{"host":"missing.fixture.invalid","status_code":"NXDOMAIN"}`, `{"host":"empty.fixture.invalid","status_code":"NOERROR"}`} {
+		r, err := parseTool("dnsx", []byte(data), schema.RunRequest{})
+		if err != nil || r.Status == "partial" || len(r.Errors) != 0 || len(r.Assets) != 0 || len(r.Observations) == 0 {
+			t.Fatalf("definitive absence lost: %+v %v", r, err)
+		}
+	}
+	for _, data := range []string{"", `{"host":"fixture.invalid"}`, `{"host":"fixture.invalid","status_code":"SERVFAIL"}`} {
+		r, err := parseTool("dnsx", []byte(data), schema.RunRequest{})
+		if err != nil || r.Status != "partial" || len(r.Errors) == 0 || len(r.Assets) != 0 {
+			t.Fatalf("failure converted to absence: %+v %v", r, err)
+		}
+	}
+	for _, data := range []string{`{"host":"fixture.invalid","status_code":"NOERROR","a":["garbage"]}`, `{"host":"fixture.invalid","status_code":"NXDOMAIN","a":["127.0.0.1"]}`} {
+		if _, err := parseTool("dnsx", []byte(data), schema.RunRequest{}); err == nil {
+			t.Fatal("invalid DNS address/status report accepted", data)
+		}
+	}
+	r, err := parseTool("httpx", nil, schema.RunRequest{})
+	if err != nil || r.Status != "partial" || len(r.Errors) == 0 {
+		t.Fatalf("unreachable HTTP target reported complete: %+v %v", r, err)
+	}
+}
+
 func TestClassificationNeverInventsSecurityFindings(t *testing.T) {
 	for _, target := range []string{"https://fixture.invalid/?id=1", "https://fixture.invalid/api/login", "https://fixture.invalid/?user_id=1&query=hello"} {
 		r, err := (ClassifyEndpoint{}).Run(context.Background(), schema.RunRequest{Target: target}, Dependencies{})

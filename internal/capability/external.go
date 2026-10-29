@@ -585,7 +585,10 @@ func cmseekArgs(target string, _ schema.RunRequest) []string {
 }
 
 func dnsxArgs(target string, _ schema.RunRequest) []string {
-	return []string{"-silent", "-json", "-a", "-aaaa", "-resp", "-disable-update-check", "-rate-limit", "10", "-threads", "2", "-l", target}
+	// Explicit -a/-aaaa filters out valid NXDOMAIN/NODATA JSON records in
+	// dnsx 1.3.0. Recon mode with all other query types excluded preserves
+	// response codes while still issuing only A and AAAA questions.
+	return []string{"-silent", "-json", "-recon", "-exclude-type", "cname,ns,txt,srv,ptr,mx,soa,axfr,caa,any", "-rcode", "noerror,nxdomain,servfail,refused,formerr,notimp", "-resp", "-disable-update-check", "-rate-limit", "10", "-threads", "2", "-l", target}
 }
 
 func subfinderArgs(target string, _ schema.RunRequest) []string {

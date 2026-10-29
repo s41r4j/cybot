@@ -14,6 +14,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -96,6 +97,40 @@ func TestLiveCoreWebMapping(t *testing.T) {
 		t.Fatalf("crawl missed link: %+v", result.Endpoints)
 	}
 	validateFixtureResult(t, result)
+	clean := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		fmt.Fprint(w, "<html><title>No links</title><p>Local fixture</p></html>")
+	}))
+	defer clean.Close()
+	result, err = liveCapability(t, "web.map").Run(context.Background(), liveRequest(clean.URL), d)
+	if err != nil || len(result.Errors) != 0 || len(result.Evidence) != 2 || len(result.Findings) != 0 || len(result.Endpoints) == 0 {
+		t.Fatalf("clean mapping failed: %+v %v", result, err)
+	}
+	for _, ep := range result.Endpoints {
+		if ep.URL != clean.URL && ep.URL != clean.URL+"/" {
+			t.Fatalf("crawler invented a link: %+v", result.Endpoints)
+		}
+	}
+	clean.Close()
+	broken := liveCapability(t, "web.map")
+	broken.steps[0].Args = func(target string, r schema.RunRequest) []string {
+		return append(httpxArgs(target, r), "-timeout", "2", "-retries", "0")
+	}
+	broken.steps[1].Args = func(target string, r schema.RunRequest) []string {
+		return append(katanaArgs(target, r), "-timeout", "2", "-retry", "0")
+	}
+	result, err = broken.Run(context.Background(), liveRequest(clean.URL), d)
+	if err == nil && result.Status != "partial" || len(result.Errors) == 0 {
+		t.Fatalf("unreachable mapping was accepted as complete: %+v %v", result, err)
+	}
+	requireToolFailure(t, d, "katana", []string{"--cybot-invalid-fixture-option"})
+	cases := []operationCase{
+		passedCase("positive", "HTTPx records the reachable fixture and Katana discovers its /about link."),
+		passedCase("negative", "A reachable page without links yields no invented endpoints or security findings."),
+		passedCase("failure", "A closed loopback target produces an incomplete/error result; Katana rejects an invalid option."),
+	}
+	certifyOperation(t, "httpx", "web.map", cases)
+	certifyOperation(t, "katana", "", cases)
 }
 func TestLiveCoreFFUF(t *testing.T) {
 	d := liveDeps(t)
@@ -217,6 +252,8 @@ func TestLiveCoreDNS(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer conn.Close()
+	var unexpected atomic.Bool
+	var negatives atomic.Int32
 	go func() {
 		buf := make([]byte, 4096)
 		for {
@@ -237,14 +274,27 @@ func TestLiveCoreDNS(t *testing.T) {
 				continue
 			}
 			typ := binary.BigEndian.Uint16(q[end-4 : end-2])
+			if typ != 1 && typ != 28 {
+				unexpected.Store(true)
+			}
+			label := string(q[13 : 13+int(q[12])])
 			answer := append([]byte(nil), q[:end]...)
 			answer[2] = 0x81
 			answer[3] = 0x80
 			answer[6] = 0
 			answer[7] = 0
-			if typ == 1 {
-				answer[7] = 1
-				answer = append(answer, 0xc0, 0x0c, 0, 1, 0, 1, 0, 0, 0, 60, 0, 4, 127, 0, 0, 1)
+			switch label {
+			case "missing":
+				answer[3] = 0x83 // NXDOMAIN
+				negatives.Add(1)
+			case "failed":
+				answer[3] = 0x82 // SERVFAIL
+			case "empty": // NOERROR with no A/AAAA records.
+			default:
+				if typ == 1 {
+					answer[7] = 1
+					answer = append(answer, 0xc0, 0x0c, 0, 1, 0, 1, 0, 0, 0, 60, 0, 4, 127, 0, 0, 1)
+				}
 			}
 			_, _ = conn.WriteTo(answer, addr)
 		}
@@ -265,6 +315,29 @@ func TestLiveCoreDNS(t *testing.T) {
 		t.Fatalf("DNS response lost: %+v", result)
 	}
 	validateFixtureResult(t, result)
+	for _, host := range []string{"missing.fixture.invalid", "empty.fixture.invalid"} {
+		result, err = c.Run(context.Background(), liveRequest(host), d)
+		if err != nil || len(result.Errors) != 0 || len(result.Assets) != 0 || len(result.Evidence) != 1 || len(result.Observations) == 0 {
+			t.Fatalf("definitive DNS absence was mishandled: %+v %v", result, err)
+		}
+	}
+	if negatives.Load() == 0 || unexpected.Load() {
+		t.Fatal("negative DNS query was skipped or expanded beyond A/AAAA")
+	}
+	result, err = c.Run(context.Background(), liveRequest("failed.fixture.invalid"), d)
+	if err == nil && result.Status != "partial" || len(result.Errors) == 0 || len(result.Assets) != 0 {
+		t.Fatalf("SERVFAIL was accepted as clean: %+v %v", result, err)
+	}
+	conn.Close()
+	result, err = c.Run(context.Background(), liveRequest("fixture.invalid"), d)
+	if err == nil && result.Status != "partial" || len(result.Errors) == 0 {
+		t.Fatalf("unavailable resolver was accepted as clean: %+v %v", result, err)
+	}
+	certifyOperation(t, "dnsx", "dns.analyse", []operationCase{
+		passedCase("positive", "Real DNSx resolves loopback A records through a synthetic UDP resolver using only A/AAAA questions."),
+		passedCase("negative", "NXDOMAIN and NOERROR without address records produce observations and zero invented assets."),
+		passedCase("failure", "SERVFAIL and an unavailable resolver produce partial/error results rather than clean assessments."),
+	})
 }
 func TestLiveCoreSubfinderArguments(t *testing.T) {
 	_ = liveDeps(t)

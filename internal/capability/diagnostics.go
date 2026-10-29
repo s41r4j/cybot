@@ -12,6 +12,10 @@ import (
 // A successful process exit and a valid report do not establish full scan
 // coverage. Preserve diagnostics beside findings rather than discard either.
 func applyReportDiagnostics(tool string, data []byte, result *schema.Result) {
+	if tool == "httpx" && len(result.Endpoints) == 0 {
+		result.Status = "partial"
+		result.Errors = append(result.Errors, schema.RunError{Tool: tool, Code: "NO_REACHABLE_HTTP_TARGET", Message: "HTTPx did not record a reachable HTTP target; an empty report is not a completed mapping."})
+	}
 	var root map[string]json.RawMessage
 	if json.Unmarshal(data, &root) != nil || root == nil {
 		return

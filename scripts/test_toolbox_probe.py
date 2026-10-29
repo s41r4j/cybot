@@ -21,7 +21,10 @@ class ProbeTests(unittest.TestCase):
 
     def test_version_mismatch_is_explicit_not_normalized_away(self):
         source={'tools':{'dnsx':{'version':'v1.3.0','reported_version':'1.2.3'}},'packages':{}}
-        toolbox_probe.validate_source({'binaries':{'dnsx':{'reported_version':'1.2.3'}},'packages':{}},source)
+        report={'binaries':{'dnsx':{'reported_version':'1.2.3'}},'packages':{}}
+        toolbox_probe.validate_source(report,source)
+        self.assertEqual(report['binaries']['dnsx']['reported_version'], '1.2.3')
+        self.assertEqual(report['binaries']['dnsx']['release_version'], '1.3.0')
         with self.assertRaisesRegex(RuntimeError,'dnsx'):
             toolbox_probe.validate_source({'binaries':{'dnsx':{'reported_version':'1.4.0'}},'packages':{}},source)
 

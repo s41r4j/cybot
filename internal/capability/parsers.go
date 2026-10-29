@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/s41r4j/cybot/internal/evidence"
+	"net"
 	"net/url"
 	"regexp"
 	"slices"
@@ -23,7 +24,7 @@ type toolParser func([]byte, schema.RunRequest) (schema.Result, error)
 var parsers = map[string]toolParser{
 	"subfinder":     parseAssets,
 	"amass":         parseAssets,
-	"dnsx":          parseAssets,
+	"dnsx":          parseDNSX,
 	"nmap":          parseNmap,
 	"naabu":         parseNaabu,
 	"httpx":         parseEndpoints,
@@ -215,6 +216,50 @@ func parseAssets(data []byte, req schema.RunRequest) (schema.Result, error) {
 		return result.Assets[i].Type < result.Assets[j].Type
 	})
 	return result, nil
+}
+
+func parseDNSX(data []byte, req schema.RunRequest) (schema.Result, error) {
+	docs, err := decodeDocuments(data)
+	if err != nil {
+		return emptyResult(), err
+	}
+	r := emptyResult()
+	if len(docs) == 0 {
+		r.Status = "partial"
+		r.Errors = append(r.Errors, schema.RunError{Tool: "dnsx", Code: "NO_DNS_RESPONSE", Message: "No DNS response was recorded; silence does not establish that a hostname is absent."})
+	}
+	for _, doc := range docs {
+		status := strings.ToUpper(firstText(doc, "status_code"))
+		switch status {
+		case "NXDOMAIN":
+			if len(texts(doc["a"]))+len(texts(doc["aaaa"])) != 0 {
+				return r, fmt.Errorf("DNS NXDOMAIN report contains contradictory address records")
+			}
+			r.Observations = append(r.Observations, "The resolver returned NXDOMAIN for "+firstText(doc, "host")+".")
+		case "NOERROR":
+			addresses := append(texts(doc["a"]), texts(doc["aaaa"])...)
+			for _, address := range addresses {
+				if net.ParseIP(address) == nil {
+					return r, fmt.Errorf("DNS report contains an invalid address")
+				}
+			}
+			if len(addresses) == 0 {
+				r.Observations = append(r.Observations, "The resolver returned NOERROR without A/AAAA records for "+firstText(doc, "host")+".")
+				continue
+			}
+			encoded, _ := json.Marshal(doc)
+			part, parseErr := parseAssets(encoded, req)
+			if parseErr != nil {
+				return r, parseErr
+			}
+			mergeResult(&r, part)
+		default:
+			r.Status = "partial"
+			r.Errors = append(r.Errors, schema.RunError{Tool: "dnsx", Code: "DNS_RESPONSE_FAILED", Message: "The resolver did not return a definitive NOERROR/NXDOMAIN response (status " + status + ")."})
+		}
+	}
+	deduplicateResult(&r)
+	return r, nil
 }
 
 func parseURLCandidates(data []byte, _ schema.RunRequest) (schema.Result, error) {

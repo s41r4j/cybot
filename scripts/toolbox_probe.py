@@ -52,6 +52,9 @@ def validate_source(report, source):
     for name, entry in source['tools'].items():
         if report['binaries'][name]['reported_version'] != entry['reported_version']:
             raise RuntimeError('Runtime version differs from source lock: ' + name)
+        # Upstream release identity and the embedded version string are
+        # separate measurements (dnsx v1.3.0 embeds 1.2.3).
+        report['binaries'][name]['release_version'] = entry['version'].removeprefix('v')
     if report['packages'] != source['packages']:
         raise RuntimeError('Installed package versions differ from source lock')
 
