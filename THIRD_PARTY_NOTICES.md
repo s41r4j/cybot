@@ -44,3 +44,13 @@ tool in the catalog does not redistribute it or grant rights to its source.
 
 Release validation must inspect the actual shipped assets and notices. An
 MIT project license does not relicense third-party components.
+## Patched upstream Go tools
+
+Core HTTPx 1.10.0, DNSx 1.3.0 and Katana 1.6.1 are rebuilt from checksum-verified
+upstream Go modules with Go 1.26.10 and the committed module locks in
+`docker/toolbox/patched-go/`. The original release archive hashes remain as
+upstream provenance; these rebuilt executables have their own measured hashes.
+The go-github v30 dependency's two OpenPGP imports are migrated to the maintained
+ProtonMail implementation using exact input-file hashes. Binary symbols are
+retained for artifact vulnerability analysis. Build manifests and copied upstream
+dependency licenses are included under `/opt/cybot/share/` in the image.

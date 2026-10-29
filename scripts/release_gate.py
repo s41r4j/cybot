@@ -18,6 +18,36 @@ def evaluate(coverage, baseline, evidence, digest, evidence_root):
     records = evidence.get('records', [])
     if evidence.get('source_sha256') != digest:
         blockers.append('Missing or stale validation: evidence must match the current product source digest')
+    for required in baseline.get('required_artifact_audits', []):
+        label = required['profile']+'/'+required['platform']
+        matching = [row for row in evidence.get('artifact_audits', []) if all(row.get(key) == required[key] for key in ('profile', 'platform'))]
+        if len(matching) != 1:
+            blockers.append(label+': exactly one source-matching final artifact security audit is required')
+            continue
+        record = matching[0]
+        try:
+            path = evidence_root/record['report']
+            path.resolve().relative_to(evidence_root.resolve())
+            data = path.read_bytes()
+            if hashlib.sha256(data).hexdigest() != record.get('report_sha256'):
+                raise ValueError('artifact audit checksum differs')
+            audit = json.loads(data)
+            if audit.get('source_sha256') != digest or any(audit.get(key) != required[key] for key in ('profile', 'platform')):
+                raise ValueError('artifact audit source/platform differs')
+            if not re.fullmatch('sha256:[a-f0-9]{64}', audit.get('image_id', '')):
+                raise ValueError('audited image identity is missing')
+            if audit.get('status') != 'passed' or audit.get('final_security_ready') is not True or audit.get('os_packages', {}).get('status') != 'passed':
+                raise ValueError('final artifact security audit is incomplete or has blocking findings')
+            binaries = audit.get('binaries', {})
+            if not binaries or 'cybot' not in binaries or any(row.get('status') != 'passed' or not re.fullmatch('[a-f0-9]{64}', row.get('binary_sha256', '')) for row in binaries.values()):
+                raise ValueError('compiled executable security evidence is incomplete')
+            for operation in records:
+                if operation.get('platform') != required['platform'] or operation.get('kind') != 'tool' or operation.get('id') not in binaries:
+                    continue
+                if binaries[operation['id']]['binary_sha256'] != operation.get('binary_sha256'):
+                    raise ValueError('audited executable differs from operation-tested executable')
+        except (ValueError, OSError, KeyError, TypeError, AttributeError) as error:
+            blockers.append(label+': '+str(error))
     for family in ('tools', 'capabilities'):
         for row in coverage[family]:
             kind = 'tool' if family == 'tools' else 'capability'

@@ -37,7 +37,7 @@ def collect(directory, runtime, source, arch):
     return records
 
 
-def merge(inputs, destination, source):
+def merge(inputs, destination, source, audits=()):
     destination.mkdir(parents=True, exist_ok=True)
     records = []
     seen = {}
@@ -62,7 +62,16 @@ def merge(inputs, destination, source):
             name = f'{index}-{original.name}'
             shutil.copy2(original, destination/name)
             records.append(dict(record, report=name))
-    result = {'source_sha256': source, 'records': records}
+    audit_records = []
+    for index, path in enumerate(sorted(audits)):
+        report = json.loads(path.read_text())
+        if report.get('source_sha256') != source:
+            raise RuntimeError('Refusing stale artifact audit: '+str(path))
+        name = f'artifact-audit-{index}.json'
+        shutil.copy2(path, destination/name)
+        audit_records.append({'profile': report['profile'], 'platform': report['platform'],
+                              'report': name, 'report_sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
+    result = {'source_sha256': source, 'records': records, 'artifact_audits': audit_records}
     (destination/'evidence.json').write_text(json.dumps(result, indent=2)+'\n')
     return result
 
@@ -72,4 +81,4 @@ if __name__ == '__main__':
     parser.add_argument('inputs', type=Path, help='Directory containing downloaded CI evidence artifacts')
     parser.add_argument('--output', type=Path, required=True)
     options = parser.parse_args()
-    merge(options.inputs.rglob('evidence.json'), options.output, source_digest())
+    merge(options.inputs.rglob('evidence.json'), options.output, source_digest(), options.inputs.rglob('security/audit.json'))

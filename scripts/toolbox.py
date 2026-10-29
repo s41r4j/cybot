@@ -189,6 +189,8 @@ def prepare(dest):
         return
     lock = json.loads((ROOT / 'docker/toolbox/core.lock.json').read_text())
     for name, spec in lock['tools'].items():
+        if spec.get('build') == 'cybot-patched-go':
+            continue
         print('Preparing', name, spec['version'], flush=True)
         usage = disk_usage()
         if usage['accounted_bytes'] + 3 * GB > BUDGET:
@@ -197,6 +199,8 @@ def prepare(dest):
         download(spec['assets'][ARCH], archive)
         unpack_binary(archive, name, dest)
         archive.unlink()
+    from patched_go_tools import prepare as prepare_patched_tools
+    prepare_patched_tools(dest)
     archive = dest / 'templates.tar.gz'
     download(lock['data']['nuclei-templates'], archive)
     templates = dest / 'share/nuclei-templates'
@@ -498,7 +502,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile', choices=['core', 'analysis', 'supplychain'], default='core')
     parser.add_argument('--network', choices=['none', 'bridge'], help='Explicit network choice for run; local analysis profiles default to none')
-    parser.add_argument('action', choices=['status', 'build', 'pull', 'run', 'verify', 'image'])
+    parser.add_argument('action', choices=['status', 'build', 'pull', 'run', 'verify', 'image', 'audit'])
     parser.add_argument('args', nargs=argparse.REMAINDER)
     options = parser.parse_args()
     if options.network is not None and options.action != 'run':
@@ -514,6 +518,9 @@ def main():
                 verify()
             elif options.action == 'build':
                 build()
+            elif options.action == 'audit':
+                from audit_toolbox import audit_image
+                audit_image()
             elif options.action == 'pull':
                 if len(options.args) != 1:
                     raise RuntimeError('usage: toolbox.py pull REGISTRY/IMAGE@sha256:DIGEST')

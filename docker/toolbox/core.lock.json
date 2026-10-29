@@ -16,7 +16,8 @@
           "size": 19132519
         }
       },
-      "reported_version": "1.10.0"
+      "reported_version": "1.10.0",
+      "build": "cybot-patched-go"
     },
     "katana": {
       "version": "v1.6.1",
@@ -32,7 +33,8 @@
           "size": 31373279
         }
       },
-      "reported_version": "1.6.1"
+      "reported_version": "1.6.1",
+      "build": "cybot-patched-go"
     },
     "nuclei": {
       "version": "v3.11.0",
@@ -65,7 +67,8 @@
         }
       },
       "reported_version": "1.2.3",
-      "version_note": "Official v1.3.0 release archive embeds a binary reporting 1.2.3; identity is pinned by SHA-256."
+      "version_note": "Official v1.3.0 release archive embeds a binary reporting 1.2.3; identity is pinned by SHA-256.",
+      "build": "cybot-patched-go"
     },
     "subfinder": {
       "version": "v2.14.0",

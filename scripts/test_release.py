@@ -41,4 +41,25 @@ class PublicationTests(unittest.TestCase):
             record['report']='../outside.json'
             self.assertFalse(release_gate.evaluate(coverage,baseline,evidence,'a'*64,root)['release_ready'])
 
+    def test_go_audit_cannot_clear_missing_os_audit_or_tampered_artifact(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            coverage = {'tools': [], 'capabilities': []}
+            required = {'profile': 'core', 'platform': 'linux/amd64'}
+            baseline = dict(coverage, required_artifact_audits=[required])
+            evidence = {'source_sha256': 'a'*64, 'records': []}
+            self.assertFalse(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
+            report = dict(required, source_sha256='a'*64, status='passed', image_id='sha256:'+'b'*64,
+                          final_security_ready=False, os_packages={'status': 'not-audited'},
+                          binaries={'cybot': {'status': 'passed', 'binary_sha256': 'c'*64}})
+            def save():
+                data = json.dumps(report).encode(); (root/'audit.json').write_bytes(data)
+                evidence['artifact_audits'] = [dict(required, report='audit.json', report_sha256=hashlib.sha256(data).hexdigest())]
+            save()
+            self.assertFalse(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
+            report.update(final_security_ready=True, os_packages={'status': 'passed'}); save()
+            self.assertTrue(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
+            (root/'audit.json').write_text('{}')
+            self.assertFalse(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
+
 if __name__ == '__main__': unittest.main()

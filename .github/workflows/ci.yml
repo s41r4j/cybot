@@ -71,6 +71,9 @@ jobs:
           go-version: '1.26.10'
       - name: Build and validate before promoting a runtime pin
         run: python3 scripts/toolbox.py build
+      - name: Audit final installed Go executables
+        continue-on-error: true
+        run: python3 scripts/toolbox.py audit
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
@@ -81,6 +84,7 @@ jobs:
             .cybot/toolbox/runtime.lock.json
             .cybot/toolbox/probe-error.txt
             .cybot/toolbox/validation/
+            .cybot/toolbox/security/
   analysis-runtime:
     name: Code analysis fixtures (${{ matrix.runner }})
     strategy:
@@ -97,6 +101,9 @@ jobs:
         with:
           go-version: '1.26.10'
       - run: python3 scripts/toolbox.py --profile analysis build
+      - name: Audit final installed Go executables
+        continue-on-error: true
+        run: python3 scripts/toolbox.py --profile analysis audit
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
@@ -107,6 +114,7 @@ jobs:
             .cybot/toolbox/analysis/runtime.lock.json
             .cybot/toolbox/analysis/probe-error.txt
             .cybot/toolbox/analysis/validation/
+            .cybot/toolbox/analysis/security/
   operation-readiness:
     needs: [compact-runtime, analysis-runtime, supplychain-runtime]
     if: always()
@@ -148,6 +156,9 @@ jobs:
         with:
           go-version: '1.26.10'
       - run: python3 scripts/toolbox.py --profile supplychain build
+      - name: Audit final installed Go executables
+        continue-on-error: true
+        run: python3 scripts/toolbox.py --profile supplychain audit
       - name: Resolve official Grype database metadata for the next runtime
         if: always()
         continue-on-error: true
@@ -172,3 +183,4 @@ jobs:
             .cybot/toolbox/supplychain/probe-error.txt
             .cybot/toolbox/supplychain/grype-db-metadata.json
             .cybot/toolbox/supplychain/validation/
+            .cybot/toolbox/supplychain/security/

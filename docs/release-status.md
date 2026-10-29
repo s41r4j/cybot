@@ -1,4 +1,4 @@
-# Release status — 2026-10-28
+# Release status — 2026-10-29
 
 CYBOT is public source in active development. A stable release covering the
 entire catalog is **not yet certified**. The release requirement includes every
@@ -26,13 +26,16 @@ These are source and contract checks, not 84-tool live certification.
 
 The local Docker daemon is unavailable. Historical 2026-10-22 compact-core
 results are retained as historical records and do not certify the changed source.
-The complete source CI run at revision `cde3054` passed on Linux AMD64/ARM64,
-macOS and Windows, including both native Linux compact-toolbox fixture jobs.
-The expanded code-analysis profile and per-operation certification pipeline
-are being validated separately; they are not counted as passed in this snapshot.
-Windows,
-AD, cloud credentials, external providers and specialist runtimes need compatible
-authorized environments and real-operation tests.
+The complete [CI run at revision `5944378`](https://github.com/s41r4j/cybot/actions/runs/40814092934)
+passed source checks on Linux AMD64/ARM64, macOS and Windows, and real-operation
+fixtures in all three native Linux toolbox profiles on both architectures.
+Its source-bound reports certify **16 tools and 13 capabilities** functionally;
+they do not certify the entire 84-tool/71-capability catalog or the security of
+every bundled executable. Later source changes require fresh certificates.
+Windows/AD and account-level cloud tests are explicitly deferred because no
+compatible labs were supplied. Their catalog entries remain visible and required
+by the full-release gate. External providers and specialist runtimes still need
+authorized operation tests.
 
 ## Complete inventory and gate
 
@@ -106,3 +109,18 @@ HTTPx, Katana and DNSx diagnostic binaries contain affected compiled dependencie
 and older Go runtimes. Passing functional fixtures does not clear those findings
 or certify the final toolbox security. Patched rebuilds need their own dependency
 audit and fresh platform operation evidence before release.
+
+HTTPx/DNSx/Katana now have reproducible source-build recipes with exact module
+checksums, committed dependency locks, Go 1.26.10, and a hash-checked migration
+from unmaintained OpenPGP code. Diagnostic patched builds pass the binary Go
+vulnerability audit and the HTTP/DNS loopback controls; Linux image validation
+remains a separate requirement. Image build manifests distinguish these CYBOT
+patched executables from upstream release binaries.
+
+`python3 scripts/toolbox.py --profile core audit` copies measured executables
+from the validated image and scans their exact bytes. The same action supports
+analysis and supplychain. CI retains these reports even when vulnerabilities
+block an audit. Stripped-binary conservative matches remain blockers, and a
+passing Go audit cannot substitute for the unfinished OS/native-language audit.
+The full-release gate requires artifact-security proof for all six Linux
+profile/architecture combinations in addition to operation certificates.

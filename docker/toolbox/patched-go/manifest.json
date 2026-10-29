@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "go_toolchain": "go1.26.10",
+  "go-github": {
+    "module": "github.com/google/go-github/v30@v30.1.0",
+    "sum": "h1:VLDx+UolQICEOKu2m4uAoMti1SxuEBAl7RSEG16L+Oo=",
+    "files": {
+      "github/git_commits.go": "bdb3f293ad63ad5b5f14fa8614fed08dcef7005c57f54d05f324e1b6af69297e",
+      "github/git_commits_test.go": "33bbcf19388ebb25e5e036575662cd2ff22fe18eb1a427f1763f623bffcb5b16"
+    }
+  },
+  "tools": {
+    "dnsx": {
+      "module": "github.com/projectdiscovery/dnsx@v1.3.0",
+      "sum": "h1:NO57HD0arskX9s4MSivJDX/AX8HungbIxhCIkd8Vy10="
+    },
+    "httpx": {
+      "module": "github.com/projectdiscovery/httpx@v1.10.0",
+      "sum": "h1:sZvfeJDeX4eJfB5Oh29My4gOHmLfvpCt2wCqhargJrE="
+    },
+    "katana": {
+      "module": "github.com/projectdiscovery/katana@v1.6.1",
+      "sum": "h1:Dd1MKntRLOQtvRPu72Vk8sxzpL9Igd7zol/DGXU+8sU="
+    }
+  }
+}

@@ -170,5 +170,31 @@
     "darwin": [
       "darwin/arm64"
     ]
-  }
+  },
+  "required_artifact_audits": [
+    {
+      "profile": "core",
+      "platform": "linux/amd64"
+    },
+    {
+      "profile": "core",
+      "platform": "linux/arm64"
+    },
+    {
+      "profile": "analysis",
+      "platform": "linux/amd64"
+    },
+    {
+      "profile": "analysis",
+      "platform": "linux/arm64"
+    },
+    {
+      "profile": "supplychain",
+      "platform": "linux/amd64"
+    },
+    {
+      "profile": "supplychain",
+      "platform": "linux/arm64"
+    }
+  ]
 }
