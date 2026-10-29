@@ -55,18 +55,19 @@
     },
     {
       "id": "anew",
-      "version": "1.0.0",
-      "platforms": [],
-      "normalization": "observations-only",
+      "version": "0.1.1",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
       "implementation": "adapter",
       "resource_scope": "target",
-      "capabilities": [],
+      "capabilities": [
+        "pattern.detect"
+      ],
       "validation": "not-certified",
       "blockers": [
-        "pinned binary/version and fresh real-operation evidence are required",
-        "supported operating systems have not been explicitly declared",
-        "catalog tool has no executable capability mapping",
-        "operation-specific normalization is unverified"
+        "pinned binary/version and fresh real-operation evidence are required"
       ]
     },
     {
@@ -381,20 +382,19 @@
     },
     {
       "id": "gf",
-      "version": "1.0.0",
-      "platforms": [],
-      "normalization": "observations-only",
-      "implementation": "not-implemented",
+      "version": "0.0.0-20200618134122-dcd4c361f9f5",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
+      "implementation": "adapter",
       "resource_scope": "target",
       "capabilities": [
         "pattern.detect"
       ],
       "validation": "not-certified",
       "blockers": [
-        "pinned binary/version and fresh real-operation evidence are required",
-        "supported operating systems have not been explicitly declared",
-        "adapter only lists patterns; target matching is not implemented",
-        "operation-specific normalization is unverified"
+        "pinned binary/version and fresh real-operation evidence are required"
       ]
     },
     {
@@ -1904,15 +1904,14 @@
     },
     {
       "id": "pattern.detect",
-      "implementation": "not-implemented",
+      "implementation": "adapter",
       "tools": [
+        "anew",
         "gf"
       ],
       "validation": "not-certified",
       "blockers": [
-        "fresh platform-specific end-to-end evidence is required",
-        "gf: adapter only lists patterns; target matching is not implemented",
-        "gf: operation-specific normalization is unverified"
+        "fresh platform-specific end-to-end evidence is required"
       ]
     },
     {

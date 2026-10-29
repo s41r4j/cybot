@@ -1,6 +1,7 @@
 package capability
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"os"
@@ -86,11 +87,50 @@ func TestTruffleHogRedactsAliasesAndMetadataCopies(t *testing.T) {
 	}
 }
 
+func TestTrivySecretContextCannotEscapeIntoEvidence(t *testing.T) {
+	data := []byte(`{"SchemaVersion":2,"Results":[{"Target":"fixture.env","Secrets":[{"RuleID":"fixture","Match":"synthetic-token-value","Code":{"Lines":[{"Content":"unlabeled synthetic-token-value"}]},"Context":"duplicate synthetic-token-value"}]}]}`)
+	out, _, err := evidenceOutput("trivy", data)
+	if err != nil || bytes.Contains(out, []byte("synthetic-token-value")) {
+		t.Fatalf("Trivy secret context survived redaction: %s %v", out, err)
+	}
+}
+
+func TestTrivyPassingChecksAreNotFindingsAndLocationsStayDistinct(t *testing.T) {
+	data := []byte(`{"SchemaVersion":2,"Results":[{"Target":"main.tf","Misconfigurations":[{"ID":"check","Title":"Passed","Status":"PASS"},{"ID":"check","Title":"Failed","Status":"FAIL","CauseMetadata":{"Resource":"first"}},{"ID":"check","Title":"Failed","Status":"FAIL","CauseMetadata":{"Resource":"second"}}]}]}`)
+	r, err := parseTool("trivy", data, schema.RunRequest{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	deduplicateResult(&r)
+	if len(r.Findings) != 2 {
+		t.Fatal("passed check became a finding or independent failures collapsed", r.Findings)
+	}
+}
+
 func TestScannerCoverageCannotBeOmitted(t *testing.T) {
 	for tool, data := range map[string]string{"gosec": `{"Issues":[]}`, "semgrep": `{"results":[]}`} {
 		r, err := parseTool(tool, []byte(data), schema.RunRequest{})
 		if err != nil || r.Status != "partial" || len(r.Errors) == 0 {
 			t.Fatalf("missing scan coverage was treated as clean: %s %+v %v", tool, r, err)
+		}
+	}
+}
+
+func TestMalformedFindingRecordsCannotBecomeCleanScans(t *testing.T) {
+	for tool, data := range map[string]string{
+		"semgrep": `{"results":[{"message":"unexpected format"}]}`,
+		"gosec":   `{"Issues":[{"message":"unexpected format"}]}`,
+		"grype":   `{"matches":[{"vulnerability":{"id":"fixture"}}]}`,
+		"trivy":   `{"SchemaVersion":2,"Results":[{"Target":"main.tf","Misconfigurations":[{"message":"unexpected format"}]}]}`,
+	} {
+		if _, err := parseTool(tool, []byte(data), schema.RunRequest{}); err == nil {
+			t.Fatal("malformed record was silently skipped", tool)
+		}
+	}
+	for _, data := range []string{`{"SchemaVersion":2,"Results":[{"Target":"main.tf","MisconfSummary":{"Successes":0,"Failures":0}}]}`, `{"SchemaVersion":2,"Results":[{"Target":"main.tf","MisconfSummary":{"Failures":2},"Misconfigurations":[]}]}`} {
+		r, err := parseTool("trivy", []byte(data), schema.RunRequest{})
+		if err != nil || r.Status != "partial" || len(r.Errors) == 0 {
+			t.Fatal("unexecuted checks or missing findings appeared clean", r, err)
 		}
 	}
 }

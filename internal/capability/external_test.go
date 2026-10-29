@@ -1,6 +1,7 @@
 package capability
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"os"
@@ -49,6 +50,25 @@ func TestContainerArchiveUsesTrivyInput(t *testing.T) {
 	}
 	if err := validateCapabilityTarget("container.scan", t.TempDir()); err == nil {
 		t.Fatal("container directory should be rejected; an archive file is required")
+	}
+}
+
+func TestContainerOCILayoutUsesImageSources(t *testing.T) {
+	dir := t.TempDir()
+	for name, content := range map[string]string{"oci-layout": `{"imageLayoutVersion":"1.0.0"}`, "index.json": `{"schemaVersion":2,"manifests":[]}`} {
+		if err := os.WriteFile(filepath.Join(dir, name), []byte(content), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := validateCapabilityTarget("container.scan", dir); err != nil {
+		t.Fatal(err)
+	}
+	req := schema.RunRequest{Capability: "container.scan", Target: dir}
+	if args := strings.Join(trivyImageArgs("/input", req), " "); !strings.Contains(args, "--input /input") {
+		t.Fatal("OCI layout was treated as a registry image", args)
+	}
+	if args := grypeArgs("/input", req); args[0] != "oci-dir:/input" {
+		t.Fatal("OCI layout was treated as an ordinary directory", args)
 	}
 }
 
@@ -130,6 +150,27 @@ func TestCodeAuditFileDoesNotExpandGosecScope(t *testing.T) {
 	}
 	if len(runner.specs) != 1 || runner.specs[0].Tool.ID != "semgrep" || runner.specs[0].Args[len(runner.specs[0].Args)-1] != path {
 		t.Fatal("file request escaped to its parent package", runner.specs)
+	}
+}
+
+func TestPatternPipelinePassesActualStageOutputWithoutWritingInput(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "input.txt")
+	if err := os.WriteFile(path, []byte("https://fixture.invalid/a\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	tools := registry.NewTools()
+	for _, id := range []string{"gf", "anew"} {
+		if err := tools.Register(schema.Tool{ID: id, Kind: "native", Binary: id, Version: "fixture"}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	runner := &fixtureRunner{outputs: map[string][]byte{"gf": []byte("https://fixture.invalid/a\nhttps://fixture.invalid/a\n"), "anew": []byte("https://fixture.invalid/a\n")}}
+	r, err := liveCapability(t, "pattern.detect").Run(context.Background(), liveRequest(path), Dependencies{Tools: tools, Runner: runner, Evidence: evidence.New(t.TempDir())})
+	if err != nil || len(runner.specs) != 2 || len(r.Endpoints) != 1 || len(r.Findings) != 0 {
+		t.Fatalf("pattern pipeline contract failed: %+v %v", r, err)
+	}
+	if !bytes.Equal(runner.specs[1].Stdin, runner.outputs["gf"]) || len(runner.specs[0].Stdin) != 0 || strings.Join(runner.specs[1].Args, " ") != "-d" {
+		t.Fatal("pipeline did not preserve the read-only streaming contract", runner.specs)
 	}
 }
 

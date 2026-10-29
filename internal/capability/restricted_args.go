@@ -170,8 +170,10 @@ func knockpyArgs(target string, _ schema.RunRequest) []string {
 }
 
 func gfArgs(target string, _ schema.RunRequest) []string {
-	return []string{"-list", strings.TrimSpace(target)}
+	return []string{"cybot-urls", target}
 }
+
+func anewArgs(string, schema.RunRequest) []string { return []string{"-d"} }
 
 func waybackurlsArgs(target string, _ schema.RunRequest) []string {
 	return []string{strings.TrimSpace(target)}

@@ -50,6 +50,12 @@ def prepare(dest):
     if len(installed) != 1:
         raise RuntimeError('Expected exactly one built Gosec executable')
     shutil.copy2(installed[0], dest / 'bin/gosec')
+    for name, spec in lock['go_tools'].items():
+        toolbox.monitored(['go', 'install', '-p', '1', '-trimpath', '-ldflags=-s -w', spec['module']], env=env, timeout_seconds=300)
+        installed = list((cache / 'gopath/bin').rglob(name))
+        if len(installed) != 1:
+            raise RuntimeError('Expected exactly one built executable: '+name)
+        shutil.copy2(installed[0], dest/'bin'/name)
     # Preserve upstream licenses for every fetched module, not just the scanner.
     notices = dest / 'share/licenses/gosec'
     for notice in (cache / 'modules').rglob('*'):
@@ -71,6 +77,7 @@ def prepare(dest):
 
 def probe(image):
     toolbox.STATE.mkdir(parents=True, exist_ok=True)
+    lock = json.loads((toolbox.ROOT / 'docker/toolbox/analysis.lock.json').read_text())
     commands = {
         'cybot': ('/opt/cybot/bin/cybot', '--version'),
         'gosec': ('/opt/cybot/bin/gosec', '-version'),
@@ -80,14 +87,17 @@ def probe(image):
         'gitleaks': ('/opt/cybot/bin/gitleaks', 'version'),
         'trufflehog': ('/opt/cybot/bin/trufflehog', '--version'),
     }
+    for name in lock['go_tools']:
+        commands[name] = ('/opt/cybot/bin/'+name, '')
     # Locate the core engine through the CLI's installed package rather than
     # assume its wheel layout. Hash both the launcher and real native engine.
     lines = ['set -eu', "core=$(python3 -c 'import semgrep, pathlib; print(pathlib.Path(semgrep.__file__).parent / \"bin/semgrep-core\")')"]
     for name, (path, flag) in commands.items():
         if name == 'semgrep-core':
             path = '"$core"'
+        version_command = f'/opt/go/bin/go version -m {path}' if name in lock['go_tools'] else f'{path} {flag}'
         lines += [f"printf '\\nCYBOT_HASH {name} '", f'sha256sum {path}',
-                  f"printf 'CYBOT_VERSION {name}\\n'", f'{path} {flag} 2>&1', "printf '\\nCYBOT_END\\n'"]
+                  f"printf 'CYBOT_VERSION {name}\\n'", version_command+' 2>&1', "printf '\\nCYBOT_END\\n'"]
     with tempfile.TemporaryDirectory(prefix='probe-', dir=toolbox.STATE) as temp:
         output = Path(temp) / 'result.txt'
         try:
@@ -98,15 +108,16 @@ def probe(image):
                 (toolbox.STATE / 'probe-error.txt').write_bytes(output.read_bytes()[-65536:])
             raise
         text = output.read_text()
-    lock = json.loads((toolbox.ROOT / 'docker/toolbox/analysis.lock.json').read_text())
     report = {'binaries': {}, 'packages': {}}
     for name, (path, _) in commands.items():
         digest = re.search(r'CYBOT_HASH '+name+r' ([a-f0-9]{64})\s+(\S+)', text)
         output = re.search(r'CYBOT_VERSION '+name+r'\n(.*?)\nCYBOT_END', text, re.S)
         version = re.search(r'(?<!\d)(\d+\.\d+\.\d+)(?!\d)', output[1]) if output else None
+        if name in lock['go_tools'] and output:
+            version = re.search(r'\bmod\s+'+re.escape(lock['go_tools'][name]['module_path'])+r'\s+v(\S+)', output[1])
         if not digest or not version:
             raise RuntimeError('Incomplete analysis runtime measurement: '+name+'\n'+text[-4000:])
-        expected = lock['semgrep']['version'] if name in ('semgrep', 'semgrep-core') else lock.get(name, lock['tools'].get(name, {})).get('version')
+        expected = lock['semgrep']['version'] if name in ('semgrep', 'semgrep-core') else lock.get(name, lock['tools'].get(name, lock['go_tools'].get(name, {}))).get('version')
         if expected and version[1] != expected:
             raise RuntimeError('Analysis runtime version mismatch: '+name)
         report['binaries'][name] = {'path': digest[2], 'sha256': digest[1], 'reported_version': version[1]}

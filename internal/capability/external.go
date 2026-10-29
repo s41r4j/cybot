@@ -1,6 +1,7 @@
 package capability
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -15,10 +16,11 @@ import (
 )
 
 type toolStep struct {
-	ID              string
-	Args            func(target string, req schema.RunRequest) []string
-	Required        bool
-	AcceptExitCodes []int
+	ID                string
+	Args              func(target string, req schema.RunRequest) []string
+	Required          bool
+	AcceptExitCodes   []int
+	StdinFromPrevious bool
 }
 
 type externalCapability struct {
@@ -57,6 +59,14 @@ func (c externalCapability) Definition() schema.CapabilityDefinition {
 		d.Implementation = "partial"
 		d.Stability = "experimental"
 	}
+	if c.ID() == "pattern.detect" {
+		d.Stability = "experimental"
+		d.Documentation.Description = "Extract HTTP(S) URL candidates from a bounded local text file using the pinned cybot-urls GF pattern, then deduplicate with Anew."
+		d.Documentation.Limitations = append(d.Documentation.Limitations, "Only the bundled URL pattern is selected; candidates do not establish endpoint reachability or a vulnerability.", "Target must be a regular local text file no larger than 1 MiB.")
+	}
+	if c.ID() == "container.scan" {
+		d.Documentation.Limitations = append(d.Documentation.Limitations, "Local sources must be Docker-save archive files or OCI image-layout directories; unpack OCI tarballs into a layout before scanning.", "Registry references require reachable registries and any necessary credentials; offline profiles support local archives/layouts.")
+	}
 	return d
 }
 
@@ -71,6 +81,8 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 	}
 	combined := emptyResult()
 	completed := 0
+	var previous []byte
+	havePrevious := false
 	for _, step := range c.steps {
 		if step.ID == "gosec" {
 			if info, err := os.Stat(req.Target); err == nil && !info.IsDir() {
@@ -111,13 +123,24 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 		if step.Args != nil {
 			args = step.Args(toolTarget, req)
 		}
-		out, runErr := d.Runner.Run(ctx, execution.Spec{Tool: tool, Args: args, EnvOverrides: toolEnvironment(step.ID), Timeout: d.Timeout, Retries: 0, Network: tool.RequiresNetwork, WorkDir: hostWorkdir, ContainerWorkDir: containerWorkdir, Mounts: mounts, AcceptExitCodes: step.AcceptExitCodes})
+		var stdin []byte
+		if step.StdinFromPrevious {
+			if !havePrevious {
+				return combined, fmt.Errorf("%s requires a completed upstream stage", step.ID)
+			}
+			stdin = previous
+		}
+		out, runErr := d.Runner.Run(ctx, execution.Spec{Tool: tool, Args: args, Stdin: stdin, EnvOverrides: toolEnvironment(step.ID), Timeout: d.Timeout, Retries: 0, Network: tool.RequiresNetwork, WorkDir: hostWorkdir, ContainerWorkDir: containerWorkdir, Mounts: mounts, AcceptExitCodes: step.AcceptExitCodes})
 		if runErr != nil {
 			combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "TOOL_EXECUTION_FAILED", Message: runErr.Error(), Retryable: false})
 			if step.Required {
 				return combined, runErr
 			}
 			continue
+		}
+		if step.ID == "gf" && len(bytes.TrimSpace(out.Stderr)) != 0 {
+			combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "TOOL_REPORTED_ERRORS", Message: "GF reported a pattern/input/grep error; its exit code does not distinguish failure from a successful empty match."})
+			return combined, fmt.Errorf("GF pattern matching failed; no clean result is established")
 		}
 		normalized, parseErr := parseTool(step.ID, out.Stdout, req)
 		if parseErr != nil {
@@ -143,6 +166,7 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 		mergeResult(&combined, normalized)
 		combined.Decisions = append(combined.Decisions, schema.Decision{Stage: "tool-selection", Selected: step.ID, Reason: "Configured adapter completed; evidence records its declared version.", Skipped: []schema.SkippedOption{}})
 		completed++
+		previous, havePrevious = out.Stdout, true
 	}
 	if completed == 0 {
 		return combined, fmt.Errorf("no deterministic tool step completed")
@@ -248,10 +272,28 @@ func validateCapabilityTarget(id, target string) error {
 			return fmt.Errorf("target must be an existing local path: %w", err)
 		}
 		return nil
+	case "pattern.detect":
+		info, err := os.Stat(target)
+		if err != nil || !info.Mode().IsRegular() || info.Size() > 1<<20 {
+			return fmt.Errorf("pattern target must be an existing regular text file no larger than 1 MiB")
+		}
+		return nil
 	case "container.scan":
 		if info, err := os.Stat(target); err == nil {
 			if info.IsDir() {
-				return fmt.Errorf("local container target must be an OCI or Docker archive file")
+				for _, name := range []string{"oci-layout", "index.json"} {
+					entry, err := os.Stat(filepath.Join(target, name))
+					if err != nil || !entry.Mode().IsRegular() || entry.Size() > 1<<20 {
+						return fmt.Errorf("container directory must be an OCI image layout with bounded oci-layout and index.json files")
+					}
+				}
+				layout, err := os.ReadFile(filepath.Join(target, "oci-layout"))
+				var version struct {
+					Version string `json:"imageLayoutVersion"`
+				}
+				if err != nil || json.Unmarshal(layout, &version) != nil || version.Version != "1.0.0" {
+					return fmt.Errorf("unsupported OCI image layout")
+				}
 			}
 			return nil
 		}
@@ -301,6 +343,9 @@ func evidenceOutput(tool string, data []byte) ([]byte, string, error) {
 	}
 	var value any
 	if json.Unmarshal(data, &value) == nil {
+		if tool == "trivy" {
+			redactTrivySecretContext(value)
+		}
 		redactValue(value)
 		out, err := json.Marshal(value)
 		return out, "application/json", err
@@ -321,6 +366,31 @@ func evidenceOutput(tool string, data []byte) ([]byte, string, error) {
 		lines = append(lines, b)
 	}
 	return []byte(strings.Join(byteStrings(lines), "\n")), "application/x-ndjson", nil
+}
+
+func redactTrivySecretContext(value any) {
+	root, ok := value.(map[string]any)
+	if !ok {
+		return
+	}
+	for _, raw := range array(root["Results"]) {
+		row := object(raw)
+		secrets := array(row["Secrets"])
+		for i, raw := range secrets {
+			issue := object(raw)
+			known := []string{}
+			for _, key := range []string{"Match", "Secret", "Raw", "RawV2"} {
+				if secret, ok := issue[key].(string); ok && secret != "" {
+					known = append(known, secret)
+				}
+			}
+			if _, exists := issue["Code"]; exists {
+				issue["Code"] = "[REDACTED]"
+			}
+			redactValue(issue)
+			secrets[i] = redactKnownSecretCopies(issue, known)
+		}
+	}
 }
 func redactValue(v any) {
 	switch x := v.(type) {
@@ -419,6 +489,9 @@ func unique[T any](in []T, key func(T) string) []T {
 	return out
 }
 func summaryFor(id string, r schema.Result, tools int) string {
+	if id == "pattern.detect" {
+		return fmt.Sprintf("Extracted %d unique URL candidate(s) using a pinned GF pattern and Anew; no HTTP requests or vulnerability tests were performed.", len(r.Endpoints))
+	}
 	return fmt.Sprintf("%s completed with %d tool(s): %d asset(s), %d service(s), %d endpoint(s), and %d finding(s).", id, tools, len(r.Assets), len(r.Services), len(r.Endpoints), len(r.Findings))
 }
 func resultConfidence(r schema.Result) float64 {
@@ -558,7 +631,7 @@ func trivyFilesystemArgs(target string, _ schema.RunRequest) []string {
 }
 func trivyImageArgs(target string, req schema.RunRequest) []string {
 	args := []string{"image", "--cache-dir", trivyCacheDir(), "--cache-backend", "memory", "--format", "json", "--scanners", "vuln,misconfig,secret", "--skip-db-update", "--skip-java-db-update", "--skip-check-update", "--skip-version-check", "--offline-scan", "--disable-telemetry"}
-	if info, err := os.Stat(req.Target); err == nil && !info.IsDir() {
+	if _, err := os.Stat(req.Target); err == nil {
 		return append(args, "--input", target)
 	}
 	return append(args, target)
@@ -579,7 +652,11 @@ func syftArgs(target string, _ schema.RunRequest) []string {
 func grypeArgs(target string, req schema.RunRequest) []string {
 	if info, err := os.Stat(req.Target); err == nil {
 		if info.IsDir() {
-			target = "dir:" + target
+			if req.Capability == "container.scan" {
+				target = "oci-dir:" + target
+			} else {
+				target = "dir:" + target
+			}
 		}
 	} else if req.Capability == "container.scan" {
 		target = "registry:" + target

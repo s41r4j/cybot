@@ -313,12 +313,20 @@ python3 scripts/toolbox.py --profile supplychain build
 python3 scripts/toolbox.py --profile supplychain run cybot run cloud.review --target /data/terraform --approve
 ```
 
-Analysis includes Semgrep, local rules, Gosec, Go, Gitleaks and TruffleHog.
+Analysis includes Semgrep, local rules, Gosec, Go, Gitleaks, TruffleHog, GF and Anew.
+`pattern.detect` extracts/deduplicates URL candidates from a local text file;
+it does not establish vulnerabilities or modify the source file.
 Supply-chain includes Trivy, Grype, Syft, embedded configuration checks and locked
 read-only vulnerability datasets. Runtime dependency/database downloads are disabled;
 Go modules must be available locally. `cloud.review` checks local IaC files and
 does not authenticate to a cloud account. Each profile has its own validated
 runtime pin under `.cybot/toolbox/`; failed builds never replace a working pin.
+Container scans accept Docker-save archives, OCI layout directories, or reachable
+registry references. Each profile's persistent history/evidence is isolated under
+`.cybot/runtimes/PROFILE`; unrelated private repository state is not mounted.
+Analysis and supply-chain runs default to `--network none`. Registry access must
+be selected explicitly with `--network bridge` before `run`; runtime database
+updates remain disabled. Fixture validation always uses `none`.
 
 The historical monolithic recipe remains in `docker/toolbox/Dockerfile.full` and
 is outside these budgets. No host security tools are installed by this workflow.

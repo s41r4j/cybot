@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/s41r4j/cybot/pkg/schema"
 )
@@ -52,6 +53,29 @@ func applyReportDiagnostics(tool string, data []byte, result *schema.Result) {
 		if json.Unmarshal(root["Results"], &rows) != nil || len(rows) == 0 {
 			result.Status = "partial"
 			result.Warnings = append(result.Warnings, "Trivy reported no recognized scan targets; vulnerability coverage is unverified.")
+		}
+		for _, raw := range rows {
+			var record map[string]any
+			if json.Unmarshal(raw, &record) != nil {
+				continue
+			}
+			if summary, exists := record["MisconfSummary"]; exists {
+				stats := object(summary)
+				if number(stats["Successes"])+number(stats["Failures"])+number(stats["Exceptions"]) == 0 {
+					result.Status = "partial"
+					result.Errors = append(result.Errors, schema.RunError{Tool: tool, Code: "NO_CHECKS_EXECUTED", Message: "The configuration report did not establish that any checks were evaluated."})
+				}
+				failed := 0
+				for _, item := range array(record["Misconfigurations"]) {
+					if strings.EqualFold(firstText(object(item), "Status"), "FAIL") {
+						failed++
+					}
+				}
+				if number(stats["Failures"]) > failed {
+					result.Status = "partial"
+					result.Errors = append(result.Errors, schema.RunError{Tool: tool, Code: "MISSING_FINDING_DETAILS", Message: "The scanner reported failed checks without all finding details."})
+				}
+			}
 		}
 	}
 }

@@ -28,6 +28,8 @@ import (
 
 type fixtureOCI struct {
 	manifest []byte
+	config   []byte
+	layer    []byte
 	digest   string
 	blobs    map[string][]byte
 }
@@ -108,10 +110,10 @@ func fixtureOCIImage(t *testing.T, version string) fixtureOCI {
 		return map[string]any{"mediaType": media, "digest": fixtureDigest(data), "size": len(data)}
 	}
 	manifest := encode(map[string]any{"schemaVersion": 2, "mediaType": "application/vnd.oci.image.manifest.v1+json", "config": descriptor("application/vnd.oci.image.config.v1+json", config), "layers": []any{descriptor("application/vnd.oci.image.layer.v1.tar+gzip", compressed.Bytes())}})
-	return fixtureOCI{manifest: manifest, digest: fixtureDigest(manifest), blobs: map[string][]byte{fixtureDigest(config): config, fixtureDigest(compressed.Bytes()): compressed.Bytes()}}
+	return fixtureOCI{manifest: manifest, config: config, layer: layer, digest: fixtureDigest(manifest), blobs: map[string][]byte{fixtureDigest(config): config, fixtureDigest(compressed.Bytes()): compressed.Bytes()}}
 }
 
-func (image fixtureOCI) archive(t *testing.T, path string) {
+func (image fixtureOCI) layout(t *testing.T, path string) {
 	t.Helper()
 	descriptor := map[string]any{"mediaType": "application/vnd.oci.image.manifest.v1+json", "digest": image.digest, "size": len(image.manifest), "platform": map[string]string{"architecture": runtime.GOARCH, "os": "linux"}, "annotations": map[string]string{"org.opencontainers.image.ref.name": "fixture:local"}}
 	index, err := json.Marshal(map[string]any{"schemaVersion": 2, "manifests": []any{descriptor}})
@@ -122,6 +124,25 @@ func (image fixtureOCI) archive(t *testing.T, path string) {
 	for digest, data := range image.blobs {
 		files["blobs/sha256/"+strings.TrimPrefix(digest, "sha256:")] = data
 	}
+	for name, data := range files {
+		target := filepath.Join(path, filepath.FromSlash(name))
+		if err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(target, data, 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
+func (image fixtureOCI) archive(t *testing.T, path string) {
+	t.Helper()
+	config := strings.TrimPrefix(fixtureDigest(image.config), "sha256:") + ".json"
+	manifest, err := json.Marshal([]map[string]any{{"Config": config, "RepoTags": []string{"fixture:local"}, "Layers": []string{"layer.tar"}}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := map[string][]byte{"manifest.json": manifest, config: image.config, "layer.tar": image.layer}
 	if err := os.WriteFile(path, fixtureTar(t, files), 0600); err != nil {
 		t.Fatal(err)
 	}
@@ -171,7 +192,9 @@ func TestLiveSupplyChainContainers(t *testing.T) {
 	for tag, image := range images {
 		path := filepath.Join(dir, tag+".tar")
 		image.archive(t, path)
-		for _, target := range []string{path, "registry.cybot.invalid:" + port + "/fixture:" + tag} {
+		layout := filepath.Join(dir, tag+"-layout")
+		image.layout(t, layout)
+		for _, target := range []string{path, layout, "registry.cybot.invalid:" + port + "/fixture:" + tag} {
 			r, err := c.Run(context.Background(), liveRequest(target), d)
 			if err != nil || len(r.Errors) != 0 || len(r.Evidence) != 2 || r.Status == "partial" {
 				t.Fatalf("container source failed (%s): %+v %v", tag, r, err)
@@ -201,8 +224,8 @@ func TestLiveSupplyChainContainers(t *testing.T) {
 		t.Fatal("invalid image archive reported clean")
 	}
 	certifyOperation(t, "grype", "container.scan", []operationCase{
-		passedCase("positive", "Both scanners detect the vulnerable npm layer in OCI archives and a TLS-verified loopback registry."),
-		passedCase("negative", "Both source modes scan a nonvulnerable control layer without findings."),
+		passedCase("positive", "Both scanners detect vulnerable npm layers in Docker archives, OCI layout directories and a TLS-verified loopback registry."),
+		passedCase("negative", "All three source modes scan a nonvulnerable control layer without findings."),
 		passedCase("failure", "An invalid image archive fails explicitly."),
 	})
 }

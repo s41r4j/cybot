@@ -8,6 +8,10 @@ the image includes license/notice files for the scanner and its downloaded Go
 modules under `/opt/cybot/share/licenses/gosec`. The Go SDK includes its upstream
 license at `/opt/go/LICENSE`. CYBOT CLI dependency notices are included under
 `/opt/cybot/share/licenses/cybot/dependencies` in every toolbox profile.
+GF and Anew are built from the exact Go module revisions in
+`docker/toolbox/analysis.lock.json`, using the same verified toolchain. Their MIT
+notices are collected alongside the other downloaded Go-module notices. The
+`cybot-urls` pattern is part of CYBOT's own MIT-licensed source.
 
 The supply-chain profile preserves Trivy, Grype and Syft notices from their official
 release archives under `/opt/cybot/share/licenses`. Its locked vulnerability

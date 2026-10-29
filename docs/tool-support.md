@@ -9,7 +9,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `agent-browser` | adapter | undeclared | web.automate, web.browse, web.har |
 | `amass` | not-implemented | undeclared | dns.enum |
 | `amass-enum` | adapter | undeclared | **no executable mapping** |
-| `anew` | adapter | undeclared | **no executable mapping** |
+| `anew` | adapter | linux | pattern.detect |
 | `arjun` | adapter | undeclared | **no executable mapping** |
 | `bettercap` | adapter | undeclared | mitm.assess |
 | `bloodhound` | adapter | undeclared | active-directory.attack, privilege.escalation |
@@ -28,7 +28,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `enum4linux` | adapter | undeclared | smb.test |
 | `evilginx` | adapter | undeclared | credential.harvest, phishing.campaign |
 | `ffuf` | adapter | linux | dir.bruteforce, web.content.discover |
-| `gf` | not-implemented | undeclared | pattern.detect |
+| `gf` | adapter | linux | pattern.detect |
 | `gitleaks` | adapter | linux | secret.scan |
 | `gobuster` | adapter | undeclared | dir.bruteforce |
 | `gophish` | not-implemented | undeclared | phishing.campaign, social.engineer |
@@ -130,7 +130,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `mitm.assess` | adapter | bettercap |
 | `mitre.map` | built-in | built-in |
 | `password.bruteforce` | adapter | hydra |
-| `pattern.detect` | not-implemented | gf |
+| `pattern.detect` | adapter | anew, gf |
 | `payload.generate` | adapter | msfvenom |
 | `persist.install` | not-implemented | sharppersist |
 | `personnel.osint` | adapter | sherlock, theharvester |

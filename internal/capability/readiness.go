@@ -47,7 +47,6 @@ var incompleteAdapters = map[string]string{
 	"covenant":     "adapter only displays help; C2 execution is not implemented",
 	"kekeo":        "adapter only exits; ticket operations are not implemented",
 	"powersploit":  "adapter only lists modules; post-exploitation execution is not implemented",
-	"gf":           "adapter only lists patterns; target matching is not implemented",
 	"gophish":      "starting a server does not create or scope a campaign; a campaign/configuration contract is required",
 	"dnschef":      "the current listener ignores the requested target; an explicit scoped DNS configuration is required",
 	"chisel":       "starting a reverse server does not implement a scoped forwarding/tunnel request",
@@ -61,7 +60,7 @@ func normalization(tool string) string {
 		return "built-in"
 	case "subfinder", "amass", "dnsx", "nmap", "naabu", "httpx", "katana", "ffuf", "nuclei",
 		"gitleaks", "trufflehog", "gosec", "semgrep", "trivy", "syft", "grype", "whatweb",
-		"testssl", "sqlmap", "jsluice", "corscanner", "wpscan", "agent-browser", "zap":
+		"testssl", "sqlmap", "jsluice", "corscanner", "wpscan", "agent-browser", "zap", "gf", "anew":
 		return "tool-specific"
 	default:
 		return "observations-only"

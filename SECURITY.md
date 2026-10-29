@@ -25,12 +25,15 @@ Local and interface-wide adapters require typed resource targets and explicit
 approval even in suggestive mode. Review sanitized evidence before sharing;
 redaction cannot recognize every encoded or unlabeled secret.
 
-Local file scopes use explicit paths such as `/workspace/source/*` or
-`./source/*`; hostname allowlists do not authorize similarly named files.
+Local file scopes use explicit entry points such as `/workspace/source` or
+`./source`; hostname allowlists do not authorize similarly named files.
 Scope checks resolve the target and pattern prefixes through symlinks and
 preserve filesystem path case. These checks validate the requested entry point;
 native tools still run with the current user's OS permissions. Use isolated
 toolbox profiles for untrusted assessment inputs.
+Each toolbox profile mounts its own `.cybot/runtimes/PROFILE` state directory.
+The repository's private research and unrelated `.cybot` state are not mounted
+into the toolbox. Existing state is preserved in its original location.
 
 Unix storage uses restricted file/directory modes. Windows storage ACLs and
 specialist security tools remain outside the certified scope; a successful

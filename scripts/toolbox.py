@@ -351,6 +351,8 @@ def run(args, image=None, network=None, mounts=(), writable_mounts=(), output=No
         raise RuntimeError('Image exceeds the 3 GB compact-profile limit')
     for folder in ('reports', 'data', '.cybot'):
         (ROOT / folder).mkdir(exist_ok=True)
+    runtime_state = ROOT/'.cybot/runtimes'/PROFILE
+    runtime_state.mkdir(parents=True, exist_ok=True, mode=0o700)
     # An engine-wide name is the cross-process lock. Do not remove a conflicting
     # name: it may be someone else's active CYBOT run.
     extra = ['--network', network]
@@ -379,7 +381,7 @@ def run(args, image=None, network=None, mounts=(), writable_mounts=(), output=No
                  '--tmpfs', f'/home/cybot/.config:rw,noexec,nosuid,size=16m,uid={uid},gid={gid}',
                  '--mount', f'type=bind,src={ROOT / "data"},dst=/data,readonly',
                  '--mount', f'type=bind,src={ROOT / "reports"},dst=/reports',
-                 '--mount', f'type=bind,src={ROOT / ".cybot"},dst=/workspace/.cybot', image, *args).strip()
+                 '--mount', f'type=bind,src={runtime_state},dst=/workspace/.cybot', image, *args).strip()
     try:
         with output.open('w') if output else nullcontext(None) as destination:
             monitored(['docker', 'start', '-a', cid], stop=lambda: docker('stop', '--time', '2', cid), stdout=destination, timeout_seconds=timeout_seconds)
@@ -495,9 +497,12 @@ def operation_lock():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile', choices=['core', 'analysis', 'supplychain'], default='core')
+    parser.add_argument('--network', choices=['none', 'bridge'], help='Explicit network choice for run; local analysis profiles default to none')
     parser.add_argument('action', choices=['status', 'build', 'pull', 'run', 'verify', 'image'])
     parser.add_argument('args', nargs=argparse.REMAINDER)
     options = parser.parse_args()
+    if options.network is not None and options.action != 'run':
+        parser.error('--network applies only to run; validation always uses an isolated network')
     configure_profile(options.profile)
     if options.action == 'image':
         print(current_image())
@@ -514,7 +519,7 @@ def main():
                     raise RuntimeError('usage: toolbox.py pull REGISTRY/IMAGE@sha256:DIGEST')
                 pull(options.args[0])
             else:
-                run(options.args or ['help'])
+                run(options.args or ['help'], network=options.network)
 
 
 if __name__ == '__main__':

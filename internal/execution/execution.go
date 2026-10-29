@@ -1,6 +1,7 @@
 package execution
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -22,6 +23,7 @@ type Spec struct {
 	// EnvOverrides replace named variables for both native tools and containers.
 	// Env itself remains the environment of the launched host process.
 	EnvOverrides     []string
+	Stdin            []byte
 	WorkDir          string
 	ContainerWorkDir string
 	Entrypoint       string
@@ -138,6 +140,9 @@ func (LocalRunner) Health(ctx context.Context, t schema.Tool) error {
 	return nil
 }
 func (r LocalRunner) Run(ctx context.Context, s Spec) (Output, error) {
+	if len(s.Stdin) > 8<<20 {
+		return Output{}, fmt.Errorf("tool input exceeds the 8 MiB bounded stream limit")
+	}
 	if err := r.Health(ctx, s.Tool); err != nil {
 		return Output{}, err
 	}
@@ -180,6 +185,9 @@ func (r LocalRunner) Run(ctx context.Context, s Spec) (Output, error) {
 			for _, variable := range s.EnvOverrides {
 				args = append(args, "--env", variable)
 			}
+			if s.Stdin != nil {
+				args = append(args, "-i")
+			}
 			if s.ContainerWorkDir != "" {
 				args = append(args, "--workdir", s.ContainerWorkDir)
 			}
@@ -199,6 +207,9 @@ func (r LocalRunner) Run(ctx context.Context, s Spec) (Output, error) {
 			cmd.Dir = s.WorkDir
 		}
 		cmd.Env = s.Env
+		if s.Stdin != nil {
+			cmd.Stdin = bytes.NewReader(s.Stdin)
+		}
 		if len(s.EnvOverrides) > 0 {
 			if cmd.Env == nil {
 				cmd.Env = os.Environ()

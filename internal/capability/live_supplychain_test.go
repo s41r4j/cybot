@@ -66,31 +66,35 @@ func TestLiveSupplyChainCloudConfig(t *testing.T) {
 	d := liveDeps(t)
 	dir := t.TempDir()
 	path := filepath.Join(dir, "main.tf")
-	write := func(action, resource string) {
+	write := func(cidr string) {
 		t.Helper()
-		source := fmt.Sprintf(`resource "aws_iam_policy" "fixture" {
+		source := fmt.Sprintf(`resource "aws_security_group" "fixture" {
   name = "cybot-local-fixture"
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{ Effect = "Allow", Action = [%q], Resource = [%q] }]
-  })
+  description = "Scoped SSH fixture"
+  ingress {
+    description = "Fixture SSH access"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = [%q]
+  }
 }
-`, action, resource)
+`, cidr)
 		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
 			t.Fatal(err)
 		}
 	}
 	c := liveCapability(t, "cloud.review")
-	write("*", "*")
+	write("0.0.0.0/0")
 	r, err := c.Run(context.Background(), liveRequest(dir), d)
 	if err != nil || len(r.Errors) != 0 || len(r.Findings) == 0 || r.Status == "partial" {
-		t.Fatalf("wildcard IAM policy was not detected: %+v %v", r, err)
+		t.Fatalf("public SSH ingress was not detected: %+v %v", r, err)
 	}
 	validateFixtureResult(t, r)
-	write("s3:GetObject", "arn:aws:s3:::cybot-fixture/specific-object")
+	write("10.0.0.0/24")
 	r, err = c.Run(context.Background(), liveRequest(dir), d)
 	if err != nil || len(r.Errors) != 0 || len(r.Findings) != 0 || r.Status == "partial" {
-		t.Fatalf("scoped IAM policy did not pass control: %+v %v", r, err)
+		t.Fatalf("private SSH ingress did not pass control: %+v %v", r, err)
 	}
 	broken := c
 	broken.steps = append([]toolStep{}, c.steps...)
@@ -102,8 +106,8 @@ func TestLiveSupplyChainCloudConfig(t *testing.T) {
 		t.Fatal("invalid configuration scan reported clean")
 	}
 	certifyOperation(t, "trivy", "cloud.review", []operationCase{
-		passedCase("positive", "Embedded Terraform checks detect a wildcard administrative IAM policy locally."),
-		passedCase("negative", "A least-privilege IAM policy passes the same embedded checks."),
+		passedCase("positive", "Embedded Terraform checks detect security group SSH ingress from the public internet."),
+		passedCase("negative", "The same security group scoped to a private CIDR passes those embedded checks."),
 		passedCase("failure", "Invalid required scanner configuration fails the capability."),
 	})
 }

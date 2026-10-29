@@ -13,7 +13,7 @@ COPY rules/ /opt/cybot/rules/
 COPY analysis.lock.json /opt/cybot/manifest/analysis.lock.json
 COPY entrypoint.sh /usr/local/bin/cybot-toolbox
 ENV PATH="/opt/cybot/bin:/opt/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
-    HOME=/home/cybot XDG_CACHE_HOME=/home/cybot/.cache XDG_CONFIG_HOME=/home/cybot/.config \
+    HOME=/home/cybot USER=cybot XDG_CACHE_HOME=/home/cybot/.cache XDG_CONFIG_HOME=/home/cybot/.config \
     CYBOT_TOOLBOX_INTERNAL=1 CYBOT_PACK_AUTO_UPDATE=0 GOMAXPROCS=1 GOMEMLIMIT=768MiB \
     GOTOOLCHAIN=local GOPROXY=off GOSUMDB=off GOTELEMETRY=off \
     GOCACHE=/home/cybot/.cache/go-build GOPATH=/home/cybot/.cache/go \

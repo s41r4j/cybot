@@ -71,7 +71,7 @@ var credentialAssignment = regexp.MustCompile(`(?i)(\b(?:password|passwd|secret|
 var authorizationLine = regexp.MustCompile(`(?im)(\b(?:authorization|proxy-authorization|cookie|set-cookie)\s*:\s*)[^\r\n]+`)
 var bearerToken = regexp.MustCompile(`(?i)\b(?:Bearer|Basic)\s+[A-Za-z0-9._~+/=-]+`)
 var privateKeyBlock = regexp.MustCompile(`(?s)-----BEGIN [^-]*PRIVATE KEY-----.*?-----END [^-]*PRIVATE KEY-----`)
-var textURL = regexp.MustCompile(`https?://[^\s<>"']+`)
+var textURL = regexp.MustCompile(`(?i)[a-z][a-z0-9+.-]*://[^\s<>"']+`)
 
 // SanitizeURL preserves URL syntax while removing credentials and sensitive query values.
 func SanitizeURL(raw string) string {
@@ -177,6 +177,10 @@ func sanitizeValue(v any) {
 					if _, ok := m["text"]; ok {
 						m["text"] = "[REDACTED]"
 					}
+				} else {
+					// Raw string/array bodies are no safer than HAR text fields.
+					x[k] = "[REDACTED]"
+					continue
 				}
 				sanitizeValue(child)
 			default:

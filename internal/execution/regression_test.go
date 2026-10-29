@@ -2,6 +2,7 @@ package execution
 
 import (
 	"context"
+	"io"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -13,6 +14,12 @@ import (
 )
 
 func TestMain(m *testing.M) {
+	if os.Getenv("CYBOT_TEST_PROCESS") == "stdin" {
+		if _, err := io.Copy(os.Stdout, os.Stdin); err != nil {
+			os.Exit(1)
+		}
+		os.Exit(0)
+	}
 	if os.Getenv("CYBOT_TEST_PROCESS") == "finding" {
 		_, _ = os.Stdout.WriteString(`{"site":[]}`)
 		os.Exit(2)
@@ -28,6 +35,20 @@ func TestMain(m *testing.M) {
 		os.Exit(0)
 	}
 	os.Exit(m.Run())
+}
+
+func TestBoundedNativeStdin(t *testing.T) {
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := (LocalRunner{}).Run(context.Background(), Spec{Tool: schema.Tool{ID: "fixture", Kind: "native", Binary: executable}, EnvOverrides: []string{"CYBOT_TEST_PROCESS=stdin", "GORACE=atexit_sleep_ms=0"}, Stdin: []byte("stream fixture\n"), Timeout: 5 * time.Second})
+	if err != nil || string(out.Stdout) != "stream fixture\n" {
+		t.Fatalf("bounded input was not delivered: %q %v", out.Stdout, err)
+	}
+	if _, err := (LocalRunner{}).Run(context.Background(), Spec{Stdin: make([]byte, (8<<20)+1)}); err == nil || !strings.Contains(err.Error(), "bounded stream limit") {
+		t.Fatal("oversized input was admitted", err)
+	}
 }
 
 func TestDockerCommandUsesImageSpecificEntrypoint(t *testing.T) {

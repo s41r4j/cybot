@@ -3,6 +3,8 @@ package capability
 import (
 	"context"
 	"errors"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/s41r4j/cybot/catalog"
@@ -51,7 +53,7 @@ func TestReadinessCoversCatalogWithoutScanning(t *testing.T) {
 	if runner.calls != 83 {
 		t.Fatalf("health checks repeated or built-in checked: %d", runner.calls)
 	}
-	expected := map[string]string{"web.map": "partial", "web.scan": "ready-to-test", "api.audit": "ready-to-test", "code.audit": "unavailable", "exploit.execute": "not-implemented", "pattern.detect": "not-implemented", "classify.endpoint": "built-in"}
+	expected := map[string]string{"web.map": "partial", "web.scan": "ready-to-test", "api.audit": "ready-to-test", "code.audit": "unavailable", "exploit.execute": "not-implemented", "pattern.detect": "unavailable", "classify.endpoint": "built-in"}
 	for _, c := range report.Capabilities {
 		if want, ok := expected[c.ID]; ok && c.Status != want {
 			t.Errorf("%s = %s, want %s", c.ID, c.Status, want)
@@ -128,6 +130,10 @@ func TestEveryExternalCapabilityFailsWithoutDependencies(t *testing.T) {
 		t.Fatal(err)
 	}
 	directory := t.TempDir()
+	file := filepath.Join(directory, "fixture.txt")
+	if err := os.WriteFile(file, []byte("fixture"), 0600); err != nil {
+		t.Fatal(err)
+	}
 	for _, registered := range caps.List() {
 		c, ok := registered.(externalCapability)
 		if !ok {
@@ -135,7 +141,7 @@ func TestEveryExternalCapabilityFailsWithoutDependencies(t *testing.T) {
 		}
 		t.Run(c.ID(), func(t *testing.T) {
 			target := ""
-			for _, candidate := range []string{directory, "https://fixture.test", "fixture.test", "fixture"} {
+			for _, candidate := range []string{directory, file, "https://fixture.test", "fixture.test", "fixture"} {
 				if validateCapabilityTarget(c.ID(), candidate) == nil {
 					target = candidate
 					break

@@ -66,6 +66,10 @@ Semgrep/Gosec image with the Go SDK and local rules. Runtime networking and Go
 dependency downloads are disabled. The profile retains the same 2 GiB RAM,
 one-CPU, 3 GB image and 20 GB storage admission limits as the compact profile.
 Code with external Go dependencies needs those dependencies available locally.
+The analysis profile also supplies GF/Anew. `pattern.detect` extracts URL
+candidates with the bundled pattern and deduplicates their stream without
+modifying input files. Missing pattern/grep failures are preserved even when
+upstream GF returns exit zero. This operation does not test URLs for vulnerabilities.
 
 `python3 scripts/toolbox.py --profile supplychain build` prepares Trivy, Grype,
 Syft and immutable upstream vulnerability databases. The databases live in checksummed,
@@ -75,6 +79,9 @@ Terraform/IaC fixture tests require no cloud account. Java database and
 account-level cloud operations are not supplied by this profile. Grype hydrates
 its own database with its pinned executable in a bounded, network-isolated import
 container; CYBOT does not fabricate its import/checksum metadata.
+Container fixtures cover Docker-save archives, OCI layout directories and a
+TLS-verified loopback registry. Local configuration fixtures compare public SSH
+ingress with a private-CIDR control; they do not create cloud resources.
 
 CI now produces individual positive/negative/failure operation reports, binds
 them to measured executable hashes and source fingerprints, and merges both
@@ -83,3 +90,6 @@ produce these certificates. Missing or stale reports keep the relevant entries
 blocked; passing source CI does not override the full-product gate.
 Independent passed operations remain available in the evidence artifact even
 when another profile test fails. A failed suite never promotes its candidate image.
+Profile runtime histories live under `.cybot/runtimes/PROFILE`; validation writes
+only to its separately mounted report directory. Private research and unrelated
+root state remain outside the toolbox's state mount.

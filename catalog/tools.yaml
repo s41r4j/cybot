@@ -489,28 +489,30 @@
 - id: gf
   title: gf
   description: Grep wrapper for finding interesting patterns.
-  purpose: Find potential vulnerabilities by matching patterns in URLs and responses.
-  version: 1.0.0
+  purpose: Extract URL candidates using a reviewed local pattern; no vulnerability verification is implied.
+  version: 0.0.0-20200618134122-dcd4c361f9f5
   kind: native
   binary: gf
+  supported_os: [linux]
   source_url: https://github.com/tomnomnom/gf
   license: MIT
   capabilities: [pattern.detect, web.map]
   default_args: []
   output_format: text
-  parser: gf.text.v1
+  parser: gf.urls.v1
   risk: local-read
   requires_network: false
 - id: anew
   title: anew
   description: Append new lines to files without duplicates.
   purpose: Stream processing tool for deduplicating and appending unique results.
-  version: "1.0.0"
+  version: 0.1.1
   kind: native
   binary: anew
+  supported_os: [linux]
   source_url: https://github.com/tomnomnom/anew
   license: MIT
-  capabilities: [pipeline.util]
+  capabilities: [pattern.detect]
   default_args: []
   output_format: text
   parser: anew.text.v1

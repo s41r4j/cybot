@@ -33,7 +33,7 @@ def validate_image(image, source_cli=False):
             import shutil
             shutil.rmtree(reports)
         reports.mkdir()
-        container_reports = '/workspace/' + str(reports.relative_to(toolbox.ROOT))
+        container_reports = '/validation/reports'
         test_pattern = '^TestLiveAnalysis' if analysis else ('^TestLiveSupplyChain' if supplychain else '^TestLive(Core|Assessment|CompactCertification)')
         succeeded = False
         try:
@@ -44,6 +44,7 @@ def validate_image(image, source_cli=False):
                          'CYBOT_VALIDATION_SOURCE='+source_digest(),
                          'SYFT_CHECK_FOR_APP_UPDATE=false','/validation/core.test','-test.v','-test.run='+test_pattern,'-test.timeout=480s'],
                         image=image, network='none', mounts=mounts,
+                        writable_mounts=[(reports, container_reports)],
                         extra_hosts=[('registry.cybot.invalid', '127.0.0.1')] if supplychain else (),
                         output=output,timeout_seconds=500)
             succeeded = True

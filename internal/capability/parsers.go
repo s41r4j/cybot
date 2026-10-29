@@ -52,8 +52,8 @@ var parsers = map[string]toolParser{
 	"corscanner":    parseCORS,
 	"cmseek":        parseJSONPassthrough,
 	"waybackurls":   parseTextLines,
-	"gf":            parseTextLines,
-	"anew":          parseTextLines,
+	"gf":            parseURLCandidates,
+	"anew":          parseURLCandidates,
 	"hydra":         parseTextLines,
 	"hashcat":       parseTextLines,
 	"john":          parseTextLines,
@@ -215,6 +215,33 @@ func parseAssets(data []byte, req schema.RunRequest) (schema.Result, error) {
 		return result.Assets[i].Type < result.Assets[j].Type
 	})
 	return result, nil
+}
+
+func parseURLCandidates(data []byte, _ schema.RunRequest) (schema.Result, error) {
+	r := emptyResult()
+	scanner := bufio.NewScanner(bytes.NewReader(data))
+	scanner.Buffer(make([]byte, 8192), 8193)
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if line == "" {
+			continue
+		}
+		if len(line) > 8192 || (!strings.HasPrefix(line, "http://") && !strings.HasPrefix(line, "https://")) {
+			return r, fmt.Errorf("URL matcher emitted an unexpected or oversized record")
+		}
+		u, err := url.Parse(line)
+		if err != nil || u.Hostname() == "" {
+			r.Warnings = append(r.Warnings, "An invalid URL-shaped match was excluded from endpoint candidates.")
+			continue
+		}
+		r.Endpoints = append(r.Endpoints, schema.Endpoint{URL: evidence.SanitizeURL(line), Method: "GET", Technology: []string{}})
+	}
+	if err := scanner.Err(); err != nil {
+		return r, fmt.Errorf("read bounded URL matches: %w", err)
+	}
+	r.Observations = []string{"URL candidates were extracted from local text; no HTTP request or vulnerability test was performed."}
+	deduplicateResult(&r)
+	return r, nil
 }
 
 func parseNaabu(data []byte, _ schema.RunRequest) (schema.Result, error) {
@@ -464,6 +491,13 @@ func parseTrivy(data []byte, _ schema.RunRequest) (schema.Result, error) {
 			if !ok {
 				continue
 			}
+			if status := strings.ToUpper(firstText(d, "Status")); status != "" && status != "FAIL" {
+				if status != "PASS" && status != "EXCEPTION" && status != "SKIP" {
+					result.Status = "partial"
+					result.Errors = append(result.Errors, schema.RunError{Tool: "trivy", Code: "UNKNOWN_CHECK_STATUS", Message: "A reported check has an unrecognized status; its outcome was not treated as a finding or a clean check."})
+				}
+				continue
+			}
 			id := firstText(d, "ID", "RuleID")
 			if id == "" {
 				continue
@@ -473,7 +507,12 @@ func parseTrivy(data []byte, _ schema.RunRequest) (schema.Result, error) {
 				title = id
 			}
 			desc := firstText(d, "Description", "Message") + " Target: " + target + ". Sensitive values were not retained."
-			result.Findings = append(result.Findings, finding("trivy", id+target, title, strings.TrimSpace(desc), firstText(d, "Severity"), .85))
+			location, err := json.Marshal(d["CauseMetadata"])
+			if err != nil {
+				return result, err
+			}
+			key := id + "\x00" + target + "\x00" + firstText(d, "StartLine") + "\x00" + string(location) + "\x00" + firstText(d, "Match")
+			result.Findings = append(result.Findings, finding("trivy", key, title, strings.TrimSpace(desc), firstText(d, "Severity"), .85))
 		}
 	}
 	sortFindings(&result)

@@ -1,0 +1,4 @@
+{
+  "flags": "-Eo",
+  "pattern": "https?://[^[:space:]<>\"']+"
+}

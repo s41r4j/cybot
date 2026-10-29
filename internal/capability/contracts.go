@@ -9,6 +9,10 @@ import (
 // Reject valid JSON with the wrong report shape instead of reporting a clean scan.
 // Empty JSONL is legitimate for match-only tools; document tools must emit a report.
 func validateReportShape(tool string, data []byte) error {
+	hasString := func(record map[string]any, key string) bool {
+		value, ok := record[key].(string)
+		return ok && value != ""
+	}
 	field := map[string]string{"gosec": "Issues", "semgrep": "results", "grype": "matches", "trivy": "Results"}[tool]
 	if field != "" {
 		var root map[string]json.RawMessage
@@ -31,9 +35,41 @@ func validateReportShape(tool string, data []byte) error {
 			return fmt.Errorf("%s: null %s report field", tool, field)
 		}
 		for _, row := range rows {
-			var object map[string]json.RawMessage
-			if json.Unmarshal(row, &object) != nil || len(object) == 0 {
+			var shape map[string]json.RawMessage
+			if json.Unmarshal(row, &shape) != nil || len(shape) == 0 {
 				return fmt.Errorf("%s: malformed %s record", tool, field)
+			}
+			var record map[string]any
+			if err := json.Unmarshal(row, &record); err != nil {
+				return err
+			}
+			valid := true
+			switch tool {
+			case "semgrep":
+				valid = hasString(record, "check_id") && hasString(record, "path")
+			case "gosec":
+				valid = (hasString(record, "rule_id") || hasString(record, "RuleID")) && hasString(record, "file")
+			case "grype":
+				valid = hasString(object(record["vulnerability"]), "id") && hasString(object(record["artifact"]), "name")
+			case "trivy":
+				valid = hasString(record, "Target")
+				for name, identity := range map[string]string{"Vulnerabilities": "VulnerabilityID", "Misconfigurations": "ID", "Secrets": "RuleID"} {
+					if nested, exists := record[name]; exists && nested != nil {
+						entries, ok := nested.([]any)
+						if !ok {
+							valid = false
+						}
+						for _, entry := range entries {
+							valid = valid && hasString(object(entry), identity)
+							if name == "Misconfigurations" {
+								valid = valid && hasString(object(entry), "Status")
+							}
+						}
+					}
+				}
+			}
+			if !valid {
+				return fmt.Errorf("%s: report record lacks required identity/location fields", tool)
 			}
 		}
 		return nil

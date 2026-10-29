@@ -97,4 +97,28 @@ class BudgetTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'name in use'): toolbox.run(['health'])
             self.assertFalse(any(call.args[0] in ('rm','stop') for call in docker.call_args_list))
 
+    def test_runtime_mounts_isolate_private_state_and_bound_writable_reports(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state = root/'.cybot/toolbox/analysis'
+            reports = state/'validation'
+            reports.mkdir(parents=True)
+            private = root/'.cybot/private-assessments'
+            private.mkdir()
+            with patch.object(toolbox, 'ROOT', root), patch.object(toolbox, 'STATE', state), \
+                 patch.object(toolbox, 'PROFILE', 'analysis'), patch.object(toolbox, 'preflight'), \
+                 patch.object(toolbox, 'image_bytes', return_value=100), \
+                 patch.object(toolbox, 'docker', side_effect=RuntimeError('fixture stop')) as docker:
+                with self.assertRaisesRegex(RuntimeError, 'fixture stop'):
+                    toolbox.run(['health'], image='fixture', writable_mounts=[(reports, '/validation/reports')])
+                args = docker.call_args.args
+                self.assertEqual(args[args.index('--network')+1], 'none')
+                self.assertIn(f'type=bind,src={root}/.cybot/runtimes/analysis,dst=/workspace/.cybot', args)
+                self.assertIn(f'type=bind,src={reports.resolve()},dst=/validation/reports', args)
+                self.assertFalse(any(f'src={root}/.cybot,' in str(arg) for arg in args))
+                docker.reset_mock()
+                with self.assertRaisesRegex(RuntimeError, 'inside this profile state'):
+                    toolbox.run(['health'], image='fixture', writable_mounts=[(private, '/validation/reports')])
+                docker.assert_not_called()
+
 if __name__ == '__main__': unittest.main()

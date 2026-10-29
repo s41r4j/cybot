@@ -1,5 +1,6 @@
 # For budget monitoring and a cross-process launch lock, prefer:
 # python3 scripts/toolbox.py run cybot <arguments>
+# This service is for the core profile. Other profiles use the Python launcher.
 services:
   toolbox:
     image: ${CYBOT_IMAGE:?Set CYBOT_IMAGE from python3 scripts/toolbox.py image}
@@ -27,7 +28,7 @@ services:
     volumes:
       - ./data:/data:ro
       - ./reports:/reports:rw
-      - ./.cybot:/workspace/.cybot:rw
+      - ./.cybot/runtimes/core:/workspace/.cybot:rw
     tmpfs:
       - /tmp:rw,noexec,nosuid,size=128m
       - /home/cybot/.cache:rw,noexec,nosuid,size=128m,uid=10001,gid=10001

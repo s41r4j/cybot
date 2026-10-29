@@ -17,6 +17,7 @@ func TestCredentialsAreRedactedAcrossFormats(t *testing.T) {
 		`[{"name":"Authorization","value":"Bearer FAKE_SENTINEL"},{"name":"X-API-Key","value":"FAKE_SENTINEL"}]`,
 		`{"log":{"entries":[{"request":{"url":"https://example.test/?token=FAKE_SENTINEL&ok=1","queryString":[{"name":"access_token","value":"FAKE_SENTINEL"}],"cookies":[{"name":"session","value":"FAKE_SENTINEL"}],"postData":{"text":"FAKE_SENTINEL"}},"response":{"content":{"text":"FAKE_SENTINEL"}}}]}}`,
 		`{"Raw":"FAKE_SENTINEL","nested":{"Secret":"FAKE_SENTINEL"},"command":["open https://example.test/?token=FAKE_SENTINEL"]}`,
+		`{"content":"FAKE_SENTINEL","nested":{"postData":["FAKE_SENTINEL"]},"Redacted":"FAKE_SENTINEL"}`,
 	}
 	for _, input := range fixtures {
 		out, err := DefaultHygieneRules.SanitizeJSON([]byte(input))
@@ -27,7 +28,7 @@ func TestCredentialsAreRedactedAcrossFormats(t *testing.T) {
 			t.Fatalf("leaked credential: %s", out)
 		}
 	}
-	for _, input := range []string{"password=FAKE_SENTINEL", `SECRET: "FAKE_SENTINEL"`, "Authorization: Bearer FAKE_SENTINEL", "https://user:FAKE_SENTINEL@example.test/"} {
+	for _, input := range []string{"password=FAKE_SENTINEL", `SECRET: "FAKE_SENTINEL"`, "Authorization: Bearer FAKE_SENTINEL", "https://user:FAKE_SENTINEL@example.test/", "HTTPS://user:FAKE_SENTINEL@example.test/", "ssh://user:FAKE_SENTINEL@example.test/"} {
 		if strings.Contains(DefaultHygieneRules.SanitizeText(input), "FAKE_SENTINEL") {
 			t.Fatalf("text leaked: %s", input)
 		}

@@ -137,7 +137,7 @@ func RegisterBuiltins(r *Registry) error {
 		external("cms.detect", "CMS Detection", "offensive-recon", []string{"cmseek", "whatweb", "wpscan"}, []string{"tech.fingerprint", "vuln.scan"}, toolStep{ID: "cmseek", Args: cmseekArgs}, toolStep{ID: "wpscan", Args: wpscanArgs}),
 		external("xss.detect", "XSS Detection", "offensive-assessment", []string{"xsstrike"}, []string{"report.generate"}, toolStep{ID: "xsstrike", Args: xsstrikeArgs}),
 		external("js.extract", "JS Endpoint Extraction", "offensive-recon", []string{"jsluice", "linkfinder"}, []string{"js.analyse", "secret.scan", "web.map"}, toolStep{ID: "jsluice", Args: jsluiceArgs}, toolStep{ID: "linkfinder", Args: linkfinderArgs}),
-		external("pattern.detect", "Pattern Detection", "offensive-recon", []string{"gf"}, []string{"web.map", "js.extract"}, toolStep{ID: "gf", Args: gfArgs}),
+		external("pattern.detect", "Pattern Detection", "offensive-recon", []string{"gf", "anew"}, []string{"web.map", "js.extract"}, toolStep{ID: "gf", Required: true, Args: gfArgs}, toolStep{ID: "anew", Required: true, Args: anewArgs, StdinFromPrevious: true}),
 		external("password.bruteforce", "Password Brute Force", "offensive-exploitation", []string{"hydra"}, []string{"credential.test", "lateral.move"}, toolStep{ID: "hydra", Args: hydraArgs}),
 		external("hash.crack", "Hash Cracking", "offensive-exploitation", []string{"hashcat", "john"}, []string{"credential.test", "report.generate"}, toolStep{ID: "hashcat", Args: hashcatArgs}, toolStep{ID: "john", Args: johnArgs}),
 		external("email.harvest", "Email Harvesting", "offensive-osint", []string{"theharvester"}, []string{"personnel.osint", "phishing.campaign"}, toolStep{ID: "theharvester", Args: theharvesterArgs}),
