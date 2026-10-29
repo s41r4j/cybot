@@ -203,6 +203,7 @@
   version: 0.72.0
   kind: native
   binary: trivy
+  supported_os: [linux]
   docker_image: aquasec/trivy:0.70.0
   source_url: https://github.com/aquasecurity/trivy
   license: Apache-2.0

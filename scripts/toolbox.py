@@ -124,7 +124,15 @@ def preflight(reserve=2 * GB):
 def download(asset, target):
     digest = hashlib.sha256()
     size = 0
-    with urllib.request.urlopen(asset['url'], timeout=60) as source, target.open('wb') as dest:
+    request = asset['url']
+    if repository := asset.get('oci_repository'):
+        if not re.fullmatch(r'[a-z0-9_-]+/[a-z0-9_-]+', repository) or not request.startswith('https://ghcr.io/v2/'+repository+'/blobs/sha256:'):
+            raise RuntimeError('Unsupported OCI database source')
+        token_url = 'https://ghcr.io/token?service=ghcr.io&scope=repository:'+repository+':pull'
+        with urllib.request.urlopen(token_url, timeout=30) as response:
+            token = json.load(response)['token']
+        request = urllib.request.Request(request, headers={'Authorization': 'Bearer '+token})
+    with urllib.request.urlopen(request, timeout=60) as source, target.open('wb') as dest:
         while block := source.read(1024 * 1024):
             size += len(block)
             if size > asset['size']:
@@ -174,6 +182,10 @@ def prepare(dest):
     if PROFILE == 'analysis':
         from analysis_profile import prepare as prepare_analysis
         prepare_analysis(dest)
+        return
+    if PROFILE == 'supplychain':
+        from supplychain_profile import prepare as prepare_supplychain
+        prepare_supplychain(dest)
         return
     lock = json.loads((ROOT / 'docker/toolbox/core.lock.json').read_text())
     for name, spec in lock['tools'].items():
@@ -382,6 +394,9 @@ def probe(image):
     if PROFILE == 'analysis':
         from analysis_profile import probe as probe_analysis
         return probe_analysis(image)
+    if PROFILE == 'supplychain':
+        from supplychain_profile import probe as probe_supplychain
+        return probe_supplychain(image)
     STATE.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='probe-', dir=STATE) as temp:
         output = Path(temp) / 'result.txt'
@@ -459,7 +474,7 @@ def operation_lock():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--profile', choices=['core', 'analysis'], default='core')
+    parser.add_argument('--profile', choices=['core', 'analysis', 'supplychain'], default='core')
     parser.add_argument('action', choices=['status', 'build', 'pull', 'run', 'verify', 'image'])
     parser.add_argument('args', nargs=argparse.REMAINDER)
     options = parser.parse_args()
@@ -483,6 +498,9 @@ def main():
 
 
 if __name__ == '__main__':
+    # Profile modules and the validation harness import `toolbox`. Reuse this
+    # command's configured module instead of loading a second default-core copy.
+    sys.modules['toolbox'] = sys.modules[__name__]
     try:
         main()
     except (RuntimeError, subprocess.SubprocessError, OSError, KeyboardInterrupt) as error:

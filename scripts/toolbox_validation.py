@@ -23,7 +23,8 @@ def validate_image(image, source_cli=False):
             toolbox.monitored(['go','build','-p','1','-trimpath','-ldflags=-s -w','-o',str(work/'cybot'),'./cmd/cybot'],env=env,timeout_seconds=300)
             mounts.append((work/'cybot','/opt/cybot/bin/cybot'))
         analysis = toolbox.PROFILE == 'analysis'
-        prefix = 'analysis' if analysis else 'core'
+        supplychain = toolbox.PROFILE == 'supplychain'
+        prefix = toolbox.PROFILE
         output = toolbox.STATE / (prefix+'-tests.txt')
         output.unlink(missing_ok=True)
         reports = toolbox.STATE / 'validation'
@@ -33,11 +34,12 @@ def validate_image(image, source_cli=False):
             shutil.rmtree(reports)
         reports.mkdir()
         container_reports = '/workspace/' + str(reports.relative_to(toolbox.ROOT))
-        test_pattern = '^TestLiveAnalysis' if analysis else '^TestLive(Core|Assessment|CompactCertification)'
+        test_pattern = '^TestLiveAnalysis' if analysis else ('^TestLiveSupplyChain' if supplychain else '^TestLive(Core|Assessment|CompactCertification)')
         succeeded = False
         try:
             toolbox.run(['exec','env','CYBOT_LIVE_CORE=1','CYBOT_LIVE_ASSESSMENT=1',
                          'CYBOT_LIVE_ANALYSIS='+('1' if analysis else '0'),
+                         'CYBOT_LIVE_SUPPLYCHAIN='+('1' if supplychain else '0'),
                          'CYBOT_VALIDATION_REPORTS='+container_reports,
                          'CYBOT_VALIDATION_SOURCE='+source_digest(),
                          'SYFT_CHECK_FOR_APP_UPDATE=false','/validation/core.test','-test.v','-test.run='+test_pattern,'-test.timeout=480s'],

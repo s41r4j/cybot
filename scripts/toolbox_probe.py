@@ -16,18 +16,21 @@ BINARIES = {
     'naabu': ('/opt/cybot/bin/naabu', '-version'),
 }
 
-def script():
+def script(binaries=None, packages=True):
+    binaries = BINARIES if binaries is None else binaries
     lines = ['set -eu']
-    for name, (path, flag) in BINARIES.items():
+    for name, (path, flag) in binaries.items():
         lines += [f"printf '\\nCYBOT_HASH {name} '", f'sha256sum {path}',
                   f"printf 'CYBOT_VERSION {name}\\n'", f'{path} {flag} 2>&1', "printf '\\nCYBOT_END\\n'"]
-    lines += ["printf 'CYBOT_PACKAGES\\n'", "dpkg-query -W -f='${Package}=${Version}\\n' nmap nmap-common ca-certificates jq libpcap0.8", "printf 'CYBOT_END\\n'"]
+    if packages:
+        lines += ["printf 'CYBOT_PACKAGES\\n'", "dpkg-query -W -f='${Package}=${Version}\\n' nmap nmap-common ca-certificates jq libpcap0.8", "printf 'CYBOT_END\\n'"]
     return '\n'.join(lines)
 
-def parse(text):
+def parse(text, binaries=None, packages=True):
+    binaries = BINARIES if binaries is None else binaries
     text = re.sub(r'\x1b\[[0-9;]*m', '', text)
     report = {'binaries': {}, 'packages': {}}
-    for name, (path, _) in BINARIES.items():
+    for name, (path, _) in binaries.items():
         digest = re.search(r'CYBOT_HASH ' + name + r' ([a-f0-9]{64})\s', text)
         output = re.search(r'CYBOT_VERSION ' + name + r'\n(.*?)\nCYBOT_END', text, re.S)
         if not digest or not output:
@@ -38,10 +41,11 @@ def parse(text):
         if not version:
             raise RuntimeError('Unrecognized version output for ' + name + ': ' + output[1])
         report['binaries'][name] = {'path': path, 'sha256': digest[1], 'reported_version': version[1]}
-    packages = re.search(r'CYBOT_PACKAGES\n(.*?)\nCYBOT_END', text, re.S)
-    if not packages:
-        raise RuntimeError('Missing package inventory')
-    report['packages'] = dict(line.split('=', 1) for line in packages[1].splitlines())
+    if packages:
+        inventory = re.search(r'CYBOT_PACKAGES\n(.*?)\nCYBOT_END', text, re.S)
+        if not inventory:
+            raise RuntimeError('Missing package inventory')
+        report['packages'] = dict(line.split('=', 1) for line in inventory[1].splitlines())
     return report
 
 def validate_source(report, source):

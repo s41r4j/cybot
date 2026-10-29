@@ -13,6 +13,14 @@ import (
 )
 
 func TestMain(m *testing.M) {
+	if os.Getenv("CYBOT_TEST_PROCESS") == "finding" {
+		_, _ = os.Stdout.WriteString(`{"site":[]}`)
+		os.Exit(2)
+	}
+	if os.Getenv("CYBOT_TEST_PROCESS") == "deadline" {
+		time.Sleep(10 * time.Second)
+		os.Exit(1)
+	}
 	if os.Getenv("CYBOT_TEST_PROCESS") == "docker" {
 		if err := os.WriteFile(os.Getenv("CYBOT_TEST_CAPTURE"), []byte(strings.Join(os.Args[1:], "\n")+"\n"), 0600); err != nil {
 			os.Exit(1)
@@ -80,8 +88,23 @@ func TestDockerCommandUsesImageSpecificEntrypoint(t *testing.T) {
 	}
 }
 func TestExpectedFindingExitCodePreservesOutput(t *testing.T) {
-	out, err := (LocalRunner{}).Run(context.Background(), Spec{Tool: schema.Tool{ID: "fixture", Kind: "native", Binary: "sh"}, Args: []string{"-c", `printf '{"site":[]}'; exit 2`}, AcceptExitCodes: []int{1, 2}, Timeout: time.Second})
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	out, err := (LocalRunner{}).Run(context.Background(), Spec{Tool: schema.Tool{ID: "fixture", Kind: "native", Binary: executable}, EnvOverrides: []string{"CYBOT_TEST_PROCESS=finding", "GORACE=atexit_sleep_ms=0"}, AcceptExitCodes: []int{1, 2}, Timeout: 5 * time.Second})
 	if err != nil || out.ExitCode != 2 || string(out.Stdout) != `{"site":[]}` {
 		t.Fatalf("finding exit treated as process failure: %#v %v", out, err)
+	}
+}
+
+func TestDeadlineCannotBecomeAnAcceptedFindingExit(t *testing.T) {
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = (LocalRunner{}).Run(context.Background(), Spec{Tool: schema.Tool{ID: "fixture", Kind: "native", Binary: executable}, EnvOverrides: []string{"CYBOT_TEST_PROCESS=deadline", "GORACE=atexit_sleep_ms=0"}, AcceptExitCodes: []int{-1, 1, 2, 137}, Timeout: 100 * time.Millisecond})
+	if err == nil || !strings.Contains(err.Error(), "timed out") {
+		t.Fatal("interrupted scan was accepted as completed", err)
 	}
 }

@@ -81,7 +81,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `system-dns-resolver` | built-in | darwin, linux, windows | asset.discover |
 | `testssl` | adapter | undeclared | tls.audit |
 | `theharvester` | adapter | undeclared | email.harvest, personnel.osint |
-| `trivy` | adapter | undeclared | cloud.review, container.scan, dependency.scan |
+| `trivy` | adapter | linux | cloud.review, container.scan, dependency.scan |
 | `trufflehog` | adapter | linux | secret.scan |
 | `wafw00f` | adapter | undeclared | waf.detect |
 | `waybackurls` | adapter | undeclared | **no executable mapping** |

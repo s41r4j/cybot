@@ -217,22 +217,30 @@ func (r LocalRunner) Run(ctx context.Context, s Spec) (Output, error) {
 			removeOwnedContainer(cidDir)
 		}
 		out = Output{Stdout: stdout.data, Stderr: stderr.data, Duration: time.Since(start), Attempts: attempt}
+		var exit *exec.ExitError
+		if err != nil {
+			out.ExitCode = -1
+		}
+		if errors.As(err, &exit) {
+			out.ExitCode = exit.ExitCode()
+		}
 		if stdout.exceeded || stderr.exceeded {
 			return out, fmt.Errorf("tool %s exceeded captured output limit (stdout 8 MiB, stderr 1 MiB); incomplete output must not be parsed as success", s.Tool.ID)
+		}
+		// A timeout may kill a Windows process with exit 1, which some scanners
+		// also use for findings. Cancellation must take precedence over that
+		// allowed exit code or an interrupted scan can appear successful.
+		if deadlineExceeded {
+			return out, fmt.Errorf("tool %s timed out after %s", s.Tool.ID, timeout)
 		}
 		if err == nil {
 			return out, nil
 		}
 		last = err
-		var exit *exec.ExitError
-		if errors.As(err, &exit) {
-			out.ExitCode = exit.ExitCode()
+		if exit != nil {
 			if containsInt(s.AcceptExitCodes, out.ExitCode) {
 				return out, nil
 			}
-		}
-		if deadlineExceeded {
-			last = fmt.Errorf("tool %s timed out after %s", s.Tool.ID, timeout)
 		}
 		if attempt <= s.Retries {
 			select {

@@ -496,17 +496,24 @@ func semgrepArgs(target string, _ schema.RunRequest) []string {
 	return []string{"scan", "--json", "--metrics=off", "--disable-version-check", "--jobs", "1", "--max-memory", "512", "--timeout", "30", "--config", "/opt/cybot/rules/semgrep-security.yaml", target}
 }
 func trivyFilesystemArgs(target string, _ schema.RunRequest) []string {
-	return []string{"filesystem", "--cache-dir", "/home/cybot/.cache/trivy", "--format", "json", "--scanners", "vuln,misconfig,secret", "--skip-db-update", "--skip-java-db-update", "--skip-check-update", "--skip-version-check", "--offline-scan", "--disable-telemetry", target}
+	return []string{"filesystem", "--cache-dir", trivyCacheDir(), "--cache-backend", "memory", "--format", "json", "--scanners", "vuln,misconfig,secret", "--skip-db-update", "--skip-java-db-update", "--skip-check-update", "--skip-version-check", "--offline-scan", "--disable-telemetry", target}
 }
 func trivyImageArgs(target string, req schema.RunRequest) []string {
-	args := []string{"image", "--cache-dir", "/home/cybot/.cache/trivy", "--format", "json", "--scanners", "vuln,misconfig,secret", "--skip-db-update", "--skip-java-db-update", "--skip-check-update", "--skip-version-check", "--offline-scan", "--disable-telemetry"}
+	args := []string{"image", "--cache-dir", trivyCacheDir(), "--cache-backend", "memory", "--format", "json", "--scanners", "vuln,misconfig,secret", "--skip-db-update", "--skip-java-db-update", "--skip-check-update", "--skip-version-check", "--offline-scan", "--disable-telemetry"}
 	if info, err := os.Stat(req.Target); err == nil && !info.IsDir() {
 		return append(args, "--input", target)
 	}
 	return append(args, target)
 }
 func trivyConfigArgs(target string, _ schema.RunRequest) []string {
-	return []string{"config", "--cache-dir", "/home/cybot/.cache/trivy", "--format", "json", "--skip-check-update", "--skip-version-check", "--disable-telemetry", target}
+	return []string{"config", "--cache-dir", trivyCacheDir(), "--format", "json", "--skip-check-update", "--skip-version-check", "--disable-telemetry", target}
+}
+
+func trivyCacheDir() string {
+	if path := os.Getenv("CYBOT_TRIVY_CACHE_DIR"); path != "" {
+		return path
+	}
+	return "/home/cybot/.cache/trivy"
 }
 func syftArgs(target string, _ schema.RunRequest) []string {
 	return []string{"scan", target, "-o", "cyclonedx-json"}

@@ -297,11 +297,28 @@ Pull a published, digest-pinned image with `python3 scripts/toolbox.py pull REGI
 The launcher caps its container at 2 GiB RAM, one CPU and no extra swap. It
 serializes supported builds/runs, checks storage before starting, and monitors a
 20 GB accounting budget without changing other Docker projects. The compact
-image was validated on ARM64; AMD64 assets are pinned but not live-tested here.
+image has passed isolated real-tool fixtures on native Linux AMD64 and ARM64
+GitHub runners; the full 84-tool release gate remains incomplete.
 See [Docker budgets and limitations](docs/docker-budget.md) and
 [tested core tools and version pins](docs/core-testing.md). Verify the installed
 core with `python3 scripts/toolbox.py verify`; repeat the offline integration
 tests with `python3 scripts/test-core.py`.
+
+Additional profiles are under active validation:
+
+```sh
+python3 scripts/toolbox.py --profile analysis build
+python3 scripts/toolbox.py --profile analysis run cybot run code.audit --target /data/source --approve
+python3 scripts/toolbox.py --profile supplychain build
+python3 scripts/toolbox.py --profile supplychain run cybot run cloud.review --target /data/terraform --approve
+```
+
+Analysis includes Semgrep, local rules, Gosec, Go, Gitleaks and TruffleHog.
+Supply-chain includes Trivy, Syft, embedded configuration checks and a locked
+vulnerability database. Runtime dependency/database downloads are disabled;
+Go modules must be available locally. `cloud.review` checks local IaC files and
+does not authenticate to a cloud account. Each profile has its own validated
+runtime pin under `.cybot/toolbox/`; failed builds never replace a working pin.
 
 The historical monolithic recipe remains in `docker/toolbox/Dockerfile.full` and
 is outside these budgets. No host security tools are installed by this workflow.

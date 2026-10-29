@@ -7,7 +7,13 @@ in the base image. Gosec is built from the verified Go module version v2.28.0;
 the image includes license/notice files for the scanner and its downloaded Go
 modules under `/opt/cybot/share/licenses/gosec`. The Go SDK includes its upstream
 license at `/opt/go/LICENSE`. CYBOT CLI dependency notices are included under
-`/opt/cybot/share/licenses/cybot/dependencies` in both toolbox profiles.
+`/opt/cybot/share/licenses/cybot/dependencies` in every toolbox profile.
+
+The supply-chain profile preserves Trivy and Syft notices from their official
+release archives under `/opt/cybot/share/licenses`. Its locked vulnerability
+database comes from `ghcr.io/aquasecurity/trivy-db`; the exact blob checksum and
+publication time are recorded in `docker/toolbox/supplychain.lock.json`.
+Database source and license information: https://github.com/aquasecurity/trivy-db.
 
 CYBOT's own source is MIT licensed. External executables, data sets, rules,
 databases, fonts and prompt packs retain their respective licenses. Listing a

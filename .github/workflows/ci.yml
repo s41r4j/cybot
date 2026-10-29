@@ -108,7 +108,7 @@ jobs:
             .cybot/toolbox/analysis/probe-error.txt
             .cybot/toolbox/analysis/validation/
   operation-readiness:
-    needs: [compact-runtime, analysis-runtime]
+    needs: [compact-runtime, analysis-runtime, supplychain-runtime]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -131,3 +131,42 @@ jobs:
           path: |
             /tmp/operation-readiness.json
             /tmp/operation-evidence/
+  supplychain-runtime:
+    name: Supply chain fixtures (${{ matrix.runner }})
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    env:
+      CYBOT_VERSION: 0.1.0-dev
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: '1.26.10'
+      - run: python3 scripts/toolbox.py --profile supplychain build
+      - name: Resolve official Grype database metadata for the next runtime
+        if: always()
+        continue-on-error: true
+        run: |
+          python3 - <<'PY'
+          import json, urllib.request
+          from pathlib import Path
+          url = 'https://grype.anchore.io/databases/v6/latest.json'
+          with urllib.request.urlopen(url, timeout=30) as response:
+              metadata = json.load(response)
+          Path('.cybot/toolbox/supplychain/grype-db-metadata.json').write_text(json.dumps(metadata, indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: supplychain-validation-${{ matrix.runner }}
+          path: |
+            .cybot/toolbox/supplychain/supplychain-tests.json
+            .cybot/toolbox/supplychain/supplychain-tests.txt
+            .cybot/toolbox/supplychain/runtime.lock.json
+            .cybot/toolbox/supplychain/probe-error.txt
+            .cybot/toolbox/supplychain/grype-db-metadata.json
+            .cybot/toolbox/supplychain/validation/

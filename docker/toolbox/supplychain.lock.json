@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "tools": {
+    "trivy": {
+      "version": "0.72.0",
+      "reported_version": "0.72.0",
+      "source_url": "https://github.com/aquasecurity/trivy/releases/tag/v0.72.0",
+      "assets": {
+        "amd64": {
+          "url": "https://github.com/aquasecurity/trivy/releases/download/v0.72.0/trivy_0.72.0_Linux-64bit.tar.gz",
+          "size": 50352156,
+          "sha256": "bbb64b9695866ce4a7a8f5c9592002c5961cab378577fa3f8a040df362b9b2ea"
+        },
+        "arm64": {
+          "url": "https://github.com/aquasecurity/trivy/releases/download/v0.72.0/trivy_0.72.0_Linux-ARM64.tar.gz",
+          "size": 45264808,
+          "sha256": "2ca2c023109c2db6b2b77366b6717291452d4531167377d95c79547f0c8e3467"
+        }
+      }
+    },
+    "syft": {
+      "version": "1.50.0",
+      "reported_version": "1.50.0",
+      "source_url": "https://github.com/anchore/syft/releases/tag/v1.50.0",
+      "assets": {
+        "arm64": {
+          "url": "https://github.com/anchore/syft/releases/download/v1.50.0/syft_1.50.0_linux_arm64.tar.gz",
+          "size": 26228491,
+          "sha256": "887c57cbcc2d0e8c5c110a4571a3fc7150058b24d74f993ee4663516e5c8ce86"
+        },
+        "amd64": {
+          "url": "https://github.com/anchore/syft/releases/download/v1.50.0/syft_1.50.0_linux_amd64.tar.gz",
+          "size": 28722052,
+          "sha256": "bf7b29ff57f06da30918266a0e1c2885a8f99784798d1bdb1628886aa015d788"
+        }
+      }
+    }
+  },
+  "packages": {},
+  "data": {
+    "trivy-db": {
+      "url": "https://ghcr.io/v2/aquasecurity/trivy-db/blobs/sha256:65a9491288410e43d64adea0b81659e36bb7435dda543774c4255356f2f3cd60",
+      "size": 136428356,
+      "sha256": "65a9491288410e43d64adea0b81659e36bb7435dda543774c4255356f2f3cd60",
+      "oci_repository": "aquasecurity/trivy-db",
+      "created": "2026-10-28T13:09:55Z"
+    }
+  }
+}
