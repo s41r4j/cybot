@@ -64,6 +64,11 @@ func (c externalCapability) Definition() schema.CapabilityDefinition {
 		d.Documentation.Description = "Extract HTTP(S) URL candidates from a bounded local text file using the pinned cybot-urls GF pattern, then deduplicate with Anew."
 		d.Documentation.Limitations = append(d.Documentation.Limitations, "Only the bundled URL pattern is selected; candidates do not establish endpoint reachability or a vulnerability.", "Target must be a regular local text file no larger than 1 MiB.")
 	}
+	if c.ID() == "js.extract" {
+		d.Stability = "experimental"
+		d.Documentation.Description = "Extract HTTP(S) endpoint candidates and unresolved relative paths from one bounded local JavaScript file using JSLuice and LinkFinder."
+		d.Documentation.Limitations = append(d.Documentation.Limitations, "Target must be a regular local file no larger than 1 MiB.", "Relative paths remain observations because a local file does not establish a web origin; extracted candidates do not prove reachability or a vulnerability.")
+	}
 	if c.ID() == "container.scan" {
 		d.Documentation.Limitations = append(d.Documentation.Limitations, "Local sources must be Docker-save archive files or OCI image-layout directories; unpack OCI tarballs into a layout before scanning.", "Registry references require reachable registries and any necessary credentials; offline profiles support local archives/layouts.")
 	}
@@ -138,9 +143,9 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 			}
 			continue
 		}
-		if step.ID == "gf" && len(bytes.TrimSpace(out.Stderr)) != 0 {
-			combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "TOOL_REPORTED_ERRORS", Message: "GF reported a pattern/input/grep error; its exit code does not distinguish failure from a successful empty match."})
-			return combined, fmt.Errorf("GF pattern matching failed; no clean result is established")
+		if (step.ID == "gf" || step.ID == "jsluice") && len(bytes.TrimSpace(out.Stderr)) != 0 {
+			combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "TOOL_REPORTED_ERRORS", Message: step.ID + " reported an input/parser error despite exit zero; no clean result is established."})
+			return combined, fmt.Errorf("%s reported an operation failure", step.ID)
 		}
 		normalized, parseErr := parseTool(step.ID, out.Stdout, req)
 		if parseErr != nil {
@@ -170,6 +175,22 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 	}
 	if completed == 0 {
 		return combined, fmt.Errorf("no deterministic tool step completed")
+	}
+	if c.ID() == "js.extract" {
+		known := map[string]bool{}
+		for _, endpoint := range combined.Endpoints {
+			if endpoint.Method != "" {
+				known[endpoint.URL] = true
+			}
+		}
+		endpoints := []schema.Endpoint{}
+		for _, endpoint := range combined.Endpoints {
+			if endpoint.Method != "" || !known[endpoint.URL] {
+				endpoints = append(endpoints, endpoint)
+			}
+		}
+		combined.Endpoints = endpoints
+		combined.Observations = unique(combined.Observations, func(value string) string { return value })
 	}
 	combined.Summary = summaryFor(c.ID(), combined, completed)
 	combined.Confidence = resultConfidence(combined)
@@ -267,15 +288,15 @@ func validateCapabilityTarget(id, target string) error {
 			return nil
 		}
 		return validateHostname(target)
-	case "code.audit", "secret.scan", "dependency.scan", "cloud.review", "js.analyse", "js.extract":
+	case "code.audit", "secret.scan", "dependency.scan", "cloud.review", "js.analyse":
 		if _, err := os.Stat(target); err != nil {
 			return fmt.Errorf("target must be an existing local path: %w", err)
 		}
 		return nil
-	case "pattern.detect":
+	case "pattern.detect", "js.extract":
 		info, err := os.Stat(target)
 		if err != nil || !info.Mode().IsRegular() || info.Size() > 1<<20 {
-			return fmt.Errorf("pattern target must be an existing regular text file no larger than 1 MiB")
+			return fmt.Errorf("target must be an existing regular text file no larger than 1 MiB")
 		}
 		return nil
 	case "container.scan":
@@ -492,6 +513,9 @@ func summaryFor(id string, r schema.Result, tools int) string {
 	if id == "pattern.detect" {
 		return fmt.Sprintf("Extracted %d unique URL candidate(s) using a pinned GF pattern and Anew; no HTTP requests or vulnerability tests were performed.", len(r.Endpoints))
 	}
+	if id == "js.extract" {
+		return fmt.Sprintf("Extracted %d web endpoint candidate(s) and %d path observation(s); reachability and vulnerabilities were not tested.", len(r.Endpoints), len(r.Observations))
+	}
 	return fmt.Sprintf("%s completed with %d tool(s): %d asset(s), %d service(s), %d endpoint(s), and %d finding(s).", id, tools, len(r.Assets), len(r.Services), len(r.Endpoints), len(r.Findings))
 }
 func resultConfidence(r schema.Result) float64 {
@@ -572,7 +596,7 @@ func linkfinderArgs(target string, _ schema.RunRequest) []string {
 	return []string{"-i", target, "-o", "cli"}
 }
 func jsluiceArgs(target string, _ schema.RunRequest) []string {
-	return []string{target}
+	return []string{"urls", "--unique", "--concurrency", "1", target}
 }
 func massdnsArgs(target string, _ schema.RunRequest) []string {
 	return []string{"-o", "S", "-q", "-r", "/usr/share/resolvers.txt", target}

@@ -400,30 +400,32 @@
   title: LinkFinder
   description: JavaScript endpoint discovery.
   purpose: Extract URLs and endpoints from JavaScript files for API reconnaissance.
-  version: 1.0.0
+  version: git-1debac5dace4
   kind: native
   binary: linkfinder
+  supported_os: [linux]
   source_url: https://github.com/GerbenJavado/LinkFinder
   license: MIT
-  capabilities: [js.analyse, web.map]
+  capabilities: [js.extract]
   default_args: [-o, cli]
   output_format: text
-  parser: linkfinder.text.v1
+  parser: linkfinder.urls.v1
   risk: local-read
   requires_network: false
 - id: jsluice
   title: JSLuice
-  description: JavaScript URL and secret extraction.
-  purpose: Extract URLs, paths, secrets, and endpoints from JavaScript source code.
-  version: 1.0.0
+  description: JavaScript URL and path candidate extraction.
+  purpose: Extract URL and path candidates from a bounded local JavaScript file; the adapter selects URL mode.
+  version: 0.0.0-20240110145140-0ddfab153e06
   kind: native
   binary: jsluice
+  supported_os: [linux]
   source_url: https://github.com/BishopFox/jsluice
   license: MIT
-  capabilities: [js.analyse, secret.scan, web.map]
+  capabilities: [js.extract]
   default_args: []
-  output_format: json
-  parser: jsluice.json.v1
+  output_format: jsonl
+  parser: jsluice.urls.v1
   risk: local-read
   requires_network: false
 - id: massdns

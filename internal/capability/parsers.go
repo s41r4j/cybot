@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/s41r4j/cybot/internal/evidence"
+	"html"
 	"net"
 	"net/url"
 	"regexp"
@@ -47,7 +48,7 @@ var parsers = map[string]toolParser{
 	"sqlmap":        parseSQLMap,
 	"xsstrike":      parseTextLines,
 	"cloud_enum":    parseTextLines,
-	"linkfinder":    parseTextLines,
+	"linkfinder":    parseLinkFinder,
 	"jsluice":       parseJSLuice,
 	"massdns":       parseTextLines,
 	"corscanner":    parseCORS,
@@ -832,34 +833,78 @@ func parseSQLMap(data []byte, req schema.RunRequest) (schema.Result, error) {
 	return r, nil
 }
 
-func parseJSLuice(data []byte, req schema.RunRequest) (schema.Result, error) {
-	var docs []map[string]any
-	if err := json.Unmarshal(data, &docs); err != nil {
-		var single map[string]any
-		if err2 := json.Unmarshal(data, &single); err2 != nil {
-			return parseTextLines(data, req)
-		}
-		docs = []map[string]any{single}
+func parseJSLuice(data []byte, _ schema.RunRequest) (schema.Result, error) {
+	docs, err := decodeDocuments(data)
+	if err != nil {
+		return emptyResult(), err
 	}
 	r := emptyResult()
 	for _, doc := range docs {
-		if urlStr := text(doc["url"]); urlStr != "" {
-			r.Endpoints = append(r.Endpoints, schema.Endpoint{URL: urlStr, Technology: []string{"javascript"}})
+		value, ok := doc["url"].(string)
+		if !ok || value == "" {
+			return r, fmt.Errorf("JSLuice URL mode emitted a record without a URL")
 		}
-		if secretStr := text(doc["secret"]); secretStr != "" {
-			r.Findings = append(r.Findings, schema.Finding{
-				ID:    "js-secret-" + secretFingerprint(secretStr),
-				Title: "JavaScript Secret Detected", Description: "JSLuice detected a potential secret in JS.",
-				Severity: schema.SeverityMedium, Confidence: 0.6,
-			})
+		method := strings.ToUpper(text(doc["method"]))
+		switch method {
+		case "GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "CONNECT", "TRACE", "":
+		default:
+			method = ""
+		}
+		if err := appendJavaScriptCandidate(&r, value, method); err != nil {
+			return r, err
 		}
 	}
-	if len(r.Endpoints) == 0 && len(r.Findings) == 0 {
-		return parseTextLines(data, req)
-	}
-	r.Summary = fmt.Sprintf("JSLuice extracted %d endpoint(s) and %d finding(s).", len(r.Endpoints), len(r.Findings))
-	r.Confidence = 0.65
+	deduplicateResult(&r)
 	return r, nil
+}
+
+func parseLinkFinder(data []byte, _ schema.RunRequest) (schema.Result, error) {
+	r := emptyResult()
+	scanner := bufio.NewScanner(bytes.NewReader(data))
+	scanner.Buffer(make([]byte, 8192), 8193)
+	for scanner.Scan() {
+		value := html.UnescapeString(strings.TrimSpace(scanner.Text()))
+		if value == "" {
+			continue
+		}
+		if strings.HasPrefix(strings.ToLower(value), "usage:") || strings.HasPrefix(strings.ToLower(value), "error:") {
+			return r, fmt.Errorf("LinkFinder reported an input/operation error")
+		}
+		// LinkFinder's input failures print Usage/Error to stdout and exit
+		// zero. Only its documented URL/path records can establish success.
+		if !strings.ContainsAny(value, "/.") {
+			return r, fmt.Errorf("LinkFinder emitted an unexpected non-URL record")
+		}
+		if err := appendJavaScriptCandidate(&r, value, ""); err != nil {
+			return r, err
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		return r, fmt.Errorf("read bounded LinkFinder records: %w", err)
+	}
+	deduplicateResult(&r)
+	return r, nil
+}
+
+func appendJavaScriptCandidate(r *schema.Result, value, method string) error {
+	if len(value) > 8192 || strings.ContainsAny(value, "\x00\r\n\t ") {
+		return fmt.Errorf("JavaScript extractor emitted an invalid or oversized URL/path record")
+	}
+	parsed, err := url.Parse(value)
+	if err != nil {
+		return fmt.Errorf("JavaScript extractor emitted an invalid URL/path")
+	}
+	if parsed.Scheme == "http" || parsed.Scheme == "https" {
+		if parsed.Hostname() == "" {
+			return fmt.Errorf("JavaScript extractor emitted an HTTP URL without a host")
+		}
+		r.Endpoints = append(r.Endpoints, schema.Endpoint{URL: evidence.SanitizeURL(value), Method: method, Technology: []string{"javascript"}})
+	} else if parsed.Scheme == "" {
+		r.Observations = append(r.Observations, "Relative JavaScript URL candidate (web origin unresolved): "+evidence.DefaultHygieneRules.SanitizeText(evidence.SanitizeURL(value)))
+	} else {
+		r.Observations = append(r.Observations, "A non-HTTP JavaScript URL was excluded from web endpoint candidates.")
+	}
+	return nil
 }
 
 func parseCORS(data []byte, req schema.RunRequest) (schema.Result, error) {
@@ -972,9 +1017,4 @@ func parseJSONPassthrough(data []byte, req schema.RunRequest) (schema.Result, er
 	r.Warnings = []string{"This adapter has no tool-specific finding normalization; review the retained observation."}
 	r.Confidence = .5
 	return r, nil
-}
-
-func secretFingerprint(secret string) string {
-	sum := sha256.Sum256([]byte(secret))
-	return hex.EncodeToString(sum[:])
 }

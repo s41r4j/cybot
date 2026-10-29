@@ -40,11 +40,11 @@ Generated from the executable command surface. All entries remain in the full-re
 | `hydra` | adapter | undeclared | password.bruteforce |
 | `impacket` | adapter | undeclared | active-directory.attack, credential.dump, lateral.move, smb.test |
 | `john` | adapter | undeclared | hash.crack |
-| `jsluice` | adapter | undeclared | js.extract |
+| `jsluice` | adapter | linux | js.extract |
 | `katana` | adapter | linux | web.map |
 | `kekeo` | not-implemented | windows | post.kerberos |
 | `knockpy` | adapter | undeclared | **no executable mapping** |
-| `linkfinder` | adapter | undeclared | js.extract |
+| `linkfinder` | adapter | linux | js.extract |
 | `linpeas` | adapter | undeclared | post.recon |
 | `massdns` | adapter | undeclared | **no executable mapping** |
 | `merlin` | adapter | undeclared | c2.merlin, c2.operate |

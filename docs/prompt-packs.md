@@ -100,7 +100,8 @@ packs:
   update_timeout: 45s
 ```
 
-Automatic maintenance is enabled by default. Normal CYBOT commands and prompt
+Automatic maintenance is enabled by default. `cybot capability coverage` stays
+offline so its inventory cannot trigger unrelated prompt updates. Other normal CYBOT commands and prompt
 consumers (`pack list`, `show`/`plan`, `render` and `run start`) perform due checks
 before reading the active snapshot. Work is bounded by `update_timeout` for the
 entire startup pass. Network failures leave commands usable with installed data;

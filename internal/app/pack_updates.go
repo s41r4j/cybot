@@ -25,6 +25,11 @@ func autoUpdatePacks(cmd *cobra.Command, configPath string) error {
 }
 
 func autoUpdatePacksWith(cmd *cobra.Command, configPath string, g packs.GitHub) error {
+	// Coverage describes the shipped executable surface. Updating unrelated
+	// prompt content would make this read-only inventory require networking.
+	if cmd.Name() == "coverage" && cmd.Parent() != nil && cmd.Parent().Name() == "capability" {
+		return nil
+	}
 	if cmd.Name() == "help" || cmd.Name() == "completion" {
 		return nil
 	}

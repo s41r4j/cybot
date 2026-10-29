@@ -122,3 +122,33 @@ func TestStartupFailureIsNonfatalAndOfflineSwitchWorks(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestCoverageNeverFetchesDuePromptPackUpdates(t *testing.T) {
+	t.Setenv("CYBOT_PACK_AUTO_UPDATE", "")
+	dir := t.TempDir()
+	configPath := filepath.Join(dir, "config.yaml")
+	data, _ := yaml.Marshal(map[string]string{"data_dir": dir})
+	if err := os.WriteFile(configPath, data, 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := withPacks(configPath, func(store *packs.Store, _ config.Config) error {
+		revision, err := packs.Bundled()
+		if err != nil {
+			return err
+		}
+		_, err = store.Stage(context.Background(), revision, "main")
+		return err
+	}); err != nil {
+		t.Fatal(err)
+	}
+	parent := &cobra.Command{Use: "capability"}
+	command := &cobra.Command{Use: "coverage"}
+	parent.AddCommand(command)
+	command.SetContext(context.Background())
+	if err := autoUpdatePacksWith(command, configPath, packs.GitHub{Get: func(context.Context, string) ([]byte, error) {
+		t.Fatal("read-only coverage tried to update prompt content")
+		return nil, nil
+	}}); err != nil {
+		t.Fatal(err)
+	}
+}

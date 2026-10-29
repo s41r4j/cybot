@@ -413,6 +413,13 @@ def current_image():
 
 
 def probe(image):
+    report = _probe(image)
+    report['image_id'] = json.loads(docker('image', 'inspect', image))[0]['Id']
+    report['profile'] = PROFILE
+    return report
+
+
+def _probe(image):
     if PROFILE == 'analysis':
         from analysis_profile import probe as probe_analysis
         return probe_analysis(image)

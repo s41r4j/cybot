@@ -79,7 +79,7 @@ func validateReportShape(tool string, data []byte) error {
 		if len(bytes.TrimSpace(data)) == 0 {
 			return fmt.Errorf("gitleaks: missing JSON report")
 		}
-	case "subfinder", "amass", "amass-enum", "dnsx", "naabu", "httpx", "katana", "ffuf", "nuclei", "trufflehog":
+	case "subfinder", "amass", "amass-enum", "dnsx", "naabu", "httpx", "katana", "ffuf", "nuclei", "trufflehog", "jsluice":
 	default:
 		return nil
 	}
@@ -102,6 +102,8 @@ func validateReportShape(tool string, data []byte) error {
 			valid = firstText(row, "RuleID", "rule_id") != ""
 		case "trufflehog":
 			valid = firstText(row, "DetectorName", "detector_name") != ""
+		case "jsluice":
+			valid = firstText(row, "url") != "" && firstText(row, "type") != ""
 		}
 		if !valid {
 			return fmt.Errorf("%s: unrecognized output record", tool)

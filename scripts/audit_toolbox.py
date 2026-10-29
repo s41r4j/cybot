@@ -17,7 +17,7 @@ def audit_image():
     measured = toolbox.probe(image)
     output = toolbox.STATE/'security'
     output.mkdir(parents=True, exist_ok=True)
-    excluded = {'core': {'nmap'}, 'analysis': {'semgrep', 'semgrep-core'}, 'supplychain': set()}[toolbox.PROFILE]
+    excluded = {'core': {'nmap'}, 'analysis': {'semgrep', 'semgrep-core', 'linkfinder', 'linkfinder-engine'}, 'supplychain': set()}[toolbox.PROFILE]
     names = set(measured['binaries']) - excluded
     report = {'schema_version': 1, 'source_sha256': source_digest(),
               'profile': toolbox.PROFILE, 'platform': 'linux/'+toolbox.ARCH,

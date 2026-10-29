@@ -594,8 +594,10 @@
     },
     {
       "id": "jsluice",
-      "version": "1.0.0",
-      "platforms": [],
+      "version": "0.0.0-20240110145140-0ddfab153e06",
+      "platforms": [
+        "linux"
+      ],
       "normalization": "tool-specific",
       "implementation": "adapter",
       "resource_scope": "target",
@@ -604,8 +606,7 @@
       ],
       "validation": "not-certified",
       "blockers": [
-        "pinned binary/version and fresh real-operation evidence are required",
-        "supported operating systems have not been explicitly declared"
+        "pinned binary/version and fresh real-operation evidence are required"
       ]
     },
     {
@@ -662,9 +663,11 @@
     },
     {
       "id": "linkfinder",
-      "version": "1.0.0",
-      "platforms": [],
-      "normalization": "observations-only",
+      "version": "git-1debac5dace4",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
       "implementation": "adapter",
       "resource_scope": "target",
       "capabilities": [
@@ -672,9 +675,7 @@
       ],
       "validation": "not-certified",
       "blockers": [
-        "pinned binary/version and fresh real-operation evidence are required",
-        "supported operating systems have not been explicitly declared",
-        "operation-specific normalization is unverified"
+        "pinned binary/version and fresh real-operation evidence are required"
       ]
     },
     {
@@ -1851,8 +1852,7 @@
       ],
       "validation": "not-certified",
       "blockers": [
-        "fresh platform-specific end-to-end evidence is required",
-        "linkfinder: operation-specific normalization is unverified"
+        "fresh platform-specific end-to-end evidence is required"
       ]
     },
     {

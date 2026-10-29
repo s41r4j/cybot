@@ -138,3 +138,18 @@ An executable without readable compiled-module metadata stays audit-failed.
 The audit continues checking independent executables and retains that failure.
 The compiler check also rejects older/unrecognized Go versions, including
 experimental version strings that could otherwise hide standard-library gaps.
+
+JavaScript extraction now selects JSLuice's actual `urls` mode and parses its
+JSONL contract. LinkFinder's URL/path output has dedicated normalization;
+zero-exit diagnostics fail explicitly. Both engines require one bounded local
+file. Relative paths remain observations, absolute URL credentials are redacted,
+and input files are preserved. The analysis image builds the C-backed parser
+in a separate bounded stage from verified/vendored source and includes pinned
+Python dependencies and notices for LinkFinder. This operation remains
+experimental and requires fresh Linux image controls before certification.
+
+Artifact reports now carry the operation-tested image ID and profile. The full
+gate rejects a security audit from a different image even when selected launcher
+hashes happen to match. Coverage enumeration is offline and cannot trigger an
+unrelated prompt-pack update. FFUF source builds use its upstream release linker
+flags so its embedded version matches the verified 2.2.1 source tag.

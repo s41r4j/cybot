@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "compiler": {
+    "gcc": "15.2.0-r2",
+    "musl-dev": "1.2.5-r24"
+  },
+  "jsluice": {
+    "module": "github.com/BishopFox/jsluice@v0.0.0-20240110145140-0ddfab153e06",
+    "module_path": "github.com/BishopFox/jsluice",
+    "sum": "h1:xa/dJgg1qpWdIyr7tQcTV2TUPgBK/f0TTMLMmD5GqjQ=",
+    "version": "0.0.0-20240110145140-0ddfab153e06",
+    "source_revision": "0ddfab153e060a9eeaded4d8669233f7c071e7e4",
+    "patch_inputs": {
+      "tree.go": "302f109fe8492fcf6c4cf0d965ace3eddd60921985098b1229178740a368959b",
+      "cmd/jsluice/urls.go": "77b154bf7131bea6a894aca070faa4a73fafa326fff99684c8ccaed22023f5be"
+    }
+  },
+  "linkfinder": {
+    "version": "git-1debac5dace4",
+    "source_revision": "1debac5dace4724fd6187c06f133578dae51c86f",
+    "assets": {
+      "linkfinder.py": {
+        "url": "https://raw.githubusercontent.com/GerbenJavado/LinkFinder/1debac5dace4724fd6187c06f133578dae51c86f/linkfinder.py",
+        "size": 14018,
+        "sha256": "5d57612baba7f0a9aaae952187a7e8274cff341c0d673cb289daab3302ac4961"
+      },
+      "LICENSE": {
+        "url": "https://raw.githubusercontent.com/GerbenJavado/LinkFinder/1debac5dace4724fd6187c06f133578dae51c86f/LICENSE",
+        "size": 1081,
+        "sha256": "25925929773c3954a98532c7cb118e7ec63ced1e47be340726a0328250ac069c"
+      }
+    },
+    "wheels": {
+      "jsbeautifier": {
+        "version": "1.15.4",
+        "url": "https://files.pythonhosted.org/packages/2d/14/1c65fccf8413d5f5c6e8425f84675169654395098000d8bddc4e9d3390e1/jsbeautifier-1.15.4-py3-none-any.whl",
+        "sha256": "72f65de312a3f10900d7685557f84cb61a9733c50dcc27271a39f5b0051bf528",
+        "size": 94707
+      },
+      "editorconfig": {
+        "version": "0.17.0",
+        "url": "https://files.pythonhosted.org/packages/af/e5/8dba39ea24ca3de0e954e668107692f4dfc13a85300a531fa9a39e83fde4/EditorConfig-0.17.0-py3-none-any.whl",
+        "sha256": "fe491719c5f65959ec00b167d07740e7ffec9a3f362038c72b289330b9991dfc",
+        "size": 16276
+      },
+      "six": {
+        "version": "1.17.0",
+        "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+        "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+        "size": 11050
+      }
+    }
+  },
+  "native_notices": {
+    "musl-COPYRIGHT": {
+      "url": "https://git.musl-libc.org/cgit/musl/plain/COPYRIGHT?h=v1.2.5",
+      "size": 6204,
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af"
+    },
+    "GCC-COPYING.RUNTIME": {
+      "url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING.RUNTIME",
+      "size": 3324,
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+    },
+    "GCC-COPYING3": {
+      "url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING3",
+      "size": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    }
+  }
+}

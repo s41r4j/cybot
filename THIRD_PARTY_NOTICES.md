@@ -58,3 +58,11 @@ dependency licenses are included under `/opt/cybot/share/` in the image.
 Gitleaks retains the upstream `gore2regex` build mode. Its archive dependency is
 updated together with the fixed RAR decoder; the committed locks record the
 exact resolved versions.
+
+The JavaScript extraction image also bundles LinkFinder at commit
+`1debac5dace4724fd6187c06f133578dae51c86f`, its pinned Python wheels, and
+JSLuice at module revision `0ddfab153e06`. JSLuice's URL mode has a hash-checked
+patch to surface JavaScript syntax failures. Its build retains compiler/package
+metadata and static-runtime notices. The original source licenses, vendored Go
+dependency notices, Python wheel notices, musl copyright, and GCC runtime
+exception accompany the image under `/opt/cybot/share/licenses/`.

@@ -41,11 +41,24 @@ def evaluate(coverage, baseline, evidence, digest, evidence_root):
             binaries = audit.get('binaries', {})
             if not binaries or 'cybot' not in binaries or any(row.get('status') != 'passed' or not re.fullmatch('[a-f0-9]{64}', row.get('binary_sha256', '')) for row in binaries.values()):
                 raise ValueError('compiled executable security evidence is incomplete')
+            bound = False
             for operation in records:
-                if operation.get('platform') != required['platform'] or operation.get('kind') != 'tool' or operation.get('id') not in binaries:
+                if operation.get('platform') != required['platform']:
                     continue
-                if binaries[operation['id']]['binary_sha256'] != operation.get('binary_sha256'):
+                proof_path = evidence_root/operation['report']
+                proof_path.resolve().relative_to(evidence_root.resolve())
+                proof = proof_path.read_bytes()
+                if hashlib.sha256(proof).hexdigest() != operation.get('report_sha256'):
+                    raise ValueError('operation report checksum differs')
+                runtime = json.loads(proof).get('runtime', {})
+                if runtime.get('profile') == required['profile']:
+                    bound = True
+                    if runtime.get('image_id') != audit['image_id']:
+                        raise ValueError('audited image differs from operation-tested image')
+                if operation.get('kind') == 'tool' and operation.get('id') in binaries and binaries[operation['id']]['binary_sha256'] != operation.get('binary_sha256'):
                     raise ValueError('audited executable differs from operation-tested executable')
+            if records and not bound:
+                raise ValueError('no operation-tested image identity is bound to this artifact audit')
         except (ValueError, OSError, KeyError, TypeError, AttributeError) as error:
             blockers.append(label+': '+str(error))
     for family in ('tools', 'capabilities'):

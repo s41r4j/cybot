@@ -126,8 +126,8 @@ func TestNmapXMLContract(t *testing.T) {
 func TestSecretIDsHashEntireSecret(t *testing.T) {
 	ids := map[string]bool{}
 	for _, value := range []string{"FAKE-one", "FAKE-two"} {
-		b, _ := json.Marshal(map[string]string{"secret": value})
-		r, err := parseJSLuice(b, schema.RunRequest{})
+		b, _ := json.Marshal(map[string]string{"DetectorName": "Fixture", "Raw": value})
+		r, err := parseTruffleHog(b, schema.RunRequest{})
 		if err != nil || len(r.Findings) != 1 {
 			t.Fatalf("%v %#v", err, r)
 		}

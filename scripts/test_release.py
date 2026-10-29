@@ -59,6 +59,15 @@ class PublicationTests(unittest.TestCase):
             self.assertFalse(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
             report.update(final_security_ready=True, os_packages={'status': 'passed'}); save()
             self.assertTrue(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
+            proof = {'runtime': {'profile': 'core', 'image_id': 'sha256:'+'d'*64}}
+            def save_proof():
+                data = json.dumps(proof).encode(); (root/'case.json').write_bytes(data)
+                evidence['records'] = [{'kind': 'capability', 'id': 'fixture', 'platform': 'linux/amd64',
+                                        'report': 'case.json', 'report_sha256': hashlib.sha256(data).hexdigest()}]
+            save_proof()
+            self.assertFalse(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
+            proof['runtime']['image_id'] = report['image_id']; save_proof()
+            self.assertTrue(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
             (root/'audit.json').write_text('{}')
             self.assertFalse(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
 

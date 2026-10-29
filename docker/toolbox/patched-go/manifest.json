@@ -25,7 +25,8 @@
     "ffuf": {
       "module": "github.com/ffuf/ffuf/v2@v2.2.1",
       "sum": "h1:Ff/BpOlO9aoRU2hqF6RviuSvaKb1H03n9365CE4k2zM=",
-      "package": "."
+      "package": ".",
+      "ldflags": "-X github.com/ffuf/ffuf/v2/pkg/ffuf.VERSION=2.2.1 -X github.com/ffuf/ffuf/v2/pkg/ffuf.VERSION_APPENDIX="
     },
     "gitleaks": {
       "module": "github.com/zricethezav/gitleaks/v8@v8.30.1",

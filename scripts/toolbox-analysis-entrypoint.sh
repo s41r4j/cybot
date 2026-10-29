@@ -4,7 +4,7 @@ mkdir -p "$HOME/.config/gf"
 cp /opt/cybot/rules/gf/cybot-urls.json "$HOME/.config/gf/cybot-urls.json"
 case "${1:-help}" in
   health)
-    for tool in cybot semgrep gosec go gitleaks trufflehog gf anew; do
+    for tool in cybot semgrep gosec go gitleaks trufflehog gf anew jsluice linkfinder; do
       command -v "$tool" >/dev/null || exit 1
       printf 'ok\t%s\n' "$tool"
     done

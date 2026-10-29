@@ -65,6 +65,8 @@ def prepare(dest):
     # temporary module cache before Python removes the remaining build state.
     toolbox.monitored(['go', 'clean', '-modcache'], env=env, timeout_seconds=180)
     shutil.rmtree(cache)
+    from javascript_profile import prepare as prepare_javascript
+    prepare_javascript(dest)
     shutil.copytree(toolbox.ROOT / 'rules', dest / 'rules')
     shutil.copy(toolbox.ROOT / 'docker/toolbox/analysis.Dockerfile', dest / 'Dockerfile')
     shutil.copy(toolbox.ROOT / 'docker/toolbox/analysis.lock.json', dest / 'analysis.lock.json')
@@ -76,6 +78,7 @@ def prepare(dest):
 def probe(image):
     toolbox.STATE.mkdir(parents=True, exist_ok=True)
     lock = json.loads((toolbox.ROOT / 'docker/toolbox/analysis.lock.json').read_text())
+    javascript = json.loads((toolbox.ROOT/'docker/toolbox/javascript.lock.json').read_text())
     commands = {
         'cybot': ('/opt/cybot/bin/cybot', '--version'),
         'gosec': ('/opt/cybot/bin/gosec', '-version'),
@@ -84,6 +87,9 @@ def probe(image):
         'go': ('/opt/go/bin/go', 'version'),
         'gitleaks': ('/opt/cybot/bin/gitleaks', 'version'),
         'trufflehog': ('/opt/cybot/bin/trufflehog', '--version'),
+        'jsluice': ('/opt/cybot/bin/jsluice', ''),
+        'linkfinder': ('/opt/cybot/bin/linkfinder', '--version'),
+        'linkfinder-engine': ('/opt/cybot/lib/linkfinder/linkfinder.py', ''),
     }
     for name in lock['go_tools']:
         commands[name] = ('/opt/cybot/bin/'+name, '')
@@ -93,9 +99,22 @@ def probe(image):
     for name, (path, flag) in commands.items():
         if name == 'semgrep-core':
             path = '"$core"'
-        version_command = f'/opt/go/bin/go version -m {path}' if name in lock['go_tools'] else f'{path} {flag}'
+        version_command = f'/opt/go/bin/go version -m {path}' if name in lock['go_tools'] or name == 'jsluice' else f'{path} {flag}'
+        if name == 'linkfinder-engine':
+            version_command = '/opt/cybot/bin/linkfinder --version'
         lines += [f"printf '\\nCYBOT_HASH {name} '", f'sha256sum {path}',
                   f"printf 'CYBOT_VERSION {name}\\n'", version_command+' 2>&1', "printf '\\nCYBOT_END\\n'"]
+    lines += ["printf 'CYBOT_JS_DATA\\n'", "python3 -B - <<'PY'",
+              'import hashlib, pathlib, importlib.metadata, json, sys',
+              "root = pathlib.Path('/opt/cybot/lib/linkfinder/site-packages')",
+              'digest = hashlib.sha256()',
+              'for path in sorted(root.rglob("*")):',
+              ' if path.is_symlink(): raise RuntimeError("Unexpected Python dependency symlink")',
+              ' if path.is_file(): digest.update(str(path.relative_to(root)).encode()+b"\\0"+hashlib.sha256(path.read_bytes()).digest())',
+              'result = {"linkfinder-python": digest.hexdigest()}',
+              "for name, path in {'javascript-source-manifest':'/opt/cybot/manifest/javascript.lock.json', 'jsluice-source-build':'/opt/cybot/share/builds/jsluice.json', 'jsluice-compiler':'/opt/cybot/share/builds/jsluice-compiler.txt'}.items(): result[name] = hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()",
+              'sys.path.insert(0, str(root))',
+              "print(json.dumps({'data':result, 'packages':{name:importlib.metadata.version(name) for name in ['jsbeautifier','editorconfig','six']}}))", 'PY', "printf 'CYBOT_END\\n'"]
     with tempfile.TemporaryDirectory(prefix='probe-', dir=toolbox.STATE) as temp:
         output = Path(temp) / 'result.txt'
         try:
@@ -106,17 +125,29 @@ def probe(image):
                 (toolbox.STATE / 'probe-error.txt').write_bytes(output.read_bytes()[-65536:])
             raise
         text = output.read_text()
-    report = {'binaries': {}, 'packages': {}}
+    extra = re.search(r'CYBOT_JS_DATA\n(.*?)\nCYBOT_END', text, re.S)
+    if not extra:
+        raise RuntimeError('Missing measured JavaScript dependency inventory')
+    report = dict(json.loads(extra[1]), binaries={})
+    if report['packages'] != {name: row['version'] for name, row in javascript['linkfinder']['wheels'].items()}:
+        raise RuntimeError('JavaScript Python dependency version mismatch')
     for name, (path, _) in commands.items():
         digest = re.search(r'CYBOT_HASH '+name+r' ([a-f0-9]{64})\s+(\S+)', text)
         output = re.search(r'CYBOT_VERSION '+name+r'\n(.*?)\nCYBOT_END', text, re.S)
         version = re.search(r'(?<!\d)(\d+\.\d+\.\d+)(?!\d)', output[1]) if output else None
         if name in lock['go_tools'] and output:
             version = re.search(r'\bmod\s+'+re.escape(lock['go_tools'][name]['module_path'])+r'\s+v(\S+)', output[1])
+        if name == 'jsluice' and output:
+            version = re.search(r'\bmod\s+'+re.escape(javascript['jsluice']['module_path'])+r'\s+(\(devel\))', output[1])
+        if name.startswith('linkfinder') and output:
+            version = re.search(r'\b(git-[a-f0-9]{12})\b', output[1])
         if not digest or not version:
             raise RuntimeError('Incomplete analysis runtime measurement: '+name+'\n'+text[-4000:])
         expected = lock['semgrep']['version'] if name in ('semgrep', 'semgrep-core') else lock.get(name, lock['tools'].get(name, lock['go_tools'].get(name, {}))).get('version')
+        if name == 'jsluice': expected = '(devel)'
+        if name.startswith('linkfinder'): expected = javascript['linkfinder']['version']
         if expected and version[1] != expected:
             raise RuntimeError('Analysis runtime version mismatch: '+name)
         report['binaries'][name] = {'path': digest[2], 'sha256': digest[1], 'reported_version': version[1]}
+        if name == 'jsluice': report['binaries'][name]['release_version'] = javascript['jsluice']['version']
     return report
