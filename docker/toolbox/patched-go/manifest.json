@@ -45,6 +45,46 @@
       "module": "github.com/securego/gosec/v2@v2.28.0",
       "sum": "h1:ZsSdiDb0AtTpLFVol5z91gbMei9ZiLEPG/pZjZujp7c=",
       "ldflags": "-X main.Version=2.28.0"
+    },
+    "naabu": {
+      "module": "github.com/projectdiscovery/naabu/v2@v2.6.1",
+      "sum": "h1:1feuCo46ICf9s2uhrwVHYgQ3Yc9Mt+Z676MIpC5cB24="
+    },
+    "syft": {
+      "module": "github.com/anchore/syft@v1.50.0",
+      "sum": "h1:kSQ4oshw6dwHxcYhrH1jUZl/M05kiCfyPoGJgvXe61s=",
+      "ldflags": "-X main.version=1.50.0"
+    },
+    "nuclei": {
+      "module": "github.com/projectdiscovery/nuclei/v3@v3.11.0",
+      "sum": "h1:sxZdBNl5x215A3Z9f70Zm0oCtj+tTAN1A8u5vPNKrmc=",
+      "source_patches": {
+        "pkg/input/formats/openapi/examples.go": {
+          "sha256": "350ed646d0f77eda97433129d29ab4a4e0dbc2559ebd462a59cd8db948f8301d",
+          "replacements": [
+            [
+              "if schema.ExclusiveMin {",
+              "if schema.ExclusiveMin.Bool != nil && *schema.ExclusiveMin.Bool {"
+            ],
+            [
+              "if schema.ExclusiveMax {",
+              "if schema.ExclusiveMax.Bool != nil && *schema.ExclusiveMax.Bool {"
+            ],
+            [
+              "case schema.Type.Is(\"number\"), schema.Type.Is(\"integer\"):\n\t\tvalue := 0.0",
+              "case schema.Type.Is(\"number\"), schema.Type.Is(\"integer\"):\n\t\t// Numeric OpenAPI 3.1 exclusive bounds need a separate generator.\n\t\t// Preserve the supported 3.0 boolean behavior and fail explicitly.\n\t\tif schema.ExclusiveMin.Value != nil || schema.ExclusiveMax.Value != nil {\n\t\t\treturn nil, ErrNoExample\n\t\t}\n\t\tvalue := 0.0"
+            ]
+          ]
+        }
+      },
+      "test_files": [
+        "pkg/input/formats/openapi/cybot_compat_test.go"
+      ],
+      "tests": [
+        "./pkg/input/formats/openapi",
+        "-run",
+        "^TestCybotExclusiveBoundsCompatibility$"
+      ]
     }
   }
 }

@@ -153,3 +153,19 @@ gate rejects a security audit from a different image even when selected launcher
 hashes happen to match. Coverage enumeration is offline and cannot trigger an
 unrelated prompt-pack update. FFUF source builds use its upstream release linker
 flags so its embedded version matches the verified 2.2.1 source tag.
+
+Naabu, Nuclei and Syft also have checksum-verified source rebuilds and committed
+dependency locks. Diagnostic binaries pass their Go audits and real loopback or
+local-package positive/negative/failure controls. Syft additionally updates its
+containerd and OpenTelemetry dependencies. Nuclei's required kin-openapi update
+includes a hash-checked compatibility patch and focused upstream-package tests;
+unsupported OpenAPI 3.1 numeric exclusive bounds fail instead of generating
+unchecked examples. Native Linux image tests remain required for these builds.
+
+The legacy backup helpers now select validated profile pins instead of an old
+hard-coded ARM64 tag. A backup directory contains the immutable image archive
+and a mandatory checksummed manifest. Restore validates profile/platform, rejects
+tag-bearing archives, measures the loaded image and reruns operation fixtures
+before selecting its pin. These image-only backups preserve existing workspace
+state and require separate data backups; they do not claim full data rollback.
+Both Linux core jobs include the actual backup/restore round trip.

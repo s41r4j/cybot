@@ -72,11 +72,39 @@ are pinned and checked against the source lock. Builds fail if those revisions
 are no longer available; transitive package resolution still uses Debian's
 repositories. This is not yet a fully reproducible release build.
 
-Runs use the immutable local image ID in `core-runtime.lock.json`, which also
+Runs use the immutable local image ID in `.cybot/toolbox/runtime.lock.json`, which also
 records binary SHA-256 values and installed package revisions. `python3
 scripts/toolbox.py verify` compares the installed runtime against those locks.
 Tags are retained for convenience and rollback but do not select the default
 runtime. Image IDs are local pins, not published registry digests.
+
+## Image backup and restore
+
+Back up only a validated profile pin, then restore its checksummed directory:
+
+```sh
+python3 scripts/toolbox.py --profile core backup backups/core-snapshot
+python3 scripts/toolbox.py --profile core restore backups/core-snapshot
+```
+
+The backup publishes `image.tar.gz` and a required `manifest.json` together. It
+records the exact image ID, architecture, profile, binary hashes and archive
+checksum. Backups stay within the workspace's accounted `backups/` directory;
+existing destinations are preserved. Archive creation is bounded and uses the
+same operation lock and storage admission as other toolbox operations.
+
+Restore rejects missing manifests, changed bytes, the wrong platform/profile,
+path escapes, multiple images and tag-bearing archives before Docker load. It
+measures the loaded image and reruns real-operation fixtures before changing the
+active pin. A failed validation keeps the previous pin. A checksum detects
+changed bytes; it does not authenticate an untrusted backup's publisher.
+
+These are **image-only** backups. Existing configuration, evidence, reports and
+external vulnerability databases remain in their current directories and need
+their own data-backup strategy. Supply-chain restores require the matching
+verified external datasets to be present. Legacy full-image `.tar.gz` files
+without this manifest are not accepted by the current restore helper. CI runs
+the compact-core backup/restore path on both native Linux architectures.
 
 The helper checks versions/hashes and runs the offline integration suite on a candidate before tagging it active and retains the previous
 active image under the `-previous` tag. Space for the candidate and previous image

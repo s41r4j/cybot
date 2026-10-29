@@ -33,7 +33,8 @@
           "size": 28722052,
           "sha256": "bf7b29ff57f06da30918266a0e1c2885a8f99784798d1bdb1628886aa015d788"
         }
-      }
+      },
+      "build": "cybot-patched-go"
     },
     "grype": {
       "version": "0.116.1",

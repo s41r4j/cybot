@@ -14,10 +14,14 @@ import toolbox_probe
 def prepare(dest):
     lock = json.loads((toolbox.ROOT/'docker/toolbox/supplychain.lock.json').read_text())
     for name, spec in lock['tools'].items():
+        if spec.get('build') == 'cybot-patched-go':
+            continue
         archive = dest/'tool-download'
         toolbox.download(spec['assets'][toolbox.ARCH], archive)
         toolbox.unpack_binary(archive, name, dest)
         archive.unlink()
+    from patched_go_tools import prepare as prepare_patched_tools
+    prepare_patched_tools(dest, {name for name, spec in lock['tools'].items() if spec.get('build') == 'cybot-patched-go'})
     prepare_runtime_data()
     shutil.copy(toolbox.ROOT/'docker/toolbox/supplychain.Dockerfile', dest/'Dockerfile')
     # Bind the exact data version into the image's environment, while keeping

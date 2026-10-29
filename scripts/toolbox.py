@@ -509,7 +509,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--profile', choices=['core', 'analysis', 'supplychain'], default='core')
     parser.add_argument('--network', choices=['none', 'bridge'], help='Explicit network choice for run; local analysis profiles default to none')
-    parser.add_argument('action', choices=['status', 'build', 'pull', 'run', 'verify', 'image', 'audit'])
+    parser.add_argument('action', choices=['status', 'build', 'pull', 'run', 'verify', 'image', 'audit', 'backup', 'restore'])
     parser.add_argument('args', nargs=argparse.REMAINDER)
     options = parser.parse_args()
     if options.network is not None and options.action != 'run':
@@ -528,6 +528,14 @@ def main():
             elif options.action == 'audit':
                 from audit_toolbox import audit_image
                 audit_image()
+            elif options.action in ('backup', 'restore'):
+                from toolbox_backup import backup, restore
+                if len(options.args) > 1 or (options.action == 'restore' and not options.args):
+                    raise RuntimeError('usage: toolbox.py --profile PROFILE '+options.action+' BACKUP_DIRECTORY')
+                if options.action == 'backup':
+                    backup(options.args[0] if options.args else None)
+                else:
+                    restore(options.args[0])
             elif options.action == 'pull':
                 if len(options.args) != 1:
                     raise RuntimeError('usage: toolbox.py pull REGISTRY/IMAGE@sha256:DIGEST')

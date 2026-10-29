@@ -43,6 +43,25 @@ def patch_imports(root, files):
     return applied
 
 
+def patch_source(root, files):
+    applied = []
+    for name, spec in files.items():
+        path = root/name
+        path.resolve().relative_to(root.resolve())
+        original = path.read_bytes()
+        if hashlib.sha256(original).hexdigest() != spec['sha256']:
+            raise RuntimeError('Upstream compatibility patch input changed: '+name)
+        data = original
+        for before, after in spec['replacements']:
+            before, after = before.encode(), after.encode()
+            if not before or data.count(before) != 1:
+                raise RuntimeError('Compatibility patch insertion point changed: '+name)
+            data = data.replace(before, after)
+        path.write_bytes(data)
+        applied.append({'file': name, 'before_sha256': spec['sha256'], 'after_sha256': hashlib.sha256(data).hexdigest()})
+    return applied
+
+
 def prepare(dest, names=None):
     lock_root = toolbox.ROOT/'docker/toolbox/patched-go'
     lock = json.loads((lock_root/'manifest.json').read_text())
@@ -72,8 +91,17 @@ def prepare(dest, names=None):
             patched.parent.mkdir()
             writable_copy(source, patched)
             applied = patch_imports(patched, lock['go-github']['files'])
+            source_patches = patch_source(root, spec.get('source_patches', {}))
             for file in ('go.mod', 'go.sum'):
                 shutil.copyfile(lock_root/name/file, root/file)
+            test_files = {}
+            for file in spec.get('test_files', []):
+                target = root/file
+                target.resolve().relative_to(root.resolve())
+                shutil.copyfile(lock_root/name/file, target)
+                test_files[file] = hashlib.sha256(target.read_bytes()).hexdigest()
+            if spec.get('tests'):
+                toolbox.monitored(['go', '-C', str(root), 'test', '-mod=readonly', '-p', '1', *spec['tests']], env=env, timeout_seconds=300)
             # Keep symbols: stripped binaries force govulncheck into conservative
             # module-level fallback and cannot establish absence of affected code.
             args = ['go', '-C', str(root), 'build', '-mod=readonly', '-p', '1', '-trimpath', '-buildvcs=false']
@@ -94,6 +122,7 @@ def prepare(dest, names=None):
                     'upstream_sum': spec['sum'], 'go_toolchain': toolbox.GO_TOOLCHAIN,
                     'platform': 'linux/'+toolbox.ARCH, 'patch_module': lock['go-github']['module'],
                     'patch_module_sum': lock['go-github']['sum'], 'patches': applied,
+                    'source_patches': source_patches, 'compatibility_tests': test_files,
                     'binary_sha256': hashlib.sha256((dest/'bin'/name).read_bytes()).hexdigest(),
                     'dependency_locks': {file: hashlib.sha256((root/file).read_bytes()).hexdigest() for file in ('go.mod', 'go.sum')}}
             (provenance/(name+'.json')).write_text(json.dumps(data, indent=2)+'\n')

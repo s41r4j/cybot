@@ -5,7 +5,7 @@ RUN apk add --no-cache gcc=15.2.0-r2 musl-dev=1.2.5-r24
 COPY go/ /opt/go/
 COPY jsluice-source/ /src/
 ENV PATH="/opt/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
-    CGO_ENABLED=1 CGO_CFLAGS="-O2 -g -std=c11" GOMAXPROCS=1 GOMEMLIMIT=512MiB GOTOOLCHAIN=local GOPROXY=off GOSUMDB=off GOTELEMETRY=off
+    CGO_ENABLED=1 CGO_CFLAGS="-O2 -g -std=gnu11" GOMAXPROCS=1 GOMEMLIMIT=512MiB GOTOOLCHAIN=local GOPROXY=off GOSUMDB=off GOTELEMETRY=off
 WORKDIR /src
 RUN mkdir /out \
     && go build -mod=vendor -p 1 -trimpath -buildvcs=false -ldflags='-linkmode external -extldflags=-static' -o /out/jsluice ./cmd/jsluice \

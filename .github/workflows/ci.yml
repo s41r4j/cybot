@@ -74,6 +74,11 @@ jobs:
       - name: Audit final installed Go executables
         continue-on-error: true
         run: python3 scripts/toolbox.py audit
+      - name: Round-trip a checksummed immutable image backup
+        run: |
+          python3 scripts/toolbox.py backup backups/ci-core
+          python3 scripts/toolbox.py restore backups/ci-core
+          python3 scripts/toolbox.py verify
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

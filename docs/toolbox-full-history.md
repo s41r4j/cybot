@@ -53,6 +53,11 @@ The Compose service is read-only, drops Linux capabilities, prevents privilege e
 
 ## Backup before upload
 
+This section records the old archive format and commands. Current helpers use
+validated profile pins and a mandatory manifest directory; see
+[current backup and restore](docker-budget.md#image-backup-and-restore). They do
+not restore the historical archive below.
+
 Keep the local image and make a checksum-protected archive:
 
 ```sh

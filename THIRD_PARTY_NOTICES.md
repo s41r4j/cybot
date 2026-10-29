@@ -47,7 +47,7 @@ MIT project license does not relicense third-party components.
 
 ## Patched upstream Go tools
 
-HTTPx, DNSx, Katana, FFUF, Subfinder, Gitleaks and Gosec are rebuilt from checksum-verified
+HTTPx, DNSx, Katana, FFUF, Subfinder, Gitleaks, Gosec, Naabu, Nuclei and Syft are rebuilt from checksum-verified
 upstream Go modules with Go 1.26.10 and the committed module locks in
 `docker/toolbox/patched-go/`. The original release archive hashes remain as
 upstream provenance; these rebuilt executables have their own measured hashes.
@@ -55,6 +55,10 @@ The go-github v30 dependency's two OpenPGP imports are migrated to the maintaine
 ProtonMail implementation using exact input-file hashes. Binary symbols are
 retained for artifact vulnerability analysis. Build manifests and copied upstream
 dependency licenses are included under `/opt/cybot/share/` in the image.
+Nuclei's OpenAPI example generator has an exact-input compatibility patch for
+the fixed kin-openapi API. It preserves supported OpenAPI 3.0 boolean bounds and
+explicitly rejects unsupported 3.1 numeric exclusive bounds; focused compatibility
+tests and their hashes accompany the source-build provenance.
 Gitleaks retains the upstream `gore2regex` build mode. Its archive dependency is
 updated together with the fixed RAR decoder; the committed locks record the
 exact resolved versions.
