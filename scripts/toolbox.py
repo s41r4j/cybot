@@ -200,7 +200,7 @@ def prepare(dest):
         unpack_binary(archive, name, dest)
         archive.unlink()
     from patched_go_tools import prepare as prepare_patched_tools
-    prepare_patched_tools(dest)
+    prepare_patched_tools(dest, {name for name, spec in lock['tools'].items() if spec.get('build') == 'cybot-patched-go'})
     archive = dest / 'templates.tar.gz'
     download(lock['data']['nuclei-templates'], archive)
     templates = dest / 'share/nuclei-templates'

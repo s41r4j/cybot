@@ -32,24 +32,22 @@ def prepare(dest):
     archive.unlink()
     (dest / 'bin').mkdir(exist_ok=True)
     for name, tool in lock['tools'].items():
+        if tool.get('build') == 'cybot-patched-go':
+            continue
         asset = dest / 'tool-download'
         toolbox.download(tool['assets'][toolbox.ARCH], asset)
         toolbox.unpack_binary(asset, name, dest)
         asset.unlink()
+    from patched_go_tools import prepare as prepare_patched_tools
+    patched = {name for name, spec in lock['tools'].items() if spec.get('build') == 'cybot-patched-go'}
+    patched.add('gosec')
+    prepare_patched_tools(dest, patched)
     # Isolate downloads and compiler state from both the host and final image.
     cache = dest / '.build-cache'
     env = dict(os.environ, CGO_ENABLED='0', GOOS='linux', GOARCH=toolbox.ARCH,
                GOMAXPROCS='1', GOMEMLIMIT='512MiB', GOTOOLCHAIN=toolbox.GO_TOOLCHAIN,
                GOBIN='', GOPATH=str(cache / 'gopath'), GOCACHE=str(cache / 'build'),
                GOMODCACHE=str(cache / 'modules'))
-    toolbox.monitored(['go', 'install', '-p', '1', '-trimpath',
-                       '-ldflags=-s -w -X main.Version='+lock['gosec']['version'],
-                       'github.com/securego/gosec/v2/cmd/gosec@v'+lock['gosec']['version']],
-                      env=env, timeout_seconds=900)
-    installed = list((cache / 'gopath/bin').rglob('gosec'))
-    if len(installed) != 1:
-        raise RuntimeError('Expected exactly one built Gosec executable')
-    shutil.copy2(installed[0], dest / 'bin/gosec')
     for name, spec in lock['go_tools'].items():
         toolbox.monitored(['go', 'install', '-p', '1', '-trimpath', '-ldflags=-s -w', spec['module']], env=env, timeout_seconds=300)
         installed = list((cache / 'gopath/bin').rglob(name))

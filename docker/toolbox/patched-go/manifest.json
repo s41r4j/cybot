@@ -21,6 +21,29 @@
     "katana": {
       "module": "github.com/projectdiscovery/katana@v1.6.1",
       "sum": "h1:Dd1MKntRLOQtvRPu72Vk8sxzpL9Igd7zol/DGXU+8sU="
+    },
+    "ffuf": {
+      "module": "github.com/ffuf/ffuf/v2@v2.2.1",
+      "sum": "h1:Ff/BpOlO9aoRU2hqF6RviuSvaKb1H03n9365CE4k2zM=",
+      "package": "."
+    },
+    "gitleaks": {
+      "module": "github.com/zricethezav/gitleaks/v8@v8.30.1",
+      "sum": "h1:PmEvCfVI7ti9dV3s5aMZUY7sS2GxRvG3yzih7E+cS3w=",
+      "package": ".",
+      "tags": [
+        "gore2regex"
+      ],
+      "ldflags": "-X github.com/zricethezav/gitleaks/v8/version.Version=8.30.1"
+    },
+    "subfinder": {
+      "module": "github.com/projectdiscovery/subfinder/v2@v2.14.0",
+      "sum": "h1:lTi9tNEqSPFOKcswh62MDVEV8yO5qCJU75ccLcW7Anc="
+    },
+    "gosec": {
+      "module": "github.com/securego/gosec/v2@v2.28.0",
+      "sum": "h1:ZsSdiDb0AtTpLFVol5z91gbMei9ZiLEPG/pZjZujp7c=",
+      "ldflags": "-X main.Version=2.28.0"
     }
   }
 }

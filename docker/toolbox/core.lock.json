@@ -84,7 +84,8 @@
           "size": 11128476
         }
       },
-      "reported_version": "2.14.0"
+      "reported_version": "2.14.0",
+      "build": "cybot-patched-go"
     },
     "ffuf": {
       "version": "v2.2.1",
@@ -100,7 +101,8 @@
           "size": 4078669
         }
       },
-      "reported_version": "2.2.1"
+      "reported_version": "2.2.1",
+      "build": "cybot-patched-go"
     },
     "gitleaks": {
       "version": "8.30.1",
@@ -117,7 +119,8 @@
           "size": 8230402,
           "sha256": "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb"
         }
-      }
+      },
+      "build": "cybot-patched-go"
     },
     "syft": {
       "version": "1.50.0",

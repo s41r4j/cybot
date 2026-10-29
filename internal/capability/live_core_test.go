@@ -339,6 +339,57 @@ func TestLiveCoreDNS(t *testing.T) {
 		passedCase("failure", "SERVFAIL and an unavailable resolver produce partial/error results rather than clean assessments."),
 	})
 }
+
+func TestLiveCorePortCapability(t *testing.T) {
+	d := liveDeps(t)
+	server := fixtureHTTP(t)
+	_, port, err := net.SplitHostPort(strings.TrimPrefix(server.URL, "http://"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	c := liveCapability(t, "port.scan")
+	singlePort := func(args []string, flag string) []string {
+		for i := 0; i < len(args)-1; i++ {
+			if args[i] == flag {
+				args[i], args[i+1] = "-p", port
+				return args
+			}
+		}
+		t.Fatal("production port selection flag missing", flag)
+		return nil
+	}
+	c.steps[0].Args = func(target string, req schema.RunRequest) []string {
+		return singlePort(nmapArgs(target, req), "--top-ports")
+	}
+	c.steps[1].Args = func(target string, req schema.RunRequest) []string {
+		return singlePort(naabuArgs(target, req), "-top-ports")
+	}
+	result, err := c.Run(context.Background(), liveRequest("127.0.0.1"), d)
+	if err != nil || len(result.Errors) != 0 || len(result.Evidence) != 2 || len(result.Services) == 0 {
+		t.Fatalf("combined scanner capability missed local service: %+v %v", result, err)
+	}
+	for _, service := range result.Services {
+		if fmt.Sprint(service.Port) != port || service.Host != "127.0.0.1" {
+			t.Fatalf("scanner expanded beyond fixture scope: %+v", result.Services)
+		}
+	}
+	validateFixtureResult(t, result)
+	server.Close()
+	result, err = c.Run(context.Background(), liveRequest("127.0.0.1"), d)
+	if err != nil || len(result.Errors) != 0 || len(result.Services) != 0 || len(result.Evidence) != 2 {
+		t.Fatalf("closed port was reported open: %+v %v", result, err)
+	}
+	c.steps[0].Args = func(string, schema.RunRequest) []string { return []string{"--cybot-invalid-fixture-option"} }
+	result, err = c.Run(context.Background(), liveRequest("127.0.0.1"), d)
+	if err == nil && result.Status != "partial" || len(result.Errors) == 0 {
+		t.Fatalf("failed corroborating scanner was reported complete: %+v %v", result, err)
+	}
+	certifyCapability(t, "nmap", "port.scan", []operationCase{
+		passedCase("positive", "Both real scanners complete the full capability against one loopback service, with production parser and service/script flags."),
+		passedCase("negative", "Both scanners report zero open services after the fixture port closes."),
+		passedCase("failure", "A real Nmap execution failure remains a partial/error result even when the other scanner completes."),
+	})
+}
 func TestLiveCoreSubfinderArguments(t *testing.T) {
 	_ = liveDeps(t)
 	args := append(subfinderArgs("fixture.invalid", schema.RunRequest{}), "-list-sources")

@@ -43,11 +43,14 @@ def patch_imports(root, files):
     return applied
 
 
-def prepare(dest):
+def prepare(dest, names=None):
     lock_root = toolbox.ROOT/'docker/toolbox/patched-go'
     lock = json.loads((lock_root/'manifest.json').read_text())
     if lock['go_toolchain'] != toolbox.GO_TOOLCHAIN:
         raise RuntimeError('Patched tool compiler differs from the source lock')
+    names = set(lock['tools']) if names is None else set(names)
+    if not names.issubset(lock['tools']):
+        raise RuntimeError('Requested patched tool has no committed source/dependency lock')
     cache = dest/'.patched-build'
     env = dict(os.environ, CGO_ENABLED='0', GOOS='linux', GOARCH=toolbox.ARCH,
                GOMAXPROCS='1', GOMEMLIMIT='512MiB', GOTOOLCHAIN=toolbox.GO_TOOLCHAIN,
@@ -60,6 +63,8 @@ def prepare(dest):
         provenance = dest/'share/builds'
         provenance.mkdir(parents=True, exist_ok=True)
         for name, spec in lock['tools'].items():
+            if name not in names:
+                continue
             print('Rebuilding patched upstream release', name, spec['module'], flush=True)
             root = cache/name
             writable_copy(verified_module(spec, env), root)
@@ -71,8 +76,12 @@ def prepare(dest):
                 shutil.copyfile(lock_root/name/file, root/file)
             # Keep symbols: stripped binaries force govulncheck into conservative
             # module-level fallback and cannot establish absence of affected code.
-            toolbox.monitored(['go', '-C', str(root), 'build', '-mod=readonly', '-p', '1',
-                               '-trimpath', '-buildvcs=false', '-o', str(dest/'bin'/name), './cmd/'+name],
+            args = ['go', '-C', str(root), 'build', '-mod=readonly', '-p', '1', '-trimpath', '-buildvcs=false']
+            if spec.get('tags'):
+                args.append('-tags='+','.join(spec['tags']))
+            if spec.get('ldflags'):
+                args.append('-ldflags='+spec['ldflags'])
+            toolbox.monitored([*args, '-o', str(dest/'bin'/name), spec.get('package', './cmd/'+name)],
                               env=env, timeout_seconds=1200)
             notices = dest/'share/licenses'/name/'modules'
             notices.mkdir(parents=True, exist_ok=True)

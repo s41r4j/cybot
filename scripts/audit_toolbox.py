@@ -45,7 +45,13 @@ def audit_image():
                     toolbox.docker('cp', cid+':'+measured['binaries'][name]['path'], str(path))
                     if path.is_symlink() or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != measured['binaries'][name]['sha256']:
                         raise RuntimeError('Copied executable differs from measured image: '+name)
-                    result = artifact_audit.audit(path, work/'tools/govulncheck')
+                    try:
+                        result = artifact_audit.audit(path, work/'tools/govulncheck')
+                    except (RuntimeError, OSError) as error:
+                        # Missing/stripped build metadata is an audit failure,
+                        # never a clean binary. Keep auditing independent tools.
+                        result = {'status': 'failed', 'binary_sha256': measured['binaries'][name]['sha256'],
+                                  'go_version': 'unverified', 'advisories': [], 'error': str(error)}
                     report['binaries'][name] = result
                     print(name, result['status'], 'blocking advisories:', sum(row['level'] > 0 for row in result['advisories']), flush=True)
                     path.unlink()

@@ -124,3 +124,17 @@ block an audit. Stripped-binary conservative matches remain blockers, and a
 passing Go audit cannot substitute for the unfinished OS/native-language audit.
 The full-release gate requires artifact-security proof for all six Linux
 profile/architecture combinations in addition to operation certificates.
+
+The next repair batch also supplies locked rebuilds for FFUF, Subfinder,
+Gitleaks and Gosec. Diagnostic binaries clear the Go audit; FFUF/Gitleaks/Gosec
+pass their real positive/negative/failure controls. Subfinder's provider-list
+check remains startup validation until real provider response controls pass.
+New installed-CLI fixtures cover curated CVE/ATT&CK lookups, classification,
+persisted reports and evidence-backed finding review, including tampered
+evidence rejection. These new certificates are counted only after CI executes
+all controls on the new source revision.
+
+An executable without readable compiled-module metadata stays audit-failed.
+The audit continues checking independent executables and retains that failure.
+The compiler check also rejects older/unrecognized Go versions, including
+experimental version strings that could otherwise hide standard-library gaps.

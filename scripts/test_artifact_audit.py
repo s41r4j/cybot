@@ -42,5 +42,12 @@ class ArtifactAuditTests(unittest.TestCase):
         self.assertEqual(report['status'], 'blocked')
         self.assertEqual(report['advisories'][0]['precision'], 'conservative-module')
 
+    def test_older_or_unrecognized_compiler_cannot_pass_a_clean_module_scan(self):
+        for version in ['go1.26.4-X:jsonv2', 'go1.25.5', 'devel go1.27']:
+            objects = self.header(); objects[1]['SBOM']['go_version'] = version
+            report = artifact_audit.summarize(objects)
+            self.assertEqual(report['status'], 'blocked')
+            self.assertEqual(report['toolchain']['status'], 'blocked')
+
 
 if __name__ == '__main__': unittest.main()

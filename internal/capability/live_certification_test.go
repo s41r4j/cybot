@@ -27,6 +27,16 @@ type operationCase struct {
 // Called only after actual executions and assertions for all three cases pass.
 // The host collector binds this report to its measured image and version probe.
 func certifyOperation(t *testing.T, tool, capability string, cases []operationCase) {
+	certifyItems(t, tool, []certificateItem{{"tool", tool}, {"capability", capability}}, cases)
+}
+
+type certificateItem struct{ kind, id string }
+
+func certifyCapability(t *testing.T, binary, capability string, cases []operationCase) {
+	certifyItems(t, binary, []certificateItem{{"capability", capability}}, cases)
+}
+
+func certifyItems(t *testing.T, tool string, items []certificateItem, cases []operationCase) {
 	t.Helper()
 	output, source := os.Getenv("CYBOT_VALIDATION_REPORTS"), os.Getenv("CYBOT_VALIDATION_SOURCE")
 	if output == "" {
@@ -47,7 +57,7 @@ func certifyOperation(t *testing.T, tool, capability string, cases []operationCa
 	if err := os.MkdirAll(output, 0700); err != nil {
 		t.Fatal(err)
 	}
-	for _, item := range []struct{ kind, id string }{{"tool", tool}, {"capability", capability}} {
+	for _, item := range items {
 		if item.id == "" {
 			continue
 		}

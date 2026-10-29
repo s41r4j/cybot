@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -72,11 +73,14 @@ def summarize(objects):
     if not sbom or not sbom.get('go_version') or not sbom.get('modules'):
         raise RuntimeError('Scanner did not identify a compiled Go module inventory')
     rows = sorted(advisories.values(), key=lambda row: (row['id'], row['module']))
+    compiler = re.fullmatch(r'go(\d+)\.(\d+)\.(\d+)(?:[-+].*)?', sbom['go_version'])
+    compiler_ok = compiler is not None and tuple(map(int, compiler.groups())) >= (1, 26, 10)
     # Preserve conservative fallback findings from stripped executables as
     # blockers too. They do not prove a vulnerable package is linked, and they
     # cannot establish its absence. Never waive them as a clean artifact.
-    return {'status': 'blocked' if any(row['level'] > 0 for row in rows) else 'passed',
+    return {'status': 'blocked' if not compiler_ok or any(row['level'] > 0 for row in rows) else 'passed',
             'scanner': config, 'go_version': sbom['go_version'],
+            'toolchain': {'minimum': 'go1.26.10', 'status': 'passed' if compiler_ok else 'blocked'},
             'modules': sbom['modules'], 'advisories': rows}
 
 
