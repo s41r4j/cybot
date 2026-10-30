@@ -23,13 +23,13 @@
   "id": "nuclei",
   "kind": "tool",
   "platform": "linux/arm64",
-  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
+  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
   "tool": "nuclei",
   "runtime": {
     "binaries": {
       "cybot": {
         "path": "/opt/cybot/bin/cybot",
-        "sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
+        "sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
         "reported_version": "0.1.0"
       },
       "httpx": {
@@ -99,7 +99,7 @@
       "nmap": "7.93+dfsg1-1",
       "nmap-common": "7.93+dfsg1-1"
     },
-    "image_id": "sha256:eb2d7fdbad9af39a7f7749b83ea9c90be8893fde3184db8d309f4b7ca49ebfea",
+    "image_id": "sha256:bfe2c56811db94248cd8a7db58bfa2dab10fe72323cf821eec6ae63526fa980a",
     "profile": "core"
   }
 }

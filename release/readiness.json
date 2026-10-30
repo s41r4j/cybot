@@ -1,19 +1,21 @@
 {
   "schema_version": 1,
-  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
+  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
   "release_ready": false,
   "counts": {
     "tools": 84,
     "capabilities": 71
   },
-  "validated_items": 38,
+  "validated_items": 44,
   "blockers": [
     "core/linux/amd64: final artifact security audit is incomplete or has blocking findings",
     "core/linux/arm64: final artifact security audit is incomplete or has blocking findings",
     "analysis/linux/amd64: final artifact security audit is incomplete or has blocking findings",
     "analysis/linux/arm64: final artifact security audit is incomplete or has blocking findings",
     "supplychain/linux/amd64: final artifact security audit is incomplete or has blocking findings",
-    "supplychain/linux/arm64: final artifact security audit is incomplete or has blocking findings"
+    "supplychain/linux/arm64: final artifact security audit is incomplete or has blocking findings",
+    "web/linux/amd64: final artifact security audit is incomplete or has blocking findings",
+    "web/linux/arm64: final artifact security audit is incomplete or has blocking findings"
   ],
   "items": [
     {
@@ -244,12 +246,8 @@
     {
       "kind": "tool",
       "id": "gobuster",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "operation-specific normalization is not validated",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -735,12 +733,8 @@
     {
       "kind": "tool",
       "id": "wafw00f",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "operation-specific normalization is not validated",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -756,11 +750,8 @@
     {
       "kind": "tool",
       "id": "whatweb",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -963,10 +954,8 @@
     {
       "kind": "capability",
       "id": "dir.bruteforce",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1250,10 +1239,8 @@
     {
       "kind": "capability",
       "id": "tech.fingerprint",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1280,10 +1267,8 @@
     {
       "kind": "capability",
       "id": "waf.detect",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",

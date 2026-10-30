@@ -26,13 +26,13 @@ These are source and contract checks, not 84-tool live certification.
 
 The local Docker daemon is unavailable. Historical 2026-10-22 compact-core
 results are retained as historical records and do not certify the changed source.
-The complete [CI run at revision `d2ab06c`](https://github.com/s41r4j/cybot/actions/runs/41057743784)
+The complete [CI run at revision `4d6d878`](https://github.com/s41r4j/cybot/actions/runs/41073870511)
 passed source checks on Linux AMD64/ARM64, macOS and Windows, and real-operation
-fixtures in all three native Linux toolbox profiles on both architectures.
+fixtures in all four native Linux toolbox profiles on both architectures.
 Both compact-core jobs also passed the actual checksummed image backup/restore
 round trip. Installed-CLI, JavaScript extraction and finding-review controls
 passed on both Linux architectures.
-Its source-bound reports certify **18 tools and 20 capabilities** functionally;
+Its source-bound reports certify **21 tools and 23 capabilities** functionally;
 they do not certify the entire 84-tool/71-capability catalog or the security of
 every bundled executable. Later source changes require fresh certificates.
 Windows/AD and account-level cloud tests are explicitly deferred because no
@@ -75,8 +75,8 @@ fingerprint engines from following redirects, and retain partial Gobuster
 matches when request errors occur. TLS verification is enabled by exact-input
 source patches in WhatWeb and WAFW00F; this does not assert the same property
 for every other scanner. Gobuster's quiet-mode patch preserves request errors.
-Native diagnostic tests pass; fresh Linux container evidence is still required
-before these three additions count in the release totals. The profile uses
+Native diagnostic tests and both Linux container profiles pass; these three
+additions now count in the source-bound functional totals. The profile uses
 the same runtime and storage limits; operation validation has networking disabled.
 
 `python3 scripts/toolbox.py --profile analysis build` builds a separate pinned
@@ -137,7 +137,7 @@ from the validated image and scans their exact bytes. The same action supports
 analysis and supplychain. CI retains these reports even when vulnerabilities
 block an audit. Stripped-binary conservative matches remain blockers, and a
 passing Go audit cannot substitute for the unfinished OS/native-language audit.
-The full-release gate requires artifact-security proof for all six Linux
+The full-release gate requires artifact-security proof for all eight Linux
 profile/architecture combinations in addition to operation certificates.
 
 The next repair batch also supplies locked rebuilds for FFUF, Subfinder,
@@ -211,9 +211,9 @@ these Go/source-module checks substitutes for the pending OS/native-component
 security audit.
 
 
-The checked-in `release/validation/` directory now retains all 76 platform-specific
-operation reports plus six installed-Go audit reports from revision `d2ab06c`.
+The checked-in `release/validation/` directory now retains all 88 platform-specific
+operation reports plus eight installed-Go audit reports from revision `4d6d878`.
 `release/readiness.json` is regenerated against the current product digest; it
-records 18 tools and 20 capabilities with passing functional proof and keeps the
+records 21 tools and 23 capabilities with passing functional proof and keeps the
 full release blocked. The website displays that snapshot per entry, including
 tested platforms and the remaining release checks.

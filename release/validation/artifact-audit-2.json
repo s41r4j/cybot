@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
-  "checked_at": "2026-10-30T13:03:58.437675+00:00",
+  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
+  "checked_at": "2026-10-30T15:00:58.032176+00:00",
   "profile": "core",
   "platform": "linux/arm64",
   "scope": "compiled-go-executables",
@@ -33,7 +33,7 @@
       "modules": [
         {
           "path": "github.com/s41r4j/cybot",
-          "version": "v0.0.0-20261030124516-d2ab06cc83ca"
+          "version": "v0.0.0-20261030144120-4d6d87855fed"
         },
         {
           "path": "github.com/dustin/go-humanize",
@@ -93,8 +93,8 @@
         }
       ],
       "advisories": [],
-      "binary_sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc"
+      "binary_sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439"
     },
     "dnsx": {
       "status": "passed",
@@ -531,7 +531,7 @@
         }
       ],
       "binary_sha256": "39a60bdf01b0bab78ee0a2380b7e6d67ebc94617c2232da98deb3cca627cd14a",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439",
       "source_modules": [
         {
           "module": "github.com/projectdiscovery/dnsx",
@@ -539,7 +539,7 @@
           "upstream_sum": "h1:NO57HD0arskX9s4MSivJDX/AX8HungbIxhCIkd8Vy10=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:43.672511+00:00",
+          "checked_at": "2026-10-30T15:01:43.231945+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         },
@@ -549,7 +549,7 @@
           "upstream_sum": "h1:VLDx+UolQICEOKu2m4uAoMti1SxuEBAl7RSEG16L+Oo=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:43.846402+00:00",
+          "checked_at": "2026-10-30T15:01:43.473402+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -612,7 +612,7 @@
       ],
       "advisories": [],
       "binary_sha256": "3eb8e39eaf1a4f3045cbfb8662adffcab205fdfdd9488cee6a139353c7acae05",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439",
       "source_modules": [
         {
           "module": "github.com/ffuf/ffuf/v2",
@@ -620,7 +620,7 @@
           "upstream_sum": "h1:Ff/BpOlO9aoRU2hqF6RviuSvaKb1H03n9365CE4k2zM=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:44.556869+00:00",
+          "checked_at": "2026-10-30T15:01:44.238178+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -918,7 +918,7 @@
         }
       ],
       "binary_sha256": "c84426117283c200adfcdf340c092c7a614f44bb2345c0c50b09230d2719cc31",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439",
       "source_modules": [
         {
           "module": "github.com/zricethezav/gitleaks/v8",
@@ -926,7 +926,7 @@
           "upstream_sum": "h1:PmEvCfVI7ti9dV3s5aMZUY7sS2GxRvG3yzih7E+cS3w=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:45.450513+00:00",
+          "checked_at": "2026-10-30T15:01:45.248007+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -1572,7 +1572,7 @@
         }
       ],
       "binary_sha256": "2c873a321ceb5d2fbd6882285f25b954bf0eea3b4e9b5a5e19edc4745a9d3890",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439",
       "source_modules": [
         {
           "module": "github.com/projectdiscovery/httpx",
@@ -1580,7 +1580,7 @@
           "upstream_sum": "h1:sZvfeJDeX4eJfB5Oh29My4gOHmLfvpCt2wCqhargJrE=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:46.807057+00:00",
+          "checked_at": "2026-10-30T15:01:46.707293+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         },
@@ -1590,7 +1590,7 @@
           "upstream_sum": "h1:VLDx+UolQICEOKu2m4uAoMti1SxuEBAl7RSEG16L+Oo=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:47.017070+00:00",
+          "checked_at": "2026-10-30T15:01:46.874978+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -2236,7 +2236,7 @@
         }
       ],
       "binary_sha256": "0ae69669a2b30c25c54fc661c3fe05c3dfcfa6b93ae29116b3ba718160071c6d",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439",
       "source_modules": [
         {
           "module": "github.com/projectdiscovery/katana",
@@ -2244,7 +2244,7 @@
           "upstream_sum": "h1:Dd1MKntRLOQtvRPu72Vk8sxzpL9Igd7zol/DGXU+8sU=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:48.451564+00:00",
+          "checked_at": "2026-10-30T15:01:48.363069+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         },
@@ -2254,7 +2254,7 @@
           "upstream_sum": "h1:VLDx+UolQICEOKu2m4uAoMti1SxuEBAl7RSEG16L+Oo=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:48.640174+00:00",
+          "checked_at": "2026-10-30T15:01:48.563736+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -2780,7 +2780,7 @@
         }
       ],
       "binary_sha256": "6fbeb6dd58700b3685a751a791a5b418e6bdf0c2f4c9b38aa8ff14576316312d",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439",
       "source_modules": [
         {
           "module": "github.com/projectdiscovery/naabu/v2",
@@ -2788,7 +2788,7 @@
           "upstream_sum": "h1:1feuCo46ICf9s2uhrwVHYgQ3Yc9Mt+Z676MIpC5cB24=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:49.784806+00:00",
+          "checked_at": "2026-10-30T15:01:49.722674+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         },
@@ -2798,7 +2798,7 @@
           "upstream_sum": "h1:VLDx+UolQICEOKu2m4uAoMti1SxuEBAl7RSEG16L+Oo=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:49.966854+00:00",
+          "checked_at": "2026-10-30T15:01:49.904800+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -4316,7 +4316,7 @@
         }
       ],
       "binary_sha256": "8b525cdec383065b5bdfc59a422cdb7fa1903c3d1427d7dd3ae1005c6932a115",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439",
       "source_modules": [
         {
           "module": "github.com/projectdiscovery/nuclei/v3",
@@ -4324,7 +4324,7 @@
           "upstream_sum": "h1:sxZdBNl5x215A3Z9f70Zm0oCtj+tTAN1A8u5vPNKrmc=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:52.474053+00:00",
+          "checked_at": "2026-10-30T15:01:51.874028+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         },
@@ -4334,7 +4334,7 @@
           "upstream_sum": "h1:VLDx+UolQICEOKu2m4uAoMti1SxuEBAl7RSEG16L+Oo=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:52.683890+00:00",
+          "checked_at": "2026-10-30T15:01:52.085316+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -4840,7 +4840,7 @@
         }
       ],
       "binary_sha256": "e79361979170d82d5889a69e1551e4b2a117cf4a21cae9b1b7ebb76a0e0bde99",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439",
       "source_modules": [
         {
           "module": "github.com/projectdiscovery/subfinder/v2",
@@ -4848,7 +4848,7 @@
           "upstream_sum": "h1:lTi9tNEqSPFOKcswh62MDVEV8yO5qCJU75ccLcW7Anc=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:53.814221+00:00",
+          "checked_at": "2026-10-30T15:01:53.299467+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         },
@@ -4858,7 +4858,7 @@
           "upstream_sum": "h1:VLDx+UolQICEOKu2m4uAoMti1SxuEBAl7RSEG16L+Oo=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:54.026108+00:00",
+          "checked_at": "2026-10-30T15:01:53.490067+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -6000,7 +6000,7 @@
         }
       ],
       "binary_sha256": "b3ed2cc578b896ce04902254b64c8a22a2f96cd93ff45048e47488f2630a9590",
-      "scanner_sha256": "e9a469c5be65619aae8e2da455a1697412fd4b102a83476e7557a993c59166bc",
+      "scanner_sha256": "705b47e01112f3f993d53bf3654a9c6275910873681045de1e8f4a8907bc3439",
       "source_modules": [
         {
           "module": "github.com/anchore/syft",
@@ -6008,7 +6008,7 @@
           "upstream_sum": "h1:kSQ4oshw6dwHxcYhrH1jUZl/M05kiCfyPoGJgvXe61s=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:04:55.943188+00:00",
+          "checked_at": "2026-10-30T15:01:55.084401+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -6016,5 +6016,5 @@
       "source_provenance_sha256": "563ed02c97fb45cf186027c44c5db41c381f16522ce71e36cfe4d209647c817d"
     }
   },
-  "image_id": "sha256:eb2d7fdbad9af39a7f7749b83ea9c90be8893fde3184db8d309f4b7ca49ebfea"
+  "image_id": "sha256:bfe2c56811db94248cd8a7db58bfa2dab10fe72323cf821eec6ae63526fa980a"
 }

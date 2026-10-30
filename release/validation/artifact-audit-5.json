@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
-  "checked_at": "2026-10-30T13:18:39.362595+00:00",
+  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
+  "checked_at": "2026-10-30T15:13:53.771824+00:00",
   "profile": "supplychain",
   "platform": "linux/amd64",
   "scope": "compiled-go-executables",
@@ -31,7 +31,7 @@
       "modules": [
         {
           "path": "github.com/s41r4j/cybot",
-          "version": "v0.0.0-20261030124516-d2ab06cc83ca"
+          "version": "v0.0.0-20261030144120-4d6d87855fed"
         },
         {
           "path": "github.com/dustin/go-humanize",
@@ -91,8 +91,8 @@
         }
       ],
       "advisories": [],
-      "binary_sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
-      "scanner_sha256": "b1bdb6377a573d2d634eb030fe1f11bb6eb30600f0d8af3420b658047574bef9"
+      "binary_sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
+      "scanner_sha256": "799ae434ea83daaff386568f64070b42455684012b3b170be132d55fc93a66af"
     },
     "grype": {
       "status": "passed",
@@ -1317,7 +1317,7 @@
         }
       ],
       "binary_sha256": "47cfa1a026a155c66acfc2ce16157422c3bc9b7efa109492425d8ef3831606d2",
-      "scanner_sha256": "b1bdb6377a573d2d634eb030fe1f11bb6eb30600f0d8af3420b658047574bef9",
+      "scanner_sha256": "799ae434ea83daaff386568f64070b42455684012b3b170be132d55fc93a66af",
       "source_modules": [
         {
           "module": "github.com/anchore/grype",
@@ -1325,7 +1325,7 @@
           "upstream_sum": "h1:7rEB30cM/eCA8cs7RTs8Li//DWVYNZ+IYh2ogtypde0=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:19:28.991972+00:00",
+          "checked_at": "2026-10-30T15:14:47.059468+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -2467,7 +2467,7 @@
         }
       ],
       "binary_sha256": "502ea88d583cea3828903dedf85079a64de159cde419128bee1959e1c91882bd",
-      "scanner_sha256": "b1bdb6377a573d2d634eb030fe1f11bb6eb30600f0d8af3420b658047574bef9",
+      "scanner_sha256": "799ae434ea83daaff386568f64070b42455684012b3b170be132d55fc93a66af",
       "source_modules": [
         {
           "module": "github.com/anchore/syft",
@@ -2475,7 +2475,7 @@
           "upstream_sum": "h1:kSQ4oshw6dwHxcYhrH1jUZl/M05kiCfyPoGJgvXe61s=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:19:31.194574+00:00",
+          "checked_at": "2026-10-30T15:14:49.439255+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -4109,7 +4109,7 @@
         }
       ],
       "binary_sha256": "639b6d4cf997bdcc4bf2cfceeb289063cb4cb17c7ee555cefad8722eba8215c6",
-      "scanner_sha256": "b1bdb6377a573d2d634eb030fe1f11bb6eb30600f0d8af3420b658047574bef9",
+      "scanner_sha256": "799ae434ea83daaff386568f64070b42455684012b3b170be132d55fc93a66af",
       "source_modules": [
         {
           "module": "github.com/aquasecurity/trivy",
@@ -4117,7 +4117,7 @@
           "upstream_sum": "h1:W3v+NE94olOzk3nSwwha59DTBsbcgLRXa4QNSJpRQQM=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:19:34.623578+00:00",
+          "checked_at": "2026-10-30T15:14:53.237592+00:00",
           "findings": [
             {
               "id": "GO-2026-4919",
@@ -4233,5 +4233,5 @@
       "source_provenance_sha256": "b6eb80964ad4f81296622ceb20d5b9fc15990e81a186b0d095d6aaf1b739a773"
     }
   },
-  "image_id": "sha256:dd782fbc0a5af439f1dcf929662b757eb8599b8bc8e0465335c625796edb8a7e"
+  "image_id": "sha256:be6980b4ec7169389acb9d700c143ca2f595dbb24d62fb0f5147c724c9dbda51"
 }

@@ -1,5 +1,5 @@
 {
-  "binary_sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
+  "binary_sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
   "cases": [
     {
       "type": "positive",
@@ -23,13 +23,13 @@
   "id": "classify.endpoint",
   "kind": "capability",
   "platform": "linux/amd64",
-  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
+  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
   "tool": "cybot",
   "runtime": {
     "binaries": {
       "cybot": {
         "path": "/opt/cybot/bin/cybot",
-        "sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
+        "sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
         "reported_version": "0.1.0"
       },
       "httpx": {
@@ -99,7 +99,7 @@
       "nmap": "7.93+dfsg1-1",
       "nmap-common": "7.93+dfsg1-1"
     },
-    "image_id": "sha256:a6e9b7b659e85fdc897d70ff2208c4ec1b85a4c3cd49dcca512ab4a78c4a4e36",
+    "image_id": "sha256:09b891571f8b623d54f0e17b34e4961832e4556b30ff96a5ccdd8a2ae175c64f",
     "profile": "core"
   }
 }

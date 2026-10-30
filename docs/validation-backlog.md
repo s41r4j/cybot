@@ -1,6 +1,6 @@
 # Validation environments and remaining work
 
-Updated 2026-10-28. Windows/Active Directory and cloud labs are unavailable and
+Updated 2026-10-30. Windows/Active Directory and cloud labs are unavailable and
 their specialist validation is explicitly deferred. These entries remain in the
 full catalog and full-release gate; deferral does not certify or remove them.
 
@@ -24,7 +24,9 @@ help/status/startup placeholders with real scoped operation contracts, adding
 operation-specific normalization, declaring verified platform support, supplying
 runtime/data dependencies, and retaining positive/negative/failure evidence.
 
-Priorities for Linux expansion are static code analysis and supply-chain tools,
-then web/DNS specialist adapters. A new binary in an image does not by itself
+Pinned core, static code, supply-chain and web profiles now have passing
+operation fixtures on both Linux architectures. The next Linux work includes
+browser, TLS, CORS, CMS and DNS specialist adapters, followed by remaining
+Linux operations and provider contracts. A new binary in an image does not by itself
 complete a capability. Keep the independent full-product release gate blocked
 until the entire declared scope is supported and validated.

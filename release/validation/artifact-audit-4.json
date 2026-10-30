@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
-  "checked_at": "2026-10-30T13:14:00.649545+00:00",
+  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
+  "checked_at": "2026-10-30T15:11:43.177868+00:00",
   "profile": "supplychain",
   "platform": "linux/arm64",
   "scope": "compiled-go-executables",
@@ -31,7 +31,7 @@
       "modules": [
         {
           "path": "github.com/s41r4j/cybot",
-          "version": "v0.0.0-20261030124516-d2ab06cc83ca"
+          "version": "v0.0.0-20261030144120-4d6d87855fed"
         },
         {
           "path": "github.com/dustin/go-humanize",
@@ -91,8 +91,8 @@
         }
       ],
       "advisories": [],
-      "binary_sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
-      "scanner_sha256": "8c36b66fb3eb0737d8155e407c8055737b52c874d5c98889c583ae729ae959b3"
+      "binary_sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
+      "scanner_sha256": "7cd83f775a0a5c7ddf28651e0f708d89bb75fab2a3ca495e49465c1dca9bfb59"
     },
     "grype": {
       "status": "passed",
@@ -1317,7 +1317,7 @@
         }
       ],
       "binary_sha256": "d8024dab523e0c7a194fa6cfeb72726bc723e9419e7236aa1162f4ddb96b310c",
-      "scanner_sha256": "8c36b66fb3eb0737d8155e407c8055737b52c874d5c98889c583ae729ae959b3",
+      "scanner_sha256": "7cd83f775a0a5c7ddf28651e0f708d89bb75fab2a3ca495e49465c1dca9bfb59",
       "source_modules": [
         {
           "module": "github.com/anchore/grype",
@@ -1325,7 +1325,7 @@
           "upstream_sum": "h1:7rEB30cM/eCA8cs7RTs8Li//DWVYNZ+IYh2ogtypde0=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:14:43.926079+00:00",
+          "checked_at": "2026-10-30T15:12:26.554555+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -2467,7 +2467,7 @@
         }
       ],
       "binary_sha256": "b3ed2cc578b896ce04902254b64c8a22a2f96cd93ff45048e47488f2630a9590",
-      "scanner_sha256": "8c36b66fb3eb0737d8155e407c8055737b52c874d5c98889c583ae729ae959b3",
+      "scanner_sha256": "7cd83f775a0a5c7ddf28651e0f708d89bb75fab2a3ca495e49465c1dca9bfb59",
       "source_modules": [
         {
           "module": "github.com/anchore/syft",
@@ -2475,7 +2475,7 @@
           "upstream_sum": "h1:kSQ4oshw6dwHxcYhrH1jUZl/M05kiCfyPoGJgvXe61s=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:14:46.164869+00:00",
+          "checked_at": "2026-10-30T15:12:28.684467+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -4109,7 +4109,7 @@
         }
       ],
       "binary_sha256": "254ac5660a960c9b16b0a417bdfa26ec64853e232b43e736026bf68c446c84a5",
-      "scanner_sha256": "8c36b66fb3eb0737d8155e407c8055737b52c874d5c98889c583ae729ae959b3",
+      "scanner_sha256": "7cd83f775a0a5c7ddf28651e0f708d89bb75fab2a3ca495e49465c1dca9bfb59",
       "source_modules": [
         {
           "module": "github.com/aquasecurity/trivy",
@@ -4117,7 +4117,7 @@
           "upstream_sum": "h1:W3v+NE94olOzk3nSwwha59DTBsbcgLRXa4QNSJpRQQM=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T13:14:49.517383+00:00",
+          "checked_at": "2026-10-30T15:12:31.847407+00:00",
           "findings": [
             {
               "id": "GO-2026-4919",
@@ -4137,8 +4137,8 @@
                   "CGA-vv8j-fpcj-x4fm"
                 ],
                 "database_specific": {
-                  "review_status": "REVIEWED",
-                  "url": "https://pkg.go.dev/vuln/GO-2026-4919"
+                  "url": "https://pkg.go.dev/vuln/GO-2026-4919",
+                  "review_status": "REVIEWED"
                 },
                 "references": [
                   {
@@ -4233,5 +4233,5 @@
       "source_provenance_sha256": "9991bd9389b889d66b000b9eec7e5d8112c91d16a09d9225fcfa61864eac9105"
     }
   },
-  "image_id": "sha256:584c02a94fc8322df6d4a6dc99cd8ec6d9caca746986efc90fc52175a5396288"
+  "image_id": "sha256:c1ca7b323c22a79f698d3ade13bb68b038c43a419d9445850852957068c8fd6a"
 }

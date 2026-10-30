@@ -23,13 +23,13 @@
   "id": "container.scan",
   "kind": "capability",
   "platform": "linux/amd64",
-  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
+  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
   "tool": "grype",
   "runtime": {
     "binaries": {
       "cybot": {
         "path": "/opt/cybot/bin/cybot",
-        "sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
+        "sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
         "reported_version": "0.1.0"
       },
       "trivy": {
@@ -64,7 +64,7 @@
         }
       },
       "grype-db": {
-        "sha256": "5a1cc6ce1c05b9dc7ece5bba1dd7e88f33c8cdc74847d12ab56e45260a07dfbf",
+        "sha256": "a965231899b735e069fed30271a8e70aa3a24b71d4de6abac80924c5f5b74bbf",
         "source": {
           "url": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-10-28T00:24:28Z_1793168610.tar.zst",
           "size": 196243021,
@@ -75,7 +75,7 @@
         }
       }
     },
-    "image_id": "sha256:dd782fbc0a5af439f1dcf929662b757eb8599b8bc8e0465335c625796edb8a7e",
+    "image_id": "sha256:be6980b4ec7169389acb9d700c143ca2f595dbb24d62fb0f5147c724c9dbda51",
     "profile": "supplychain"
   }
 }
