@@ -8,20 +8,21 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"unicode"
 
-	"github.com/s41r4j/cybot/internal/execution"
+	"github.com/s41r4j/cybot/internal/evidence"
 	"github.com/s41r4j/cybot/pkg/schema"
 	jsonschemas "github.com/s41r4j/cybot/schemas"
 )
 
 // Browser capabilities drive a real Chrome via the agent-browser CLI. Each
-// capability runs one deterministic `agent-browser batch --json` invocation so
-// the daemon state (open -> wait -> snapshot) stays within a single process.
+// capability runs one deterministic batch in a fresh owned session, followed
+// by an explicit close, so no browser state is shared between operations.
 
 var browserURLRe = regexp.MustCompile(`url=(\S+)`)
 
 func browserBrowseArgs(target string, _ schema.RunRequest) []string {
-	return []string{"--json", "batch", "--bail", "open " + target, "wait 2000", "snapshot -i -c", "get url", "get title"}
+	return []string{"--json", "batch", "--bail", "open " + target, "wait 2000", "snapshot -i -c --urls", "get url", "get title"}
 }
 
 func browserAutomateArgs(target string, _ schema.RunRequest) []string {
@@ -41,10 +42,14 @@ func (c browserCapability) ID() string                              { return c.d
 func (c browserCapability) Definition() schema.CapabilityDefinition { return c.definition }
 
 func (c browserCapability) Run(ctx context.Context, req schema.RunRequest, d Dependencies) (schema.Result, error) {
+	if req.Capability != "" && req.Capability != c.ID() {
+		return emptyResult(), fmt.Errorf("request capability does not match %s", c.ID())
+	}
 	target := strings.TrimSpace(req.Target)
 	if err := validateBrowserTarget(target); err != nil {
 		return emptyResult(), err
 	}
+	req.Target = target
 	tool, ok := d.Tools.Get("agent-browser")
 	if !ok {
 		return emptyResult(), fmt.Errorf("agent-browser adapter is not registered")
@@ -58,13 +63,20 @@ func (c browserCapability) Run(ctx context.Context, req schema.RunRequest, d Dep
 	default:
 		args = browserBrowseArgs(target, req)
 	}
-	out, runErr := d.Runner.Run(ctx, execution.Spec{Tool: tool, Args: args, Timeout: d.Timeout, Retries: 0, Network: true})
-	if runErr != nil {
-		return emptyResult(), runErr
+	commands, inputErr := c.batchCommands(args, req)
+	if inputErr != nil {
+		return emptyResult(), inputErr
 	}
+	out, runErr := runIsolatedBrowser(ctx, tool, target, commands, d)
 	normalized, parseErr := parseBrowserBatch(c.mode, out.Stdout, req)
 	if parseErr != nil {
+		if runErr != nil {
+			return emptyResult(), runErr
+		}
 		return emptyResult(), fmt.Errorf("normalize agent-browser output: %w", parseErr)
+	}
+	if runErr != nil {
+		normalized.Errors = append(normalized.Errors, schema.RunError{Tool: "agent-browser", Code: "BROWSER_EXECUTION_INCOMPLETE", Message: runErr.Error()})
 	}
 	ev, evErr := d.Evidence.Put(req.RunID, "agent-browser-batch", "application/json", out.Stdout)
 	if evErr != nil {
@@ -91,7 +103,7 @@ func validateBrowserTarget(target string) error {
 	if target == "" {
 		return fmt.Errorf("target is required")
 	}
-	if len(target) > 8192 || strings.ContainsAny(target, " \t\r\n\x00\"'\\") {
+	if len(target) > 8192 || strings.ContainsAny(target, "\"'\\") || strings.IndexFunc(target, func(r rune) bool { return unicode.IsSpace(r) || unicode.IsControl(r) }) >= 0 {
 		return fmt.Errorf("URL must encode spaces and unsafe characters before browser/tool execution")
 	}
 	u, err := url.Parse(target)
@@ -144,19 +156,33 @@ func parseBrowserBatch(mode string, data []byte, req schema.RunRequest) (schema.
 		if raw == "" || seen[key] {
 			return
 		}
-		if u, e := url.Parse(raw); e != nil || u.Scheme == "" || u.Host == "" {
+		if u, e := url.Parse(raw); e != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Hostname() == "" {
 			return
 		}
 		seen[key] = true
 		if tech == nil {
 			tech = []string{}
 		}
-		r.Endpoints = append(r.Endpoints, schema.Endpoint{URL: raw, Method: method, Status: status, Technology: tech})
+		r.Endpoints = append(r.Endpoints, schema.Endpoint{URL: evidence.SanitizeURL(raw), Method: method, Status: status, Technology: tech})
 	}
 	for _, doc := range requestDocs {
 		switch {
 		case doc["snapshot"] != nil:
 			parseBrowserTree(text(doc["snapshot"]), addEndpoint)
+			if mode == "automate" {
+				if refs, ok := doc["refs"].(map[string]any); ok {
+					keys := make([]string, 0, len(refs))
+					for ref := range refs {
+						keys = append(keys, ref)
+					}
+					sort.Strings(keys)
+					for _, ref := range keys {
+						if control, ok := refs[ref].(map[string]any); ok {
+							r.Observations = append(r.Observations, evidence.RedactText(fmt.Sprintf("Interactive control ref=%s role=%s name=%s", ref, text(control["role"]), text(control["name"]))))
+						}
+					}
+				}
+			}
 			if origin := text(doc["origin"]); origin != "" {
 				addEndpoint(origin, "GET", 0, nil)
 			}
@@ -177,6 +203,9 @@ func parseBrowserBatch(mode string, data []byte, req schema.RunRequest) (schema.
 		}
 	}
 	sort.Slice(r.Endpoints, func(i, j int) bool { return r.Endpoints[i].URL < r.Endpoints[j].URL })
+	if len(r.Endpoints) == 0 && len(r.Observations) == 0 {
+		return r, fmt.Errorf("browser report contains no completed page or network capture")
+	}
 	r.Summary = fmt.Sprintf("agent-browser %s completed: %d endpoint(s) discovered from rendered DOM and network.", mode, len(r.Endpoints))
 	r.Confidence = 0.8
 	return r, nil
@@ -185,27 +214,27 @@ func parseBrowserBatch(mode string, data []byte, req schema.RunRequest) (schema.
 func parseBrowserTree(tree string, addEndpoint func(string, string, int, []string)) {
 	for _, line := range strings.Split(tree, "\n") {
 		if m := browserURLRe.FindStringSubmatch(line); len(m) == 2 {
-			addEndpoint(strings.TrimSuffix(m[1], ","), "GET", 0, nil)
+			addEndpoint(strings.TrimSuffix(strings.TrimSuffix(m[1], "]"), ","), "GET", 0, nil)
 		}
 	}
 }
 
 func browserDefinition(id, title, category, description, purpose string) schema.CapabilityDefinition {
-	return schema.CapabilityDefinition{
-		ID: id, Title: title, Version: "1.0.0", Category: category, Stability: "stable",
+	d := schema.CapabilityDefinition{
+		ID: id, Title: title, Version: "1.1.0", Category: category, Stability: "experimental",
 		Documentation: schema.Documentation{
 			Description: description, Purpose: purpose,
 			Arguments:           []schema.Argument{{Name: "target", Type: "url", Required: true, Description: "Policy-authorized http/https URL."}},
 			Examples:            []schema.Example{{Description: "Browse a target", Command: "cybot run " + id + " --target https://authorized.example --approve"}},
 			ExpectedOutput:      "A normalized cybot.result with endpoints discovered from the rendered DOM and network activity.",
 			OutputSchema:        "cybot://schemas/result",
-			Limitations:         []string{"Requires the agent-browser adapter and a Chrome/Chromium binary.", "JS-heavy pages may need wait tuning."},
+			Limitations:         []string{"Requires the pinned browser profile and Chromium.", "Each run uses a fresh anonymous browser and restricts navigation/subresources to the requested hostname; this does not bind traffic to a single port or path.", "Interactive mode supports at most 16 explicit click/wait actions; it does not accept JavaScript, fills, uploads or arbitrary CLI commands. Returned references describe this run and cannot be reused after its session closes.", "Network capture returns observed requests rather than a complete HAR archive; JS-heavy pages may need wait tuning.", "Container runs disable Chromium's internal sandbox within the bounded nonroot container; this is not a full browser sandbox certification."},
 			RequiredPermissions: []string{"Explicit target authorization", "Capability approval under active policy"},
 			RelatedCommands:     []string{"cybot capability plan " + id, "cybot tool doctor agent-browser"},
 			CommonMistakes:      []string{"Passing a non-http(s) target", "Assuming every rendered link is in scope"},
 			BestPractices:       []string{"Run web.map first", "Review extracted endpoints before deeper scanning"},
 		},
-		InputSchema:  jsonRaw(`{"type":"object","additionalProperties":false,"required":["target"],"properties":{"target":{"type":"string","format":"uri"}}}`),
+		InputSchema:  browserInputSchema(id),
 		OutputSchema: jsonschemas.Must("result"),
 		Workflow: []schema.DecisionNode{
 			{ID: "validate", Action: "Validate strict input and policy scope", Condition: "input matches schema and policy permits target", OnSuccess: "launch", OnFailure: "deny"},
@@ -220,6 +249,12 @@ func browserDefinition(id, title, category, description, purpose string) schema.
 		RelatedCapabilities: []string{"web.map", "js.extract"},
 		NextCapabilities:    []string{"web.map", "js.extract", "web.scan"},
 	}
+	if id == "web.automate" {
+		d.Documentation.Arguments = append(d.Documentation.Arguments, schema.Argument{Name: "input-file", Type: "path", Required: false, Description: "JSON object with up to 16 click/wait actions. Click requires selector; wait requires milliseconds (0–2000). Actions require --approve even under advisory policy."})
+		d.Documentation.Examples = append(d.Documentation.Examples, schema.Example{Description: "Execute an explicitly authorized bounded interaction", Command: "cybot run web.automate --target https://authorized.example --input-file actions.json --approve"})
+		d.Documentation.RequiredPermissions = append(d.Documentation.RequiredPermissions, "Explicit --approve for all supplied actions, including in advisory mode")
+	}
+	return d
 }
 
 func RegisterBrowserCapabilities(r *Registry) error {
@@ -232,14 +267,14 @@ func RegisterBrowserCapabilities(r *Registry) error {
 		},
 		{
 			definition: browserDefinition("web.automate", "Web Automation (Interactive)", "web-security",
-				"Drive a real browser through an authorized flow and return interactive elements with refs for scripted action.",
-				"Enumerate interactive controls (links, buttons, inputs) with stable refs so agents can act deterministically."),
+				"Perform a bounded sequence of explicitly approved clicks/waits and capture the resulting interactive page; omit actions for inspection only.",
+				"Execute operator-specified interactions and return control roles, labels and session-scoped references for review."),
 			mode: "automate",
 		},
 		{
 			definition: browserDefinition("web.har", "Web HAR Capture", "web-security",
 				"Open a target in a real browser and capture the observed network request log as normalized endpoints.",
-				"Capture request methods, status codes, and resource types from an authenticated, JS-rendered session."),
+				"Capture request methods, status codes, and resource types from a fresh anonymous, JS-rendered session."),
 			mode: "har",
 		},
 	}

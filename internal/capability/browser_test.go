@@ -21,7 +21,7 @@ func TestBrowserCapabilitiesPlanAndExecute(t *testing.T) {
 		if !ok {
 			t.Fatalf("missing capability %s", id)
 		}
-		if c.Definition().Stability != "stable" {
+		if c.Definition().Stability != "experimental" {
 			t.Errorf("%s stability=%s", id, c.Definition().Stability)
 		}
 	}

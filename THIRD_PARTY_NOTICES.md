@@ -86,3 +86,10 @@ Hash-checked patches enable certificate verification in both WhatWeb TLS
 transports and WAFW00F's request engine. Gobuster's quiet-mode patch preserves
 request-error diagnostics; explicit error suppression remains an upstream option.
 The committed patch recipes and dependency locks identify corresponding source.
+
+The browser profile uses the official Apache-2.0 agent-browser 0.40.0 static
+Linux release for each architecture, with exact asset checksums and source
+commit `c3880a7de9be3b075c8779e8aaca4b530b7f0e10`. Its upstream license and
+Cargo dependency lock accompany the image. Chromium and its installed Debian
+dependencies retain their packaged copyright notices. Full Rust/native
+dependency security and license review remains part of the release backlog.

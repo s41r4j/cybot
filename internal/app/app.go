@@ -146,17 +146,22 @@ func capabilityCmd(path, format *string) *cobra.Command {
 }
 
 func capabilityPlanCmd(path, format *string) *cobra.Command {
-	var target string
+	var target, inputFile string
 	var approved bool
 	c := &cobra.Command{Use: "plan ID", Args: cobra.ExactArgs(1), RunE: func(_ *cobra.Command, args []string) error {
+		input, err := readCapabilityInput(inputFile)
+		if err != nil {
+			return err
+		}
 		return withRuntime(path, func(r *runtime) error {
-			plan, err := r.core.Plan(schema.RunRequest{Capability: args[0], Target: target, Input: json.RawMessage(`{}`), Approved: approved})
+			plan, err := r.core.Plan(schema.RunRequest{Capability: args[0], Target: target, Input: input, Approved: approved})
 			if err != nil {
 				return err
 			}
 			return write(format, plan)
 		})
 	}}
+	c.Flags().StringVar(&inputFile, "input-file", "", "bounded capability input to include in the plan")
 	c.Flags().StringVar(&target, "target", "", "target to evaluate against policy")
 	c.Flags().BoolVar(&approved, "approve", false, "include approval in policy evaluation")
 	return c
@@ -354,23 +359,9 @@ func runCmd(path, format *string) *cobra.Command {
 	var target, inputFile string
 	var approved bool
 	c := &cobra.Command{Use: "run CAPABILITY", Args: cobra.ExactArgs(1), RunE: func(cmd *cobra.Command, args []string) error {
-		input := json.RawMessage(`{}`)
-		if inputFile != "" {
-			info, err := os.Stat(inputFile)
-			if err != nil {
-				return err
-			}
-			if !info.Mode().IsRegular() || info.Size() > 1<<20 {
-				return fmt.Errorf("input-file must be a regular JSON file of at most 1 MiB")
-			}
-			input, err = os.ReadFile(inputFile)
-			if err != nil {
-				return err
-			}
-			var object map[string]json.RawMessage
-			if json.Unmarshal(input, &object) != nil || object == nil {
-				return fmt.Errorf("input-file must contain one JSON object")
-			}
+		input, err := readCapabilityInput(inputFile)
+		if err != nil {
+			return err
 		}
 		return withRuntime(path, func(r *runtime) error {
 			result, err := r.core.Run(cmd.Context(), schema.RunRequest{Capability: args[0], Target: target, Input: input, Approved: approved})

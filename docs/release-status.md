@@ -67,6 +67,17 @@ created by the offline validation workflow.
 
 ## Expanded operation evidence
 
+The optional `browser` profile pins the official agent-browser 0.40.0 Linux
+assets and Chromium 156 packages. Browser operations use fresh anonymous
+sessions, ignore host browser/provider configuration, restrict requests to the
+requested hostname and explicitly close their owned sessions. The current
+snapshot URL delimiter is parsed correctly. Interactive mode supports up to
+16 explicit click/wait actions from an input JSON file; actions require
+`--approve` even under advisory policy. Selectors are sent as JSON arguments,
+and command arrays are omitted from stored browser output. This is bounded
+interaction, not arbitrary script execution or persistent authenticated browsing.
+Native diagnostic controls pass; Linux profile evidence is still pending.
+
 The optional `web` profile pins WhatWeb 0.6.4, WAFW00F 2.4.2, Gobuster 3.8.2,
 HTTPx and FFUF. Its build runs real loopback positive/negative/failure controls
 for `tech.fingerprint`, `waf.detect` and `dir.bruteforce`. Additional controls

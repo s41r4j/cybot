@@ -1,0 +1,6 @@
+{
+  "actions": [
+    {"action": "click", "selector": "button[data-testid=\"show-details\"]"},
+    {"action": "wait", "milliseconds": 200}
+  ]
+}

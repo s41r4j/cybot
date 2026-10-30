@@ -22,6 +22,7 @@ def validate_image(image, source_cli=False):
         if source_cli:
             toolbox.monitored(['go','build','-p','1','-trimpath','-ldflags=-s -w','-o',str(work/'cybot'),'./cmd/cybot'],env=env,timeout_seconds=300)
             mounts.append((work/'cybot','/opt/cybot/bin/cybot'))
+        browser = toolbox.PROFILE == 'browser'
         web = toolbox.PROFILE == 'web'
         analysis = toolbox.PROFILE == 'analysis'
         supplychain = toolbox.PROFILE == 'supplychain'
@@ -35,10 +36,11 @@ def validate_image(image, source_cli=False):
             shutil.rmtree(reports)
         reports.mkdir()
         container_reports = '/validation/reports'
-        test_pattern = '^TestLiveWeb' if web else '^TestLiveAnalysis' if analysis else ('^TestLiveSupplyChain' if supplychain else '^TestLive(Core|Assessment|CompactCertification)')
+        test_pattern = '^TestLiveBrowser' if browser else '^TestLiveWeb' if web else '^TestLiveAnalysis' if analysis else ('^TestLiveSupplyChain' if supplychain else '^TestLive(Core|Assessment|CompactCertification)')
         succeeded = False
         try:
             toolbox.run(['exec','env','CYBOT_LIVE_CORE=1','CYBOT_LIVE_ASSESSMENT=1',
+                         'CYBOT_LIVE_BROWSER='+('1' if browser else '0'),
                          'CYBOT_LIVE_WEB='+('1' if web else '0'),
                          'CYBOT_LIVE_ANALYSIS='+('1' if analysis else '0'),
                          'CYBOT_LIVE_SUPPLYCHAIN='+('1' if supplychain else '0'),

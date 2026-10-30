@@ -55,6 +55,15 @@ func (o *Orchestrator) Plan(req schema.RunRequest) (schema.ExecutionPlan, error)
 	if o.Policy.Config().EnforcementMode == "suggestive" {
 		p.RequiresApproval = false
 	}
+	if guard, ok := c.(interface{ ValidateRequest(schema.RunRequest) error }); ok {
+		if err := guard.ValidateRequest(req); err != nil {
+			p.Executable = false
+			p.Warnings = append(p.Warnings, "Invalid capability input: "+err.Error())
+		}
+	}
+	if guard, ok := c.(interface{ RequiresInputApproval(schema.RunRequest) bool }); ok && guard.RequiresInputApproval(req) {
+		p.RequiresApproval = true
+	}
 	if err := capability.ValidateTarget(c, req.Target); err != nil {
 		p.Executable = false
 		p.Warnings = append(p.Warnings, "Invalid target: "+err.Error())

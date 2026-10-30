@@ -179,6 +179,10 @@ def unpack_binary(archive, name, dest):
 
 
 def prepare(dest):
+    if PROFILE == 'browser':
+        from browser_profile import prepare as prepare_browser
+        prepare_browser(dest)
+        return
     if PROFILE == 'web':
         from web_profile import prepare as prepare_web
         prepare_web(dest)
@@ -424,6 +428,9 @@ def probe(image):
 
 
 def _probe(image):
+    if PROFILE == 'browser':
+        from browser_profile import probe as probe_browser
+        return probe_browser(image)
     if PROFILE == 'web':
         from web_profile import probe as probe_web
         return probe_web(image)
@@ -514,7 +521,7 @@ def operation_lock():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--profile', choices=['core', 'analysis', 'supplychain', 'web'], default='core')
+    parser.add_argument('--profile', choices=['core', 'analysis', 'supplychain', 'web', 'browser'], default='core')
     parser.add_argument('--network', choices=['none', 'bridge'], help='Explicit network choice for run; local analysis profiles default to none')
     parser.add_argument('action', choices=['status', 'build', 'pull', 'run', 'verify', 'image', 'audit', 'backup', 'restore'])
     parser.add_argument('args', nargs=argparse.REMAINDER)

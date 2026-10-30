@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "profile": "browser",
+  "base_image": "debian:bookworm-slim@sha256:7ff6ba31527b9e336162fa061746c366c4b2032f4d2cff2078bea43f78efe3f8",
+  "agent_browser": {
+    "version": "0.40.0",
+    "source_commit": "c3880a7de9be3b075c8779e8aaca4b530b7f0e10",
+    "assets": {
+      "amd64": {
+        "url": "https://github.com/vercel-labs/agent-browser/releases/download/v0.40.0/agent-browser-linux-musl-x64",
+        "size": 18234240,
+        "sha256": "aeebf976eb429064efb10179ccdf737ec7d798c019bae7067ce2751c9c6e176a"
+      },
+      "arm64": {
+        "url": "https://github.com/vercel-labs/agent-browser/releases/download/v0.40.0/agent-browser-linux-musl-arm64",
+        "size": 15763544,
+        "sha256": "3d4352c0b39f173896aa12af0e63d5905ac8ce7c95575fe6f1f93ce21f9b9e26"
+      }
+    },
+    "source_files": {
+      "LICENSE": {
+        "url": "https://raw.githubusercontent.com/vercel-labs/agent-browser/c3880a7de9be3b075c8779e8aaca4b530b7f0e10/LICENSE",
+        "size": 10931,
+        "sha256": "014bb31e83d5c2e76aea1cc6e82217346ab41362f32cb355ad0f5c10aa0aeaff"
+      },
+      "cli/Cargo.lock": {
+        "url": "https://raw.githubusercontent.com/vercel-labs/agent-browser/c3880a7de9be3b075c8779e8aaca4b530b7f0e10/cli/Cargo.lock",
+        "size": 83234,
+        "sha256": "f35ff4ca8fc710e185627ae033704976711ed2164aa6e4c34fce0a54c0b85a96"
+      }
+    }
+  },
+  "packages": {
+    "amd64": {
+      "ca-certificates": "20250419~deb12u2",
+      "chromium": "156.0.8078.73-1~deb12u1",
+      "chromium-common": "156.0.8078.73-1~deb12u1",
+      "chromium-sandbox": "156.0.8078.73-1~deb12u1",
+      "fonts-liberation": "1:1.07.4-11",
+      "libnss3": "2:3.87.1-1+deb12u4",
+      "python3": "3.11.2-1+b1",
+      "python3.11": "3.11.2-6+deb12u9"
+    },
+    "arm64": {
+      "ca-certificates": "20250419~deb12u2",
+      "chromium": "156.0.8078.73-1~deb12u1",
+      "chromium-common": "156.0.8078.73-1~deb12u1",
+      "chromium-sandbox": "156.0.8078.73-1~deb12u1",
+      "fonts-liberation": "1:1.07.4-11",
+      "libnss3": "2:3.87.1-1+deb12u4",
+      "python3": "3.11.2-1+b1",
+      "python3.11": "3.11.2-6+deb12u9"
+    }
+  }
+}

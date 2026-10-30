@@ -75,6 +75,9 @@ func TestContainerOCILayoutUsesImageSources(t *testing.T) {
 func (f *fixtureRunner) Health(context.Context, schema.Tool) error { return nil }
 func (f *fixtureRunner) Run(_ context.Context, s execution.Spec) (execution.Output, error) {
 	f.specs = append(f.specs, s)
+	if s.Tool.ID == "agent-browser" && len(s.Args) > 0 && s.Args[len(s.Args)-1] == "close" {
+		return execution.Output{Stdout: []byte(`{"success":true,"data":{"closed":true}}`)}, nil
+	}
 	out, ok := f.outputs[s.Tool.ID]
 	if !ok {
 		return execution.Output{}, errors.New("missing fixture")

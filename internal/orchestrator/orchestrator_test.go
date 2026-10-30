@@ -62,3 +62,26 @@ func newPlanTools(t *testing.T) *registry.ToolRegistry {
 	}
 	return r
 }
+
+func TestBrowserActionApprovalSurvivesAdvisoryPlanning(t *testing.T) {
+	caps := capability.NewRegistry()
+	if err := capability.RegisterBuiltins(caps); err != nil {
+		t.Fatal(err)
+	}
+	o := Orchestrator{Capabilities: caps, Policy: policy.New(policy.Config{AllowedCapabilities: []string{"different"}, EnforcementMode: "suggestive"}), Dependencies: capability.Dependencies{Tools: newPlanTools(t)}}
+	req := schema.RunRequest{Capability: "web.automate", Target: "https://fixture.invalid", Input: json.RawMessage(`{"actions":[{"action":"click","selector":"#fixture"}]}`)}
+	p, err := o.Plan(req)
+	if err != nil || p.Executable || !p.RequiresApproval {
+		t.Fatalf("advisory mode bypassed browser action approval: %+v %v", p, err)
+	}
+	req.Approved = true
+	p, err = o.Plan(req)
+	if err != nil || !p.Executable {
+		t.Fatalf("approved valid interaction cannot be planned: %+v %v", p, err)
+	}
+	req.Input = json.RawMessage(`{"actions":[{"action":"eval","selector":"arbitrary-code"}]}`)
+	p, err = o.Plan(req)
+	if err != nil || p.Executable {
+		t.Fatalf("unsupported browser code became executable: %+v %v", p, err)
+	}
+}

@@ -1258,10 +1258,11 @@
   title: Agent Browser
   description: CDP-driven Chrome automation CLI for AI agents (snapshot, click, fill, HAR, refs).
   purpose: Drive a real browser for JS-rendered endpoints, interaction automation, and network capture.
-  version: "0.34.0"
+  version: "0.40.0"
+  supported_os: [linux]
   kind: native
   binary: agent-browser
-  source_url: https://github.com/cyberful/agent-browser
+  source_url: https://github.com/vercel-labs/agent-browser
   license: Apache-2.0
   capabilities: [web.browse, web.automate, web.har]
   default_args: []

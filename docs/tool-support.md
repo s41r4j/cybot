@@ -6,7 +6,7 @@ Generated from the executable command surface. All entries remain in the full-re
 
 | Tool | Implementation | Platform declaration | Actual capability mappings |
 | --- | --- | --- | --- |
-| `agent-browser` | adapter | undeclared | web.automate, web.browse, web.har |
+| `agent-browser` | adapter | linux | web.automate, web.browse, web.har |
 | `amass` | not-implemented | undeclared | dns.enum |
 | `amass-enum` | adapter | undeclared | **no executable mapping** |
 | `anew` | adapter | linux | pattern.detect |
