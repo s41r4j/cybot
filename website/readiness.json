@@ -1,0 +1,1618 @@
+{
+  "schema_version": 1,
+  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
+  "release_ready": false,
+  "counts": {
+    "tools": 84,
+    "capabilities": 71
+  },
+  "validated_items": 38,
+  "blockers": [
+    "core/linux/amd64: final artifact security audit is incomplete or has blocking findings",
+    "core/linux/arm64: final artifact security audit is incomplete or has blocking findings",
+    "analysis/linux/amd64: final artifact security audit is incomplete or has blocking findings",
+    "analysis/linux/arm64: final artifact security audit is incomplete or has blocking findings",
+    "supplychain/linux/amd64: final artifact security audit is incomplete or has blocking findings",
+    "supplychain/linux/arm64: final artifact security audit is incomplete or has blocking findings"
+  ],
+  "items": [
+    {
+      "kind": "tool",
+      "id": "agent-browser",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "amass",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "amass-enum",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "anew",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "arjun",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "bettercap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "bloodhound",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "certipy",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "chisel",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "cloud_enum",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "cloudfox",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "cmseek",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "corscanner",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "covenant",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "crackmapexec",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "dirsearch",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "dnschef",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "dnsrecon",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "dnsx",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "enum4linux",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "evilginx",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "ffuf",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "gf",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "gitleaks",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "gobuster",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "gophish",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "gosec",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "grype",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "hashcat",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "havoc",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "httpx",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "hydra",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "impacket",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "john",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "jsluice",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "katana",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "kekeo",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "knockpy",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "linkfinder",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "linpeas",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "massdns",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "merlin",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "metagoofil",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "metasploit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "mimikatz",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "msfvenom",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "mythic",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "naabu",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "netexec",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "nikto",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "nmap",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "nuclei",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "pacu",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "pcredz",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "powersploit",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "responder",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "rubeus",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "searchsploit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "seatbelt",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "semgrep",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "sharphound",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "sharppersist",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation implementation is incomplete",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "sharpup",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "sharpview",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "sherlock",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "shodan",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "sliver",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "smbmap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "sqlmap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "subfinder",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: linux/amd64",
+        "missing required platform evidence: linux/arm64",
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "swaks",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "syft",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "system-dns-resolver",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: darwin/arm64",
+        "missing required platform evidence: linux/amd64",
+        "missing required platform evidence: linux/arm64",
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "testssl",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "theharvester",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "trivy",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "trufflehog",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "tool",
+      "id": "wafw00f",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "waybackurls",
+      "ready": false,
+      "blockers": [
+        "no executable capability mapping",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "whatweb",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "winpeas",
+      "ready": false,
+      "blockers": [
+        "missing required platform evidence: windows/amd64",
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "wpscan",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "xsstrike",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation-specific normalization is not validated",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "tool",
+      "id": "zap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "supported operating systems have not been explicitly declared"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "active-directory.attack",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "api.audit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "asset.discover",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "c2.covenant",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "c2.havoc",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "c2.merlin",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "c2.mythic",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "c2.operate",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "c2.setup",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "c2.sliver",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "classify.endpoint",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "cloud.enum",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "cloud.review",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "cms.detect",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "code.audit",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "container.scan",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "cors.audit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "credential.dump",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "credential.harvest",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "cve.lookup",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "dependency.scan",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "dir.bruteforce",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "dns.analyse",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "dns.enum",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "email.harvest",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "exploit.execute",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "exploit.framework",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "exploit.search",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "hash.crack",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "js.analyse",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "js.extract",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "lateral.move",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "mitm.assess",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "mitre.map",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "password.bruteforce",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "pattern.detect",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "payload.generate",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "persist.install",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "personnel.osint",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "phishing.campaign",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "pivot.tunnel",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "port.forward",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "port.scan",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "post.adcs",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "post.exploit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "post.kerberoast",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "post.kerberos",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "post.mimikatz",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "post.persistence",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "post.recon",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "privilege.escalation",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "report.generate",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "sbom.generate",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "secret.scan",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "service.enumerate",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "smb.test",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "social.engineer",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence",
+        "operation implementation is incomplete"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "sql.inject",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "tech.fingerprint",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "tls.audit",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "validate.finding",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "vuln.scan",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "waf.detect",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "web.automate",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "web.browse",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "web.content.discover",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.har",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "web.map",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.scan",
+      "ready": true,
+      "blockers": [],
+      "tested_platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ]
+    },
+    {
+      "kind": "capability",
+      "id": "web.zap",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    },
+    {
+      "kind": "capability",
+      "id": "xss.detect",
+      "ready": false,
+      "blockers": [
+        "no real-operation validation evidence"
+      ],
+      "tested_platforms": []
+    }
+  ],
+  "source_revision": "d2ab06cc83ca6f98eb121544036eda5ee78ee898",
+  "ci_url": "https://github.com/s41r4j/cybot/actions/runs/41057743784"
+}

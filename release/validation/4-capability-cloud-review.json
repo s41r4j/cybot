@@ -1,0 +1,81 @@
+{
+  "binary_sha256": "254ac5660a960c9b16b0a417bdfa26ec64853e232b43e736026bf68c446c84a5",
+  "cases": [
+    {
+      "type": "positive",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Embedded Terraform checks detect security group SSH ingress from the public internet."
+    },
+    {
+      "type": "negative",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "The same security group scoped to a private CIDR passes those embedded checks."
+    },
+    {
+      "type": "failure",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Invalid required scanner configuration fails the capability."
+    }
+  ],
+  "id": "cloud.review",
+  "kind": "capability",
+  "platform": "linux/arm64",
+  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
+  "tool": "trivy",
+  "runtime": {
+    "binaries": {
+      "cybot": {
+        "path": "/opt/cybot/bin/cybot",
+        "sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
+        "reported_version": "0.1.0"
+      },
+      "trivy": {
+        "path": "/opt/cybot/bin/trivy",
+        "sha256": "254ac5660a960c9b16b0a417bdfa26ec64853e232b43e736026bf68c446c84a5",
+        "reported_version": "0.72.0",
+        "release_version": "0.72.0"
+      },
+      "grype": {
+        "path": "/opt/cybot/bin/grype",
+        "sha256": "d8024dab523e0c7a194fa6cfeb72726bc723e9419e7236aa1162f4ddb96b310c",
+        "reported_version": "0.116.1",
+        "release_version": "0.116.1"
+      },
+      "syft": {
+        "path": "/opt/cybot/bin/syft",
+        "sha256": "b3ed2cc578b896ce04902254b64c8a22a2f96cd93ff45048e47488f2630a9590",
+        "reported_version": "1.50.0",
+        "release_version": "1.50.0"
+      }
+    },
+    "packages": {},
+    "data": {
+      "trivy-db": {
+        "sha256": "faa015429c6ebd9c9a672be99cfbd5aecec2eade21d1d6e59d4dc091dc752ff3",
+        "source": {
+          "url": "https://ghcr.io/v2/aquasecurity/trivy-db/blobs/sha256:65a9491288410e43d64adea0b81659e36bb7435dda543774c4255356f2f3cd60",
+          "size": 136428356,
+          "sha256": "65a9491288410e43d64adea0b81659e36bb7435dda543774c4255356f2f3cd60",
+          "oci_repository": "aquasecurity/trivy-db",
+          "created": "2026-10-28T13:09:55Z"
+        }
+      },
+      "grype-db": {
+        "sha256": "a965231899b735e069fed30271a8e70aa3a24b71d4de6abac80924c5f5b74bbf",
+        "source": {
+          "url": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-10-28T00:24:28Z_1793168610.tar.zst",
+          "size": 196243021,
+          "sha256": "b08902b91738f1a9bc7fd61942f331d8e5e76a5df0c0b5f8c17c18bd787ee278",
+          "user_agent": "grype/0.116.1",
+          "created": "2026-10-28T06:23:30Z",
+          "schema_version": "v6.1.10"
+        }
+      }
+    },
+    "image_id": "sha256:584c02a94fc8322df6d4a6dc99cd8ec6d9caca746986efc90fc52175a5396288",
+    "profile": "supplychain"
+  }
+}

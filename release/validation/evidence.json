@@ -1,0 +1,1335 @@
+{
+  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
+  "records": [
+    {
+      "kind": "capability",
+      "id": "code.audit",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.172.0",
+      "reported_tool_version": "1.172.0",
+      "binary_sha256": "418846853224d55bc0b3049db10b562b7c83e27c28892c4721dc66f4c69ebf4b",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-capability-code-audit.json",
+      "report_sha256": "65ef899e13919a001026bb969553099ecdfe1871c6833c558edbc05aafa0039e"
+    },
+    {
+      "kind": "capability",
+      "id": "js.analyse",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.172.0",
+      "reported_tool_version": "1.172.0",
+      "binary_sha256": "418846853224d55bc0b3049db10b562b7c83e27c28892c4721dc66f4c69ebf4b",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-capability-js-analyse.json",
+      "report_sha256": "48e23c8fc469559114fe4927998fdf3e578e07710bf1fc376dffc5581960c461"
+    },
+    {
+      "kind": "capability",
+      "id": "js.extract",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "git-1debac5dace4",
+      "reported_tool_version": "git-1debac5dace4",
+      "binary_sha256": "cf5bc50b8b76e2385e3815ccb5222845b25b7d3b6c7bc86faabe5f33d0b39aa9",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-capability-js-extract.json",
+      "report_sha256": "da89d7b0bbb069fe15769614ab074cdb499cd3194d56f022eacf166495fe0553"
+    },
+    {
+      "kind": "capability",
+      "id": "pattern.detect",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.1.1",
+      "reported_tool_version": "0.1.1",
+      "binary_sha256": "ad22df574c4af1e93869f7168b0101fa6b754dc6e1e43135da36d5a8e3403e1f",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-capability-pattern-detect.json",
+      "report_sha256": "bebe4006166dd012f59e86871803cc8d2cb019744fd315db2d3b1ec6d3707e00"
+    },
+    {
+      "kind": "capability",
+      "id": "secret.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "3.96.0",
+      "reported_tool_version": "3.96.0",
+      "binary_sha256": "7aca189f1866513ef18f1420fdf0b5d192b195907d8dfe069763ff9e9302f60e",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-capability-secret-scan.json",
+      "report_sha256": "062b7ef536ef4760eb0fd2aa93050a607148055178571babfe9f739c2e3486dd"
+    },
+    {
+      "kind": "capability",
+      "id": "validate.finding",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-capability-validate-finding.json",
+      "report_sha256": "7075849a08072f85593158f9df186b3243945d789bf2669c93cbd562e79511d9"
+    },
+    {
+      "kind": "tool",
+      "id": "anew",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.1.1",
+      "reported_tool_version": "0.1.1",
+      "binary_sha256": "ad22df574c4af1e93869f7168b0101fa6b754dc6e1e43135da36d5a8e3403e1f",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-tool-anew.json",
+      "report_sha256": "0d492404dde68625fe97ec0316ebe39c43ca91904ed9342798a3bc6b203f1b07"
+    },
+    {
+      "kind": "tool",
+      "id": "gf",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.0.0-20200618134122-dcd4c361f9f5",
+      "reported_tool_version": "0.0.0-20200618134122-dcd4c361f9f5",
+      "binary_sha256": "7c99383e0406a6b9e3d9cf6ba3c97704199d930016a2fa8b4fc77728af6c8b67",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-tool-gf.json",
+      "report_sha256": "69497cd12892e7a5cb26cc196761563da814dee92ff4e58ba0dde8dd5f2b06ff"
+    },
+    {
+      "kind": "tool",
+      "id": "gitleaks",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "8.30.1",
+      "reported_tool_version": "8.30.1",
+      "binary_sha256": "c84426117283c200adfcdf340c092c7a614f44bb2345c0c50b09230d2719cc31",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-tool-gitleaks.json",
+      "report_sha256": "d402bc7be9c7c338446438033fbb808526bc6e12748d7eccc972313bdad10219"
+    },
+    {
+      "kind": "tool",
+      "id": "gosec",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "2.28.0",
+      "reported_tool_version": "2.28.0",
+      "binary_sha256": "cc3fec29a2ffd8c3d6c070c212e8f9ace891997335da18463ba29715128a77a0",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-tool-gosec.json",
+      "report_sha256": "d3d5a410c03d4a8c3532312ef19f53efa5116c043e58556335f153f6fd1ce928"
+    },
+    {
+      "kind": "tool",
+      "id": "jsluice",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.0.0-20240110145140-0ddfab153e06",
+      "reported_tool_version": "(devel)",
+      "binary_sha256": "3a3109a7edcdfe9477a98654f1ba4b9d392856cd453d3534bed1fbf8052705e9",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-tool-jsluice.json",
+      "report_sha256": "03633c44a7623a9fd7c3bcacdd08d869665e64f27206ec82c175fdafb6db1c5c"
+    },
+    {
+      "kind": "tool",
+      "id": "linkfinder",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "git-1debac5dace4",
+      "reported_tool_version": "git-1debac5dace4",
+      "binary_sha256": "cf5bc50b8b76e2385e3815ccb5222845b25b7d3b6c7bc86faabe5f33d0b39aa9",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-tool-linkfinder.json",
+      "report_sha256": "0fb2b25f4eeabb1c6aef1d2b0563a9ce5200746d30ee410ba9cfa1a76552601b"
+    },
+    {
+      "kind": "tool",
+      "id": "semgrep",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.172.0",
+      "reported_tool_version": "1.172.0",
+      "binary_sha256": "418846853224d55bc0b3049db10b562b7c83e27c28892c4721dc66f4c69ebf4b",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-tool-semgrep.json",
+      "report_sha256": "c6d060f386d847cdf5a287a51a7f1462007919e4cdb42bfd41c3d3dadd84366a"
+    },
+    {
+      "kind": "tool",
+      "id": "trufflehog",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "3.96.0",
+      "reported_tool_version": "3.96.0",
+      "binary_sha256": "7aca189f1866513ef18f1420fdf0b5d192b195907d8dfe069763ff9e9302f60e",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "0-tool-trufflehog.json",
+      "report_sha256": "c8f445083f11c9319ea40785bb45a384ec7ce43decff0787e0845cbfc698a396"
+    },
+    {
+      "kind": "capability",
+      "id": "code.audit",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.172.0",
+      "reported_tool_version": "1.172.0",
+      "binary_sha256": "418846853224d55bc0b3049db10b562b7c83e27c28892c4721dc66f4c69ebf4b",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-capability-code-audit.json",
+      "report_sha256": "7e1632a5b9c5a0d279c8e8abee4789ba2749b2cda011bd188577ffc8b54c5982"
+    },
+    {
+      "kind": "capability",
+      "id": "js.analyse",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.172.0",
+      "reported_tool_version": "1.172.0",
+      "binary_sha256": "418846853224d55bc0b3049db10b562b7c83e27c28892c4721dc66f4c69ebf4b",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-capability-js-analyse.json",
+      "report_sha256": "bab141f011f5893964bd6b52ac745deef0acc82e9317ef80a2bd8f1c12f31b6c"
+    },
+    {
+      "kind": "capability",
+      "id": "js.extract",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "git-1debac5dace4",
+      "reported_tool_version": "git-1debac5dace4",
+      "binary_sha256": "cf5bc50b8b76e2385e3815ccb5222845b25b7d3b6c7bc86faabe5f33d0b39aa9",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-capability-js-extract.json",
+      "report_sha256": "1f0cdfadb6d2890032df01263a2b5c0c1bf32c5955b6fef60782adf8dfa6ed95"
+    },
+    {
+      "kind": "capability",
+      "id": "pattern.detect",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.1.1",
+      "reported_tool_version": "0.1.1",
+      "binary_sha256": "6c55f826aa0de7d8e9929e5034adce6a195eafa784a4b7c898ba815ecb5477e8",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-capability-pattern-detect.json",
+      "report_sha256": "42c92c0a95ecc595bf3fc4f939765abb2ab1f4fede5d5316fee69c07ab9edf6c"
+    },
+    {
+      "kind": "capability",
+      "id": "secret.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "3.96.0",
+      "reported_tool_version": "3.96.0",
+      "binary_sha256": "95afdf21ecb3546d2081cf5249447df09061fbcfd151f67e8bf1f13a4167bc30",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-capability-secret-scan.json",
+      "report_sha256": "7e437862775e85a1507ff11786fca2b9d5d89709715edd21ba180f62895b063c"
+    },
+    {
+      "kind": "capability",
+      "id": "validate.finding",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-capability-validate-finding.json",
+      "report_sha256": "acbcc621c6bc4c4887ad14a9fe2f39ac14062c8ca48b265f96dcf0c3b919230f"
+    },
+    {
+      "kind": "tool",
+      "id": "anew",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.1.1",
+      "reported_tool_version": "0.1.1",
+      "binary_sha256": "6c55f826aa0de7d8e9929e5034adce6a195eafa784a4b7c898ba815ecb5477e8",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-tool-anew.json",
+      "report_sha256": "41ab1a799590869529149b7980785fcf075999465120b73eabcc8e6db01bb4d8"
+    },
+    {
+      "kind": "tool",
+      "id": "gf",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.0.0-20200618134122-dcd4c361f9f5",
+      "reported_tool_version": "0.0.0-20200618134122-dcd4c361f9f5",
+      "binary_sha256": "3794f69684cc06f3158f6f958085d5dd6fa2cea25c5c036332c2384e873fac60",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-tool-gf.json",
+      "report_sha256": "af0cae4aba5ef33247d3ea9d2517a51aa24d8a2e776bce9180e9e5c5bd2517c2"
+    },
+    {
+      "kind": "tool",
+      "id": "gitleaks",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "8.30.1",
+      "reported_tool_version": "8.30.1",
+      "binary_sha256": "601dbd0ed31535bb1c7ec69a3937bee3e80aba610fe1b68adf767aeba3031f06",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-tool-gitleaks.json",
+      "report_sha256": "8c7fe43e2d2eb12837657f4e256c0dfd5d295b347a0e0192aa58ee67e6e12217"
+    },
+    {
+      "kind": "tool",
+      "id": "gosec",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "2.28.0",
+      "reported_tool_version": "2.28.0",
+      "binary_sha256": "98c9b20c06ce1bbcb5ccd3ef2138043bddfc7d0871bbdd297457797220bfd787",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-tool-gosec.json",
+      "report_sha256": "77369b83bd8774368097ae56a8881ae5b2acb3c8a285918aeb9dea2d7b96c492"
+    },
+    {
+      "kind": "tool",
+      "id": "jsluice",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.0.0-20240110145140-0ddfab153e06",
+      "reported_tool_version": "(devel)",
+      "binary_sha256": "b474da92146c89f149f26e37af085b04c26ab7f4c26e830e07a52fe0736e4f8a",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-tool-jsluice.json",
+      "report_sha256": "23b79323a532e6ec7f26451199e0efaa93f29319b441007111aee2540c04d2ca"
+    },
+    {
+      "kind": "tool",
+      "id": "linkfinder",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "git-1debac5dace4",
+      "reported_tool_version": "git-1debac5dace4",
+      "binary_sha256": "cf5bc50b8b76e2385e3815ccb5222845b25b7d3b6c7bc86faabe5f33d0b39aa9",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-tool-linkfinder.json",
+      "report_sha256": "d5ac02937708c0bca3fd083e8cf370d67cca96400643830b20d2bafe057f864c"
+    },
+    {
+      "kind": "tool",
+      "id": "semgrep",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.172.0",
+      "reported_tool_version": "1.172.0",
+      "binary_sha256": "418846853224d55bc0b3049db10b562b7c83e27c28892c4721dc66f4c69ebf4b",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-tool-semgrep.json",
+      "report_sha256": "7df176f57ec09d6479a16c4fcef46668f0371b64c4d0b49acdd9caa8aa40e6e0"
+    },
+    {
+      "kind": "tool",
+      "id": "trufflehog",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "3.96.0",
+      "reported_tool_version": "3.96.0",
+      "binary_sha256": "95afdf21ecb3546d2081cf5249447df09061fbcfd151f67e8bf1f13a4167bc30",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "1-tool-trufflehog.json",
+      "report_sha256": "4f8ccc9a4ae0e64d0a8bb2d263125618f8e3eadd0c7adccf498f689ebb8b2629"
+    },
+    {
+      "kind": "capability",
+      "id": "classify.endpoint",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-classify-endpoint.json",
+      "report_sha256": "83a720e2a5a2ffc6294c2357d654a5e794966ece8a27b6f8af38165d3a8e6337"
+    },
+    {
+      "kind": "capability",
+      "id": "cve.lookup",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-cve-lookup.json",
+      "report_sha256": "07565eb7fd5f00a020c6dff48ac5c07e3b48f9d25e359b422a2865613fc566d5"
+    },
+    {
+      "kind": "capability",
+      "id": "dns.analyse",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.3.0",
+      "reported_tool_version": "1.2.3",
+      "binary_sha256": "39a60bdf01b0bab78ee0a2380b7e6d67ebc94617c2232da98deb3cca627cd14a",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-dns-analyse.json",
+      "report_sha256": "573de7af011b2c654eedce6db76b9b30140a4a936d2ac7fcdcde43313b645772"
+    },
+    {
+      "kind": "capability",
+      "id": "mitre.map",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-mitre-map.json",
+      "report_sha256": "c4110a762824263606f954c78c4b97a37818288e2f30e4ba73a8d8aa1323c298"
+    },
+    {
+      "kind": "capability",
+      "id": "port.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "7.93",
+      "reported_tool_version": "7.93",
+      "binary_sha256": "5cd0d099170314bbf1bfbfae0392e38ac26175b9f5d1b1c47260c52616c79994",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-port-scan.json",
+      "report_sha256": "1debc8e63a0d256f03783c2b66725d9ae82b7c5d4f63cd7f600496359662310c"
+    },
+    {
+      "kind": "capability",
+      "id": "report.generate",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-report-generate.json",
+      "report_sha256": "72f643c9a749d608b52d3efecf93355b71b7ea3c17548c51a8c24b50fd067815"
+    },
+    {
+      "kind": "capability",
+      "id": "sbom.generate",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.50.0",
+      "reported_tool_version": "1.50.0",
+      "binary_sha256": "b3ed2cc578b896ce04902254b64c8a22a2f96cd93ff45048e47488f2630a9590",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-sbom-generate.json",
+      "report_sha256": "aef7e722731aa8e32c50fa3be7a292db4e8c949584a92299d8abb874f285d58b"
+    },
+    {
+      "kind": "capability",
+      "id": "service.enumerate",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "2.6.1",
+      "reported_tool_version": "2.6.1",
+      "binary_sha256": "6fbeb6dd58700b3685a751a791a5b418e6bdf0c2f4c9b38aa8ff14576316312d",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-service-enumerate.json",
+      "report_sha256": "96ce8a135f77354dad210eea48603decb0d1431c7c07e52d9c6fbc03641980a5"
+    },
+    {
+      "kind": "capability",
+      "id": "web.content.discover",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "2.2.1",
+      "reported_tool_version": "2.2.1",
+      "binary_sha256": "3eb8e39eaf1a4f3045cbfb8662adffcab205fdfdd9488cee6a139353c7acae05",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-web-content-discover.json",
+      "report_sha256": "b21cf02d7f36e9e5c5d709b1d6837864c596f72aede5a09c835d765d751a5240"
+    },
+    {
+      "kind": "capability",
+      "id": "web.map",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.10.0",
+      "reported_tool_version": "1.10.0",
+      "binary_sha256": "2c873a321ceb5d2fbd6882285f25b954bf0eea3b4e9b5a5e19edc4745a9d3890",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-web-map.json",
+      "report_sha256": "a13ad70060e2ce533e359750185c5de41a8d5f97cbd6ef3b98796d97141c9def"
+    },
+    {
+      "kind": "capability",
+      "id": "web.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "3.11.0",
+      "reported_tool_version": "3.11.0",
+      "binary_sha256": "8b525cdec383065b5bdfc59a422cdb7fa1903c3d1427d7dd3ae1005c6932a115",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-web-scan.json",
+      "report_sha256": "ea9c0c51369be949d137b007232b8442972307d24f8e1d72e6902fb38902469b"
+    },
+    {
+      "kind": "tool",
+      "id": "dnsx",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.3.0",
+      "reported_tool_version": "1.2.3",
+      "binary_sha256": "39a60bdf01b0bab78ee0a2380b7e6d67ebc94617c2232da98deb3cca627cd14a",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-tool-dnsx.json",
+      "report_sha256": "1ba7cf80fb3dcc81aa6d688ced2c78d866b0d965c062c9b2a00e95143eb59ff9"
+    },
+    {
+      "kind": "tool",
+      "id": "ffuf",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "2.2.1",
+      "reported_tool_version": "2.2.1",
+      "binary_sha256": "3eb8e39eaf1a4f3045cbfb8662adffcab205fdfdd9488cee6a139353c7acae05",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-tool-ffuf.json",
+      "report_sha256": "f628985ca55fcc44c86b6b16f263116cfaacb38d356b900adcfc97d60de52545"
+    },
+    {
+      "kind": "tool",
+      "id": "httpx",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.10.0",
+      "reported_tool_version": "1.10.0",
+      "binary_sha256": "2c873a321ceb5d2fbd6882285f25b954bf0eea3b4e9b5a5e19edc4745a9d3890",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-tool-httpx.json",
+      "report_sha256": "1fd77cdc433d3d13e324f511e99318c01dfc3efbb143704f87ef6b26188ca2f1"
+    },
+    {
+      "kind": "tool",
+      "id": "katana",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.6.1",
+      "reported_tool_version": "1.6.1",
+      "binary_sha256": "0ae69669a2b30c25c54fc661c3fe05c3dfcfa6b93ae29116b3ba718160071c6d",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-tool-katana.json",
+      "report_sha256": "9853d297bcffa96fddec974aba1a8263f2e06aab690031b66713ff3231c0775b"
+    },
+    {
+      "kind": "tool",
+      "id": "naabu",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "2.6.1",
+      "reported_tool_version": "2.6.1",
+      "binary_sha256": "6fbeb6dd58700b3685a751a791a5b418e6bdf0c2f4c9b38aa8ff14576316312d",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-tool-naabu.json",
+      "report_sha256": "a6a9ed1af0a604b82f5f341154e9d079b3ca26bab28b3e25d4c12015bed44334"
+    },
+    {
+      "kind": "tool",
+      "id": "nmap",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "7.93",
+      "reported_tool_version": "7.93",
+      "binary_sha256": "5cd0d099170314bbf1bfbfae0392e38ac26175b9f5d1b1c47260c52616c79994",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-tool-nmap.json",
+      "report_sha256": "881aa68e05c8e7f03ffe3b34d948e8d8e1bb48790ffbbbf9a444db47781674d7"
+    },
+    {
+      "kind": "tool",
+      "id": "nuclei",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "3.11.0",
+      "reported_tool_version": "3.11.0",
+      "binary_sha256": "8b525cdec383065b5bdfc59a422cdb7fa1903c3d1427d7dd3ae1005c6932a115",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-tool-nuclei.json",
+      "report_sha256": "1fb378eb59330ecfe1a68e967ceded51f4721f725b80f6a76c9881e440c7e5cc"
+    },
+    {
+      "kind": "tool",
+      "id": "syft",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "1.50.0",
+      "reported_tool_version": "1.50.0",
+      "binary_sha256": "b3ed2cc578b896ce04902254b64c8a22a2f96cd93ff45048e47488f2630a9590",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-tool-syft.json",
+      "report_sha256": "da1e2a1cd9b4fa77027cd08224c30ef10dc880d75d47f1230150c8f622620a26"
+    },
+    {
+      "kind": "capability",
+      "id": "classify.endpoint",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-classify-endpoint.json",
+      "report_sha256": "caba69a002250c13d90c6dd920dcb50c2e13eb4757901fc68e4c19d750e8b84e"
+    },
+    {
+      "kind": "capability",
+      "id": "cve.lookup",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-cve-lookup.json",
+      "report_sha256": "9184245cb777051c52a71d27fd96dee966c50cbddfd381685b863b9a5e6e1d66"
+    },
+    {
+      "kind": "capability",
+      "id": "dns.analyse",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.3.0",
+      "reported_tool_version": "1.2.3",
+      "binary_sha256": "f12e567149775ec6922e5ef7556815cc7a860171bd54756c44a309aa87931149",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-dns-analyse.json",
+      "report_sha256": "b5c8a2ee465f8cf38b480dfca0e73f13b41d3dab01a86b29f18760127fba02a9"
+    },
+    {
+      "kind": "capability",
+      "id": "mitre.map",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-mitre-map.json",
+      "report_sha256": "59fbd78e98bcb55cc856f3da67184ecf4123690276c984bba2a6eee6452f4ec6"
+    },
+    {
+      "kind": "capability",
+      "id": "port.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "7.93",
+      "reported_tool_version": "7.93",
+      "binary_sha256": "2fe7e6e019929c0dbb5e4772f2a619416cc3c7f25f95c27f016405dc744f92f7",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-port-scan.json",
+      "report_sha256": "2e49319362ef9c522e4fcf2bf46815265fc77367be5bf33813ea1459af64e58b"
+    },
+    {
+      "kind": "capability",
+      "id": "report.generate",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.1.0",
+      "reported_tool_version": "0.1.0",
+      "binary_sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-report-generate.json",
+      "report_sha256": "15af390eb9a03fde7b6d6d995d079452084500331d489c383e7e16e8698ebf1f"
+    },
+    {
+      "kind": "capability",
+      "id": "sbom.generate",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.50.0",
+      "reported_tool_version": "1.50.0",
+      "binary_sha256": "502ea88d583cea3828903dedf85079a64de159cde419128bee1959e1c91882bd",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-sbom-generate.json",
+      "report_sha256": "0501d96cda79f200af69b01bbf25ea76978e511516c20acf74f937bb4845131d"
+    },
+    {
+      "kind": "capability",
+      "id": "service.enumerate",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "2.6.1",
+      "reported_tool_version": "2.6.1",
+      "binary_sha256": "f442c163990df333cf98d5cba424576e5f060e501b99bef9288777e6d6c910e7",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-service-enumerate.json",
+      "report_sha256": "da1ed53012b18ca5d90082e5999c00e650b4bfdd08a0ae5be1cfb0db6383ed05"
+    },
+    {
+      "kind": "capability",
+      "id": "web.content.discover",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "2.2.1",
+      "reported_tool_version": "2.2.1",
+      "binary_sha256": "a2ced5ab7bcc7735b51ac8bf744e22233e8a1808d8310d0b9b6dea561d32bffd",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-web-content-discover.json",
+      "report_sha256": "4137f46a583fcfd369f3de1da644b52a70d15b74955f49d91cc530046316e6fb"
+    },
+    {
+      "kind": "capability",
+      "id": "web.map",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.10.0",
+      "reported_tool_version": "1.10.0",
+      "binary_sha256": "2d777a1ca1f994b9fee6f5253c6c1b2cccd1d58358f2842e9ba550343a18612c",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-web-map.json",
+      "report_sha256": "5f1f491d93aecc3819a1e9cc629b5dfb13f6e2bc00cc7c63e9d338ed29f03b1a"
+    },
+    {
+      "kind": "capability",
+      "id": "web.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "3.11.0",
+      "reported_tool_version": "3.11.0",
+      "binary_sha256": "13263ddaeeac9f327ace2ffad9923656d816da3dcd8dda4aab09ba8e6bb8c702",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-web-scan.json",
+      "report_sha256": "51e42c9db6ee7df5489c44dde54457654b4d8cad96968e9a6d9405b6ed78c2b4"
+    },
+    {
+      "kind": "tool",
+      "id": "dnsx",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.3.0",
+      "reported_tool_version": "1.2.3",
+      "binary_sha256": "f12e567149775ec6922e5ef7556815cc7a860171bd54756c44a309aa87931149",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-tool-dnsx.json",
+      "report_sha256": "002f82cde6984621b93bdc0c7111e8c152041aefe9786de0e40fb1aabe486722"
+    },
+    {
+      "kind": "tool",
+      "id": "ffuf",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "2.2.1",
+      "reported_tool_version": "2.2.1",
+      "binary_sha256": "a2ced5ab7bcc7735b51ac8bf744e22233e8a1808d8310d0b9b6dea561d32bffd",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-tool-ffuf.json",
+      "report_sha256": "1f7cf5c185de7932cf666c407e85688fd4c238c5e0cfad59cdc64f48bc831218"
+    },
+    {
+      "kind": "tool",
+      "id": "httpx",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.10.0",
+      "reported_tool_version": "1.10.0",
+      "binary_sha256": "2d777a1ca1f994b9fee6f5253c6c1b2cccd1d58358f2842e9ba550343a18612c",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-tool-httpx.json",
+      "report_sha256": "f2dfb933ffa751591e4f82c1806d1657a9c7e06de5c8ff59cc1189fcf1108a23"
+    },
+    {
+      "kind": "tool",
+      "id": "katana",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.6.1",
+      "reported_tool_version": "1.6.1",
+      "binary_sha256": "d982ec86b96eb56f100bdba5e5c66d30e7fd2bb5586293bf3167ad38cf7f9ad4",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-tool-katana.json",
+      "report_sha256": "c50db997a733a123625eb48c89c62eb27139a97f540c8612f76f5474c573bbe4"
+    },
+    {
+      "kind": "tool",
+      "id": "naabu",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "2.6.1",
+      "reported_tool_version": "2.6.1",
+      "binary_sha256": "f442c163990df333cf98d5cba424576e5f060e501b99bef9288777e6d6c910e7",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-tool-naabu.json",
+      "report_sha256": "048aa3615c2aa20e9b1b4affe60a2092b568bba05f8a17f8ada059763efb92d8"
+    },
+    {
+      "kind": "tool",
+      "id": "nmap",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "7.93",
+      "reported_tool_version": "7.93",
+      "binary_sha256": "2fe7e6e019929c0dbb5e4772f2a619416cc3c7f25f95c27f016405dc744f92f7",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-tool-nmap.json",
+      "report_sha256": "4e51aaee4bf44a86e86c9c2f487400228bf51e77b69a422705f7fa65c82df028"
+    },
+    {
+      "kind": "tool",
+      "id": "nuclei",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "3.11.0",
+      "reported_tool_version": "3.11.0",
+      "binary_sha256": "13263ddaeeac9f327ace2ffad9923656d816da3dcd8dda4aab09ba8e6bb8c702",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-tool-nuclei.json",
+      "report_sha256": "97bc7aea66e52d51915a1bcd2bf9b495cb4a8a3d78098e285b8232a61914e7f3"
+    },
+    {
+      "kind": "tool",
+      "id": "syft",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "1.50.0",
+      "reported_tool_version": "1.50.0",
+      "binary_sha256": "502ea88d583cea3828903dedf85079a64de159cde419128bee1959e1c91882bd",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-tool-syft.json",
+      "report_sha256": "8f1d6bec65ffe73df1478e0a1bf39e79ad03aab248d2c0c1209e5d64602ccce5"
+    },
+    {
+      "kind": "capability",
+      "id": "cloud.review",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.72.0",
+      "reported_tool_version": "0.72.0",
+      "binary_sha256": "254ac5660a960c9b16b0a417bdfa26ec64853e232b43e736026bf68c446c84a5",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "4-capability-cloud-review.json",
+      "report_sha256": "18180b35b563eeef6e6ff95cd551968833c4664e8f14ce72f61aed5429f7dac5"
+    },
+    {
+      "kind": "capability",
+      "id": "container.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.116.1",
+      "reported_tool_version": "0.116.1",
+      "binary_sha256": "d8024dab523e0c7a194fa6cfeb72726bc723e9419e7236aa1162f4ddb96b310c",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "4-capability-container-scan.json",
+      "report_sha256": "10a792c0d0e9fad67f2d5c390145749ef45d40194d41ab298cf7d8453b83968c"
+    },
+    {
+      "kind": "capability",
+      "id": "dependency.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.116.1",
+      "reported_tool_version": "0.116.1",
+      "binary_sha256": "d8024dab523e0c7a194fa6cfeb72726bc723e9419e7236aa1162f4ddb96b310c",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "4-capability-dependency-scan.json",
+      "report_sha256": "8466b72847b764f9455d1c19c9d478feae51b10f8bc1a75bdce724f9fd11a20f"
+    },
+    {
+      "kind": "tool",
+      "id": "grype",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.116.1",
+      "reported_tool_version": "0.116.1",
+      "binary_sha256": "d8024dab523e0c7a194fa6cfeb72726bc723e9419e7236aa1162f4ddb96b310c",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "4-tool-grype.json",
+      "report_sha256": "6283ad2a2915b4b8fadad8397f4e4b48fdab015fc4dc48c163aaef898c98f8b7"
+    },
+    {
+      "kind": "tool",
+      "id": "trivy",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.72.0",
+      "reported_tool_version": "0.72.0",
+      "binary_sha256": "254ac5660a960c9b16b0a417bdfa26ec64853e232b43e736026bf68c446c84a5",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "4-tool-trivy.json",
+      "report_sha256": "cdd6e4a91bb864d3b5a85c2943e593237f28b991604b38102cb530d852cb6a4f"
+    },
+    {
+      "kind": "capability",
+      "id": "cloud.review",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.72.0",
+      "reported_tool_version": "0.72.0",
+      "binary_sha256": "639b6d4cf997bdcc4bf2cfceeb289063cb4cb17c7ee555cefad8722eba8215c6",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "5-capability-cloud-review.json",
+      "report_sha256": "0c3d72b7f7a9f93d3f85caf958ec2e4e97f19fdef30ba106d48fff62d8a19aa7"
+    },
+    {
+      "kind": "capability",
+      "id": "container.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.116.1",
+      "reported_tool_version": "0.116.1",
+      "binary_sha256": "47cfa1a026a155c66acfc2ce16157422c3bc9b7efa109492425d8ef3831606d2",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "5-capability-container-scan.json",
+      "report_sha256": "b63a32d8f78cc0aae82993e51b8c20bb53e14392714c09de43d425a1fd2b5eee"
+    },
+    {
+      "kind": "capability",
+      "id": "dependency.scan",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.116.1",
+      "reported_tool_version": "0.116.1",
+      "binary_sha256": "47cfa1a026a155c66acfc2ce16157422c3bc9b7efa109492425d8ef3831606d2",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "5-capability-dependency-scan.json",
+      "report_sha256": "c8252c6651b1181bcaa51105be5057852a684a4a4917541a93a8da3005e87c00"
+    },
+    {
+      "kind": "tool",
+      "id": "grype",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.116.1",
+      "reported_tool_version": "0.116.1",
+      "binary_sha256": "47cfa1a026a155c66acfc2ce16157422c3bc9b7efa109492425d8ef3831606d2",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "5-tool-grype.json",
+      "report_sha256": "b81e0c4f5256472ec6b8d2548ba6808ffd507ae9f39796e8f0b2a3b9b5a08646"
+    },
+    {
+      "kind": "tool",
+      "id": "trivy",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.72.0",
+      "reported_tool_version": "0.72.0",
+      "binary_sha256": "639b6d4cf997bdcc4bf2cfceeb289063cb4cb17c7ee555cefad8722eba8215c6",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "5-tool-trivy.json",
+      "report_sha256": "be5e73e2abd4dc7a767e097648de748c84e0fd5c1fa7011553d6a7836d27f79d"
+    }
+  ],
+  "artifact_audits": [
+    {
+      "profile": "analysis",
+      "platform": "linux/arm64",
+      "report": "artifact-audit-0.json",
+      "report_sha256": "7c882361a4ed95653c60a7f85738d863929058bba82e6b22abf5ab88d2001689"
+    },
+    {
+      "profile": "analysis",
+      "platform": "linux/amd64",
+      "report": "artifact-audit-1.json",
+      "report_sha256": "6f9a70a8075971eedf7cba8955e65fa4caaa433de82107ee24f0ddc8106f32a2"
+    },
+    {
+      "profile": "core",
+      "platform": "linux/arm64",
+      "report": "artifact-audit-2.json",
+      "report_sha256": "11fffddf391cbefde63068ae748f00ea8823f759977b7d6bd2ce975c7c21c3f7"
+    },
+    {
+      "profile": "core",
+      "platform": "linux/amd64",
+      "report": "artifact-audit-3.json",
+      "report_sha256": "0fa3d69ee414de8bf889d3b04bba8822cf430e4657437bdc8ddca2d8193f8216"
+    },
+    {
+      "profile": "supplychain",
+      "platform": "linux/arm64",
+      "report": "artifact-audit-4.json",
+      "report_sha256": "fbd8c3a33a66ebc3af2a355903b08eade96f78a424fb452b1b51c33ab7a764e5"
+    },
+    {
+      "profile": "supplychain",
+      "platform": "linux/amd64",
+      "report": "artifact-audit-5.json",
+      "report_sha256": "fc67c9c291f4016902a6ae4147794919fa939e3bd9500e0fc68565acc8ef78ab"
+    }
+  ]
+}

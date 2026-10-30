@@ -1,14 +1,19 @@
 {
   "schema_version": 1,
-  "source_sha256": "b268bf5c4a579537d4fbe8184d9416de1788c599b5df52644ba708d7763e1ad6",
+  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
   "release_ready": false,
   "counts": {
     "tools": 84,
     "capabilities": 71
   },
-  "validated_items": 0,
+  "validated_items": 38,
   "blockers": [
-    "Missing or stale validation: evidence must match the current product source digest"
+    "core/linux/amd64: final artifact security audit is incomplete or has blocking findings",
+    "core/linux/arm64: final artifact security audit is incomplete or has blocking findings",
+    "analysis/linux/amd64: final artifact security audit is incomplete or has blocking findings",
+    "analysis/linux/arm64: final artifact security audit is incomplete or has blocking findings",
+    "supplychain/linux/amd64: final artifact security audit is incomplete or has blocking findings",
+    "supplychain/linux/arm64: final artifact security audit is incomplete or has blocking findings"
   ],
   "items": [
     {
@@ -44,13 +49,8 @@
     {
       "kind": "tool",
       "id": "anew",
-      "ready": false,
-      "blockers": [
-        "no executable capability mapping",
-        "no real-operation validation evidence",
-        "operation-specific normalization is not validated",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -200,11 +200,8 @@
     {
       "kind": "tool",
       "id": "dnsx",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -229,31 +226,20 @@
     {
       "kind": "tool",
       "id": "ffuf",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
       "id": "gf",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "operation implementation is incomplete",
-        "operation-specific normalization is not validated",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
       "id": "gitleaks",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -279,20 +265,14 @@
     {
       "kind": "tool",
       "id": "gosec",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
       "id": "grype",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -317,11 +297,8 @@
     {
       "kind": "tool",
       "id": "httpx",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -356,20 +333,14 @@
     {
       "kind": "tool",
       "id": "jsluice",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
       "id": "katana",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -396,12 +367,8 @@
     {
       "kind": "tool",
       "id": "linkfinder",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "operation-specific normalization is not validated",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -490,11 +457,8 @@
     {
       "kind": "tool",
       "id": "naabu",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -519,20 +483,14 @@
     {
       "kind": "tool",
       "id": "nmap",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
       "id": "nuclei",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -610,11 +568,8 @@
     {
       "kind": "tool",
       "id": "semgrep",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -712,8 +667,9 @@
       "id": "subfinder",
       "ready": false,
       "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
+        "missing required platform evidence: linux/amd64",
+        "missing required platform evidence: linux/arm64",
+        "no real-operation validation evidence"
       ]
     },
     {
@@ -730,11 +686,8 @@
     {
       "kind": "tool",
       "id": "syft",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -770,20 +723,14 @@
     {
       "kind": "tool",
       "id": "trivy",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
       "id": "trufflehog",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -940,10 +887,8 @@
     {
       "kind": "capability",
       "id": "classify.endpoint",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -956,10 +901,8 @@
     {
       "kind": "capability",
       "id": "cloud.review",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -972,18 +915,14 @@
     {
       "kind": "capability",
       "id": "code.audit",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
       "id": "container.scan",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1012,18 +951,14 @@
     {
       "kind": "capability",
       "id": "cve.lookup",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
       "id": "dependency.scan",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1036,10 +971,8 @@
     {
       "kind": "capability",
       "id": "dns.analyse",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1095,18 +1028,14 @@
     {
       "kind": "capability",
       "id": "js.analyse",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
       "id": "js.extract",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1127,10 +1056,8 @@
     {
       "kind": "capability",
       "id": "mitre.map",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1143,11 +1070,8 @@
     {
       "kind": "capability",
       "id": "pattern.detect",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "operation implementation is incomplete"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1204,10 +1128,8 @@
     {
       "kind": "capability",
       "id": "port.scan",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1279,34 +1201,26 @@
     {
       "kind": "capability",
       "id": "report.generate",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
       "id": "sbom.generate",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
       "id": "secret.scan",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
       "id": "service.enumerate",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1352,10 +1266,8 @@
     {
       "kind": "capability",
       "id": "validate.finding",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1392,10 +1304,8 @@
     {
       "kind": "capability",
       "id": "web.content.discover",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1408,18 +1318,14 @@
     {
       "kind": "capability",
       "id": "web.map",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
       "id": "web.scan",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",

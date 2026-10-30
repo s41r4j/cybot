@@ -1,0 +1,106 @@
+{
+  "binary_sha256": "7aca189f1866513ef18f1420fdf0b5d192b195907d8dfe069763ff9e9302f60e",
+  "cases": [
+    {
+      "type": "positive",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Gitleaks and TruffleHog both detect an invalid synthetic token; retained evidence is redacted."
+    },
+    {
+      "type": "negative",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Both scanners inspect clean source with no findings or errors."
+    },
+    {
+      "type": "failure",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Both real executables reject invalid configuration or missing input."
+    }
+  ],
+  "id": "trufflehog",
+  "kind": "tool",
+  "platform": "linux/arm64",
+  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
+  "tool": "trufflehog",
+  "runtime": {
+    "data": {
+      "linkfinder-python": "6f58830a1ae8d6e58d6ce82374dcec57932f9bad262ff8834b0be89f0eb22d2c",
+      "javascript-source-manifest": "0a7f28f96f071a4f9a1f0bda65ca66cd2691358352b261b5a361726903eb309f",
+      "jsluice-source-build": "0303e1400d70b2ebc7b4c134876a1b4e985184088881930556c5df52dc33c59e",
+      "jsluice-compiler": "178ab26afdcbc0bb8ec3224ed010811e84293e9bb672e274851c60d2abe1035e"
+    },
+    "packages": {
+      "jsbeautifier": "1.15.4",
+      "editorconfig": "0.17.0",
+      "six": "1.17.0"
+    },
+    "binaries": {
+      "cybot": {
+        "path": "/opt/cybot/bin/cybot",
+        "sha256": "b4950f27cee61fb47f1974d7156e6368e31cf5204d3ab051fad2c510d611b5d2",
+        "reported_version": "0.1.0"
+      },
+      "gosec": {
+        "path": "/opt/cybot/bin/gosec",
+        "sha256": "cc3fec29a2ffd8c3d6c070c212e8f9ace891997335da18463ba29715128a77a0",
+        "reported_version": "2.28.0"
+      },
+      "semgrep": {
+        "path": "/usr/bin/semgrep",
+        "sha256": "418846853224d55bc0b3049db10b562b7c83e27c28892c4721dc66f4c69ebf4b",
+        "reported_version": "1.172.0"
+      },
+      "semgrep-core": {
+        "path": "/usr/lib/python3.12/site-packages/semgrep/bin/semgrep-core",
+        "sha256": "617cde91d142f3b15bef27f1d2dd9fc3ee34fe84ea0fa9edb310e88d3660cabb",
+        "reported_version": "1.172.0"
+      },
+      "go": {
+        "path": "/opt/go/bin/go",
+        "sha256": "110394f41cd6ab0a3da928c16753a1fa7e6d53823684d4240508729c4172c280",
+        "reported_version": "1.26.10"
+      },
+      "gitleaks": {
+        "path": "/opt/cybot/bin/gitleaks",
+        "sha256": "c84426117283c200adfcdf340c092c7a614f44bb2345c0c50b09230d2719cc31",
+        "reported_version": "8.30.1"
+      },
+      "trufflehog": {
+        "path": "/opt/cybot/bin/trufflehog",
+        "sha256": "7aca189f1866513ef18f1420fdf0b5d192b195907d8dfe069763ff9e9302f60e",
+        "reported_version": "3.96.0"
+      },
+      "jsluice": {
+        "path": "/opt/cybot/bin/jsluice",
+        "sha256": "3a3109a7edcdfe9477a98654f1ba4b9d392856cd453d3534bed1fbf8052705e9",
+        "reported_version": "(devel)",
+        "release_version": "0.0.0-20240110145140-0ddfab153e06"
+      },
+      "linkfinder": {
+        "path": "/opt/cybot/bin/linkfinder",
+        "sha256": "cf5bc50b8b76e2385e3815ccb5222845b25b7d3b6c7bc86faabe5f33d0b39aa9",
+        "reported_version": "git-1debac5dace4"
+      },
+      "linkfinder-engine": {
+        "path": "/opt/cybot/lib/linkfinder/linkfinder.py",
+        "sha256": "5d57612baba7f0a9aaae952187a7e8274cff341c0d673cb289daab3302ac4961",
+        "reported_version": "git-1debac5dace4"
+      },
+      "gf": {
+        "path": "/opt/cybot/bin/gf",
+        "sha256": "7c99383e0406a6b9e3d9cf6ba3c97704199d930016a2fa8b4fc77728af6c8b67",
+        "reported_version": "0.0.0-20200618134122-dcd4c361f9f5"
+      },
+      "anew": {
+        "path": "/opt/cybot/bin/anew",
+        "sha256": "ad22df574c4af1e93869f7168b0101fa6b754dc6e1e43135da36d5a8e3403e1f",
+        "reported_version": "0.1.1"
+      }
+    },
+    "image_id": "sha256:a566ec56f337eaab8d6bef7293ee344815f5299054c2356f81bfab1245c80647",
+    "profile": "analysis"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "binary_sha256": "47cfa1a026a155c66acfc2ce16157422c3bc9b7efa109492425d8ef3831606d2",
+  "cases": [
+    {
+      "type": "positive",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Both pinned offline databases identify vulnerable lodash 4.17.20 from a local lockfile."
+    },
+    {
+      "type": "negative",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "A synthetic package version outside the vulnerable range produces no vulnerability finding."
+    },
+    {
+      "type": "failure",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Both real scanners reject invalid scan options."
+    }
+  ],
+  "id": "dependency.scan",
+  "kind": "capability",
+  "platform": "linux/amd64",
+  "source_sha256": "f3b68d53fc496af5e3869eb59f443754f52c330307f546ea2f404988bf85eaa3",
+  "tool": "grype",
+  "runtime": {
+    "binaries": {
+      "cybot": {
+        "path": "/opt/cybot/bin/cybot",
+        "sha256": "530f276bb0bdf095c63a6234de04dfeb9174ed9525512ff0ce2180805aa1dcd5",
+        "reported_version": "0.1.0"
+      },
+      "trivy": {
+        "path": "/opt/cybot/bin/trivy",
+        "sha256": "639b6d4cf997bdcc4bf2cfceeb289063cb4cb17c7ee555cefad8722eba8215c6",
+        "reported_version": "0.72.0",
+        "release_version": "0.72.0"
+      },
+      "grype": {
+        "path": "/opt/cybot/bin/grype",
+        "sha256": "47cfa1a026a155c66acfc2ce16157422c3bc9b7efa109492425d8ef3831606d2",
+        "reported_version": "0.116.1",
+        "release_version": "0.116.1"
+      },
+      "syft": {
+        "path": "/opt/cybot/bin/syft",
+        "sha256": "502ea88d583cea3828903dedf85079a64de159cde419128bee1959e1c91882bd",
+        "reported_version": "1.50.0",
+        "release_version": "1.50.0"
+      }
+    },
+    "packages": {},
+    "data": {
+      "trivy-db": {
+        "sha256": "faa015429c6ebd9c9a672be99cfbd5aecec2eade21d1d6e59d4dc091dc752ff3",
+        "source": {
+          "url": "https://ghcr.io/v2/aquasecurity/trivy-db/blobs/sha256:65a9491288410e43d64adea0b81659e36bb7435dda543774c4255356f2f3cd60",
+          "size": 136428356,
+          "sha256": "65a9491288410e43d64adea0b81659e36bb7435dda543774c4255356f2f3cd60",
+          "oci_repository": "aquasecurity/trivy-db",
+          "created": "2026-10-28T13:09:55Z"
+        }
+      },
+      "grype-db": {
+        "sha256": "5a1cc6ce1c05b9dc7ece5bba1dd7e88f33c8cdc74847d12ab56e45260a07dfbf",
+        "source": {
+          "url": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-10-28T00:24:28Z_1793168610.tar.zst",
+          "size": 196243021,
+          "sha256": "b08902b91738f1a9bc7fd61942f331d8e5e76a5df0c0b5f8c17c18bd787ee278",
+          "user_agent": "grype/0.116.1",
+          "created": "2026-10-28T06:23:30Z",
+          "schema_version": "v6.1.10"
+        }
+      }
+    },
+    "image_id": "sha256:dd782fbc0a5af439f1dcf929662b757eb8599b8bc8e0465335c625796edb8a7e",
+    "profile": "supplychain"
+  }
+}
