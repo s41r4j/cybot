@@ -265,13 +265,14 @@
   title: WhatWeb
   description: Web technology fingerprinting and identification.
   purpose: Identify web technologies, CMS, frameworks, and server software on targets.
-  version: 0.5.5
+  version: 0.6.4
+  supported_os: [linux]
   kind: native
   binary: whatweb
   source_url: https://github.com/urbanadventurer/WhatWeb
   license: GPL-2.0
   capabilities: [tech.fingerprint, web.map]
-  default_args: [--log-json, /dev/stdout, --no-errors, -q]
+  default_args: [--log-json, /dev/stdout, --follow-redirect, never, -q]
   output_format: json
   parser: whatweb.json.v1
   risk: active-http
@@ -280,28 +281,30 @@
   title: WAFW00F
   description: Web Application Firewall detection.
   purpose: Identify and fingerprint WAF/IDS/IPS/CDN products protecting web applications.
-  version: 2.2.0
+  version: 2.4.2
+  supported_os: [linux]
   kind: native
   binary: wafw00f
   source_url: https://github.com/EnableSecurity/wafw00f
   license: BSD-3-Clause
   capabilities: [waf.detect]
-  default_args: [-a]
-  output_format: text
-  parser: wafw00f.text.v1
+  default_args: [-a, --noredirect, --format, json, --output, "-"]
+  output_format: json
+  parser: wafw00f.json.v1
   risk: active-http
   requires_network: true
 - id: gobuster
   title: Gobuster
   description: Directory, file, DNS, and VHOST brute forcing.
   purpose: Discover hidden paths, files, subdomains, and virtual hosts on web servers.
-  version: 3.6.0
+  version: 3.8.2
+  supported_os: [linux]
   kind: native
   binary: gobuster
   source_url: https://github.com/OJ/gobuster
   license: Apache-2.0
   capabilities: [dir.bruteforce, web.content.discover, dns.enum]
-  default_args: [dir, --no-error, -q]
+  default_args: [dir, --expanded, --no-color, --no-progress, -q]
   output_format: text
   parser: gobuster.text.v1
   risk: active-http-high

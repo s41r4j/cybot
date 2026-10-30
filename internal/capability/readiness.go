@@ -60,7 +60,7 @@ func normalization(tool string) string {
 		return "built-in"
 	case "subfinder", "amass", "dnsx", "nmap", "naabu", "httpx", "katana", "ffuf", "nuclei",
 		"gitleaks", "trufflehog", "gosec", "semgrep", "trivy", "syft", "grype", "whatweb",
-		"testssl", "sqlmap", "jsluice", "linkfinder", "corscanner", "wpscan", "agent-browser", "zap", "gf", "anew":
+		"testssl", "sqlmap", "jsluice", "linkfinder", "corscanner", "wpscan", "agent-browser", "zap", "gf", "anew", "wafw00f", "gobuster":
 		return "tool-specific"
 	default:
 		return "observations-only"

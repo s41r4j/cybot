@@ -30,7 +30,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `ffuf` | adapter | linux | dir.bruteforce, web.content.discover |
 | `gf` | adapter | linux | pattern.detect |
 | `gitleaks` | adapter | linux | secret.scan |
-| `gobuster` | adapter | undeclared | dir.bruteforce |
+| `gobuster` | adapter | linux | dir.bruteforce |
 | `gophish` | not-implemented | undeclared | phishing.campaign, social.engineer |
 | `gosec` | adapter | linux | code.audit |
 | `grype` | adapter | linux | container.scan, dependency.scan |
@@ -83,9 +83,9 @@ Generated from the executable command surface. All entries remain in the full-re
 | `theharvester` | adapter | undeclared | email.harvest, personnel.osint |
 | `trivy` | adapter | linux | cloud.review, container.scan, dependency.scan |
 | `trufflehog` | adapter | linux | secret.scan |
-| `wafw00f` | adapter | undeclared | waf.detect |
+| `wafw00f` | adapter | linux | waf.detect |
 | `waybackurls` | adapter | undeclared | **no executable mapping** |
-| `whatweb` | adapter | undeclared | tech.fingerprint |
+| `whatweb` | adapter | linux | tech.fingerprint |
 | `winpeas` | adapter | windows | post.recon |
 | `wpscan` | adapter | undeclared | cms.detect |
 | `xsstrike` | adapter | undeclared | xss.detect |

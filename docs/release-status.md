@@ -67,6 +67,18 @@ created by the offline validation workflow.
 
 ## Expanded operation evidence
 
+The optional `web` profile pins WhatWeb 0.6.4, WAFW00F 2.4.2, Gobuster 3.8.2,
+HTTPx and FFUF. Its build runs real loopback positive/negative/failure controls
+for `tech.fingerprint`, `waf.detect` and `dir.bruteforce`. Additional controls
+reject untrusted TLS, accept an explicitly trusted fixture CA, prevent the two
+fingerprint engines from following redirects, and retain partial Gobuster
+matches when request errors occur. TLS verification is enabled by exact-input
+source patches in WhatWeb and WAFW00F; this does not assert the same property
+for every other scanner. Gobuster's quiet-mode patch preserves request errors.
+Native diagnostic tests pass; fresh Linux container evidence is still required
+before these three additions count in the release totals. The profile uses
+the same runtime and storage limits; operation validation has networking disabled.
+
 `python3 scripts/toolbox.py --profile analysis build` builds a separate pinned
 Semgrep/Gosec image with the Go SDK and local rules. Runtime networking and Go
 dependency downloads are disabled. The profile retains the same 2 GiB RAM,

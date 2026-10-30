@@ -120,8 +120,38 @@ jobs:
             .cybot/toolbox/analysis/probe-error.txt
             .cybot/toolbox/analysis/validation/
             .cybot/toolbox/analysis/security/
+  web-runtime:
+    name: Web engine fixtures (${{ matrix.runner }})
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    env:
+      CYBOT_VERSION: 0.1.0-dev
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: '1.26.10'
+      - run: python3 scripts/toolbox.py --profile web build
+      - name: Audit final installed Go executables
+        continue-on-error: true
+        run: python3 scripts/toolbox.py --profile web audit
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: web-validation-${{ matrix.runner }}
+          path: |
+            .cybot/toolbox/web/web-tests.json
+            .cybot/toolbox/web/web-tests.txt
+            .cybot/toolbox/web/runtime.lock.json
+            .cybot/toolbox/web/probe-error.txt
+            .cybot/toolbox/web/validation/
+            .cybot/toolbox/web/security/
   operation-readiness:
-    needs: [compact-runtime, analysis-runtime, supplychain-runtime]
+    needs: [compact-runtime, analysis-runtime, supplychain-runtime, web-runtime]
     if: always()
     runs-on: ubuntu-latest
     steps:

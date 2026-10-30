@@ -69,6 +69,10 @@ func (c externalCapability) Definition() schema.CapabilityDefinition {
 		d.Documentation.Description = "Extract HTTP(S) endpoint candidates and unresolved relative paths from one bounded local JavaScript file using JSLuice and LinkFinder."
 		d.Documentation.Limitations = append(d.Documentation.Limitations, "Target must be a regular local file no larger than 1 MiB.", "Relative paths remain observations because a local file does not establish a web origin; extracted candidates do not prove reachability or a vulnerability.")
 	}
+	if c.ID() == "tech.fingerprint" || c.ID() == "waf.detect" || c.ID() == "dir.bruteforce" {
+		d.Stability = "experimental"
+		d.Documentation.Limitations = append(d.Documentation.Limitations, "Technology and WAF matches are signature candidates; content-discovery responses do not establish a vulnerability.", "The profile's patched WhatWeb and WAFW00F engines verify TLS certificates. These web adapters do not follow redirects; unsupported certificates fail explicitly.")
+	}
 	if c.ID() == "container.scan" {
 		d.Documentation.Limitations = append(d.Documentation.Limitations, "Local sources must be Docker-save archive files or OCI image-layout directories; unpack OCI tarballs into a layout before scanning.", "Registry references require reachable registries and any necessary credentials; offline profiles support local archives/layouts.")
 	}
@@ -154,6 +158,10 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 				return combined, fmt.Errorf("normalize %s output: %w", step.ID, parseErr)
 			}
 			continue
+		}
+		if step.ID == "gobuster" && len(bytes.TrimSpace(out.Stderr)) != 0 {
+			normalized.Status = "partial"
+			normalized.Errors = append(normalized.Errors, schema.RunError{Tool: step.ID, Code: "TOOL_REPORTED_ERRORS", Message: "Gobuster reported request errors; retained matched responses are incomplete."})
 		}
 		evidenceBytes, mediaType, redactErr := evidenceOutput(step.ID, out.Stdout)
 		if redactErr != nil {
@@ -565,14 +573,14 @@ func nmapArgs(target string, _ schema.RunRequest) []string {
 	return []string{"-sV", "-sC", "-oX", "-", "-T4", "--top-ports", "1000", target}
 }
 func whatwebArgs(target string, _ schema.RunRequest) []string {
-	return []string{"--log-json", "/dev/stdout", "--no-errors", "-q", target}
+	return []string{"--log-json", "/dev/stdout", "--color", "never", "--follow-redirect", "never", "--aggression", "1", "--max-threads", "2", "--open-timeout", "5", "--read-timeout", "5", "-q", target}
 }
 func wafw00fArgs(target string, _ schema.RunRequest) []string {
-	return []string{"-a", "-o", "-", target}
+	return []string{"-a", "--noredirect", "--no-colors", "--timeout", "5", "--format", "json", "--output", "-", target}
 }
 func gobusterArgs(target string, _ schema.RunRequest) []string {
 	base := strings.TrimRight(target, "/")
-	return []string{"dir", "-u", base, "-w", "/usr/share/wordlists/dirb/common.txt", "--no-error", "-q"}
+	return []string{"dir", "-u", base, "-w", "/opt/cybot/share/seclists/Discovery/Web-Content/common.txt", "--expanded", "--no-color", "--no-progress", "--threads", "2", "--delay", "200ms", "--timeout", "5s", "-q"}
 }
 func testsslArgs(target string, _ schema.RunRequest) []string {
 	return []string{"--jsonfile-pretty", "/dev/stdout", "--quiet", target}

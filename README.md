@@ -311,6 +311,8 @@ python3 scripts/toolbox.py --profile analysis build
 python3 scripts/toolbox.py --profile analysis run cybot run code.audit --target /data/source --approve
 python3 scripts/toolbox.py --profile supplychain build
 python3 scripts/toolbox.py --profile supplychain run cybot run cloud.review --target /data/terraform --approve
+python3 scripts/toolbox.py --profile web build
+python3 scripts/toolbox.py --profile web --network bridge run cybot run tech.fingerprint --target https://YOUR-AUTHORIZED-TARGET --approve
 ```
 
 Analysis includes Semgrep, local rules, Gosec, Go, Gitleaks, TruffleHog, GF and Anew.

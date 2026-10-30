@@ -52,9 +52,13 @@ def patch_source(root, files):
         if hashlib.sha256(original).hexdigest() != spec['sha256']:
             raise RuntimeError('Upstream compatibility patch input changed: '+name)
         data = original
-        for before, after in spec['replacements']:
+        for change in spec['replacements']:
+            if len(change) not in (2, 3):
+                raise RuntimeError("Invalid compatibility patch instruction: "+name)
+            before, after = change[:2]
+            expected_count = change[2] if len(change) == 3 else 1
             before, after = before.encode(), after.encode()
-            if not before or data.count(before) != 1:
+            if not before or not 1 <= expected_count <= 10 or data.count(before) != expected_count:
                 raise RuntimeError('Compatibility patch insertion point changed: '+name)
             data = data.replace(before, after)
         path.write_bytes(data)

@@ -30,7 +30,7 @@ var parsers = map[string]toolParser{
 	"naabu":         parseNaabu,
 	"httpx":         parseEndpoints,
 	"katana":        parseEndpoints,
-	"ffuf":          parseEndpoints,
+	"ffuf":          parseFFUF,
 	"nuclei":        parseNuclei,
 	"nikto":         parseJSONPassthrough,
 	"gitleaks":      parseGitleaks,
@@ -41,8 +41,8 @@ var parsers = map[string]toolParser{
 	"syft":          parseSBOM,
 	"grype":         parseGrype,
 	"whatweb":       parseWhatWeb,
-	"wafw00f":       parseTextLines,
-	"gobuster":      parseTextLines,
+	"wafw00f":       parseWafw00f,
+	"gobuster":      parseGobuster,
 	"testssl":       parseTestSSL,
 	"dirsearch":     parseEndpoints,
 	"sqlmap":        parseSQLMap,
@@ -721,40 +721,6 @@ func texts(v any) []string {
 		out = append(out, s)
 	}
 	return out
-}
-
-func parseWhatWeb(data []byte, req schema.RunRequest) (schema.Result, error) {
-	var docs []map[string]any
-	if err := json.Unmarshal(data, &docs); err != nil {
-		var single map[string]any
-		if err2 := json.Unmarshal(data, &single); err2 != nil {
-			return emptyResult(), fmt.Errorf("whatweb: %w", err)
-		}
-		docs = []map[string]any{single}
-	}
-	r := emptyResult()
-	for _, doc := range docs {
-		target := text(doc["target"])
-		platform := text(doc["platform"])
-		if target == "" {
-			return emptyResult(), fmt.Errorf("whatweb: report record lacks target")
-		}
-		if target != "" || platform != "" {
-			techs := []string{}
-			if platform != "" {
-				techs = append(techs, platform)
-			}
-			for _, t := range texts(doc["plugins"]) {
-				if t != "" {
-					techs = append(techs, t)
-				}
-			}
-			r.Endpoints = append(r.Endpoints, schema.Endpoint{URL: target, Technology: techs})
-		}
-	}
-	r.Summary = fmt.Sprintf("Fingerprinted %d target(s).", len(r.Endpoints))
-	r.Confidence = 0.75
-	return r, nil
 }
 
 func parseTextLines(data []byte, req schema.RunRequest) (schema.Result, error) {

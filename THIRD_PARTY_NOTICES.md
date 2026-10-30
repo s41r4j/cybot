@@ -47,7 +47,7 @@ MIT project license does not relicense third-party components.
 
 ## Patched upstream Go tools
 
-HTTPx, DNSx, Katana, FFUF, Subfinder, Gitleaks, Gosec, Naabu, Nuclei, Syft, Trivy, Grype and TruffleHog are rebuilt from checksum-verified
+HTTPx, DNSx, Katana, FFUF, Subfinder, Gitleaks, Gosec, Naabu, Nuclei, Syft, Trivy, Grype, TruffleHog and Gobuster are rebuilt from checksum-verified
 upstream Go modules with Go 1.26.10 and the committed module locks in
 `docker/toolbox/patched-go/`. The original release archive hashes remain as
 upstream provenance; these rebuilt executables have their own measured hashes.
@@ -77,3 +77,12 @@ upstream AGPL-3.0 license; the verified source module, dependency locks and buil
 recipe identify its corresponding source. Upstream source and dependency
 licenses accompany the image. Trivy preserves its upstream JSONv2 build mode;
 its VEX and signing dependency updates remove the retired cryptography paths.
+
+The web image includes WhatWeb 0.6.4 (GPL-2.0), its complete interpreted source,
+and pinned Addressable, Public Suffix and IPAddr gems with their license files.
+WAFW00F 2.4.2 retains its BSD-3-Clause license and pinned Python wheel notices.
+Exact source and package hashes are recorded in `docker/toolbox/web.lock.json`.
+Hash-checked patches enable certificate verification in both WhatWeb TLS
+transports and WAFW00F's request engine. Gobuster's quiet-mode patch preserves
+request-error diagnostics; explicit error suppression remains an upstream option.
+The committed patch recipes and dependency locks identify corresponding source.

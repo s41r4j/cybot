@@ -416,9 +416,11 @@
     },
     {
       "id": "gobuster",
-      "version": "3.6.0",
-      "platforms": [],
-      "normalization": "observations-only",
+      "version": "3.8.2",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
       "implementation": "adapter",
       "resource_scope": "target",
       "capabilities": [
@@ -426,9 +428,7 @@
       ],
       "validation": "not-certified",
       "blockers": [
-        "pinned binary/version and fresh real-operation evidence are required",
-        "supported operating systems have not been explicitly declared",
-        "operation-specific normalization is unverified"
+        "pinned binary/version and fresh real-operation evidence are required"
       ]
     },
     {
@@ -1351,9 +1351,11 @@
     },
     {
       "id": "wafw00f",
-      "version": "2.2.0",
-      "platforms": [],
-      "normalization": "observations-only",
+      "version": "2.4.2",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
       "implementation": "adapter",
       "resource_scope": "target",
       "capabilities": [
@@ -1361,9 +1363,7 @@
       ],
       "validation": "not-certified",
       "blockers": [
-        "pinned binary/version and fresh real-operation evidence are required",
-        "supported operating systems have not been explicitly declared",
-        "operation-specific normalization is unverified"
+        "pinned binary/version and fresh real-operation evidence are required"
       ]
     },
     {
@@ -1384,8 +1384,10 @@
     },
     {
       "id": "whatweb",
-      "version": "0.5.5",
-      "platforms": [],
+      "version": "0.6.4",
+      "platforms": [
+        "linux"
+      ],
       "normalization": "tool-specific",
       "implementation": "adapter",
       "resource_scope": "target",
@@ -1394,8 +1396,7 @@
       ],
       "validation": "not-certified",
       "blockers": [
-        "pinned binary/version and fresh real-operation evidence are required",
-        "supported operating systems have not been explicitly declared"
+        "pinned binary/version and fresh real-operation evidence are required"
       ]
     },
     {
@@ -1738,8 +1739,7 @@
       ],
       "validation": "not-certified",
       "blockers": [
-        "fresh platform-specific end-to-end evidence is required",
-        "gobuster: operation-specific normalization is unverified"
+        "fresh platform-specific end-to-end evidence is required"
       ]
     },
     {
@@ -2262,8 +2262,7 @@
       ],
       "validation": "not-certified",
       "blockers": [
-        "fresh platform-specific end-to-end evidence is required",
-        "wafw00f: operation-specific normalization is unverified"
+        "fresh platform-specific end-to-end evidence is required"
       ]
     },
     {

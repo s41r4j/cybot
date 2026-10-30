@@ -19,7 +19,7 @@ def audit_image():
     measured = toolbox.probe(image)
     output = toolbox.STATE/'security'
     output.mkdir(parents=True, exist_ok=True)
-    excluded = {'core': {'nmap'}, 'analysis': {'semgrep', 'semgrep-core', 'linkfinder', 'linkfinder-engine'}, 'supplychain': set()}[toolbox.PROFILE]
+    excluded = {'core': {'nmap'}, 'analysis': {'semgrep', 'semgrep-core', 'linkfinder', 'linkfinder-engine'}, 'supplychain': set(), 'web': {'whatweb', 'whatweb-engine', 'wafw00f', 'wafw00f-engine', 'ruby', 'python'}}[toolbox.PROFILE]
     names = set(measured['binaries']) - excluded
     lock_root = toolbox.ROOT/'docker/toolbox/patched-go'
     source_lock = json.loads((lock_root/'manifest.json').read_text())

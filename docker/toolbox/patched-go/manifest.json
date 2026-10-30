@@ -151,6 +151,22 @@
       "sum": "h1:KO9enwT8Zq5RNEQlTpuSCQb/eRSBc04tyxs/UkPzR2c=",
       "package": ".",
       "ldflags": "-X github.com/trufflesecurity/trufflehog/v3/pkg/version.BuildVersion=3.96.0"
+    },
+    "gobuster": {
+      "module": "github.com/OJ/gobuster/v3@v3.8.2",
+      "sum": "h1:zUjQVIuqZ2HqHIMaoRHhJ704DzeD8Rmxp8DJBQ0/Z5Q=",
+      "package": ".",
+      "source_patches": {
+        "cli/gobuster.go": {
+          "sha256": "89828a1693a6ea2c7c8fc536fd9b877a6e4c55b4dc51977caa839257bbee6fd8",
+          "replacements": [
+            [
+              "if !g.Opts.Quiet && !g.Opts.NoError {",
+              "if !g.Opts.NoError {"
+            ]
+          ]
+        }
+      }
     }
   }
 }
