@@ -67,6 +67,16 @@ created by the offline validation workflow.
 
 ## Expanded operation evidence
 
+The image audit now also builds source-checked Syft/Grype scanners, exports the
+immutable operation-tested image and inspects installed OS/language packages
+inside network-isolated containers. A separately pinned database is checked for
+age and integrity. Real synthetic image controls cover affected OpenSSL/Lodash
+versions, an empty-match fixture and a malformed archive. Findings, suppressed
+matches, unlisted Go executables, Cgo dependencies and unmapped standalone
+components prevent a clean result. These package checks are undergoing their
+first Linux pipeline validation; they do not clear the existing release block.
+
+
 The optional `browser` profile pins the official agent-browser 0.40.0 Linux
 assets and Chromium 156 packages. Browser operations use fresh anonymous
 sessions, ignore host browser/provider configuration, restrict requests to the

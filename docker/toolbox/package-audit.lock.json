@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "go_tools": {
+    "syft": "1.50.0",
+    "grype": "0.116.1"
+  },
+  "database": {
+    "url": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-10-30T00:25:15Z_1793341408.tar.zst",
+    "size": 197159249,
+    "sha256": "1e1b9cf2cbfaf16b770e4d75d7beb4840dc4254ca2281682fe5ec3700a4251a8",
+    "user_agent": "grype/0.116.1",
+    "created": "2026-10-30T06:23:28Z",
+    "schema_version": "v6.1.10"
+  },
+  "max_database_age_hours": 72,
+  "native_components": {
+    "core": [
+      "nmap"
+    ],
+    "analysis": [
+      "semgrep",
+      "semgrep-core",
+      "linkfinder",
+      "linkfinder-engine"
+    ],
+    "supplychain": [],
+    "web": [
+      "whatweb",
+      "whatweb-engine",
+      "wafw00f",
+      "wafw00f-engine",
+      "ruby",
+      "python"
+    ],
+    "browser": [
+      "agent-browser",
+      "chromium",
+      "chromium-launcher",
+      "python"
+    ]
+  }
+}

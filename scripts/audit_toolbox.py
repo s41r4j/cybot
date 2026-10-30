@@ -19,14 +19,16 @@ def audit_image():
     measured = toolbox.probe(image)
     output = toolbox.STATE/'security'
     output.mkdir(parents=True, exist_ok=True)
-    excluded = {'core': {'nmap'}, 'analysis': {'semgrep', 'semgrep-core', 'linkfinder', 'linkfinder-engine'}, 'supplychain': set(), 'browser': {'agent-browser', 'chromium', 'chromium-launcher', 'python'}, 'web': {'whatweb', 'whatweb-engine', 'wafw00f', 'wafw00f-engine', 'ruby', 'python'}}[toolbox.PROFILE]
+    package_lock = json.loads((toolbox.ROOT/'docker/toolbox/package-audit.lock.json').read_text())
+    excluded = set(package_lock['native_components'][toolbox.PROFILE])
     names = set(measured['binaries']) - excluded
     lock_root = toolbox.ROOT/'docker/toolbox/patched-go'
     source_lock = json.loads((lock_root/'manifest.json').read_text())
     report = {'schema_version': 1, 'source_sha256': source_digest(),
               'checked_at': datetime.now(timezone.utc).isoformat(),
               'profile': toolbox.PROFILE, 'platform': 'linux/'+toolbox.ARCH,
-              'scope': 'compiled-go-executables', 'status': 'failed',
+              'runtime': measured,
+              'scope': 'compiled Go plus installed OS/language packages; native coverage gaps remain explicit', 'status': 'failed',
               'final_security_ready': False, 'os_packages': {'status': 'not-audited'},
               'unscanned_native_components': sorted(excluded), 'binaries': {}}
     try:
@@ -94,9 +96,22 @@ def audit_image():
                 if cid is not None:
                     toolbox.docker('rm', cid)
                 toolbox.monitored(['go', 'clean', '-modcache'], env=env, timeout_seconds=180)
-            report['status'] = 'passed' if report['binaries'] and all(row['status'] == 'passed' for row in report['binaries'].values()) else 'blocked'
+            go_ready = bool(report['binaries']) and all(row['status']=='passed' for row in report['binaries'].values())
+            try:
+                from native_package_audit import audit as audit_packages
+                package_report = audit_packages(report['image_id'],measured,work,work/'tools/govulncheck',output)
+                report['package_audit'] = package_report
+                report['os_packages'] = {'status':package_report['os_status']}
+                report['unscanned_native_components'] = package_report['unmapped_components']
+                report['final_security_ready'] = go_ready and package_report['status']=='passed'
+                report['status'] = 'passed' if report['final_security_ready'] else 'blocked'
+            except (RuntimeError,OSError,ValueError) as error:
+                report['package_audit'] = {'status':'failed','error':str(error)}
+                report['os_packages'] = {'status':'failed'}
+                report['status'] = 'blocked'
+
     finally:
         (output/'audit.json').write_text(json.dumps(report, indent=2)+'\n')
     if report['status'] != 'passed':
-        raise RuntimeError('Installed Go executables have blocking audit findings; see '+str(output/'audit.json'))
-    print('Go executable audit passed; OS/native-language artifact audit is still required.')
+        raise RuntimeError('Final image security audit has findings or incomplete coverage; see '+str(output/'audit.json'))
+    print('Measured Go executables and installed OS/native-package audit passed.')

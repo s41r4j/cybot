@@ -44,6 +44,11 @@ def evaluate(coverage, baseline, evidence, digest, evidence_root):
                 raise ValueError('audited image identity is missing')
             if audit.get('status') != 'passed' or audit.get('final_security_ready') is not True or audit.get('os_packages', {}).get('status') != 'passed':
                 raise ValueError('final artifact security audit is incomplete or has blocking findings')
+            if package_policy := baseline.get('package_audit'):
+                from package_audit_report import validate_clear_report
+                validate_clear_report(audit.get('package_audit',{}),package_policy,audit['image_id'],required['profile'])
+                if audit['package_audit'].get('source_sha256')!=digest or any(audit['package_audit'].get(key)!=required[key] for key in ('profile','platform')):
+                    raise ValueError('package audit source/profile/platform differs')
             binaries = audit.get('binaries', {})
             if not binaries or 'cybot' not in binaries or any(row.get('status') != 'passed' or not re.fullmatch('[a-f0-9]{64}', row.get('binary_sha256', '')) for row in binaries.values()):
                 raise ValueError('compiled executable security evidence is incomplete')
@@ -72,6 +77,11 @@ def evaluate(coverage, baseline, evidence, digest, evidence_root):
                     bound = True
                     if runtime.get('image_id') != audit['image_id']:
                         raise ValueError('audited image differs from operation-tested image')
+                    if baseline.get('package_audit'):
+                        components={row['component']:row for row in audit['package_audit']['components']}
+                        for name in baseline['package_audit']['native_components'][required['profile']]:
+                            if components[name].get('binary_sha256')!=runtime.get('binaries',{}).get(name,{}).get('sha256'):
+                                raise ValueError('native-package coverage differs from the operation-tested executable: '+name)
                 if operation.get('kind') == 'tool' and operation.get('id') in binaries and binaries[operation['id']]['binary_sha256'] != operation.get('binary_sha256'):
                     raise ValueError('audited executable differs from operation-tested executable')
             if records and not bound:
