@@ -9,10 +9,10 @@ increase a percentage.
 
 | Area | Source changes | Remaining release evidence |
 | --- | --- | --- |
-| 1. Scope binding | Remote approval cannot invoke local/interface operations. Explicit local://HOSTNAME and interface://INTERFACE targets require approval. Policy preserves resource kind; unimplemented operations fail explicitly. | Real compatible runtime/lab evidence for every specialist adapter; service-start/status commands are not accepted as complete operations. |
+| 1. Scope binding | Browser actions require explicit approval even under advisory policy; sessions are anonymous, isolated and restricted to the requested hostname. Remote approval cannot invoke local/interface operations. Explicit local://HOSTNAME and interface://INTERFACE targets require approval. Policy preserves resource kind; unimplemented operations fail explicitly. | Real compatible runtime/lab evidence for every specialist adapter; service-start/status commands are not accepted as complete operations. |
 | 2. Scanner errors | Tool diagnostics are preserved; zero-file Semgrep/Gosec reports and targetless Trivy reports are partial. Partial scans retain genuine findings. | Full positive/negative/failure fixture coverage for each installed scanner version. |
 | 3. Heuristic findings | URL classification returns investigation candidates and never creates vulnerability findings. Finding review requires explicit operator assertions and hash-verified stored evidence; prose alone stays UNVERIFIED. | Independent review remains necessary; operator assertions do not prove exploitability. |
-| 4. Toolchain | Go 1.26.10 pinned; source scan and all installed Go executable/source-identity audits pass on both Linux architectures. | Complete OS/native-component artifact audits and release provenance. |
+| 4. Toolchain | Go 1.26.10 pinned; source scan and all measured Go executable/source-identity audits pass on both Linux architectures. | Complete OS/native-component artifact audits and release provenance. |
 | 5. Distribution | Public repository and website, release gate, immutable image pull/validation, local pins, and verified core image backup/restore on both Linux architectures. | Successful publishing pipeline, clean-machine installation and compatible image evidence. No completed stable release is claimed. |
 | 6. Publication hygiene | MIT license, security policy, third-party notices, strict example, and allowlisted clean source export. Private research remains locally preserved and is excluded from public source/history. | Ongoing secret scanning and third-party asset/license review for each release. |
 
@@ -26,13 +26,13 @@ These are source and contract checks, not 84-tool live certification.
 
 The local Docker daemon is unavailable. Historical 2026-10-22 compact-core
 results are retained as historical records and do not certify the changed source.
-The complete [CI run at revision `4d6d878`](https://github.com/s41r4j/cybot/actions/runs/41073870511)
+The complete [CI run at revision `cd68e28`](https://github.com/s41r4j/cybot/actions/runs/41086212546)
 passed source checks on Linux AMD64/ARM64, macOS and Windows, and real-operation
-fixtures in all four native Linux toolbox profiles on both architectures.
+fixtures in all five native Linux toolbox profiles on both architectures.
 Both compact-core jobs also passed the actual checksummed image backup/restore
 round trip. Installed-CLI, JavaScript extraction and finding-review controls
 passed on both Linux architectures.
-Its source-bound reports certify **21 tools and 23 capabilities** functionally;
+Its source-bound reports certify **22 tools and 26 capabilities** functionally;
 they do not certify the entire 84-tool/71-capability catalog or the security of
 every bundled executable. Later source changes require fresh certificates.
 Windows/AD and account-level cloud tests are explicitly deferred because no
@@ -76,7 +76,9 @@ snapshot URL delimiter is parsed correctly. Interactive mode supports up to
 `--approve` even under advisory policy. Selectors are sent as JSON arguments,
 and command arrays are omitted from stored browser output. This is bounded
 interaction, not arbitrary script execution or persistent authenticated browsing.
-Native diagnostic controls pass; Linux profile evidence is still pending.
+Native diagnostic controls and both Linux profiles pass, including actual clicks,
+isolated storage, hostname filtering and untrusted-TLS failure controls.
+Planning accepts the same bounded input file as execution.
 
 The optional `web` profile pins WhatWeb 0.6.4, WAFW00F 2.4.2, Gobuster 3.8.2,
 HTTPx and FFUF. Its build runs real loopback positive/negative/failure controls
@@ -148,7 +150,7 @@ from the validated image and scans their exact bytes. The same action supports
 analysis and supplychain. CI retains these reports even when vulnerabilities
 block an audit. Stripped-binary conservative matches remain blockers, and a
 passing Go audit cannot substitute for the unfinished OS/native-language audit.
-The full-release gate requires artifact-security proof for all eight Linux
+The full-release gate requires artifact-security proof for all ten Linux
 profile/architecture combinations in addition to operation certificates.
 
 The next repair batch also supplies locked rebuilds for FFUF, Subfinder,
@@ -203,7 +205,7 @@ Docker SDK to the maintained Moby API, with focused loopback daemon controls.
 Trivy retains upstream JSONv2 compilation and updates VEX discovery, Rekor,
 containerd and telemetry dependencies. TruffleHog is built without UPX packing,
 so compiled metadata can be audited. Diagnostic binaries clear compiled Go
-audits; the native Linux AMD64/ARM64 runtime suites and all installed Go executable/source-identity audits pass for this batch. OS/native-component audit remains incomplete.
+audits; the native Linux AMD64/ARM64 runtime suites and all measured Go executable/source-identity audits pass for this batch. OS/native-component audit remains incomplete.
 
 Security audits now supplement compiled-symbol checks with advisory queries
 for checksum-verified upstream identities hidden by local `(devel)` main modules
@@ -222,9 +224,9 @@ these Go/source-module checks substitutes for the pending OS/native-component
 security audit.
 
 
-The checked-in `release/validation/` directory now retains all 88 platform-specific
-operation reports plus eight installed-Go audit reports from revision `4d6d878`.
+The checked-in `release/validation/` directory now retains all 96 platform-specific
+operation reports plus ten measured-Go audit reports from revision `cd68e28`.
 `release/readiness.json` is regenerated against the current product digest; it
-records 21 tools and 23 capabilities with passing functional proof and keeps the
+records 22 tools and 26 capabilities with passing functional proof and keeps the
 full release blocked. The website displays that snapshot per entry, including
 tested platforms and the remaining release checks.

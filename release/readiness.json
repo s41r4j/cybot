@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
+  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
   "release_ready": false,
   "counts": {
     "tools": 84,
     "capabilities": 71
   },
-  "validated_items": 44,
+  "validated_items": 48,
   "blockers": [
     "core/linux/amd64: final artifact security audit is incomplete or has blocking findings",
     "core/linux/arm64: final artifact security audit is incomplete or has blocking findings",
@@ -15,17 +15,16 @@
     "supplychain/linux/amd64: final artifact security audit is incomplete or has blocking findings",
     "supplychain/linux/arm64: final artifact security audit is incomplete or has blocking findings",
     "web/linux/amd64: final artifact security audit is incomplete or has blocking findings",
-    "web/linux/arm64: final artifact security audit is incomplete or has blocking findings"
+    "web/linux/arm64: final artifact security audit is incomplete or has blocking findings",
+    "browser/linux/amd64: final artifact security audit is incomplete or has blocking findings",
+    "browser/linux/arm64: final artifact security audit is incomplete or has blocking findings"
   ],
   "items": [
     {
       "kind": "tool",
       "id": "agent-browser",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence",
-        "supported operating systems have not been explicitly declared"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "tool",
@@ -1273,18 +1272,14 @@
     {
       "kind": "capability",
       "id": "web.automate",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
       "id": "web.browse",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",
@@ -1295,10 +1290,8 @@
     {
       "kind": "capability",
       "id": "web.har",
-      "ready": false,
-      "blockers": [
-        "no real-operation validation evidence"
-      ]
+      "ready": true,
+      "blockers": []
     },
     {
       "kind": "capability",

@@ -1,5 +1,5 @@
 {
-  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
+  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
   "records": [
     {
       "kind": "capability",
@@ -16,7 +16,7 @@
         "positive"
       ],
       "report": "0-capability-code-audit.json",
-      "report_sha256": "70af11e790719662a284eaac19132fce4caa2014bb91bb9bd8d9470fffe203fd"
+      "report_sha256": "68b23f4617f46cb61c549fa97f558ed33fddd2ff449784d75d45513af924d1b2"
     },
     {
       "kind": "capability",
@@ -33,7 +33,7 @@
         "positive"
       ],
       "report": "0-capability-js-analyse.json",
-      "report_sha256": "219c7f75b0ea341c3562abdb8b0589ec029c17e724647e7a93c5788bc5545345"
+      "report_sha256": "3ea651202751c1729d3774d5378cf97801964754dd582ff9b51e27610927903b"
     },
     {
       "kind": "capability",
@@ -50,7 +50,7 @@
         "positive"
       ],
       "report": "0-capability-js-extract.json",
-      "report_sha256": "714f970570f65f9b3e94965b59cae46ac19f2b33b02cefd0053baf02aa8ad154"
+      "report_sha256": "54e52bf7a653aecf2b094929fa78debb318f191f4d4a19d80d8389e4c8b6cb3b"
     },
     {
       "kind": "capability",
@@ -67,7 +67,7 @@
         "positive"
       ],
       "report": "0-capability-pattern-detect.json",
-      "report_sha256": "cf42fc8f27de3a3fbca9c82cceb4a0c91d0799f116a96445f75ef64999f17a02"
+      "report_sha256": "16e504bdf82d8383fe7528471aa53e47020a20eef8f936b3f96ead0679e6e1fc"
     },
     {
       "kind": "capability",
@@ -84,7 +84,7 @@
         "positive"
       ],
       "report": "0-capability-secret-scan.json",
-      "report_sha256": "f7da133f492ccdb0ce08275fff7648a47bde1e32cf9abfeae491bc7148a0030e"
+      "report_sha256": "ccf026e044f0cf568c1be53f2688e702e6d90cf8752471bbaf3b4569b7df0dd6"
     },
     {
       "kind": "capability",
@@ -94,14 +94,14 @@
       "platform": "linux/arm64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
+      "binary_sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
       "report": "0-capability-validate-finding.json",
-      "report_sha256": "efde9e5d64e36fea2f290648a70eb3745dea69017b7fb481823740b9c5b64068"
+      "report_sha256": "673d89a2a0c4fd04930170f782aa318491e7d2305413dbf83faac615feabc937"
     },
     {
       "kind": "tool",
@@ -118,7 +118,7 @@
         "positive"
       ],
       "report": "0-tool-anew.json",
-      "report_sha256": "5b42fd95e830dc760c7917d32d2a5abce8626c8cb1edd5cb888834b2f8b91795"
+      "report_sha256": "bf3b67f34b13c29b92c27ddf80423351d9a68fe78ab00f0831797721446266f4"
     },
     {
       "kind": "tool",
@@ -135,7 +135,7 @@
         "positive"
       ],
       "report": "0-tool-gf.json",
-      "report_sha256": "2aa45ec3fd67fbe9622900973dfaef13dd4a85542a704d2be2cabe9a3a4a01cd"
+      "report_sha256": "c8b49facb85dfba6455884bb4f71d39e4bbaca323d8a5f4e093406387a056b0c"
     },
     {
       "kind": "tool",
@@ -152,7 +152,7 @@
         "positive"
       ],
       "report": "0-tool-gitleaks.json",
-      "report_sha256": "6ab051282d4aef6f8ee190a417b84dfedd338495b931e0081b41c0022569f0fe"
+      "report_sha256": "f759d0cc9255595bd45745bf3411db5857604acc6900af0056d5f8b90fd21f66"
     },
     {
       "kind": "tool",
@@ -169,7 +169,7 @@
         "positive"
       ],
       "report": "0-tool-gosec.json",
-      "report_sha256": "6c69ee8c43f65f4809f6f5de047a2a3feefcea62d425a64ff7e6268af744698e"
+      "report_sha256": "489180f809807dfeb3b72bff08fe456d6a01ce813ed3cc13c68056873b6f3353"
     },
     {
       "kind": "tool",
@@ -186,7 +186,7 @@
         "positive"
       ],
       "report": "0-tool-jsluice.json",
-      "report_sha256": "cac50a3db2aeed3856ba9b9905db4cb6ff801b108d1c5f40e442bd8b7f411041"
+      "report_sha256": "f715395b50a9b1628b25dd77a21655e1be889a5564eac4e75412792a46bf9e66"
     },
     {
       "kind": "tool",
@@ -203,7 +203,7 @@
         "positive"
       ],
       "report": "0-tool-linkfinder.json",
-      "report_sha256": "32bcdaec8b898a6999c57ce8e50701ca94244cf784274b87826e34add7a8097e"
+      "report_sha256": "d99ae80151b683e2c532748711f73a97fe4746ec42866515f621359c92faebe2"
     },
     {
       "kind": "tool",
@@ -220,7 +220,7 @@
         "positive"
       ],
       "report": "0-tool-semgrep.json",
-      "report_sha256": "f3c7fca58084b81703c0fab8dc5381239f2c8791391e5d37186d54ee0b6d9a3c"
+      "report_sha256": "f4f2fb14e32777b923d67ab5001c3434e228f0b8b2849dee980cc3c32a8a42a2"
     },
     {
       "kind": "tool",
@@ -237,7 +237,7 @@
         "positive"
       ],
       "report": "0-tool-trufflehog.json",
-      "report_sha256": "171071512c828c21c25289f72b6b07f39ac2c0191fd577591c9248d813913e68"
+      "report_sha256": "4d1b4cb32de0cc5ac59fd3af092bedf25321934984adb6d91bbb4633b121800d"
     },
     {
       "kind": "capability",
@@ -254,7 +254,7 @@
         "positive"
       ],
       "report": "1-capability-code-audit.json",
-      "report_sha256": "4758d2d30a364beb785496d5ec4ef361c2a89179a4b757cb5bd0ef33a5be8f65"
+      "report_sha256": "2b5835874a573416be144234536bcdf76a9fb77f3ae3323bf7a23ed1837f3cbc"
     },
     {
       "kind": "capability",
@@ -271,7 +271,7 @@
         "positive"
       ],
       "report": "1-capability-js-analyse.json",
-      "report_sha256": "88781683b00a96505433eb13cc67c96dd0a98bc6f01b4d383714f529c5307132"
+      "report_sha256": "912aa73b379a9b7aca9d70a9f9b2effe171a34a467f01d5f2d1560f4a2907f39"
     },
     {
       "kind": "capability",
@@ -288,7 +288,7 @@
         "positive"
       ],
       "report": "1-capability-js-extract.json",
-      "report_sha256": "3977b99e245b7daf2c803f44995973b7bddce2247391330a6b8bb3145a51e913"
+      "report_sha256": "613a917f4a2244b6ec6e2a46380231410ed1ff175975b8005d05f0462138211b"
     },
     {
       "kind": "capability",
@@ -305,7 +305,7 @@
         "positive"
       ],
       "report": "1-capability-pattern-detect.json",
-      "report_sha256": "f5d552c888069b0d44f5476533684ca657418da0302ac9cd8e7af239b57a7ccb"
+      "report_sha256": "68b4b3eb946464dc6e775aac763cad29798917988055b964b12e1684d6a1dcbf"
     },
     {
       "kind": "capability",
@@ -322,7 +322,7 @@
         "positive"
       ],
       "report": "1-capability-secret-scan.json",
-      "report_sha256": "fc35046bdd962b546ca16391243d11c1f16496cf242390cef3e12f2fdec23ae7"
+      "report_sha256": "69e7c100dc5b959209c133f187214eb31f1807b81634f98ebb6d6ec17cc6c525"
     },
     {
       "kind": "capability",
@@ -332,14 +332,14 @@
       "platform": "linux/amd64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
+      "binary_sha256": "96d4b254ca5c28b186fc7e787def03f23e194683e3e88fd4906cef18e8729763",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
       "report": "1-capability-validate-finding.json",
-      "report_sha256": "f07fbfa125ceef5461cca668df2d7bb4b9a0b7b07772d976c0853731706a3ee6"
+      "report_sha256": "ce88960c8e1a2eaaaf3b9d9e1956f6a91227de42d118c89ae572b6af55de0859"
     },
     {
       "kind": "tool",
@@ -356,7 +356,7 @@
         "positive"
       ],
       "report": "1-tool-anew.json",
-      "report_sha256": "e9ccd9d7d708f2e7ced05967c5439c49cc44eeffd291bf6e170bf01e403331dc"
+      "report_sha256": "a7924315e855cede5a160c886b08a397d4bdafe530f2721bc9b4cdf62c808558"
     },
     {
       "kind": "tool",
@@ -373,7 +373,7 @@
         "positive"
       ],
       "report": "1-tool-gf.json",
-      "report_sha256": "d998f9d2e0421c6642fed02096557e9a47f88c680c343a1cce52e473c7902296"
+      "report_sha256": "e819dc77e9a4670d12bc5b375cee8636d0ed63b3decfc06a8aa38e023a4ab5ed"
     },
     {
       "kind": "tool",
@@ -390,7 +390,7 @@
         "positive"
       ],
       "report": "1-tool-gitleaks.json",
-      "report_sha256": "f1e40ea8a327e5d6d05ace89f5473a80e4994442ff42d992aee61834b8f67667"
+      "report_sha256": "703a631b4553d866ce65a418ed13324811d0996f4cd0e67b91e1162f54bf7d80"
     },
     {
       "kind": "tool",
@@ -407,7 +407,7 @@
         "positive"
       ],
       "report": "1-tool-gosec.json",
-      "report_sha256": "8d82a8cc5c6645630a3a29ec8574a946c244309e8d68ca03db3e5c86907f9298"
+      "report_sha256": "adcc08af4cf55ab05e3981ded812c2a9b35aef84c90ae063d49f41d455dc3ae6"
     },
     {
       "kind": "tool",
@@ -424,7 +424,7 @@
         "positive"
       ],
       "report": "1-tool-jsluice.json",
-      "report_sha256": "afc4f7effa3bc3ace260f3cfc5cbf71bdb33f8011cf103cda64ec9151cd0265c"
+      "report_sha256": "88ecd1a04365eb9d9deb64e067c062730b28d53df01c559733bd6dae590ea449"
     },
     {
       "kind": "tool",
@@ -441,7 +441,7 @@
         "positive"
       ],
       "report": "1-tool-linkfinder.json",
-      "report_sha256": "55974559cc7b79a5cf02367715b267a2d24e22a195145b58f8f359392d415fd3"
+      "report_sha256": "1565b16b1801104ff52d8e2eae27680a2779f100ab5022c045acc4c46bcb8035"
     },
     {
       "kind": "tool",
@@ -458,7 +458,7 @@
         "positive"
       ],
       "report": "1-tool-semgrep.json",
-      "report_sha256": "d21366c26c693db29b102df1f1dea5379c37ce05d3244ae1b67cd79ecc89ba7d"
+      "report_sha256": "a4e296ae076caf420dd32eb829945245e35321ae00a983e831f4126cad458505"
     },
     {
       "kind": "tool",
@@ -475,7 +475,143 @@
         "positive"
       ],
       "report": "1-tool-trufflehog.json",
-      "report_sha256": "a72a399d56ce5c5e59401bb3ea5e6695ccee812fa8b0a872e3143306d6acc9d0"
+      "report_sha256": "553cc7c8793d28282d32f6fe263bdbb3dc4bea6a6f7111a2c920edb3302932be"
+    },
+    {
+      "kind": "capability",
+      "id": "web.automate",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.40.0",
+      "reported_tool_version": "0.40.0",
+      "binary_sha256": "3d4352c0b39f173896aa12af0e63d5905ac8ce7c95575fe6f1f93ce21f9b9e26",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-web-automate.json",
+      "report_sha256": "c1295b6d8f86193d40a5b7931818cc45c7e869a74a97133826751867e24bcbf2"
+    },
+    {
+      "kind": "capability",
+      "id": "web.browse",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.40.0",
+      "reported_tool_version": "0.40.0",
+      "binary_sha256": "3d4352c0b39f173896aa12af0e63d5905ac8ce7c95575fe6f1f93ce21f9b9e26",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-web-browse.json",
+      "report_sha256": "8a53ed7cfcf98cbe2facd7b31a065321b15ab8761a7dfdb7f2d2c2d8f1b2a9fa"
+    },
+    {
+      "kind": "capability",
+      "id": "web.har",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.40.0",
+      "reported_tool_version": "0.40.0",
+      "binary_sha256": "3d4352c0b39f173896aa12af0e63d5905ac8ce7c95575fe6f1f93ce21f9b9e26",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-capability-web-har.json",
+      "report_sha256": "32855c34ae9530719fc2caf3fde718dff2bae1cc1de2cdad53289fdabeab0c4b"
+    },
+    {
+      "kind": "tool",
+      "id": "agent-browser",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/arm64",
+      "version": "0.40.0",
+      "reported_tool_version": "0.40.0",
+      "binary_sha256": "3d4352c0b39f173896aa12af0e63d5905ac8ce7c95575fe6f1f93ce21f9b9e26",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "2-tool-agent-browser.json",
+      "report_sha256": "7ba8645a301ca566126e45010fe762e989ab7077e0963de652db7a7a6ffb1457"
+    },
+    {
+      "kind": "capability",
+      "id": "web.automate",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.40.0",
+      "reported_tool_version": "0.40.0",
+      "binary_sha256": "aeebf976eb429064efb10179ccdf737ec7d798c019bae7067ce2751c9c6e176a",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-web-automate.json",
+      "report_sha256": "5df010c90d3ee93f1123a2718eba65ee6e9bbedbe765d2ffccf7aa6e88e10e09"
+    },
+    {
+      "kind": "capability",
+      "id": "web.browse",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.40.0",
+      "reported_tool_version": "0.40.0",
+      "binary_sha256": "aeebf976eb429064efb10179ccdf737ec7d798c019bae7067ce2751c9c6e176a",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-web-browse.json",
+      "report_sha256": "c418a4439d14b99ca731cc2dbac6cd0a3df344b3dc7c54812ae96d6c95b71e65"
+    },
+    {
+      "kind": "capability",
+      "id": "web.har",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.40.0",
+      "reported_tool_version": "0.40.0",
+      "binary_sha256": "aeebf976eb429064efb10179ccdf737ec7d798c019bae7067ce2751c9c6e176a",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-capability-web-har.json",
+      "report_sha256": "663b91c6ff64c7d6fbb3476fc74f485d48fcb14c29f0a7504e427207728784ca"
+    },
+    {
+      "kind": "tool",
+      "id": "agent-browser",
+      "status": "passed",
+      "mode": "real-operation",
+      "platform": "linux/amd64",
+      "version": "0.40.0",
+      "reported_tool_version": "0.40.0",
+      "binary_sha256": "aeebf976eb429064efb10179ccdf737ec7d798c019bae7067ce2751c9c6e176a",
+      "cases": [
+        "failure",
+        "negative",
+        "positive"
+      ],
+      "report": "3-tool-agent-browser.json",
+      "report_sha256": "3f9ed0c4113108820d00216acccc48d036c6945e4da588350fca726c3eea9934"
     },
     {
       "kind": "capability",
@@ -485,14 +621,14 @@
       "platform": "linux/arm64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
+      "binary_sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
-      "report": "2-capability-classify-endpoint.json",
-      "report_sha256": "1f491e0d1bb24199809d6024d5d28bfdd3e7b9850ab8ed6f2907e7f119b5a9b9"
+      "report": "4-capability-classify-endpoint.json",
+      "report_sha256": "025ec92901e798c14efe7c4bf37b6778cd3d22ccd6ee05f5a820ae68648c1988"
     },
     {
       "kind": "capability",
@@ -502,14 +638,14 @@
       "platform": "linux/arm64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
+      "binary_sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
-      "report": "2-capability-cve-lookup.json",
-      "report_sha256": "b892cc81e390075dc137b1ca2ea8e2010150c783173fedd90ea2ab2bde52031f"
+      "report": "4-capability-cve-lookup.json",
+      "report_sha256": "e4ace4024ba8cd0a3c1b096493e1b7dcdeee30af360f15dd7b16a2544e404723"
     },
     {
       "kind": "capability",
@@ -525,8 +661,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-capability-dns-analyse.json",
-      "report_sha256": "2180a673f3c53611cee345a4eec1c1f83f784e2aeec0e39dbfa93b70417ccbf1"
+      "report": "4-capability-dns-analyse.json",
+      "report_sha256": "31c2fe3a9516c6a337e0bc29019f582dc6ba6cb77ee31bd9d2097a7675f5d9d0"
     },
     {
       "kind": "capability",
@@ -536,14 +672,14 @@
       "platform": "linux/arm64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
+      "binary_sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
-      "report": "2-capability-mitre-map.json",
-      "report_sha256": "ef23cc9ffe50a80694869599f168b79cc19cf19c24d7fcf5e182bd5825055855"
+      "report": "4-capability-mitre-map.json",
+      "report_sha256": "776bc7aeb8efd345000d7bc13004e128efb209daf75f9d3504f7e5460e69831d"
     },
     {
       "kind": "capability",
@@ -559,8 +695,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-capability-port-scan.json",
-      "report_sha256": "991a9108141fde8fb4b3baf2170a14e326e92229002379d2421c3e820111202f"
+      "report": "4-capability-port-scan.json",
+      "report_sha256": "bdb0775f9129bd1ac6399f8b58e9ca3e69a20a9a2ce2cbb7db212b986504c6c0"
     },
     {
       "kind": "capability",
@@ -570,14 +706,14 @@
       "platform": "linux/arm64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
+      "binary_sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
-      "report": "2-capability-report-generate.json",
-      "report_sha256": "1d3a0c65814f807c7538bc42b6eab33803bfa947c77f219faf6b78a0daef00fe"
+      "report": "4-capability-report-generate.json",
+      "report_sha256": "8fb7b00c29f69fc3de97de48cd03aab5908791aeb2fff9beae2c61ea8b3dd627"
     },
     {
       "kind": "capability",
@@ -593,8 +729,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-capability-sbom-generate.json",
-      "report_sha256": "a3b97207b7920ae3254d69612e78a2398de60e0d2bf4269d45f11574b1f09d25"
+      "report": "4-capability-sbom-generate.json",
+      "report_sha256": "0afb7ab976336c433cea2a1c4888c6bfbaa38052750c2791323513f2e8d9a7d8"
     },
     {
       "kind": "capability",
@@ -610,8 +746,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-capability-service-enumerate.json",
-      "report_sha256": "9579adad628d9ec531ec1aaee6b4f4eb560f0e1d1f897dac8b5f6c28c423fcb3"
+      "report": "4-capability-service-enumerate.json",
+      "report_sha256": "7be0e00f149300539e29f4259a135b2c8a9eb6f23d30cd195bba3e3df2b3cc99"
     },
     {
       "kind": "capability",
@@ -627,8 +763,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-capability-web-content-discover.json",
-      "report_sha256": "c64aca1c51d3295e97d0916fef70d605e13427f942a4f5d4d98551c6ff8426f3"
+      "report": "4-capability-web-content-discover.json",
+      "report_sha256": "fce4e6f8c14307e41d72cc0ec969a3d73414f883ebf6cefcd565ec0b00a47d55"
     },
     {
       "kind": "capability",
@@ -644,8 +780,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-capability-web-map.json",
-      "report_sha256": "ec04b5ed3c5f7bf61b35bf6e230b79e1233be0fdd6829cc0bf8942ce204711fb"
+      "report": "4-capability-web-map.json",
+      "report_sha256": "bf3a3b146c7948e1c67c94b79d8fb07e7ba2c2f70bd1060c2b1bbccdb7027164"
     },
     {
       "kind": "capability",
@@ -661,8 +797,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-capability-web-scan.json",
-      "report_sha256": "3bf23f48a9503a253fe17e3478f84c5eeb4305e140b13ae55122b511eb038a48"
+      "report": "4-capability-web-scan.json",
+      "report_sha256": "295011909b8dd54cc086e78fd5baea556667c8b52a396df621c1d1ea26e00476"
     },
     {
       "kind": "tool",
@@ -678,8 +814,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-tool-dnsx.json",
-      "report_sha256": "0c89aa6b017947b186ea09f569c918b06a6144c53b09022e0a2bec53183a190d"
+      "report": "4-tool-dnsx.json",
+      "report_sha256": "8bb31e452e47e5455a7ac0c33f665921736fa4fc22b6b4900405dec5373c4a50"
     },
     {
       "kind": "tool",
@@ -695,8 +831,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-tool-ffuf.json",
-      "report_sha256": "adea151742916ea3132d4f74c5cbd58b5e80778a56d939e27d2fa8624b82dd76"
+      "report": "4-tool-ffuf.json",
+      "report_sha256": "9151f20c1b6df767ed57b5768c9acb452beb4826dd99ff5a3192ebc8d7d86095"
     },
     {
       "kind": "tool",
@@ -712,8 +848,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-tool-httpx.json",
-      "report_sha256": "7c703609ef3e87e42e36714708a843d20538f538cb34776573777a1079b17cc5"
+      "report": "4-tool-httpx.json",
+      "report_sha256": "02ba6cb5c8fd979059c840487e8ff6f636c710b390c3875dc5d12dba0a9c9450"
     },
     {
       "kind": "tool",
@@ -729,8 +865,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-tool-katana.json",
-      "report_sha256": "79e7a61aa58ff65262834957b090f0c69cc07befecaa28d58304c78690681c89"
+      "report": "4-tool-katana.json",
+      "report_sha256": "d33f978be7f2c55dc81464191906d1b4ae1ed2c3f235f55e678a6bd98a2fe68e"
     },
     {
       "kind": "tool",
@@ -746,8 +882,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-tool-naabu.json",
-      "report_sha256": "e9f9e0f283f1be06ab0a62a35d393f329f42795326669005fdc70f0c4066d36b"
+      "report": "4-tool-naabu.json",
+      "report_sha256": "a04fc0b8e4269ad95476569c969f67888ed1cc3101e6df0588afdf020c75a018"
     },
     {
       "kind": "tool",
@@ -763,8 +899,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-tool-nmap.json",
-      "report_sha256": "ff7c258031ffcc2c49562f6f78644528e5b36a160e69093f67ac73d8cb71dc94"
+      "report": "4-tool-nmap.json",
+      "report_sha256": "01497ebefd2403451c64d5a32a98b6a52cb979430a72d37b0a6f4726fa7ecf87"
     },
     {
       "kind": "tool",
@@ -780,8 +916,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-tool-nuclei.json",
-      "report_sha256": "8cdb877fde0bacbdc4cd3db10eebbe14f240b7c5f8e5b646c6cdef3eb26c61a7"
+      "report": "4-tool-nuclei.json",
+      "report_sha256": "2f62259d8f1b1aa3663b661b4612f917bedd336bf22ba49edf3152097ae4b9d6"
     },
     {
       "kind": "tool",
@@ -797,8 +933,8 @@
         "negative",
         "positive"
       ],
-      "report": "2-tool-syft.json",
-      "report_sha256": "c3f347a74cba98538ddbb08a4b7f382cbb84440dfae0d74f47de3fa7911b6f65"
+      "report": "4-tool-syft.json",
+      "report_sha256": "51bdb229130161eed2c6788f1fdfb669dc7573b58b9340425f2ac55ff060fba8"
     },
     {
       "kind": "capability",
@@ -808,14 +944,14 @@
       "platform": "linux/amd64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
+      "binary_sha256": "96d4b254ca5c28b186fc7e787def03f23e194683e3e88fd4906cef18e8729763",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
-      "report": "3-capability-classify-endpoint.json",
-      "report_sha256": "4c1bcb879a1cf2edd186df24f73d8dab886425571b5dd3487b55fa0673d7fef3"
+      "report": "5-capability-classify-endpoint.json",
+      "report_sha256": "a009f81c094d02cbf788c370426a8b2a6686857206a4a4986f3fc2c3e9804fa9"
     },
     {
       "kind": "capability",
@@ -825,14 +961,14 @@
       "platform": "linux/amd64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
+      "binary_sha256": "96d4b254ca5c28b186fc7e787def03f23e194683e3e88fd4906cef18e8729763",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
-      "report": "3-capability-cve-lookup.json",
-      "report_sha256": "18fcafc8b3c31b1e6870401637af251ab5dbffb42625b27835a5bbea9db601dc"
+      "report": "5-capability-cve-lookup.json",
+      "report_sha256": "f9dd9dd2f7a14848d44e62ceb4eb53ec0e1e35783f86d7d465c8e0915b7fe2d8"
     },
     {
       "kind": "capability",
@@ -848,8 +984,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-capability-dns-analyse.json",
-      "report_sha256": "2aa31dc8623aa1e7982df4da319b3891f8a45b409d8b08d7e51d5d69a91740e6"
+      "report": "5-capability-dns-analyse.json",
+      "report_sha256": "5e4e896a8523392137c458183bcc9e8a4af6544533940c04ea870a87378a062e"
     },
     {
       "kind": "capability",
@@ -859,14 +995,14 @@
       "platform": "linux/amd64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
+      "binary_sha256": "96d4b254ca5c28b186fc7e787def03f23e194683e3e88fd4906cef18e8729763",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
-      "report": "3-capability-mitre-map.json",
-      "report_sha256": "bee7fed8e648ef146a59eb44d4efe2299267bd64d5793d9adc892b8513e097db"
+      "report": "5-capability-mitre-map.json",
+      "report_sha256": "779cd544006935a48f8a2d366cd8a6cd7da11bf499814b5c01ec4d3c99549e23"
     },
     {
       "kind": "capability",
@@ -882,8 +1018,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-capability-port-scan.json",
-      "report_sha256": "c2c1180fe368ba9fd58779bb967aa67d311776e53c79a48e539c1b2e55d3991b"
+      "report": "5-capability-port-scan.json",
+      "report_sha256": "9fbe8ba50f5f7f7267f47c8a594755809d35bddeb811cea9e24a7bdfccff4981"
     },
     {
       "kind": "capability",
@@ -893,14 +1029,14 @@
       "platform": "linux/amd64",
       "version": "0.1.0",
       "reported_tool_version": "0.1.0",
-      "binary_sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
+      "binary_sha256": "96d4b254ca5c28b186fc7e787def03f23e194683e3e88fd4906cef18e8729763",
       "cases": [
         "failure",
         "negative",
         "positive"
       ],
-      "report": "3-capability-report-generate.json",
-      "report_sha256": "35805ac965a1e63ecea7d755a83da027330497da0781053511b17e7403bc32a4"
+      "report": "5-capability-report-generate.json",
+      "report_sha256": "8a13ff3fd7b54d917650c116edabca28cdcdb26c0b5971171d3c6e711c390850"
     },
     {
       "kind": "capability",
@@ -916,8 +1052,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-capability-sbom-generate.json",
-      "report_sha256": "8bb5ee30d5467840a6b2a8b8dfb649f5108bc245c868b455d0482f783fb37ee8"
+      "report": "5-capability-sbom-generate.json",
+      "report_sha256": "26f322d8790fcfbe5d32aa5f0087890482119ee7ab6198134929e982f58c7451"
     },
     {
       "kind": "capability",
@@ -933,8 +1069,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-capability-service-enumerate.json",
-      "report_sha256": "b34b5e9c6d904ff1d3281066fbf3fac7c740f68bcc93422d02046cf4c17eba2c"
+      "report": "5-capability-service-enumerate.json",
+      "report_sha256": "7e8e62b87f9a9ca725c941df863c375ada1bd3a38d100f1c5707f7c6345d1bd7"
     },
     {
       "kind": "capability",
@@ -950,8 +1086,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-capability-web-content-discover.json",
-      "report_sha256": "d154a7e7dc3f6e9dc5e50fa04ac76ebd367702adfdfcdfa7718ef3540abd91e6"
+      "report": "5-capability-web-content-discover.json",
+      "report_sha256": "92225e55e59bfd732c09d1169dcbb8e8df7ae7e4ca5ec6b579a68164685123b4"
     },
     {
       "kind": "capability",
@@ -967,8 +1103,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-capability-web-map.json",
-      "report_sha256": "dafd04e034ba57b452efef8434c8cad42b195f1c261c9288acde4bef93f4d65d"
+      "report": "5-capability-web-map.json",
+      "report_sha256": "60660895eaf0de6fcbdaf8889d097c0eafc3ca153f1ea996271bec0c768ad3db"
     },
     {
       "kind": "capability",
@@ -984,8 +1120,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-capability-web-scan.json",
-      "report_sha256": "7ef0cf6e740452b37a437479312830f85ace627aa9f74b5454dabf07b9803067"
+      "report": "5-capability-web-scan.json",
+      "report_sha256": "192bf3b03007260c7d27ae8218c3288c2cfc5866598dd53664777dd36c58b795"
     },
     {
       "kind": "tool",
@@ -1001,8 +1137,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-tool-dnsx.json",
-      "report_sha256": "e9e455ef0ae15ff805f9052ba954c177d7c8ef95f43334d5d99df18ace7331a6"
+      "report": "5-tool-dnsx.json",
+      "report_sha256": "20c1b4cffff377861cb2b552670f432b85757ee0a47f4cd7ada9fcb4e7b85001"
     },
     {
       "kind": "tool",
@@ -1018,8 +1154,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-tool-ffuf.json",
-      "report_sha256": "fd0cb2e6c2be81e7c30c5e58047ca3bd135db0560aa6267b9f5d0c8e241e56b3"
+      "report": "5-tool-ffuf.json",
+      "report_sha256": "d72a3e3a805c8bebbc0b28d442adee5fa6f0329437a5c2661699bc3688b300b5"
     },
     {
       "kind": "tool",
@@ -1035,8 +1171,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-tool-httpx.json",
-      "report_sha256": "9dde54c742a2d2ac9537b64d8c57e7ed76cc9f8c752a772e594ad557ed36ba5f"
+      "report": "5-tool-httpx.json",
+      "report_sha256": "39b3110c5bbd18adfa1c81b4eb93cfa076e15ffac648d28267482c70476d599f"
     },
     {
       "kind": "tool",
@@ -1052,8 +1188,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-tool-katana.json",
-      "report_sha256": "38da3066fd6e2d9a386aea7ee4e1c951de7992f23ed4029fe67deea52c22fef3"
+      "report": "5-tool-katana.json",
+      "report_sha256": "979d6d064e94dff725ce0d631246607df642530bc8bd5a4d48120e2afdd259bb"
     },
     {
       "kind": "tool",
@@ -1069,8 +1205,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-tool-naabu.json",
-      "report_sha256": "dd95174f01a0990581f85dcdad6ce6b84fc8da3083500da17122df743cea1e2c"
+      "report": "5-tool-naabu.json",
+      "report_sha256": "f940df59e3e967b0b1815ddea4cb1a75c9bef961a5d7bb6f0f54bb1059875331"
     },
     {
       "kind": "tool",
@@ -1086,8 +1222,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-tool-nmap.json",
-      "report_sha256": "be66ad4ea392c889c922d282735bcbdc8ee38594ad808880acc6eaef86f7e470"
+      "report": "5-tool-nmap.json",
+      "report_sha256": "2b5a9322e6e3edcb7da64d7896b17122e8e8f1b8b9f64e93f5c915c33cc0b2fd"
     },
     {
       "kind": "tool",
@@ -1103,8 +1239,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-tool-nuclei.json",
-      "report_sha256": "ef67c5333bd3872527a1e706173d401958fb334c12649ab1ab193d801b9569e3"
+      "report": "5-tool-nuclei.json",
+      "report_sha256": "ecf220e56066907513919287397b1127d33c5d5859d971bad072b1a177f07bce"
     },
     {
       "kind": "tool",
@@ -1120,8 +1256,8 @@
         "negative",
         "positive"
       ],
-      "report": "3-tool-syft.json",
-      "report_sha256": "2e5c9034bde5d0cb7718b05d10c5f6f4f3405826714f2c172af05739b3d75643"
+      "report": "5-tool-syft.json",
+      "report_sha256": "8e6bf1ce5b505fa75049093a2c727fe22a0b459d6464f807591c9123ab5feb41"
     },
     {
       "kind": "capability",
@@ -1137,8 +1273,8 @@
         "negative",
         "positive"
       ],
-      "report": "4-capability-cloud-review.json",
-      "report_sha256": "56d08b726307f3ae6808a1e6c68a30ea52300f34b011eea08980ad22ff98ef77"
+      "report": "6-capability-cloud-review.json",
+      "report_sha256": "f55610a1648bbdaa9b63adee05244038baed35b94ad5d20d5a1be12105478564"
     },
     {
       "kind": "capability",
@@ -1154,8 +1290,8 @@
         "negative",
         "positive"
       ],
-      "report": "4-capability-container-scan.json",
-      "report_sha256": "3cfac287028801d0f0a17974c2a3e2887f347cb58ec02d25010edfa798657786"
+      "report": "6-capability-container-scan.json",
+      "report_sha256": "c2932ea1640a558afc556ff61b9dfbbd644dfb15d4542493b55f1876d45fb3db"
     },
     {
       "kind": "capability",
@@ -1171,8 +1307,8 @@
         "negative",
         "positive"
       ],
-      "report": "4-capability-dependency-scan.json",
-      "report_sha256": "4edd100c904b0d285cca68be7fef67b9116cf1d0dca381ff2d5daa95556c8134"
+      "report": "6-capability-dependency-scan.json",
+      "report_sha256": "c5640feb14616f87ea2e2244e2910012caea442a2df2f0b1ad7c5c26b3cc639d"
     },
     {
       "kind": "tool",
@@ -1188,8 +1324,8 @@
         "negative",
         "positive"
       ],
-      "report": "4-tool-grype.json",
-      "report_sha256": "a1003eaffb00826e25ce5514ab862b19482333e098f376746e6d510a88c009d7"
+      "report": "6-tool-grype.json",
+      "report_sha256": "e6cc5692e59483038a24c39f5a5b62c0ad29a20d1ca1eb37a2a603044ca97d6f"
     },
     {
       "kind": "tool",
@@ -1205,8 +1341,8 @@
         "negative",
         "positive"
       ],
-      "report": "4-tool-trivy.json",
-      "report_sha256": "e4cd176cd20e8bca55b9c79a7e53f9ed9f72df8f3d24d7479c1b6f61c2382a6c"
+      "report": "6-tool-trivy.json",
+      "report_sha256": "5d751e70e388774ab1aea92d1e3c6b8d0ca5f6d0e55dfd5cd23b5ce97f1df684"
     },
     {
       "kind": "capability",
@@ -1222,8 +1358,8 @@
         "negative",
         "positive"
       ],
-      "report": "5-capability-cloud-review.json",
-      "report_sha256": "612795f7958b8d411a3daca1727b899834f5a741fbc77a1bd6d05e7b809b9719"
+      "report": "7-capability-cloud-review.json",
+      "report_sha256": "469953a8ee515bef872ada4f7aaa96e2a1a64979701171a47d85c6c046994125"
     },
     {
       "kind": "capability",
@@ -1239,8 +1375,8 @@
         "negative",
         "positive"
       ],
-      "report": "5-capability-container-scan.json",
-      "report_sha256": "b2fab85be0e11bf03aba9c9c05417e76839b9d8c3123193992f81643107ccb5c"
+      "report": "7-capability-container-scan.json",
+      "report_sha256": "e54dda8f16bba3630dbcaf3770b1f187d3fae185fd28f04ee7c7010a6271804a"
     },
     {
       "kind": "capability",
@@ -1256,8 +1392,8 @@
         "negative",
         "positive"
       ],
-      "report": "5-capability-dependency-scan.json",
-      "report_sha256": "8f4a6f4caa2d6538098676ef1af8a9bc7f73a78f4816e8eb4ea4b2d3ac656523"
+      "report": "7-capability-dependency-scan.json",
+      "report_sha256": "29ebd5cc3528f268c52b0c78b90ca151632e6ac0bb70331a62a8453a835276a7"
     },
     {
       "kind": "tool",
@@ -1273,8 +1409,8 @@
         "negative",
         "positive"
       ],
-      "report": "5-tool-grype.json",
-      "report_sha256": "0a94ab82a2583628d70bf38044c66c76602d413ed4d6741decdfeb12f53d5c05"
+      "report": "7-tool-grype.json",
+      "report_sha256": "f2d67075cd65a7ab7a14b8c4cf7e9ad8154275086c3d6dc51f87172b89643d76"
     },
     {
       "kind": "tool",
@@ -1290,8 +1426,8 @@
         "negative",
         "positive"
       ],
-      "report": "5-tool-trivy.json",
-      "report_sha256": "e1ab24ace3033c05ea5ea8939d9a86ed6051ba89c35d4aa7c3d8d24df88c2bed"
+      "report": "7-tool-trivy.json",
+      "report_sha256": "064c947c165e8e2cc52f1d96baa4d28bb1a7dbf0a05a937b62632c7260a681f7"
     },
     {
       "kind": "capability",
@@ -1307,8 +1443,8 @@
         "negative",
         "positive"
       ],
-      "report": "6-capability-dir-bruteforce.json",
-      "report_sha256": "342bbe588b6a4d197072ddd248ba460c853dc0f4a1e282b110d48a19cc2e035d"
+      "report": "8-capability-dir-bruteforce.json",
+      "report_sha256": "0e7a4ddc6e74624aa3392fb8d931444fba4a566dd3bebd450d828d2f27ed38ba"
     },
     {
       "kind": "capability",
@@ -1324,8 +1460,8 @@
         "negative",
         "positive"
       ],
-      "report": "6-capability-tech-fingerprint.json",
-      "report_sha256": "bdcf0349afecec9a7522b3121b961671ca1c035756ed6af1e355433895d473d7"
+      "report": "8-capability-tech-fingerprint.json",
+      "report_sha256": "3e11cc4bd06f18eb6fd9faafacb919521d09953279d52db8cf81ad0724dd461b"
     },
     {
       "kind": "capability",
@@ -1341,8 +1477,8 @@
         "negative",
         "positive"
       ],
-      "report": "6-capability-waf-detect.json",
-      "report_sha256": "59d85ec9b219681c7f7bd51815de408ec88fe5944cf3f2cfdaf4c84575aa9b47"
+      "report": "8-capability-waf-detect.json",
+      "report_sha256": "32a271b4e9ae08492de2475a90a4448a050b8049f2fffa36ea8306519a5e3b8f"
     },
     {
       "kind": "tool",
@@ -1358,8 +1494,8 @@
         "negative",
         "positive"
       ],
-      "report": "6-tool-gobuster.json",
-      "report_sha256": "54e041ffcd4d3b60e471d6f4b5526d65b87ba3c8672c4842487a76586087500a"
+      "report": "8-tool-gobuster.json",
+      "report_sha256": "ebad51c52203125ea5b2fad83776b018f441cb11ed0f80b9acf7e20445d3dec0"
     },
     {
       "kind": "tool",
@@ -1375,8 +1511,8 @@
         "negative",
         "positive"
       ],
-      "report": "6-tool-wafw00f.json",
-      "report_sha256": "68af356a6947e36c00d87bb937c4f37d933eeb604e2e7d553dbd0d43959a0344"
+      "report": "8-tool-wafw00f.json",
+      "report_sha256": "6e599f41c44cd178785f4d37befcbf5e351f549e3aafb381b368a9802754f7fc"
     },
     {
       "kind": "tool",
@@ -1392,8 +1528,8 @@
         "negative",
         "positive"
       ],
-      "report": "6-tool-whatweb.json",
-      "report_sha256": "7176ee062f1c0615db8987156731dde38db50f96facdb3a925bbe777e0e75a65"
+      "report": "8-tool-whatweb.json",
+      "report_sha256": "a5966f43ceed500b743b030b70f06a51c2672c9e8884bd245849d7531aa0aa20"
     },
     {
       "kind": "capability",
@@ -1409,8 +1545,8 @@
         "negative",
         "positive"
       ],
-      "report": "7-capability-dir-bruteforce.json",
-      "report_sha256": "dd97f8f261cc668eaa755bbfb709394e8a4269266cbd090e9a43429f654a8e99"
+      "report": "9-capability-dir-bruteforce.json",
+      "report_sha256": "8b4ac37d2560dc733d6e90ddbbece00e60deef1183d66d64122e921369ad2c2b"
     },
     {
       "kind": "capability",
@@ -1426,8 +1562,8 @@
         "negative",
         "positive"
       ],
-      "report": "7-capability-tech-fingerprint.json",
-      "report_sha256": "05daacf1fe0ef93c82b95ddd9094c5300ae1319a8ca72adba543f489715e06bf"
+      "report": "9-capability-tech-fingerprint.json",
+      "report_sha256": "394c0f2bd2d4f8dbfc330a3bbe00287e9530ea642343f32ec1837503cd16da17"
     },
     {
       "kind": "capability",
@@ -1443,8 +1579,8 @@
         "negative",
         "positive"
       ],
-      "report": "7-capability-waf-detect.json",
-      "report_sha256": "e7a5cd2d5ec1a92b4da51c4a4876fb3c6cf3147a22481a0efb48c2e77d6807a8"
+      "report": "9-capability-waf-detect.json",
+      "report_sha256": "c63a75e179624e80e1e842a33a7a17604fa87c14bf860e9e66a54e55a32fe8a2"
     },
     {
       "kind": "tool",
@@ -1460,8 +1596,8 @@
         "negative",
         "positive"
       ],
-      "report": "7-tool-gobuster.json",
-      "report_sha256": "dec47d312b9f73941f9930cb22b669812778f2f600cc295129c12a85454e5696"
+      "report": "9-tool-gobuster.json",
+      "report_sha256": "85e3e4bf92369d04b0a009ec06ffbb09331f86f0466b416be813d31a33b228f8"
     },
     {
       "kind": "tool",
@@ -1477,8 +1613,8 @@
         "negative",
         "positive"
       ],
-      "report": "7-tool-wafw00f.json",
-      "report_sha256": "303a5d76739698e9e7ade3d2de2f87c66250acc83d0b24b0f2ce58a7703a6e22"
+      "report": "9-tool-wafw00f.json",
+      "report_sha256": "62196a3b9f456ee1a34ecbea00b1c5b6535f680d5c7d5de351308579edffad32"
     },
     {
       "kind": "tool",
@@ -1494,8 +1630,8 @@
         "negative",
         "positive"
       ],
-      "report": "7-tool-whatweb.json",
-      "report_sha256": "099dab02dcfa484c31792a23cde371e93912ae5519163975afba93b287413d00"
+      "report": "9-tool-whatweb.json",
+      "report_sha256": "c3bfe61327e629ad5117b87d5c9ef524093cf36ba04e2f07d92ba92fdb6e27d6"
     }
   ],
   "artifact_audits": [
@@ -1503,49 +1639,61 @@
       "profile": "analysis",
       "platform": "linux/arm64",
       "report": "artifact-audit-0.json",
-      "report_sha256": "fdafb2df997ee15368410f669a507e11b92854646a7ec5031dc700fb383c58ef"
+      "report_sha256": "56351f32007374afc316c130abe5c167a446a1360a84443166f80d226dc71f0e"
     },
     {
       "profile": "analysis",
       "platform": "linux/amd64",
       "report": "artifact-audit-1.json",
-      "report_sha256": "6965fe8b0917304e1b4e9d98a3f7ac095f6362d88b0035656625255ea5592a4c"
+      "report_sha256": "82ca4d63c0e7e29d28d2cd1239a2139b7d3f7391df907a7c1f34234c4e743ba4"
     },
     {
-      "profile": "core",
+      "profile": "browser",
       "platform": "linux/arm64",
       "report": "artifact-audit-2.json",
-      "report_sha256": "1e8d30438a5d87f65f73f49b5171ba610c734e1c2f8c343f829f5d145ffd836d"
+      "report_sha256": "3f6fcf48faad474bd0280bd3beea436f6facf931d355798aa380712c1d117ae6"
+    },
+    {
+      "profile": "browser",
+      "platform": "linux/amd64",
+      "report": "artifact-audit-3.json",
+      "report_sha256": "37e5b0fdb482fd71f51e5560f262b1eeb16d874edafea1973750fb6e645b9709"
+    },
+    {
+      "profile": "core",
+      "platform": "linux/arm64",
+      "report": "artifact-audit-4.json",
+      "report_sha256": "210c7c1dbb1d9b9a07af9d4c4935b46b40be12c42a525d71c15a93bf082566f7"
     },
     {
       "profile": "core",
       "platform": "linux/amd64",
-      "report": "artifact-audit-3.json",
-      "report_sha256": "9ea9458c550fec154c7fb195491bcff6d982b12f6ea200392638446f890fa496"
-    },
-    {
-      "profile": "supplychain",
-      "platform": "linux/arm64",
-      "report": "artifact-audit-4.json",
-      "report_sha256": "9ae2e83939a25583ebf61c05dcb70d2e5255ad93768bbd58877fedb671de0680"
-    },
-    {
-      "profile": "supplychain",
-      "platform": "linux/amd64",
       "report": "artifact-audit-5.json",
-      "report_sha256": "7235306461b7e824132441ed5be8f4b5330304fb8a71b2c785a7a689e14f06d6"
+      "report_sha256": "51ca24aeefdefed171635ab67480f7aaedc293892d46402184258b9548069802"
     },
     {
-      "profile": "web",
+      "profile": "supplychain",
       "platform": "linux/arm64",
       "report": "artifact-audit-6.json",
-      "report_sha256": "c3fb8069c70f61a4465b245b328b6400a69bb516e473ae5e4a247235216d7768"
+      "report_sha256": "2c4344dc75196e94094c67c9120b6bc471aaa6ad57cf46d490af3c0e2b02ebbe"
+    },
+    {
+      "profile": "supplychain",
+      "platform": "linux/amd64",
+      "report": "artifact-audit-7.json",
+      "report_sha256": "f410dbe8b30d5f7b23a46b769ada2b5ad211293752ba3875bd2ab024b2eee0ce"
+    },
+    {
+      "profile": "web",
+      "platform": "linux/arm64",
+      "report": "artifact-audit-8.json",
+      "report_sha256": "63e3eef52bf25b96bb16c79980d606acf532045533951c10b4f89037d6c0000e"
     },
     {
       "profile": "web",
       "platform": "linux/amd64",
-      "report": "artifact-audit-7.json",
-      "report_sha256": "ba93751d0d87abe1ae347a6c80373b951521c61557abf11cfcd1ba820615c607"
+      "report": "artifact-audit-9.json",
+      "report_sha256": "1891e6ffcc629cd046f84898f5aa101026c39c52081e048617f9ae980dc07728"
     }
   ]
 }

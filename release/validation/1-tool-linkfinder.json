@@ -23,7 +23,7 @@
   "id": "linkfinder",
   "kind": "tool",
   "platform": "linux/amd64",
-  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
+  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
   "tool": "linkfinder",
   "runtime": {
     "data": {
@@ -40,7 +40,7 @@
     "binaries": {
       "cybot": {
         "path": "/opt/cybot/bin/cybot",
-        "sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
+        "sha256": "96d4b254ca5c28b186fc7e787def03f23e194683e3e88fd4906cef18e8729763",
         "reported_version": "0.1.0"
       },
       "gosec": {
@@ -100,7 +100,7 @@
         "reported_version": "0.1.1"
       }
     },
-    "image_id": "sha256:7e309068573fb7d07ba6efcf75de9acc503b5766e0667b0e18e08d22c407fb3b",
+    "image_id": "sha256:02a9a81552282e3050ccc1719870dac605f1560e5f77c47d634d1fb9cce31b23",
     "profile": "analysis"
   }
 }

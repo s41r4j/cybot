@@ -23,7 +23,7 @@
   "id": "gitleaks",
   "kind": "tool",
   "platform": "linux/arm64",
-  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
+  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
   "tool": "gitleaks",
   "runtime": {
     "data": {
@@ -40,7 +40,7 @@
     "binaries": {
       "cybot": {
         "path": "/opt/cybot/bin/cybot",
-        "sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
+        "sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
         "reported_version": "0.1.0"
       },
       "gosec": {
@@ -100,7 +100,7 @@
         "reported_version": "0.1.1"
       }
     },
-    "image_id": "sha256:5824994834927576e798988de844fa7284165756627f1dc5a2151edff040d53a",
+    "image_id": "sha256:166e6ff4d04fd7069e70cdda4e07bc1a89ae17584e702bfa7ab0f25e793127a6",
     "profile": "analysis"
   }
 }

@@ -1,0 +1,105 @@
+{
+  "binary_sha256": "6fbeb6dd58700b3685a751a791a5b418e6bdf0c2f4c9b38aa8ff14576316312d",
+  "cases": [
+    {
+      "type": "positive",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Single loopback TCP fixture is normalized as one open service."
+    },
+    {
+      "type": "negative",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "The same port is absent after its listener is closed."
+    },
+    {
+      "type": "failure",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Real Naabu rejects an invalid invocation instead of producing a clean report."
+    }
+  ],
+  "id": "naabu",
+  "kind": "tool",
+  "platform": "linux/arm64",
+  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
+  "tool": "naabu",
+  "runtime": {
+    "binaries": {
+      "cybot": {
+        "path": "/opt/cybot/bin/cybot",
+        "sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
+        "reported_version": "0.1.0"
+      },
+      "httpx": {
+        "path": "/opt/cybot/bin/httpx",
+        "sha256": "2c873a321ceb5d2fbd6882285f25b954bf0eea3b4e9b5a5e19edc4745a9d3890",
+        "reported_version": "1.10.0",
+        "release_version": "1.10.0"
+      },
+      "katana": {
+        "path": "/opt/cybot/bin/katana",
+        "sha256": "0ae69669a2b30c25c54fc661c3fe05c3dfcfa6b93ae29116b3ba718160071c6d",
+        "reported_version": "1.6.1",
+        "release_version": "1.6.1"
+      },
+      "nuclei": {
+        "path": "/opt/cybot/bin/nuclei",
+        "sha256": "8b525cdec383065b5bdfc59a422cdb7fa1903c3d1427d7dd3ae1005c6932a115",
+        "reported_version": "3.11.0",
+        "release_version": "3.11.0"
+      },
+      "dnsx": {
+        "path": "/opt/cybot/bin/dnsx",
+        "sha256": "39a60bdf01b0bab78ee0a2380b7e6d67ebc94617c2232da98deb3cca627cd14a",
+        "reported_version": "1.2.3",
+        "release_version": "1.3.0"
+      },
+      "subfinder": {
+        "path": "/opt/cybot/bin/subfinder",
+        "sha256": "e79361979170d82d5889a69e1551e4b2a117cf4a21cae9b1b7ebb76a0e0bde99",
+        "reported_version": "2.14.0",
+        "release_version": "2.14.0"
+      },
+      "ffuf": {
+        "path": "/opt/cybot/bin/ffuf",
+        "sha256": "3eb8e39eaf1a4f3045cbfb8662adffcab205fdfdd9488cee6a139353c7acae05",
+        "reported_version": "2.2.1",
+        "release_version": "2.2.1"
+      },
+      "nmap": {
+        "path": "/usr/bin/nmap",
+        "sha256": "5cd0d099170314bbf1bfbfae0392e38ac26175b9f5d1b1c47260c52616c79994",
+        "reported_version": "7.93"
+      },
+      "gitleaks": {
+        "path": "/opt/cybot/bin/gitleaks",
+        "sha256": "c84426117283c200adfcdf340c092c7a614f44bb2345c0c50b09230d2719cc31",
+        "reported_version": "8.30.1",
+        "release_version": "8.30.1"
+      },
+      "syft": {
+        "path": "/opt/cybot/bin/syft",
+        "sha256": "b3ed2cc578b896ce04902254b64c8a22a2f96cd93ff45048e47488f2630a9590",
+        "reported_version": "1.50.0",
+        "release_version": "1.50.0"
+      },
+      "naabu": {
+        "path": "/opt/cybot/bin/naabu",
+        "sha256": "6fbeb6dd58700b3685a751a791a5b418e6bdf0c2f4c9b38aa8ff14576316312d",
+        "reported_version": "2.6.1",
+        "release_version": "2.6.1"
+      }
+    },
+    "packages": {
+      "ca-certificates": "20250419~deb12u2",
+      "jq": "1.6-2.1+deb12u3",
+      "libpcap0.8": "1.10.3-1",
+      "nmap": "7.93+dfsg1-1",
+      "nmap-common": "7.93+dfsg1-1"
+    },
+    "image_id": "sha256:a1114b1bb4d19dc77ae1ddff959f3e0927ccb8da3bee537980f0ab905534e213",
+    "profile": "core"
+  }
+}

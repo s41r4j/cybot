@@ -1,0 +1,114 @@
+{
+  "binary_sha256": "487825bff96d81b84c0271bef0d94b6c785b9d9488927217a36e0fc10a26a2be",
+  "cases": [
+    {
+      "type": "positive",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "Both engines execute and retain PHP/8.2.0 from a local response header without inventing a vulnerability."
+    },
+    {
+      "type": "negative",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "A neutral local page yields no PHP signature or vulnerability."
+    },
+    {
+      "type": "failure",
+      "status": "passed",
+      "mode": "real-operation",
+      "detail": "A closed loopback target produces an explicit incomplete/error result."
+    }
+  ],
+  "id": "whatweb",
+  "kind": "tool",
+  "platform": "linux/arm64",
+  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
+  "tool": "whatweb",
+  "runtime": {
+    "data": {
+      "whatweb-source": "e9e0f5355c6744b5722544314cfc74eb590631fcd0da790ffc5c92fae67fd2c9",
+      "ruby-gems": "47669032199e030cc5d5313fdb997b1a6e4f05765258cb991b5aff69426cdfa4",
+      "python-wheels": "06b3db149e45b6d22807cde5a8c266a9865abff6cfa1643e868c4d427050ace3",
+      "web-source-lock": "8ccd7056baa178e2106c69fe6893cdf05b65895a661afa6998f6b3e059ebe2f5",
+      "web-source-build": "56d507198f655a349cd582e87e7b8aa7544b1af95b6ebfdca340bf89833c2b56"
+    },
+    "packages": {
+      "ca-certificates": "20250419~deb12u2",
+      "libruby3.1": "3.1.2-7+deb12u1",
+      "python3": "3.11.2-1+b1",
+      "python3.11": "3.11.2-6+deb12u9",
+      "ruby": "1:3.1",
+      "ruby-json": "2.6.3+dfsg-1",
+      "ruby3.1": "3.1.2-7+deb12u1"
+    },
+    "ruby_gems": {
+      "addressable": "2.9.1",
+      "public_suffix": "6.0.2",
+      "ipaddr": "1.3.0"
+    },
+    "python_packages": {
+      "certifi": "2026.10.23",
+      "PySocks": "1.7.1",
+      "wafw00f": "2.4.2",
+      "idna": "3.20",
+      "requests": "2.34.2",
+      "urllib3": "2.8.0",
+      "charset-normalizer": "3.5.2"
+    },
+    "binaries": {
+      "cybot": {
+        "path": "/opt/cybot/bin/cybot",
+        "sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
+        "reported_version": "0.1.0"
+      },
+      "httpx": {
+        "path": "/opt/cybot/bin/httpx",
+        "sha256": "2c873a321ceb5d2fbd6882285f25b954bf0eea3b4e9b5a5e19edc4745a9d3890",
+        "reported_version": "1.10.0"
+      },
+      "ffuf": {
+        "path": "/opt/cybot/bin/ffuf",
+        "sha256": "3eb8e39eaf1a4f3045cbfb8662adffcab205fdfdd9488cee6a139353c7acae05",
+        "reported_version": "2.2.1"
+      },
+      "gobuster": {
+        "path": "/opt/cybot/bin/gobuster",
+        "sha256": "87baeecdcaab57da8b20c80e9d575af48ae7cda80301ebcc201871f8388e52d3",
+        "reported_version": "3.8.2"
+      },
+      "whatweb": {
+        "path": "/opt/cybot/bin/whatweb",
+        "sha256": "487825bff96d81b84c0271bef0d94b6c785b9d9488927217a36e0fc10a26a2be",
+        "reported_version": "0.6.4"
+      },
+      "whatweb-engine": {
+        "path": "/opt/cybot/lib/whatweb/whatweb",
+        "sha256": "20236cc8528bc9b6ff79a6622518b59a6b32269c22598cc233bbe5b7d3249718",
+        "reported_version": "0.6.4"
+      },
+      "wafw00f": {
+        "path": "/opt/cybot/bin/wafw00f",
+        "sha256": "e15ff162f328a76b4cdf19dea306ceee8bd70eddfe0259b3699004c8d96984e4",
+        "reported_version": "2.4.2"
+      },
+      "wafw00f-engine": {
+        "path": "/opt/cybot/lib/python/wafw00f/main.py",
+        "sha256": "36b1643d06e3b04f5ef529da4aafe6713f53d3902c2c5eccaa5653306a807ceb",
+        "reported_version": "2.4.2"
+      },
+      "ruby": {
+        "path": "/usr/bin/ruby",
+        "sha256": "6d94663b02164f4d072f7ce7c875a97d8242d6e8162ef901b150736ca580006d",
+        "reported_version": "3.1.2"
+      },
+      "python": {
+        "path": "/usr/bin/python3",
+        "sha256": "2ceb9199570aaf34a254b9ea88b1d77f38530833e2a12688d002a59c905b51b2",
+        "reported_version": "3.11.2"
+      }
+    },
+    "image_id": "sha256:ec8951622298852759d68069f2a0485b72fb98c0dd1567c9c72b9f70fe046a9f",
+    "profile": "web"
+  }
+}

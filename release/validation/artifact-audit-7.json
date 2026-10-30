@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
-  "checked_at": "2026-10-30T14:47:35.897841+00:00",
-  "profile": "web",
+  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
+  "checked_at": "2026-10-30T16:26:35.970316+00:00",
+  "profile": "supplychain",
   "platform": "linux/amd64",
   "scope": "compiled-go-executables",
   "status": "passed",
@@ -10,14 +10,7 @@
   "os_packages": {
     "status": "not-audited"
   },
-  "unscanned_native_components": [
-    "python",
-    "ruby",
-    "wafw00f",
-    "wafw00f-engine",
-    "whatweb",
-    "whatweb-engine"
-  ],
+  "unscanned_native_components": [],
   "binaries": {
     "cybot": {
       "status": "passed",
@@ -38,7 +31,7 @@
       "modules": [
         {
           "path": "github.com/s41r4j/cybot",
-          "version": "v0.0.0-20261030144120-4d6d87855fed"
+          "version": "v0.0.0-20261030160204-cd68e28beb82"
         },
         {
           "path": "github.com/dustin/go-humanize",
@@ -98,10 +91,10 @@
         }
       ],
       "advisories": [],
-      "binary_sha256": "fa87efacb4828dde30c24d7d9a16c0e4a552a4c2e540d82500561096075caef0",
-      "scanner_sha256": "429a95024d38b2ab26df89ea0011eff8f58d60fb35809bb03754546cf16abf0e"
+      "binary_sha256": "96d4b254ca5c28b186fc7e787def03f23e194683e3e88fd4906cef18e8729763",
+      "scanner_sha256": "5659861a0426ab1da76b51884d6237e2159f94998ea4556781d6ddf8069bd4a1"
     },
-    "ffuf": {
+    "grype": {
       "status": "passed",
       "scanner": {
         "protocol_version": "v1.0.0",
@@ -119,301 +112,432 @@
       },
       "modules": [
         {
-          "path": "github.com/ffuf/ffuf/v2",
+          "path": "github.com/anchore/grype",
           "version": "(devel)"
         },
         {
-          "path": "github.com/PuerkitoBio/goquery",
-          "version": "v1.8.0"
+          "path": "cel.dev/expr",
+          "version": "v0.25.2"
         },
         {
-          "path": "github.com/adrg/xdg",
-          "version": "v0.4.0"
+          "path": "cloud.google.com/go",
+          "version": "v0.123.0"
         },
         {
-          "path": "github.com/andybalholm/brotli",
-          "version": "v1.0.5"
+          "path": "cloud.google.com/go/auth",
+          "version": "v0.18.2"
         },
         {
-          "path": "github.com/andybalholm/cascadia",
-          "version": "v1.3.1"
+          "path": "cloud.google.com/go/auth/oauth2adapt",
+          "version": "v0.2.8"
         },
         {
-          "path": "github.com/ffuf/pencode",
-          "version": "v0.0.0-20230421231718-2cea7e60a693"
+          "path": "cloud.google.com/go/compute/metadata",
+          "version": "v0.9.0"
         },
         {
-          "path": "github.com/pelletier/go-toml",
-          "version": "v1.9.5"
+          "path": "cloud.google.com/go/iam",
+          "version": "v1.5.3"
         },
         {
-          "path": "golang.org/x/net",
-          "version": "v0.62.0"
+          "path": "cloud.google.com/go/monitoring",
+          "version": "v1.24.3"
         },
         {
-          "path": "stdlib",
-          "version": "go1.26.10"
-        }
-      ],
-      "advisories": [],
-      "binary_sha256": "a2ced5ab7bcc7735b51ac8bf744e22233e8a1808d8310d0b9b6dea561d32bffd",
-      "scanner_sha256": "429a95024d38b2ab26df89ea0011eff8f58d60fb35809bb03754546cf16abf0e",
-      "source_modules": [
-        {
-          "module": "github.com/ffuf/ffuf/v2",
-          "upstream_version": "v2.2.1",
-          "upstream_sum": "h1:Ff/BpOlO9aoRU2hqF6RviuSvaKb1H03n9365CE4k2zM=",
-          "status": "passed",
-          "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T14:48:24.223711+00:00",
-          "findings": [],
-          "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
-        }
-      ],
-      "source_provenance_sha256": "fdf27838c1a24b48a5f98f170264f1ba71dc3c35b94efd5023bdc45d4d61a8f0"
-    },
-    "gobuster": {
-      "status": "passed",
-      "scanner": {
-        "protocol_version": "v1.0.0",
-        "scanner_name": "govulncheck",
-        "scanner_version": "v1.9.0",
-        "db": "https://vuln.go.dev",
-        "db_last_modified": "2026-10-27T21:16:18Z",
-        "scan_level": "symbol",
-        "scan_mode": "binary"
-      },
-      "go_version": "go1.26.10",
-      "toolchain": {
-        "minimum": "go1.26.10",
-        "status": "passed"
-      },
-      "modules": [
-        {
-          "path": "github.com/OJ/gobuster/v3",
-          "version": "(devel)"
+          "path": "cloud.google.com/go/storage",
+          "version": "v1.61.3"
         },
         {
-          "path": "github.com/cpuguy83/go-md2man/v2",
-          "version": "v2.0.7"
+          "path": "dario.cat/mergo",
+          "version": "v1.0.2"
         },
         {
-          "path": "github.com/fatih/color",
-          "version": "v1.18.0"
-        },
-        {
-          "path": "github.com/google/uuid",
+          "path": "github.com/BurntSushi/toml",
           "version": "v1.6.0"
         },
         {
-          "path": "github.com/mattn/go-colorable",
-          "version": "v0.1.14"
+          "path": "github.com/CycloneDX/cyclonedx-go",
+          "version": "v0.11.0"
         },
         {
-          "path": "github.com/mattn/go-isatty",
-          "version": "v0.0.20"
+          "path": "github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp",
+          "version": "v1.33.0"
         },
         {
-          "path": "github.com/pin/tftp/v3",
-          "version": "v3.1.0"
+          "path": "github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric",
+          "version": "v0.55.0"
         },
         {
-          "path": "github.com/russross/blackfriday/v2",
-          "version": "v2.1.0"
+          "path": "github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping",
+          "version": "v0.55.0"
         },
         {
-          "path": "github.com/urfave/cli/v2",
-          "version": "v2.27.7"
+          "path": "github.com/Intevation/gval",
+          "version": "v1.3.0"
         },
         {
-          "path": "github.com/xrash/smetrics",
-          "version": "v0.0.0-20250705151800-55b8f293f342"
+          "path": "github.com/Intevation/jsonpath",
+          "version": "v0.2.1"
         },
         {
-          "path": "go.uber.org/automaxprocs",
-          "version": "v1.6.0"
-        },
-        {
-          "path": "golang.org/x/crypto",
-          "version": "v0.58.0"
-        },
-        {
-          "path": "golang.org/x/net",
-          "version": "v0.62.0"
-        },
-        {
-          "path": "golang.org/x/sys",
-          "version": "v0.49.0"
-        },
-        {
-          "path": "golang.org/x/term",
-          "version": "v0.47.0"
-        },
-        {
-          "path": "software.sslmate.com/src/go-pkcs12",
-          "version": "v0.7.2"
-        },
-        {
-          "path": "stdlib",
-          "version": "go1.26.10"
-        }
-      ],
-      "advisories": [
-        {
-          "id": "GO-2026-5932",
-          "module": "golang.org/x/crypto",
-          "version": "v0.58.0",
-          "fixed_version": null,
-          "level": 0,
-          "precision": "module",
-          "package": null,
-          "symbol": null
-        }
-      ],
-      "binary_sha256": "23f07644b9a2f8254fdabc37e9bea8066fa76afd3f140ab6199f23e0a5ef28ed",
-      "scanner_sha256": "429a95024d38b2ab26df89ea0011eff8f58d60fb35809bb03754546cf16abf0e",
-      "source_modules": [
-        {
-          "module": "github.com/OJ/gobuster/v3",
-          "upstream_version": "v3.8.2",
-          "upstream_sum": "h1:zUjQVIuqZ2HqHIMaoRHhJ704DzeD8Rmxp8DJBQ0/Z5Q=",
-          "status": "passed",
-          "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T14:48:25.348413+00:00",
-          "findings": [],
-          "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
-        }
-      ],
-      "source_provenance_sha256": "f8ef1c7668a384db4863d35906e631a1985812ab01d2f7c7f8e029bfa9cd98d5"
-    },
-    "httpx": {
-      "status": "passed",
-      "scanner": {
-        "protocol_version": "v1.0.0",
-        "scanner_name": "govulncheck",
-        "scanner_version": "v1.9.0",
-        "db": "https://vuln.go.dev",
-        "db_last_modified": "2026-10-27T21:16:18Z",
-        "scan_level": "symbol",
-        "scan_mode": "binary"
-      },
-      "go_version": "go1.26.10",
-      "toolchain": {
-        "minimum": "go1.26.10",
-        "status": "passed"
-      },
-      "modules": [
-        {
-          "path": "github.com/projectdiscovery/httpx",
-          "version": "(devel)"
-        },
-        {
-          "path": "aead.dev/minisign",
-          "version": "v0.2.0"
-        },
-        {
-          "path": "filippo.io/edwards25519",
-          "version": "v1.2.0"
+          "path": "github.com/Masterminds/goutils",
+          "version": "v1.1.1"
         },
         {
           "path": "github.com/Masterminds/semver/v3",
-          "version": "v3.4.0"
+          "version": "v3.5.0"
         },
         {
-          "path": "github.com/Mzack9999/gcache",
-          "version": "v0.0.0-20230410081825-519e28eab057"
+          "path": "github.com/Masterminds/sprig/v3",
+          "version": "v3.3.0"
         },
         {
-          "path": "github.com/Mzack9999/go-http-digest-auth-client",
-          "version": "v0.6.1-0.20220414142836-eb8883508809"
+          "path": "github.com/OneOfOne/xxhash",
+          "version": "v1.2.8"
         },
         {
           "path": "github.com/ProtonMail/go-crypto",
-          "version": "v1.4.0"
+          "version": "v1.4.1"
         },
         {
-          "path": "github.com/PuerkitoBio/goquery",
-          "version": "v1.12.0"
+          "path": "github.com/STARRY-S/zip",
+          "version": "v0.2.3"
         },
         {
-          "path": "github.com/VividCortex/ewma",
-          "version": "v1.2.0"
+          "path": "github.com/acarl005/stripansi",
+          "version": "v0.0.0-20180116102854-5a71ef0e047d"
         },
         {
-          "path": "github.com/akrylysov/pogreb",
-          "version": "v0.10.2"
+          "path": "github.com/acobaugh/osrelease",
+          "version": "v0.1.0"
         },
         {
-          "path": "github.com/alecthomas/chroma/v2",
-          "version": "v2.14.0"
+          "path": "github.com/adrg/xdg",
+          "version": "v0.5.3"
+        },
+        {
+          "path": "github.com/agext/levenshtein",
+          "version": "v1.2.3"
+        },
+        {
+          "path": "github.com/anchore/bubbly",
+          "version": "v0.2.1"
+        },
+        {
+          "path": "github.com/anchore/clio",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/fangs",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-collections",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-homedir",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-logger",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-lzo",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-macholibre",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-rpmdb",
+          "version": "v0.2.0"
+        },
+        {
+          "path": "github.com/anchore/go-struct-converter",
+          "version": "v0.2.0-rc2"
+        },
+        {
+          "path": "github.com/anchore/go-sync",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-version",
+          "version": "v1.2.2-0.20210903204242-51efa5b487c4"
+        },
+        {
+          "path": "github.com/anchore/packageurl-go",
+          "version": "v0.2.0"
+        },
+        {
+          "path": "github.com/anchore/stereoscope",
+          "version": "v0.3.0"
+        },
+        {
+          "path": "github.com/anchore/syft",
+          "version": "v1.50.0"
         },
         {
           "path": "github.com/andybalholm/brotli",
           "version": "v1.2.0"
         },
         {
-          "path": "github.com/andybalholm/cascadia",
-          "version": "v1.3.3"
+          "path": "github.com/apparentlymart/go-textseg/v15",
+          "version": "v15.0.0"
         },
         {
-          "path": "github.com/asaskevich/govalidator",
-          "version": "v0.0.0-20230301143203-a9d515a09cc2"
+          "path": "github.com/aquasecurity/go-pep440-version",
+          "version": "v0.0.1"
+        },
+        {
+          "path": "github.com/aquasecurity/go-version",
+          "version": "v0.0.1"
+        },
+        {
+          "path": "github.com/araddon/dateparse",
+          "version": "v0.0.0-20210429162001-6b43995a97de"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2",
+          "version": "v1.41.5"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream",
+          "version": "v1.7.8"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/config",
+          "version": "v1.32.12"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/credentials",
+          "version": "v1.19.12"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/feature/ec2/imds",
+          "version": "v1.18.20"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/configsources",
+          "version": "v1.4.21"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/endpoints/v2",
+          "version": "v2.7.21"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/ini",
+          "version": "v1.8.6"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/v4a",
+          "version": "v1.4.22"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding",
+          "version": "v1.13.7"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/checksum",
+          "version": "v1.9.13"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/presigned-url",
+          "version": "v1.13.21"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/s3shared",
+          "version": "v1.19.21"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/s3",
+          "version": "v1.97.3"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/signin",
+          "version": "v1.0.8"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/sso",
+          "version": "v1.30.13"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/ssooidc",
+          "version": "v1.35.17"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/sts",
+          "version": "v1.41.9"
+        },
+        {
+          "path": "github.com/aws/smithy-go",
+          "version": "v1.24.2"
         },
         {
           "path": "github.com/aymanbagabas/go-osc52/v2",
           "version": "v2.0.1"
         },
         {
-          "path": "github.com/aymerick/douceur",
+          "path": "github.com/becheran/wildmatch-go",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/bgentry/go-netrc",
+          "version": "v0.0.0-20140422174119-9fd32a8b3d3d"
+        },
+        {
+          "path": "github.com/bitnami/go-version",
+          "version": "v0.0.0-20250505154626-452e8c5ee607"
+        },
+        {
+          "path": "github.com/blakesmith/ar",
+          "version": "v0.0.0-20190502131153-809d4375e1fb"
+        },
+        {
+          "path": "github.com/bmatcuk/doublestar/v2",
+          "version": "v2.0.4"
+        },
+        {
+          "path": "github.com/bmatcuk/doublestar/v4",
+          "version": "v4.10.0"
+        },
+        {
+          "path": "github.com/bodgit/plumbing",
+          "version": "v1.3.0"
+        },
+        {
+          "path": "github.com/bodgit/sevenzip",
+          "version": "v1.6.1"
+        },
+        {
+          "path": "github.com/bodgit/windows",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/cespare/xxhash/v2",
+          "version": "v2.3.0"
+        },
+        {
+          "path": "github.com/charmbracelet/bubbles",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/charmbracelet/bubbletea",
+          "version": "v1.3.10"
+        },
+        {
+          "path": "github.com/charmbracelet/colorprofile",
+          "version": "v0.4.3"
+        },
+        {
+          "path": "github.com/charmbracelet/harmonica",
           "version": "v0.2.0"
         },
         {
-          "path": "github.com/brianvoe/gofakeit/v7",
-          "version": "v7.2.1"
-        },
-        {
-          "path": "github.com/charmbracelet/glamour",
-          "version": "v0.8.0"
-        },
-        {
           "path": "github.com/charmbracelet/lipgloss",
-          "version": "v0.13.0"
+          "version": "v1.1.0"
         },
         {
           "path": "github.com/charmbracelet/x/ansi",
-          "version": "v0.3.2"
+          "version": "v0.11.6"
         },
         {
-          "path": "github.com/cheggaaa/pb/v3",
-          "version": "v3.1.6"
+          "path": "github.com/charmbracelet/x/cellbuf",
+          "version": "v0.0.15"
         },
         {
-          "path": "github.com/cloudflare/cfssl",
-          "version": "v1.6.4"
+          "path": "github.com/charmbracelet/x/term",
+          "version": "v0.2.2"
+        },
+        {
+          "path": "github.com/clipperhouse/displaywidth",
+          "version": "v0.11.0"
+        },
+        {
+          "path": "github.com/clipperhouse/uax29/v2",
+          "version": "v2.7.0"
         },
         {
           "path": "github.com/cloudflare/circl",
           "version": "v1.6.3"
         },
         {
-          "path": "github.com/cnf/structhash",
-          "version": "v0.0.0-20250313080605-df4c6cc74a9a"
+          "path": "github.com/cncf/xds/go",
+          "version": "v0.0.0-20260202195803-dba9d589def2"
         },
         {
-          "path": "github.com/corona10/goimagehash",
+          "path": "github.com/containerd/containerd/api",
+          "version": "v1.11.1"
+        },
+        {
+          "path": "github.com/containerd/containerd/v2",
+          "version": "v2.3.6"
+        },
+        {
+          "path": "github.com/containerd/continuity",
+          "version": "v0.5.0"
+        },
+        {
+          "path": "github.com/containerd/errdefs",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/containerd/errdefs/pkg",
+          "version": "v0.3.0"
+        },
+        {
+          "path": "github.com/containerd/fifo",
           "version": "v1.1.0"
         },
         {
-          "path": "github.com/dimchansky/utfbom",
-          "version": "v1.1.1"
+          "path": "github.com/containerd/log",
+          "version": "v0.1.0"
         },
         {
-          "path": "github.com/djherbis/times",
-          "version": "v1.6.0"
+          "path": "github.com/containerd/platforms",
+          "version": "v1.0.0-rc.5"
         },
         {
-          "path": "github.com/dlclark/regexp2",
-          "version": "v1.11.5"
+          "path": "github.com/containerd/plugin",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/containerd/ttrpc",
+          "version": "v1.2.8"
+        },
+        {
+          "path": "github.com/containerd/typeurl/v2",
+          "version": "v2.2.3"
+        },
+        {
+          "path": "github.com/cyphar/filepath-securejoin",
+          "version": "v0.6.1"
+        },
+        {
+          "path": "github.com/deitch/magic",
+          "version": "v0.0.0-20240306090643-c67ab88f10cb"
+        },
+        {
+          "path": "github.com/diskfs/go-diskfs",
+          "version": "v1.9.3"
+        },
+        {
+          "path": "github.com/distribution/reference",
+          "version": "v0.6.0"
+        },
+        {
+          "path": "github.com/docker/cli",
+          "version": "v29.6.1+incompatible"
+        },
+        {
+          "path": "github.com/docker/docker-credential-helpers",
+          "version": "v0.9.5"
+        },
+        {
+          "path": "github.com/docker/go-connections",
+          "version": "v0.7.0"
         },
         {
           "path": "github.com/docker/go-units",
@@ -428,6 +552,26 @@
           "version": "v1.0.1"
         },
         {
+          "path": "github.com/elliotchance/phpserialize",
+          "version": "v1.4.0"
+        },
+        {
+          "path": "github.com/emirpasic/gods",
+          "version": "v1.18.1"
+        },
+        {
+          "path": "github.com/envoyproxy/go-control-plane/envoy",
+          "version": "v1.37.0"
+        },
+        {
+          "path": "github.com/envoyproxy/protoc-gen-validate",
+          "version": "v1.3.3"
+        },
+        {
+          "path": "github.com/facebookincubator/nvdtools",
+          "version": "v0.1.5"
+        },
+        {
           "path": "github.com/fatih/color",
           "version": "v1.18.0"
         },
@@ -436,116 +580,228 @@
           "version": "v0.9.5"
         },
         {
-          "path": "github.com/gaissmai/bart",
-          "version": "v0.28.0"
+          "path": "github.com/felixge/httpsnoop",
+          "version": "v1.0.4"
         },
         {
-          "path": "github.com/go-faker/faker/v4",
-          "version": "v4.9.0"
+          "path": "github.com/fsnotify/fsnotify",
+          "version": "v1.9.0"
         },
         {
-          "path": "github.com/go-rod/rod",
-          "version": "v0.116.2"
+          "path": "github.com/gabriel-vasile/mimetype",
+          "version": "v1.4.13"
         },
         {
-          "path": "github.com/go-sql-driver/mysql",
-          "version": "v1.10.0"
+          "path": "github.com/github/go-spdx/v2",
+          "version": "v2.7.0"
+        },
+        {
+          "path": "github.com/glebarez/go-sqlite",
+          "version": "v1.22.0"
+        },
+        {
+          "path": "github.com/glebarez/sqlite",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "github.com/go-git/gcfg",
+          "version": "v1.5.1-0.20230307220236-3a3c6141e376"
+        },
+        {
+          "path": "github.com/go-git/go-billy/v5",
+          "version": "v5.9.0"
+        },
+        {
+          "path": "github.com/go-git/go-git/v5",
+          "version": "v5.19.2"
+        },
+        {
+          "path": "github.com/go-jose/go-jose/v4",
+          "version": "v4.1.4"
+        },
+        {
+          "path": "github.com/go-logr/logr",
+          "version": "v1.4.4"
+        },
+        {
+          "path": "github.com/go-logr/stdr",
+          "version": "v1.2.2"
+        },
+        {
+          "path": "github.com/go-restruct/restruct",
+          "version": "v1.2.0-alpha"
         },
         {
           "path": "github.com/go-viper/mapstructure/v2",
           "version": "v2.5.0"
         },
         {
-          "path": "github.com/gocarina/gocsv",
-          "version": "v0.0.0-20240520201108-78e41c74b4b1"
+          "path": "github.com/goccy/go-yaml",
+          "version": "v1.19.2"
         },
         {
-          "path": "github.com/golang/snappy",
-          "version": "v0.0.4"
+          "path": "github.com/gocsaf/csaf/v3",
+          "version": "v3.5.1"
         },
         {
-          "path": "github.com/google/certificate-transparency-go",
+          "path": "github.com/gogo/protobuf",
           "version": "v1.3.2"
         },
         {
-          "path": "./.cybot-patches/go-github",
-          "version": "(devel)"
+          "path": "github.com/gohugoio/hashstructure",
+          "version": "v0.6.0"
         },
         {
-          "path": "github.com/google/go-querystring",
-          "version": "v1.1.0"
+          "path": "github.com/golang/groupcache",
+          "version": "v0.0.0-20241129210726-2c02b8208cf8"
+        },
+        {
+          "path": "github.com/google/go-cmp",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/google/go-containerregistry",
+          "version": "v0.21.7"
+        },
+        {
+          "path": "github.com/google/licensecheck",
+          "version": "v0.3.1"
         },
         {
           "path": "github.com/google/pprof",
-          "version": "v0.0.0-20240227163752-401108e1b7e7"
+          "version": "v0.0.0-20250630185457-6e76a2b096b5"
         },
         {
-          "path": "github.com/google/shlex",
-          "version": "v0.0.0-20191202100458-e7afc7fbc510"
+          "path": "github.com/google/s2a-go",
+          "version": "v0.1.9"
         },
         {
           "path": "github.com/google/uuid",
           "version": "v1.6.0"
         },
         {
-          "path": "github.com/gorilla/css",
-          "version": "v1.0.1"
+          "path": "github.com/googleapis/enterprise-certificate-proxy",
+          "version": "v0.3.14"
         },
         {
-          "path": "github.com/gosimple/slug",
-          "version": "v1.15.0"
+          "path": "github.com/googleapis/gax-go/v2",
+          "version": "v2.17.0"
         },
         {
-          "path": "github.com/gosimple/unidecode",
-          "version": "v1.0.1"
+          "path": "github.com/gookit/color",
+          "version": "v1.6.1"
         },
         {
-          "path": "github.com/happyhackingspace/dit",
-          "version": "v0.0.28"
+          "path": "github.com/gpustack/gguf-parser-go",
+          "version": "v0.25.0"
+        },
+        {
+          "path": "github.com/hako/durafmt",
+          "version": "v0.0.0-20210608085754-5c1018a4e16b"
+        },
+        {
+          "path": "github.com/hashicorp/aws-sdk-go-base/v2",
+          "version": "v2.0.0-beta.72"
+        },
+        {
+          "path": "github.com/hashicorp/errwrap",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/hashicorp/go-cleanhttp",
+          "version": "v0.5.2"
+        },
+        {
+          "path": "github.com/hashicorp/go-getter",
+          "version": "v1.8.6"
+        },
+        {
+          "path": "github.com/hashicorp/go-multierror",
+          "version": "v1.1.1"
         },
         {
           "path": "github.com/hashicorp/go-version",
           "version": "v1.8.0"
         },
         {
-          "path": "github.com/hbakhtiyor/strsim",
-          "version": "v0.0.0-20190107154042-4d2bbb273edf"
+          "path": "github.com/hashicorp/golang-lru/v2",
+          "version": "v2.0.7"
         },
         {
-          "path": "github.com/hdm/jarm-go",
-          "version": "v0.0.8"
+          "path": "github.com/hashicorp/hcl/v2",
+          "version": "v2.24.0"
         },
         {
-          "path": "github.com/iangcarroll/cookiemonster",
-          "version": "v1.6.0"
+          "path": "github.com/henvic/httpretty",
+          "version": "v0.1.4"
+        },
+        {
+          "path": "github.com/huandu/xstrings",
+          "version": "v1.5.0"
+        },
+        {
+          "path": "github.com/iancoleman/strcase",
+          "version": "v0.3.0"
+        },
+        {
+          "path": "github.com/in-toto/attestation",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/jbenet/go-context",
+          "version": "v0.0.0-20150711004518-d14ea06fba99"
+        },
+        {
+          "path": "github.com/jinzhu/copier",
+          "version": "v0.4.0"
+        },
+        {
+          "path": "github.com/jinzhu/inflection",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/jinzhu/now",
+          "version": "v1.1.5"
         },
         {
           "path": "github.com/json-iterator/go",
           "version": "v1.1.12"
         },
         {
-          "path": "github.com/kataras/jwt",
-          "version": "v0.1.10"
+          "path": "github.com/kastenhq/goversion",
+          "version": "v0.0.0-20230811215019-93b2f8823953"
+        },
+        {
+          "path": "github.com/kevinburke/ssh_config",
+          "version": "v1.2.0"
         },
         {
           "path": "github.com/klauspost/compress",
-          "version": "v1.18.7"
+          "version": "v1.19.0"
         },
         {
-          "path": "github.com/lib/pq",
-          "version": "v1.12.3"
+          "path": "github.com/klauspost/cpuid/v2",
+          "version": "v2.3.0"
         },
         {
-          "path": "github.com/logrusorgru/aurora",
-          "version": "v2.0.3+incompatible"
+          "path": "github.com/klauspost/pgzip",
+          "version": "v1.2.6"
         },
         {
-          "path": "github.com/logrusorgru/aurora/v4",
-          "version": "v4.0.0"
+          "path": "github.com/knqyf263/go-apk-version",
+          "version": "v0.0.0-20200609155635-041fdbb8563f"
+        },
+        {
+          "path": "github.com/knqyf263/go-deb-version",
+          "version": "v0.0.0-20241115132648-6f4aee6ccd23"
         },
         {
           "path": "github.com/lucasb-eyer/go-colorful",
           "version": "v1.3.0"
+        },
+        {
+          "path": "github.com/masahiro331/go-mvn-version",
+          "version": "v0.0.0-20250131095131-f4974fa13b8a"
         },
         {
           "path": "github.com/mattn/go-colorable",
@@ -557,23 +813,71 @@
         },
         {
           "path": "github.com/mattn/go-runewidth",
-          "version": "v0.0.16"
+          "version": "v0.0.21"
         },
         {
-          "path": "github.com/mfonda/simhash",
-          "version": "v0.0.0-20151007195837-79f94a1100d6"
+          "path": "github.com/mgutz/ansi",
+          "version": "v0.0.0-20200706080929-d51e80ef957d"
         },
         {
-          "path": "github.com/microcosm-cc/bluemonday",
-          "version": "v1.0.27"
+          "path": "github.com/mholt/archives",
+          "version": "v0.1.5"
         },
         {
-          "path": "github.com/miekg/dns",
-          "version": "v1.1.68"
+          "path": "github.com/mikelolasagasti/xz",
+          "version": "v1.0.1"
         },
         {
-          "path": "github.com/minio/selfupdate",
-          "version": "v0.6.1-0.20230907112617-f11e74f84ca7"
+          "path": "github.com/minio/minlz",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/mitchellh/copystructure",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/mitchellh/go-homedir",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/mitchellh/go-wordwrap",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/mitchellh/reflectwalk",
+          "version": "v1.0.2"
+        },
+        {
+          "path": "github.com/moby/docker-image-spec",
+          "version": "v1.3.1"
+        },
+        {
+          "path": "github.com/moby/locker",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/moby/moby/api",
+          "version": "v1.55.0"
+        },
+        {
+          "path": "github.com/moby/moby/client",
+          "version": "v0.5.0"
+        },
+        {
+          "path": "github.com/moby/sys/mountinfo",
+          "version": "v0.7.2"
+        },
+        {
+          "path": "github.com/moby/sys/signal",
+          "version": "v0.7.1"
+        },
+        {
+          "path": "github.com/moby/sys/user",
+          "version": "v0.4.1"
+        },
+        {
+          "path": "github.com/moby/sys/userns",
+          "version": "v0.1.0"
         },
         {
           "path": "github.com/modern-go/concurrent",
@@ -581,287 +885,315 @@
         },
         {
           "path": "github.com/modern-go/reflect2",
-          "version": "v1.0.2"
+          "version": "v1.0.3-0.20250322232337-35a7c28c31ee"
         },
         {
-          "path": "github.com/montanaflynn/stats",
-          "version": "v0.7.1"
+          "path": "github.com/muesli/ansi",
+          "version": "v0.0.0-20230316100256-276c6243b2f6"
         },
         {
-          "path": "github.com/muesli/reflow",
-          "version": "v0.3.0"
+          "path": "github.com/muesli/cancelreader",
+          "version": "v0.2.2"
         },
         {
           "path": "github.com/muesli/termenv",
           "version": "v0.16.0"
         },
         {
-          "path": "github.com/nfnt/resize",
-          "version": "v0.0.0-20180221191011-83c6a9932646"
+          "path": "github.com/nix-community/go-nix",
+          "version": "v0.0.0-20250101154619-4bdde671e0a1"
+        },
+        {
+          "path": "github.com/nwaples/rardecode/v2",
+          "version": "v2.2.0"
+        },
+        {
+          "path": "github.com/olekukonko/cat",
+          "version": "v0.0.0-20250911104152-50322a0618f6"
+        },
+        {
+          "path": "github.com/olekukonko/errors",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/olekukonko/ll",
+          "version": "v0.1.6"
+        },
+        {
+          "path": "github.com/olekukonko/tablewriter",
+          "version": "v1.1.4"
+        },
+        {
+          "path": "github.com/opencontainers/go-digest",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/opencontainers/image-spec",
+          "version": "v1.1.1"
+        },
+        {
+          "path": "github.com/opencontainers/runtime-spec",
+          "version": "v1.3.0"
+        },
+        {
+          "path": "github.com/openvex/go-vex",
+          "version": "v0.2.8"
+        },
+        {
+          "path": "github.com/owenrumney/go-sarif",
+          "version": "v1.1.2-0.20231003122901-1000f5e05554"
+        },
+        {
+          "path": "github.com/package-url/packageurl-go",
+          "version": "v0.1.5"
+        },
+        {
+          "path": "github.com/pandatix/go-cvss",
+          "version": "v0.6.2"
+        },
+        {
+          "path": "github.com/pborman/indent",
+          "version": "v1.2.1"
+        },
+        {
+          "path": "github.com/pelletier/go-toml",
+          "version": "v1.9.5"
+        },
+        {
+          "path": "github.com/pelletier/go-toml/v2",
+          "version": "v2.4.3"
+        },
+        {
+          "path": "github.com/pierrec/lz4/v4",
+          "version": "v4.1.26"
+        },
+        {
+          "path": "github.com/piprate/json-gold",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/pjbgf/sha1cd",
+          "version": "v0.6.0"
         },
         {
           "path": "github.com/pkg/errors",
           "version": "v0.9.1"
         },
         {
-          "path": "github.com/projectdiscovery/asnmap",
-          "version": "v1.1.1"
+          "path": "github.com/pkg/profile",
+          "version": "v1.7.0"
         },
         {
-          "path": "github.com/projectdiscovery/awesome-search-queries",
-          "version": "v0.0.0-20260104120501-961ef30f7193"
+          "path": "github.com/pkg/xattr",
+          "version": "v0.4.12"
         },
         {
-          "path": "github.com/projectdiscovery/blackrock",
-          "version": "v0.0.1"
+          "path": "github.com/pquerna/cachecontrol",
+          "version": "v0.0.0-20180517163645-1555304b9b35"
         },
         {
-          "path": "github.com/projectdiscovery/cdncheck",
-          "version": "v1.2.42"
-        },
-        {
-          "path": "github.com/projectdiscovery/clistats",
-          "version": "v0.1.4"
-        },
-        {
-          "path": "github.com/projectdiscovery/dsl",
-          "version": "v0.8.20"
-        },
-        {
-          "path": "github.com/projectdiscovery/fastdialer",
-          "version": "v0.5.11"
-        },
-        {
-          "path": "github.com/projectdiscovery/fdmax",
-          "version": "v0.0.4"
-        },
-        {
-          "path": "github.com/projectdiscovery/freeport",
-          "version": "v0.0.7"
-        },
-        {
-          "path": "github.com/projectdiscovery/goconfig",
-          "version": "v0.0.1"
-        },
-        {
-          "path": "github.com/projectdiscovery/goflags",
-          "version": "v0.1.74"
-        },
-        {
-          "path": "github.com/projectdiscovery/gologger",
-          "version": "v1.1.71"
-        },
-        {
-          "path": "github.com/projectdiscovery/gostruct",
-          "version": "v0.0.2"
-        },
-        {
-          "path": "github.com/projectdiscovery/govaluate",
-          "version": "v0.0.0-20260504230327-80320480bb6e"
-        },
-        {
-          "path": "github.com/projectdiscovery/hmap",
-          "version": "v0.0.101"
-        },
-        {
-          "path": "github.com/projectdiscovery/machineid",
-          "version": "v0.0.0-20250715113114-c77eb3567582"
-        },
-        {
-          "path": "github.com/projectdiscovery/mapcidr",
-          "version": "v1.1.97"
-        },
-        {
-          "path": "github.com/projectdiscovery/networkpolicy",
-          "version": "v0.1.41"
-        },
-        {
-          "path": "github.com/projectdiscovery/ratelimit",
-          "version": "v0.0.88"
-        },
-        {
-          "path": "github.com/projectdiscovery/rawhttp",
-          "version": "v0.1.90"
-        },
-        {
-          "path": "github.com/projectdiscovery/retryabledns",
-          "version": "v1.0.115"
-        },
-        {
-          "path": "github.com/projectdiscovery/retryablehttp-go",
-          "version": "v1.3.16"
-        },
-        {
-          "path": "github.com/projectdiscovery/tlsx",
-          "version": "v1.2.2"
-        },
-        {
-          "path": "github.com/projectdiscovery/useragent",
-          "version": "v0.0.108"
-        },
-        {
-          "path": "github.com/projectdiscovery/utils",
-          "version": "v0.11.1"
-        },
-        {
-          "path": "github.com/projectdiscovery/wappalyzergo",
-          "version": "v0.2.87"
-        },
-        {
-          "path": "github.com/refraction-networking/utls",
-          "version": "v1.8.2"
+          "path": "github.com/remyoudompheng/bigfft",
+          "version": "v0.0.0-20230129092748-24d4a6f8daec"
         },
         {
           "path": "github.com/rivo/uniseg",
           "version": "v0.4.7"
         },
         {
-          "path": "github.com/rs/xid",
-          "version": "v1.6.0"
+          "path": "github.com/rust-secure-code/go-rustaudit",
+          "version": "v0.0.0-20250226111315-e20ec32e963c"
+        },
+        {
+          "path": "github.com/sagikazarmark/locafero",
+          "version": "v0.11.0"
         },
         {
           "path": "github.com/saintfish/chardet",
           "version": "v0.0.0-20230101081208-5e3ef4b5456d"
         },
         {
-          "path": "github.com/sashabaranov/go-openai",
-          "version": "v1.37.0"
+          "path": "github.com/santhosh-tekuri/jsonschema/v6",
+          "version": "v6.0.2"
         },
         {
-          "path": "github.com/seh-msft/burpxml",
-          "version": "v1.0.1"
+          "path": "github.com/sassoftware/go-rpmutils",
+          "version": "v0.4.0"
         },
         {
-          "path": "github.com/shirou/gopsutil/v4",
-          "version": "v4.26.3"
+          "path": "github.com/scylladb/go-set",
+          "version": "v1.0.3-0.20200225121959-cc7b2070d91e"
         },
         {
-          "path": "github.com/spaolacci/murmur3",
-          "version": "v1.1.0"
+          "path": "github.com/sergi/go-diff",
+          "version": "v1.4.0"
+        },
+        {
+          "path": "github.com/shopspring/decimal",
+          "version": "v1.4.0"
+        },
+        {
+          "path": "github.com/sirupsen/logrus",
+          "version": "v1.9.4"
+        },
+        {
+          "path": "github.com/skeema/knownhosts",
+          "version": "v1.3.1"
+        },
+        {
+          "path": "github.com/smallnest/ringbuffer",
+          "version": "v0.0.0-20241116012123-461381446e3d"
+        },
+        {
+          "path": "github.com/sorairolake/lzip-go",
+          "version": "v0.3.8"
+        },
+        {
+          "path": "github.com/sourcegraph/conc",
+          "version": "v0.3.1-0.20240121214520-5f936abd7ae8"
+        },
+        {
+          "path": "github.com/spdx/gordf",
+          "version": "v0.0.0-20250128162952-000978ccd6fb"
+        },
+        {
+          "path": "github.com/spdx/tools-golang",
+          "version": "v0.6.0-rc4"
+        },
+        {
+          "path": "github.com/spf13/afero",
+          "version": "v1.15.0"
         },
         {
           "path": "github.com/spf13/cast",
           "version": "v1.10.0"
         },
         {
-          "path": "github.com/syndtr/goleveldb",
+          "path": "github.com/spf13/cobra",
+          "version": "v1.10.2"
+        },
+        {
+          "path": "github.com/spf13/pflag",
+          "version": "v1.0.10"
+        },
+        {
+          "path": "github.com/spf13/viper",
+          "version": "v1.21.0"
+        },
+        {
+          "path": "github.com/spiffe/go-spiffe/v2",
+          "version": "v2.7.0"
+        },
+        {
+          "path": "github.com/subosito/gotenv",
+          "version": "v1.6.0"
+        },
+        {
+          "path": "github.com/sylabs/sif/v2",
+          "version": "v2.24.1"
+        },
+        {
+          "path": "github.com/sylabs/squashfs",
+          "version": "v1.0.6"
+        },
+        {
+          "path": "github.com/tailscale/hujson",
+          "version": "v0.0.0-20260302212456-ecc657c15afd"
+        },
+        {
+          "path": "github.com/therootcompany/xz",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/ulikunitz/xz",
+          "version": "v0.5.15"
+        },
+        {
+          "path": "github.com/vbatts/go-mtree",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/vifraa/gopom",
           "version": "v1.0.0"
         },
         {
-          "path": "github.com/tidwall/btree",
-          "version": "v1.7.0"
+          "path": "github.com/wagoodman/go-partybus",
+          "version": "v0.0.0-20230516145632-8ccac152c651"
         },
         {
-          "path": "github.com/tidwall/buntdb",
-          "version": "v1.3.1"
+          "path": "github.com/wagoodman/go-presenter",
+          "version": "v0.0.0-20211015174752-f9c01afc824b"
         },
         {
-          "path": "github.com/tidwall/gjson",
-          "version": "v1.18.0"
+          "path": "github.com/wagoodman/go-progress",
+          "version": "v0.0.0-20260303201901-10176f79b2c0"
         },
         {
-          "path": "github.com/tidwall/grect",
-          "version": "v0.1.4"
+          "path": "github.com/xanzy/ssh-agent",
+          "version": "v0.3.3"
         },
         {
-          "path": "github.com/tidwall/match",
-          "version": "v1.2.0"
+          "path": "github.com/xi2/xz",
+          "version": "v0.0.0-20171230120015-48954b6210f8"
         },
         {
-          "path": "github.com/tidwall/pretty",
-          "version": "v1.2.1"
+          "path": "github.com/xo/terminfo",
+          "version": "v0.0.0-20220910002029-abceb7e1c41e"
         },
         {
-          "path": "github.com/tidwall/rtred",
-          "version": "v0.1.2"
+          "path": "github.com/zclconf/go-cty",
+          "version": "v1.16.3"
         },
         {
-          "path": "github.com/tidwall/tinyqueue",
-          "version": "v0.1.1"
-        },
-        {
-          "path": "github.com/tklauser/go-sysconf",
-          "version": "v0.3.16"
-        },
-        {
-          "path": "github.com/tklauser/numcpus",
-          "version": "v0.11.0"
-        },
-        {
-          "path": "github.com/vulncheck-oss/go-exploit",
-          "version": "v1.51.0"
-        },
-        {
-          "path": "github.com/weppos/publicsuffix-go",
-          "version": "v0.50.3"
-        },
-        {
-          "path": "github.com/xdg-go/pbkdf2",
-          "version": "v1.0.0"
-        },
-        {
-          "path": "github.com/xdg-go/scram",
-          "version": "v1.1.2"
-        },
-        {
-          "path": "github.com/xdg-go/stringprep",
-          "version": "v1.0.4"
-        },
-        {
-          "path": "github.com/youmark/pkcs8",
-          "version": "v0.0.0-20240726163527-a2c0da244d78"
-        },
-        {
-          "path": "github.com/ysmood/fetchup",
-          "version": "v0.2.3"
-        },
-        {
-          "path": "github.com/ysmood/goob",
-          "version": "v0.4.0"
-        },
-        {
-          "path": "github.com/ysmood/got",
-          "version": "v0.40.0"
-        },
-        {
-          "path": "github.com/ysmood/gson",
-          "version": "v0.7.3"
-        },
-        {
-          "path": "github.com/ysmood/leakless",
-          "version": "v0.9.0"
-        },
-        {
-          "path": "github.com/yuin/goldmark",
-          "version": "v1.7.17"
-        },
-        {
-          "path": "github.com/yuin/goldmark-emoji",
-          "version": "v1.0.3"
-        },
-        {
-          "path": "github.com/zcalusic/sysinfo",
-          "version": "v1.0.2"
-        },
-        {
-          "path": "github.com/zmap/rc2",
-          "version": "v0.0.0-20190804163417-abaa70531248"
-        },
-        {
-          "path": "github.com/zmap/zcrypto",
-          "version": "v0.0.0-20240803002437-3a861682ac77"
+          "path": "github.com/zyedidia/generic",
+          "version": "v1.2.2-0.20230320175451-4410d2372cb1"
         },
         {
           "path": "go.etcd.io/bbolt",
-          "version": "v1.4.0"
+          "version": "v1.4.3"
         },
         {
-          "path": "go.mongodb.org/mongo-driver",
-          "version": "v1.17.9"
+          "path": "go.opentelemetry.io/auto/sdk",
+          "version": "v1.2.1"
         },
         {
-          "path": "go.uber.org/multierr",
-          "version": "v1.11.0"
+          "path": "go.opentelemetry.io/contrib/detectors/gcp",
+          "version": "v1.44.0"
+        },
+        {
+          "path": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+          "version": "v0.68.0"
+        },
+        {
+          "path": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+          "version": "v0.68.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/metric",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/sdk",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/sdk/metric",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/trace",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.yaml.in/yaml/v3",
+          "version": "v3.0.4"
+        },
+        {
+          "path": "go4.org",
+          "version": "v0.0.0-20230225012048-214862532bf5"
         },
         {
           "path": "golang.org/x/crypto",
@@ -869,7 +1201,11 @@
         },
         {
           "path": "golang.org/x/exp",
-          "version": "v0.0.0-20250911091902-df9299821621"
+          "version": "v0.0.0-20260410095643-746e56fc9e2f"
+        },
+        {
+          "path": "golang.org/x/mod",
+          "version": "v0.41.0"
         },
         {
           "path": "golang.org/x/net",
@@ -877,7 +1213,7 @@
         },
         {
           "path": "golang.org/x/oauth2",
-          "version": "v0.34.0"
+          "version": "v0.36.0"
         },
         {
           "path": "golang.org/x/sync",
@@ -897,15 +1233,71 @@
         },
         {
           "path": "golang.org/x/time",
-          "version": "v0.14.0"
+          "version": "v0.15.0"
         },
         {
-          "path": "gopkg.in/ini.v1",
-          "version": "v1.67.0"
+          "path": "golang.org/x/tools",
+          "version": "v0.51.0"
+        },
+        {
+          "path": "golang.org/x/xerrors",
+          "version": "v0.0.0-20240903120638-7835f813f4da"
+        },
+        {
+          "path": "google.golang.org/api",
+          "version": "v0.271.0"
+        },
+        {
+          "path": "google.golang.org/genproto",
+          "version": "v0.0.0-20260128011058-8636f8732409"
+        },
+        {
+          "path": "google.golang.org/genproto/googleapis/api",
+          "version": "v0.0.0-20260526163538-3dc84a4a5aaa"
+        },
+        {
+          "path": "google.golang.org/genproto/googleapis/rpc",
+          "version": "v0.0.0-20260526163538-3dc84a4a5aaa"
+        },
+        {
+          "path": "google.golang.org/grpc",
+          "version": "v1.83.2"
+        },
+        {
+          "path": "google.golang.org/protobuf",
+          "version": "v1.36.12-0.20260120151049-f2248ac996af"
+        },
+        {
+          "path": "gopkg.in/warnings.v0",
+          "version": "v0.1.2"
         },
         {
           "path": "gopkg.in/yaml.v3",
           "version": "v3.0.1"
+        },
+        {
+          "path": "gorm.io/gorm",
+          "version": "v1.31.2"
+        },
+        {
+          "path": "howett.net/plist",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "modernc.org/libc",
+          "version": "v1.74.1"
+        },
+        {
+          "path": "modernc.org/mathutil",
+          "version": "v1.7.1"
+        },
+        {
+          "path": "modernc.org/memory",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "modernc.org/sqlite",
+          "version": "v1.54.0"
         },
         {
           "path": "stdlib",
@@ -924,32 +1316,2922 @@
           "symbol": null
         }
       ],
-      "binary_sha256": "2d777a1ca1f994b9fee6f5253c6c1b2cccd1d58358f2842e9ba550343a18612c",
-      "scanner_sha256": "429a95024d38b2ab26df89ea0011eff8f58d60fb35809bb03754546cf16abf0e",
+      "binary_sha256": "47cfa1a026a155c66acfc2ce16157422c3bc9b7efa109492425d8ef3831606d2",
+      "scanner_sha256": "5659861a0426ab1da76b51884d6237e2159f94998ea4556781d6ddf8069bd4a1",
       "source_modules": [
         {
-          "module": "github.com/projectdiscovery/httpx",
-          "upstream_version": "v1.10.0",
-          "upstream_sum": "h1:sZvfeJDeX4eJfB5Oh29My4gOHmLfvpCt2wCqhargJrE=",
+          "module": "github.com/anchore/grype",
+          "upstream_version": "v0.116.1",
+          "upstream_sum": "h1:7rEB30cM/eCA8cs7RTs8Li//DWVYNZ+IYh2ogtypde0=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T14:48:26.875354+00:00",
-          "findings": [],
-          "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
-        },
-        {
-          "module": "github.com/google/go-github/v30",
-          "upstream_version": "v30.1.0",
-          "upstream_sum": "h1:VLDx+UolQICEOKu2m4uAoMti1SxuEBAl7RSEG16L+Oo=",
-          "status": "passed",
-          "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T14:48:27.057824+00:00",
+          "checked_at": "2026-10-30T16:27:09.642862+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
       ],
-      "source_provenance_sha256": "cc229b5b8938e09ec05b26f988466b81e7b53f90e8495a24cb8e439556455d67"
+      "source_provenance_sha256": "64e1473b844956427605f7e77f4ddf8510c3132918370ac4412a7084ffafca91"
+    },
+    "syft": {
+      "status": "passed",
+      "scanner": {
+        "protocol_version": "v1.0.0",
+        "scanner_name": "govulncheck",
+        "scanner_version": "v1.9.0",
+        "db": "https://vuln.go.dev",
+        "db_last_modified": "2026-10-27T21:16:18Z",
+        "scan_level": "symbol",
+        "scan_mode": "binary"
+      },
+      "go_version": "go1.26.10",
+      "toolchain": {
+        "minimum": "go1.26.10",
+        "status": "passed"
+      },
+      "modules": [
+        {
+          "path": "github.com/anchore/syft",
+          "version": "(devel)"
+        },
+        {
+          "path": "cel.dev/expr",
+          "version": "v0.25.2"
+        },
+        {
+          "path": "cloud.google.com/go",
+          "version": "v0.123.0"
+        },
+        {
+          "path": "cloud.google.com/go/auth",
+          "version": "v0.18.2"
+        },
+        {
+          "path": "cloud.google.com/go/auth/oauth2adapt",
+          "version": "v0.2.8"
+        },
+        {
+          "path": "cloud.google.com/go/compute/metadata",
+          "version": "v0.9.0"
+        },
+        {
+          "path": "cloud.google.com/go/iam",
+          "version": "v1.5.3"
+        },
+        {
+          "path": "cloud.google.com/go/monitoring",
+          "version": "v1.24.3"
+        },
+        {
+          "path": "cloud.google.com/go/storage",
+          "version": "v1.61.3"
+        },
+        {
+          "path": "dario.cat/mergo",
+          "version": "v1.0.2"
+        },
+        {
+          "path": "github.com/BurntSushi/toml",
+          "version": "v1.6.0"
+        },
+        {
+          "path": "github.com/CycloneDX/cyclonedx-go",
+          "version": "v0.11.0"
+        },
+        {
+          "path": "github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp",
+          "version": "v1.33.0"
+        },
+        {
+          "path": "github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric",
+          "version": "v0.55.0"
+        },
+        {
+          "path": "github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping",
+          "version": "v0.55.0"
+        },
+        {
+          "path": "github.com/Masterminds/goutils",
+          "version": "v1.1.1"
+        },
+        {
+          "path": "github.com/Masterminds/semver/v3",
+          "version": "v3.5.0"
+        },
+        {
+          "path": "github.com/Masterminds/sprig/v3",
+          "version": "v3.3.0"
+        },
+        {
+          "path": "github.com/OneOfOne/xxhash",
+          "version": "v1.2.8"
+        },
+        {
+          "path": "github.com/ProtonMail/go-crypto",
+          "version": "v1.4.1"
+        },
+        {
+          "path": "github.com/STARRY-S/zip",
+          "version": "v0.2.3"
+        },
+        {
+          "path": "github.com/acarl005/stripansi",
+          "version": "v0.0.0-20180116102854-5a71ef0e047d"
+        },
+        {
+          "path": "github.com/acobaugh/osrelease",
+          "version": "v0.1.0"
+        },
+        {
+          "path": "github.com/adrg/xdg",
+          "version": "v0.5.3"
+        },
+        {
+          "path": "github.com/agext/levenshtein",
+          "version": "v1.2.1"
+        },
+        {
+          "path": "github.com/anchore/bubbly",
+          "version": "v0.2.1"
+        },
+        {
+          "path": "github.com/anchore/clio",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/fangs",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-collections",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-homedir",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-logger",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-lzo",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-macholibre",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-rpmdb",
+          "version": "v0.2.0"
+        },
+        {
+          "path": "github.com/anchore/go-struct-converter",
+          "version": "v0.2.0-rc2"
+        },
+        {
+          "path": "github.com/anchore/go-sync",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/anchore/go-version",
+          "version": "v1.2.2-0.20200701162849-18adb9c92b9b"
+        },
+        {
+          "path": "github.com/anchore/packageurl-go",
+          "version": "v0.2.0"
+        },
+        {
+          "path": "github.com/anchore/stereoscope",
+          "version": "v0.3.0"
+        },
+        {
+          "path": "github.com/andybalholm/brotli",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/apparentlymart/go-textseg/v15",
+          "version": "v15.0.0"
+        },
+        {
+          "path": "github.com/aquasecurity/go-pep440-version",
+          "version": "v0.0.1"
+        },
+        {
+          "path": "github.com/aquasecurity/go-version",
+          "version": "v0.0.1"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2",
+          "version": "v1.41.5"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream",
+          "version": "v1.7.8"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/config",
+          "version": "v1.32.12"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/credentials",
+          "version": "v1.19.12"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/feature/ec2/imds",
+          "version": "v1.18.20"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/configsources",
+          "version": "v1.4.21"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/endpoints/v2",
+          "version": "v2.7.21"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/ini",
+          "version": "v1.8.6"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/v4a",
+          "version": "v1.4.22"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding",
+          "version": "v1.13.7"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/checksum",
+          "version": "v1.9.13"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/presigned-url",
+          "version": "v1.13.21"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/s3shared",
+          "version": "v1.19.21"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/s3",
+          "version": "v1.97.3"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/signin",
+          "version": "v1.0.8"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/sso",
+          "version": "v1.30.13"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/ssooidc",
+          "version": "v1.35.17"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/sts",
+          "version": "v1.41.9"
+        },
+        {
+          "path": "github.com/aws/smithy-go",
+          "version": "v1.24.2"
+        },
+        {
+          "path": "github.com/aymanbagabas/go-osc52/v2",
+          "version": "v2.0.1"
+        },
+        {
+          "path": "github.com/becheran/wildmatch-go",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/bgentry/go-netrc",
+          "version": "v0.0.0-20140422174119-9fd32a8b3d3d"
+        },
+        {
+          "path": "github.com/bitnami/go-version",
+          "version": "v0.0.0-20250131085805-b1f57a8634ef"
+        },
+        {
+          "path": "github.com/blakesmith/ar",
+          "version": "v0.0.0-20190502131153-809d4375e1fb"
+        },
+        {
+          "path": "github.com/bmatcuk/doublestar/v4",
+          "version": "v4.10.0"
+        },
+        {
+          "path": "github.com/bodgit/plumbing",
+          "version": "v1.3.0"
+        },
+        {
+          "path": "github.com/bodgit/sevenzip",
+          "version": "v1.6.1"
+        },
+        {
+          "path": "github.com/bodgit/windows",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/cespare/xxhash/v2",
+          "version": "v2.3.0"
+        },
+        {
+          "path": "github.com/charmbracelet/bubbles",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/charmbracelet/bubbletea",
+          "version": "v1.3.10"
+        },
+        {
+          "path": "github.com/charmbracelet/colorprofile",
+          "version": "v0.4.3"
+        },
+        {
+          "path": "github.com/charmbracelet/harmonica",
+          "version": "v0.2.0"
+        },
+        {
+          "path": "github.com/charmbracelet/lipgloss",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/charmbracelet/x/ansi",
+          "version": "v0.11.6"
+        },
+        {
+          "path": "github.com/charmbracelet/x/cellbuf",
+          "version": "v0.0.15"
+        },
+        {
+          "path": "github.com/charmbracelet/x/term",
+          "version": "v0.2.2"
+        },
+        {
+          "path": "github.com/clipperhouse/displaywidth",
+          "version": "v0.11.0"
+        },
+        {
+          "path": "github.com/clipperhouse/uax29/v2",
+          "version": "v2.7.0"
+        },
+        {
+          "path": "github.com/cloudflare/circl",
+          "version": "v1.6.3"
+        },
+        {
+          "path": "github.com/cncf/xds/go",
+          "version": "v0.0.0-20260202195803-dba9d589def2"
+        },
+        {
+          "path": "github.com/containerd/containerd/api",
+          "version": "v1.11.1"
+        },
+        {
+          "path": "github.com/containerd/containerd/v2",
+          "version": "v2.3.6"
+        },
+        {
+          "path": "github.com/containerd/continuity",
+          "version": "v0.5.0"
+        },
+        {
+          "path": "github.com/containerd/errdefs",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/containerd/errdefs/pkg",
+          "version": "v0.3.0"
+        },
+        {
+          "path": "github.com/containerd/fifo",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/containerd/log",
+          "version": "v0.1.0"
+        },
+        {
+          "path": "github.com/containerd/platforms",
+          "version": "v1.0.0-rc.5"
+        },
+        {
+          "path": "github.com/containerd/plugin",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/containerd/ttrpc",
+          "version": "v1.2.8"
+        },
+        {
+          "path": "github.com/containerd/typeurl/v2",
+          "version": "v2.2.3"
+        },
+        {
+          "path": "github.com/cyphar/filepath-securejoin",
+          "version": "v0.6.1"
+        },
+        {
+          "path": "github.com/deitch/magic",
+          "version": "v0.0.0-20230404182410-1ff89d7342da"
+        },
+        {
+          "path": "github.com/diskfs/go-diskfs",
+          "version": "v1.9.3"
+        },
+        {
+          "path": "github.com/distribution/reference",
+          "version": "v0.6.0"
+        },
+        {
+          "path": "github.com/docker/cli",
+          "version": "v29.6.1+incompatible"
+        },
+        {
+          "path": "github.com/docker/docker-credential-helpers",
+          "version": "v0.9.5"
+        },
+        {
+          "path": "github.com/docker/go-connections",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/docker/go-units",
+          "version": "v0.5.0"
+        },
+        {
+          "path": "github.com/dsnet/compress",
+          "version": "v0.0.2-0.20230904184137-39efe44ab707"
+        },
+        {
+          "path": "github.com/dustin/go-humanize",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/elliotchance/phpserialize",
+          "version": "v1.4.0"
+        },
+        {
+          "path": "github.com/emirpasic/gods",
+          "version": "v1.18.1"
+        },
+        {
+          "path": "github.com/envoyproxy/go-control-plane/envoy",
+          "version": "v1.37.0"
+        },
+        {
+          "path": "github.com/envoyproxy/protoc-gen-validate",
+          "version": "v1.3.3"
+        },
+        {
+          "path": "github.com/facebookincubator/nvdtools",
+          "version": "v0.1.5"
+        },
+        {
+          "path": "github.com/fatih/color",
+          "version": "v1.18.0"
+        },
+        {
+          "path": "github.com/felixge/fgprof",
+          "version": "v0.9.5"
+        },
+        {
+          "path": "github.com/felixge/httpsnoop",
+          "version": "v1.0.4"
+        },
+        {
+          "path": "github.com/fsnotify/fsnotify",
+          "version": "v1.9.0"
+        },
+        {
+          "path": "github.com/gabriel-vasile/mimetype",
+          "version": "v1.4.13"
+        },
+        {
+          "path": "github.com/github/go-spdx/v2",
+          "version": "v2.7.0"
+        },
+        {
+          "path": "github.com/go-git/gcfg",
+          "version": "v1.5.1-0.20230307220236-3a3c6141e376"
+        },
+        {
+          "path": "github.com/go-git/go-billy/v5",
+          "version": "v5.9.0"
+        },
+        {
+          "path": "github.com/go-git/go-git/v5",
+          "version": "v5.19.2"
+        },
+        {
+          "path": "github.com/go-jose/go-jose/v4",
+          "version": "v4.1.4"
+        },
+        {
+          "path": "github.com/go-logr/logr",
+          "version": "v1.4.4"
+        },
+        {
+          "path": "github.com/go-logr/stdr",
+          "version": "v1.2.2"
+        },
+        {
+          "path": "github.com/go-restruct/restruct",
+          "version": "v1.2.0-alpha"
+        },
+        {
+          "path": "github.com/go-viper/mapstructure/v2",
+          "version": "v2.5.0"
+        },
+        {
+          "path": "github.com/goccy/go-yaml",
+          "version": "v1.19.2"
+        },
+        {
+          "path": "github.com/gogo/protobuf",
+          "version": "v1.3.2"
+        },
+        {
+          "path": "github.com/gohugoio/hashstructure",
+          "version": "v0.6.0"
+        },
+        {
+          "path": "github.com/golang/groupcache",
+          "version": "v0.0.0-20241129210726-2c02b8208cf8"
+        },
+        {
+          "path": "github.com/google/go-cmp",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/google/go-containerregistry",
+          "version": "v0.21.7"
+        },
+        {
+          "path": "github.com/google/licensecheck",
+          "version": "v0.3.1"
+        },
+        {
+          "path": "github.com/google/pprof",
+          "version": "v0.0.0-20250317173921-a4b03ec1a45e"
+        },
+        {
+          "path": "github.com/google/s2a-go",
+          "version": "v0.1.9"
+        },
+        {
+          "path": "github.com/google/uuid",
+          "version": "v1.6.0"
+        },
+        {
+          "path": "github.com/googleapis/enterprise-certificate-proxy",
+          "version": "v0.3.14"
+        },
+        {
+          "path": "github.com/googleapis/gax-go/v2",
+          "version": "v2.17.0"
+        },
+        {
+          "path": "github.com/gookit/color",
+          "version": "v1.6.1"
+        },
+        {
+          "path": "github.com/gpustack/gguf-parser-go",
+          "version": "v0.25.0"
+        },
+        {
+          "path": "github.com/hashicorp/aws-sdk-go-base/v2",
+          "version": "v2.0.0-beta.72"
+        },
+        {
+          "path": "github.com/hashicorp/errwrap",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/hashicorp/go-cleanhttp",
+          "version": "v0.5.2"
+        },
+        {
+          "path": "github.com/hashicorp/go-getter",
+          "version": "v1.8.6"
+        },
+        {
+          "path": "github.com/hashicorp/go-multierror",
+          "version": "v1.1.1"
+        },
+        {
+          "path": "github.com/hashicorp/go-version",
+          "version": "v1.8.0"
+        },
+        {
+          "path": "github.com/hashicorp/golang-lru/v2",
+          "version": "v2.0.7"
+        },
+        {
+          "path": "github.com/hashicorp/hcl/v2",
+          "version": "v2.24.0"
+        },
+        {
+          "path": "github.com/henvic/httpretty",
+          "version": "v0.1.4"
+        },
+        {
+          "path": "github.com/huandu/xstrings",
+          "version": "v1.5.0"
+        },
+        {
+          "path": "github.com/iancoleman/strcase",
+          "version": "v0.3.0"
+        },
+        {
+          "path": "github.com/jbenet/go-context",
+          "version": "v0.0.0-20150711004518-d14ea06fba99"
+        },
+        {
+          "path": "github.com/jedib0t/go-pretty/v6",
+          "version": "v6.8.1"
+        },
+        {
+          "path": "github.com/jinzhu/copier",
+          "version": "v0.4.0"
+        },
+        {
+          "path": "github.com/json-iterator/go",
+          "version": "v1.1.12"
+        },
+        {
+          "path": "github.com/kastenhq/goversion",
+          "version": "v0.0.0-20230811215019-93b2f8823953"
+        },
+        {
+          "path": "github.com/kevinburke/ssh_config",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/klauspost/compress",
+          "version": "v1.19.0"
+        },
+        {
+          "path": "github.com/klauspost/cpuid/v2",
+          "version": "v2.3.0"
+        },
+        {
+          "path": "github.com/klauspost/pgzip",
+          "version": "v1.2.6"
+        },
+        {
+          "path": "github.com/lucasb-eyer/go-colorful",
+          "version": "v1.3.0"
+        },
+        {
+          "path": "github.com/mattn/go-colorable",
+          "version": "v0.1.14"
+        },
+        {
+          "path": "github.com/mattn/go-isatty",
+          "version": "v0.0.20"
+        },
+        {
+          "path": "github.com/mattn/go-runewidth",
+          "version": "v0.0.21"
+        },
+        {
+          "path": "github.com/mgutz/ansi",
+          "version": "v0.0.0-20200706080929-d51e80ef957d"
+        },
+        {
+          "path": "github.com/mholt/archives",
+          "version": "v0.1.5"
+        },
+        {
+          "path": "github.com/mikelolasagasti/xz",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/minio/minlz",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/mitchellh/copystructure",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/mitchellh/go-homedir",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/mitchellh/go-wordwrap",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/mitchellh/reflectwalk",
+          "version": "v1.0.2"
+        },
+        {
+          "path": "github.com/moby/docker-image-spec",
+          "version": "v1.3.1"
+        },
+        {
+          "path": "github.com/moby/locker",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/moby/moby/api",
+          "version": "v1.55.0"
+        },
+        {
+          "path": "github.com/moby/moby/client",
+          "version": "v0.5.0"
+        },
+        {
+          "path": "github.com/moby/sys/mountinfo",
+          "version": "v0.7.2"
+        },
+        {
+          "path": "github.com/moby/sys/signal",
+          "version": "v0.7.1"
+        },
+        {
+          "path": "github.com/moby/sys/user",
+          "version": "v0.4.1"
+        },
+        {
+          "path": "github.com/moby/sys/userns",
+          "version": "v0.1.0"
+        },
+        {
+          "path": "github.com/modern-go/concurrent",
+          "version": "v0.0.0-20180306012644-bacd9c7ef1dd"
+        },
+        {
+          "path": "github.com/modern-go/reflect2",
+          "version": "v1.0.3-0.20250322232337-35a7c28c31ee"
+        },
+        {
+          "path": "github.com/muesli/ansi",
+          "version": "v0.0.0-20230316100256-276c6243b2f6"
+        },
+        {
+          "path": "github.com/muesli/cancelreader",
+          "version": "v0.2.2"
+        },
+        {
+          "path": "github.com/muesli/termenv",
+          "version": "v0.16.0"
+        },
+        {
+          "path": "github.com/nix-community/go-nix",
+          "version": "v0.0.0-20250101154619-4bdde671e0a1"
+        },
+        {
+          "path": "github.com/nwaples/rardecode/v2",
+          "version": "v2.2.0"
+        },
+        {
+          "path": "github.com/olekukonko/cat",
+          "version": "v0.0.0-20250911104152-50322a0618f6"
+        },
+        {
+          "path": "github.com/olekukonko/errors",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/olekukonko/ll",
+          "version": "v0.1.6"
+        },
+        {
+          "path": "github.com/olekukonko/tablewriter",
+          "version": "v1.1.4"
+        },
+        {
+          "path": "github.com/opencontainers/go-digest",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/opencontainers/image-spec",
+          "version": "v1.1.1"
+        },
+        {
+          "path": "github.com/opencontainers/runtime-spec",
+          "version": "v1.3.0"
+        },
+        {
+          "path": "github.com/pborman/indent",
+          "version": "v1.2.1"
+        },
+        {
+          "path": "github.com/pelletier/go-toml",
+          "version": "v1.9.5"
+        },
+        {
+          "path": "github.com/pelletier/go-toml/v2",
+          "version": "v2.4.3"
+        },
+        {
+          "path": "github.com/pierrec/lz4/v4",
+          "version": "v4.1.26"
+        },
+        {
+          "path": "github.com/piprate/json-gold",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/pjbgf/sha1cd",
+          "version": "v0.6.0"
+        },
+        {
+          "path": "github.com/pkg/errors",
+          "version": "v0.9.1"
+        },
+        {
+          "path": "github.com/pkg/profile",
+          "version": "v1.7.0"
+        },
+        {
+          "path": "github.com/pkg/xattr",
+          "version": "v0.4.12"
+        },
+        {
+          "path": "github.com/pquerna/cachecontrol",
+          "version": "v0.0.0-20180517163645-1555304b9b35"
+        },
+        {
+          "path": "github.com/remyoudompheng/bigfft",
+          "version": "v0.0.0-20230129092748-24d4a6f8daec"
+        },
+        {
+          "path": "github.com/rivo/uniseg",
+          "version": "v0.4.7"
+        },
+        {
+          "path": "github.com/rust-secure-code/go-rustaudit",
+          "version": "v0.0.0-20250226111315-e20ec32e963c"
+        },
+        {
+          "path": "github.com/sagikazarmark/locafero",
+          "version": "v0.11.0"
+        },
+        {
+          "path": "github.com/saintfish/chardet",
+          "version": "v0.0.0-20230101081208-5e3ef4b5456d"
+        },
+        {
+          "path": "github.com/sassoftware/go-rpmutils",
+          "version": "v0.4.0"
+        },
+        {
+          "path": "github.com/scylladb/go-set",
+          "version": "v1.0.3-0.20200225121959-cc7b2070d91e"
+        },
+        {
+          "path": "github.com/sergi/go-diff",
+          "version": "v1.4.0"
+        },
+        {
+          "path": "github.com/shopspring/decimal",
+          "version": "v1.4.0"
+        },
+        {
+          "path": "github.com/sirupsen/logrus",
+          "version": "v1.9.4"
+        },
+        {
+          "path": "github.com/skeema/knownhosts",
+          "version": "v1.3.1"
+        },
+        {
+          "path": "github.com/smallnest/ringbuffer",
+          "version": "v0.0.0-20241116012123-461381446e3d"
+        },
+        {
+          "path": "github.com/sorairolake/lzip-go",
+          "version": "v0.3.8"
+        },
+        {
+          "path": "github.com/sourcegraph/conc",
+          "version": "v0.3.1-0.20240121214520-5f936abd7ae8"
+        },
+        {
+          "path": "github.com/spdx/gordf",
+          "version": "v0.0.0-20201111095634-7098f93598fb"
+        },
+        {
+          "path": "github.com/spdx/tools-golang",
+          "version": "v0.6.0-rc4"
+        },
+        {
+          "path": "github.com/spf13/afero",
+          "version": "v1.15.0"
+        },
+        {
+          "path": "github.com/spf13/cast",
+          "version": "v1.10.0"
+        },
+        {
+          "path": "github.com/spf13/cobra",
+          "version": "v1.10.2"
+        },
+        {
+          "path": "github.com/spf13/pflag",
+          "version": "v1.0.10"
+        },
+        {
+          "path": "github.com/spf13/viper",
+          "version": "v1.21.0"
+        },
+        {
+          "path": "github.com/spiffe/go-spiffe/v2",
+          "version": "v2.7.0"
+        },
+        {
+          "path": "github.com/subosito/gotenv",
+          "version": "v1.6.0"
+        },
+        {
+          "path": "github.com/sylabs/sif/v2",
+          "version": "v2.24.1"
+        },
+        {
+          "path": "github.com/sylabs/squashfs",
+          "version": "v1.0.6"
+        },
+        {
+          "path": "github.com/tailscale/hujson",
+          "version": "v0.0.0-20260302212456-ecc657c15afd"
+        },
+        {
+          "path": "github.com/therootcompany/xz",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/ulikunitz/xz",
+          "version": "v0.5.15"
+        },
+        {
+          "path": "github.com/vbatts/go-mtree",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/vifraa/gopom",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/wagoodman/go-partybus",
+          "version": "v0.0.0-20230516145632-8ccac152c651"
+        },
+        {
+          "path": "github.com/wagoodman/go-progress",
+          "version": "v0.0.0-20260303201901-10176f79b2c0"
+        },
+        {
+          "path": "github.com/xanzy/ssh-agent",
+          "version": "v0.3.3"
+        },
+        {
+          "path": "github.com/xi2/xz",
+          "version": "v0.0.0-20171230120015-48954b6210f8"
+        },
+        {
+          "path": "github.com/xo/terminfo",
+          "version": "v0.0.0-20220910002029-abceb7e1c41e"
+        },
+        {
+          "path": "github.com/zclconf/go-cty",
+          "version": "v1.16.3"
+        },
+        {
+          "path": "github.com/zyedidia/generic",
+          "version": "v1.2.2-0.20230320175451-4410d2372cb1"
+        },
+        {
+          "path": "go.opentelemetry.io/auto/sdk",
+          "version": "v1.2.1"
+        },
+        {
+          "path": "go.opentelemetry.io/contrib/detectors/gcp",
+          "version": "v1.44.0"
+        },
+        {
+          "path": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+          "version": "v0.68.0"
+        },
+        {
+          "path": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+          "version": "v0.68.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/metric",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/sdk",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/sdk/metric",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/trace",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.yaml.in/yaml/v3",
+          "version": "v3.0.4"
+        },
+        {
+          "path": "go4.org",
+          "version": "v0.0.0-20230225012048-214862532bf5"
+        },
+        {
+          "path": "golang.org/x/crypto",
+          "version": "v0.58.0"
+        },
+        {
+          "path": "golang.org/x/exp",
+          "version": "v0.0.0-20260410095643-746e56fc9e2f"
+        },
+        {
+          "path": "golang.org/x/mod",
+          "version": "v0.41.0"
+        },
+        {
+          "path": "golang.org/x/net",
+          "version": "v0.62.0"
+        },
+        {
+          "path": "golang.org/x/oauth2",
+          "version": "v0.36.0"
+        },
+        {
+          "path": "golang.org/x/sync",
+          "version": "v0.24.0"
+        },
+        {
+          "path": "golang.org/x/sys",
+          "version": "v0.49.0"
+        },
+        {
+          "path": "golang.org/x/term",
+          "version": "v0.47.0"
+        },
+        {
+          "path": "golang.org/x/text",
+          "version": "v0.43.0"
+        },
+        {
+          "path": "golang.org/x/time",
+          "version": "v0.15.0"
+        },
+        {
+          "path": "golang.org/x/tools",
+          "version": "v0.51.0"
+        },
+        {
+          "path": "golang.org/x/xerrors",
+          "version": "v0.0.0-20231012003039-104605ab7028"
+        },
+        {
+          "path": "google.golang.org/api",
+          "version": "v0.271.0"
+        },
+        {
+          "path": "google.golang.org/genproto",
+          "version": "v0.0.0-20260128011058-8636f8732409"
+        },
+        {
+          "path": "google.golang.org/genproto/googleapis/api",
+          "version": "v0.0.0-20260526163538-3dc84a4a5aaa"
+        },
+        {
+          "path": "google.golang.org/genproto/googleapis/rpc",
+          "version": "v0.0.0-20260526163538-3dc84a4a5aaa"
+        },
+        {
+          "path": "google.golang.org/grpc",
+          "version": "v1.83.2"
+        },
+        {
+          "path": "google.golang.org/protobuf",
+          "version": "v1.36.12-0.20260120151049-f2248ac996af"
+        },
+        {
+          "path": "gopkg.in/warnings.v0",
+          "version": "v0.1.2"
+        },
+        {
+          "path": "gopkg.in/yaml.v3",
+          "version": "v3.0.1"
+        },
+        {
+          "path": "howett.net/plist",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "modernc.org/libc",
+          "version": "v1.74.1"
+        },
+        {
+          "path": "modernc.org/mathutil",
+          "version": "v1.7.1"
+        },
+        {
+          "path": "modernc.org/memory",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "modernc.org/sqlite",
+          "version": "v1.54.0"
+        },
+        {
+          "path": "stdlib",
+          "version": "go1.26.10"
+        }
+      ],
+      "advisories": [
+        {
+          "id": "GO-2026-5932",
+          "module": "golang.org/x/crypto",
+          "version": "v0.58.0",
+          "fixed_version": null,
+          "level": 0,
+          "precision": "module",
+          "package": null,
+          "symbol": null
+        }
+      ],
+      "binary_sha256": "502ea88d583cea3828903dedf85079a64de159cde419128bee1959e1c91882bd",
+      "scanner_sha256": "5659861a0426ab1da76b51884d6237e2159f94998ea4556781d6ddf8069bd4a1",
+      "source_modules": [
+        {
+          "module": "github.com/anchore/syft",
+          "upstream_version": "v1.50.0",
+          "upstream_sum": "h1:kSQ4oshw6dwHxcYhrH1jUZl/M05kiCfyPoGJgvXe61s=",
+          "status": "passed",
+          "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
+          "checked_at": "2026-10-30T16:27:11.511217+00:00",
+          "findings": [],
+          "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        }
+      ],
+      "source_provenance_sha256": "65d10347fd2eb6abb6458109114fdeb4fd332d4328dc0b2afce6720864b15768"
+    },
+    "trivy": {
+      "status": "passed",
+      "scanner": {
+        "protocol_version": "v1.0.0",
+        "scanner_name": "govulncheck",
+        "scanner_version": "v1.9.0",
+        "db": "https://vuln.go.dev",
+        "db_last_modified": "2026-10-27T21:16:18Z",
+        "scan_level": "symbol",
+        "scan_mode": "binary"
+      },
+      "go_version": "go1.26.10-X:jsonv2",
+      "toolchain": {
+        "minimum": "go1.26.10",
+        "status": "passed"
+      },
+      "modules": [
+        {
+          "path": "github.com/aquasecurity/trivy",
+          "version": "(devel)"
+        },
+        {
+          "path": "cel.dev/expr",
+          "version": "v0.25.2"
+        },
+        {
+          "path": "cloud.google.com/go",
+          "version": "v0.123.0"
+        },
+        {
+          "path": "cloud.google.com/go/auth",
+          "version": "v0.20.0"
+        },
+        {
+          "path": "cloud.google.com/go/auth/oauth2adapt",
+          "version": "v0.2.8"
+        },
+        {
+          "path": "cloud.google.com/go/compute/metadata",
+          "version": "v0.9.0"
+        },
+        {
+          "path": "cloud.google.com/go/iam",
+          "version": "v1.13.0"
+        },
+        {
+          "path": "cloud.google.com/go/monitoring",
+          "version": "v1.29.0"
+        },
+        {
+          "path": "cloud.google.com/go/storage",
+          "version": "v1.62.2"
+        },
+        {
+          "path": "dario.cat/mergo",
+          "version": "v1.0.2"
+        },
+        {
+          "path": "github.com/Azure/azure-sdk-for-go/sdk/azcore",
+          "version": "v1.22.0"
+        },
+        {
+          "path": "github.com/Azure/azure-sdk-for-go/sdk/azidentity",
+          "version": "v1.14.0"
+        },
+        {
+          "path": "github.com/Azure/azure-sdk-for-go/sdk/containers/azcontainerregistry",
+          "version": "v0.2.3"
+        },
+        {
+          "path": "github.com/Azure/azure-sdk-for-go/sdk/internal",
+          "version": "v1.12.0"
+        },
+        {
+          "path": "github.com/AzureAD/microsoft-authentication-library-for-go",
+          "version": "v1.7.2"
+        },
+        {
+          "path": "github.com/BurntSushi/toml",
+          "version": "v1.6.0"
+        },
+        {
+          "path": "github.com/CycloneDX/cyclonedx-go",
+          "version": "v0.11.0"
+        },
+        {
+          "path": "github.com/GoogleCloudPlatform/docker-credential-gcr/v2",
+          "version": "v2.1.32"
+        },
+        {
+          "path": "github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp",
+          "version": "v1.33.0"
+        },
+        {
+          "path": "github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric",
+          "version": "v0.55.0"
+        },
+        {
+          "path": "github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping",
+          "version": "v0.55.0"
+        },
+        {
+          "path": "github.com/Intevation/gval",
+          "version": "v1.3.0"
+        },
+        {
+          "path": "github.com/Intevation/jsonpath",
+          "version": "v0.2.1"
+        },
+        {
+          "path": "github.com/MakeNowJust/heredoc",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/Masterminds/goutils",
+          "version": "v1.1.1"
+        },
+        {
+          "path": "github.com/Masterminds/semver/v3",
+          "version": "v3.5.0"
+        },
+        {
+          "path": "github.com/Masterminds/sprig/v3",
+          "version": "v3.3.0"
+        },
+        {
+          "path": "github.com/Masterminds/squirrel",
+          "version": "v1.5.4"
+        },
+        {
+          "path": "github.com/NYTimes/gziphandler",
+          "version": "v1.1.1"
+        },
+        {
+          "path": "github.com/ProtonMail/go-crypto",
+          "version": "v1.4.1"
+        },
+        {
+          "path": "github.com/VividCortex/ewma",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/agext/levenshtein",
+          "version": "v1.2.3"
+        },
+        {
+          "path": "github.com/agnivade/levenshtein",
+          "version": "v1.2.1"
+        },
+        {
+          "path": "github.com/alecthomas/chroma",
+          "version": "v0.10.0"
+        },
+        {
+          "path": "github.com/anchore/go-struct-converter",
+          "version": "v0.1.0"
+        },
+        {
+          "path": "github.com/apparentlymart/go-cidr",
+          "version": "v1.1.1"
+        },
+        {
+          "path": "github.com/apparentlymart/go-textseg/v15",
+          "version": "v15.0.0"
+        },
+        {
+          "path": "github.com/aquasecurity/go-gem-version",
+          "version": "v0.0.0-20201115065557-8eed6fe000ce"
+        },
+        {
+          "path": "github.com/aquasecurity/go-npm-version",
+          "version": "v0.0.2"
+        },
+        {
+          "path": "github.com/aquasecurity/go-pep440-version",
+          "version": "v0.0.2-0.20260224065243-f9bba28c51a4"
+        },
+        {
+          "path": "github.com/aquasecurity/go-version",
+          "version": "v0.0.1"
+        },
+        {
+          "path": "github.com/aquasecurity/iamgo",
+          "version": "v0.0.10"
+        },
+        {
+          "path": "github.com/aquasecurity/jfather",
+          "version": "v0.0.8"
+        },
+        {
+          "path": "github.com/aquasecurity/table",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "github.com/aquasecurity/tml",
+          "version": "v0.6.1"
+        },
+        {
+          "path": "github.com/aquasecurity/trivy-checks",
+          "version": "v1.12.2-0.20251219190323-79d27547baf5"
+        },
+        {
+          "path": "github.com/aquasecurity/trivy-db",
+          "version": "v0.0.0-20260629102122-a0049d7ad12f"
+        },
+        {
+          "path": "github.com/aquasecurity/trivy-java-db",
+          "version": "v0.0.0-20240109071736-184bd7481d48"
+        },
+        {
+          "path": "github.com/aquasecurity/trivy-kubernetes",
+          "version": "v0.9.1"
+        },
+        {
+          "path": "github.com/asaskevich/govalidator",
+          "version": "v0.0.0-20230301143203-a9d515a09cc2"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2",
+          "version": "v1.43.0"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream",
+          "version": "v1.7.13"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/config",
+          "version": "v1.32.31"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/credentials",
+          "version": "v1.19.30"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/feature/ec2/imds",
+          "version": "v1.18.31"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/configsources",
+          "version": "v1.4.31"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/endpoints/v2",
+          "version": "v2.7.31"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/internal/v4a",
+          "version": "v1.4.32"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/ebs",
+          "version": "v1.22.1"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/ec2",
+          "version": "v1.304.0"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/ecr",
+          "version": "v1.57.2"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding",
+          "version": "v1.13.13"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/checksum",
+          "version": "v1.9.22"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/presigned-url",
+          "version": "v1.13.31"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/internal/s3shared",
+          "version": "v1.19.29"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/s3",
+          "version": "v1.103.3"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/signin",
+          "version": "v1.5.0"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/sso",
+          "version": "v1.33.0"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/ssooidc",
+          "version": "v1.38.0"
+        },
+        {
+          "path": "github.com/aws/aws-sdk-go-v2/service/sts",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "github.com/aws/smithy-go",
+          "version": "v1.27.3"
+        },
+        {
+          "path": "github.com/bgentry/go-netrc",
+          "version": "v0.0.0-20140422174119-9fd32a8b3d3d"
+        },
+        {
+          "path": "github.com/bitnami/go-version",
+          "version": "v0.0.0-20231130084017-bb00604d650c"
+        },
+        {
+          "path": "github.com/blang/semver/v4",
+          "version": "v4.0.0"
+        },
+        {
+          "path": "github.com/bmatcuk/doublestar/v4",
+          "version": "v4.10.0"
+        },
+        {
+          "path": "github.com/briandowns/spinner",
+          "version": "v1.23.0"
+        },
+        {
+          "path": "github.com/carabiner-dev/attestation",
+          "version": "v0.2.1"
+        },
+        {
+          "path": "github.com/cenkalti/backoff/v5",
+          "version": "v5.0.3"
+        },
+        {
+          "path": "github.com/cenkalti/backoff/v6",
+          "version": "v6.0.1"
+        },
+        {
+          "path": "github.com/cespare/xxhash/v2",
+          "version": "v2.3.0"
+        },
+        {
+          "path": "github.com/chai2010/gettext-go",
+          "version": "v1.0.2"
+        },
+        {
+          "path": "github.com/cheggaaa/pb/v3",
+          "version": "v3.1.7"
+        },
+        {
+          "path": "github.com/clipperhouse/uax29/v2",
+          "version": "v2.6.0"
+        },
+        {
+          "path": "github.com/cloudflare/circl",
+          "version": "v1.6.3"
+        },
+        {
+          "path": "github.com/cncf/xds/go",
+          "version": "v0.0.0-20260202195803-dba9d589def2"
+        },
+        {
+          "path": "github.com/containerd/containerd/api",
+          "version": "v1.11.1"
+        },
+        {
+          "path": "github.com/containerd/containerd/v2",
+          "version": "v2.3.6"
+        },
+        {
+          "path": "github.com/containerd/continuity",
+          "version": "v0.5.0"
+        },
+        {
+          "path": "github.com/containerd/errdefs",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/containerd/errdefs/pkg",
+          "version": "v0.3.0"
+        },
+        {
+          "path": "github.com/containerd/fifo",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/containerd/log",
+          "version": "v0.1.0"
+        },
+        {
+          "path": "github.com/containerd/platforms",
+          "version": "v1.0.0-rc.5"
+        },
+        {
+          "path": "github.com/containerd/plugin",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/containerd/ttrpc",
+          "version": "v1.2.8"
+        },
+        {
+          "path": "github.com/containerd/typeurl/v2",
+          "version": "v2.3.0"
+        },
+        {
+          "path": "github.com/coreos/go-oidc/v3",
+          "version": "v3.20.0"
+        },
+        {
+          "path": "github.com/cyberphone/json-canonicalization",
+          "version": "v0.0.0-20241213102144-19d51d7fe467"
+        },
+        {
+          "path": "github.com/cyphar/filepath-securejoin",
+          "version": "v0.6.1"
+        },
+        {
+          "path": "github.com/davecgh/go-spew",
+          "version": "v1.1.2-0.20180830191138-d8f796af33cc"
+        },
+        {
+          "path": "github.com/digitorus/pkcs7",
+          "version": "v0.0.0-20230818184609-3a137a874352"
+        },
+        {
+          "path": "github.com/digitorus/timestamp",
+          "version": "v0.0.0-20231217203849-220c5c2851b7"
+        },
+        {
+          "path": "github.com/distribution/reference",
+          "version": "v0.6.0"
+        },
+        {
+          "path": "github.com/dlclark/regexp2",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "github.com/docker/cli",
+          "version": "v29.7.2+incompatible"
+        },
+        {
+          "path": "github.com/docker/docker-credential-helpers",
+          "version": "v0.9.8"
+        },
+        {
+          "path": "github.com/docker/go-connections",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/docker/go-units",
+          "version": "v0.5.0"
+        },
+        {
+          "path": "github.com/dsnet/compress",
+          "version": "v0.0.2-0.20230904184137-39efe44ab707"
+        },
+        {
+          "path": "github.com/dustin/go-humanize",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/dylibso/observe-sdk/go",
+          "version": "v0.0.0-20240819160327-2d926c5d788a"
+        },
+        {
+          "path": "github.com/emicklei/go-restful/v3",
+          "version": "v3.13.0"
+        },
+        {
+          "path": "github.com/emirpasic/gods",
+          "version": "v1.18.1"
+        },
+        {
+          "path": "github.com/envoyproxy/go-control-plane/envoy",
+          "version": "v1.37.0"
+        },
+        {
+          "path": "github.com/envoyproxy/protoc-gen-validate",
+          "version": "v1.3.3"
+        },
+        {
+          "path": "github.com/evanphx/json-patch/v5",
+          "version": "v5.9.11"
+        },
+        {
+          "path": "github.com/exponent-io/jsonpath",
+          "version": "v0.0.0-20210407135951-1de76d718b3f"
+        },
+        {
+          "path": "github.com/extism/go-sdk",
+          "version": "v1.7.1"
+        },
+        {
+          "path": "github.com/fatih/color",
+          "version": "v1.19.0"
+        },
+        {
+          "path": "github.com/felixge/httpsnoop",
+          "version": "v1.0.4"
+        },
+        {
+          "path": "github.com/fluxcd/cli-utils",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/fsnotify/fsnotify",
+          "version": "v1.10.1"
+        },
+        {
+          "path": "github.com/fvbommel/sortorder",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/fxamacker/cbor/v2",
+          "version": "v2.9.0"
+        },
+        {
+          "path": "github.com/go-chi/chi/v5",
+          "version": "v5.3.1"
+        },
+        {
+          "path": "github.com/go-errors/errors",
+          "version": "v1.5.1"
+        },
+        {
+          "path": "github.com/go-git/gcfg",
+          "version": "v1.5.1-0.20230307220236-3a3c6141e376"
+        },
+        {
+          "path": "github.com/go-git/go-billy/v5",
+          "version": "v5.9.0"
+        },
+        {
+          "path": "github.com/go-git/go-git/v5",
+          "version": "v5.19.2"
+        },
+        {
+          "path": "github.com/go-gorp/gorp/v3",
+          "version": "v3.1.0"
+        },
+        {
+          "path": "github.com/go-jose/go-jose/v4",
+          "version": "v4.1.4"
+        },
+        {
+          "path": "github.com/go-logr/logr",
+          "version": "v1.4.4"
+        },
+        {
+          "path": "github.com/go-logr/stdr",
+          "version": "v1.2.2"
+        },
+        {
+          "path": "github.com/go-openapi/analysis",
+          "version": "v0.26.0"
+        },
+        {
+          "path": "github.com/go-openapi/errors",
+          "version": "v0.22.8"
+        },
+        {
+          "path": "github.com/go-openapi/jsonpointer",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/go-openapi/jsonreference",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/go-openapi/loads",
+          "version": "v0.25.1"
+        },
+        {
+          "path": "github.com/go-openapi/runtime",
+          "version": "v0.32.5"
+        },
+        {
+          "path": "github.com/go-openapi/runtime/server-middleware",
+          "version": "v0.30.0"
+        },
+        {
+          "path": "github.com/go-openapi/spec",
+          "version": "v0.22.9"
+        },
+        {
+          "path": "github.com/go-openapi/strfmt",
+          "version": "v0.27.0"
+        },
+        {
+          "path": "github.com/go-openapi/swag",
+          "version": "v0.26.1"
+        },
+        {
+          "path": "github.com/go-openapi/swag/cmdutils",
+          "version": "v0.26.1"
+        },
+        {
+          "path": "github.com/go-openapi/swag/conv",
+          "version": "v0.28.0"
+        },
+        {
+          "path": "github.com/go-openapi/swag/fileutils",
+          "version": "v0.28.0"
+        },
+        {
+          "path": "github.com/go-openapi/swag/jsonname",
+          "version": "v0.26.1"
+        },
+        {
+          "path": "github.com/go-openapi/swag/jsonutils",
+          "version": "v0.28.0"
+        },
+        {
+          "path": "github.com/go-openapi/swag/loading",
+          "version": "v0.28.0"
+        },
+        {
+          "path": "github.com/go-openapi/swag/mangling",
+          "version": "v0.28.0"
+        },
+        {
+          "path": "github.com/go-openapi/swag/netutils",
+          "version": "v0.26.1"
+        },
+        {
+          "path": "github.com/go-openapi/swag/pools",
+          "version": "v0.28.0"
+        },
+        {
+          "path": "github.com/go-openapi/swag/stringutils",
+          "version": "v0.28.0"
+        },
+        {
+          "path": "github.com/go-openapi/swag/typeutils",
+          "version": "v0.28.0"
+        },
+        {
+          "path": "github.com/go-openapi/swag/yamlutils",
+          "version": "v0.28.0"
+        },
+        {
+          "path": "github.com/go-openapi/validate",
+          "version": "v0.26.3"
+        },
+        {
+          "path": "github.com/go-viper/mapstructure/v2",
+          "version": "v2.5.0"
+        },
+        {
+          "path": "github.com/gobwas/glob",
+          "version": "v0.2.3"
+        },
+        {
+          "path": "github.com/gocsaf/csaf/v3",
+          "version": "v3.5.1"
+        },
+        {
+          "path": "github.com/golang-jwt/jwt/v5",
+          "version": "v5.3.1"
+        },
+        {
+          "path": "github.com/golang/groupcache",
+          "version": "v0.0.0-20241129210726-2c02b8208cf8"
+        },
+        {
+          "path": "github.com/golang/snappy",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/google/btree",
+          "version": "v1.1.3"
+        },
+        {
+          "path": "github.com/google/certificate-transparency-go",
+          "version": "v1.3.3"
+        },
+        {
+          "path": "github.com/google/gnostic-models",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/google/go-cmp",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/google/go-containerregistry",
+          "version": "v0.22.1"
+        },
+        {
+          "path": "github.com/google/go-github/v62",
+          "version": "v62.0.0"
+        },
+        {
+          "path": "github.com/google/go-querystring",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/google/jsonschema-go",
+          "version": "v0.4.3"
+        },
+        {
+          "path": "github.com/google/licenseclassifier/v2",
+          "version": "v2.0.0"
+        },
+        {
+          "path": "github.com/google/s2a-go",
+          "version": "v0.1.9"
+        },
+        {
+          "path": "github.com/google/uuid",
+          "version": "v1.6.0"
+        },
+        {
+          "path": "github.com/googleapis/enterprise-certificate-proxy",
+          "version": "v0.3.18"
+        },
+        {
+          "path": "github.com/googleapis/gax-go/v2",
+          "version": "v2.23.0"
+        },
+        {
+          "path": "github.com/gosuri/uitable",
+          "version": "v0.0.4"
+        },
+        {
+          "path": "github.com/grpc-ecosystem/grpc-gateway/v2",
+          "version": "v2.29.0"
+        },
+        {
+          "path": "github.com/hashicorp/aws-sdk-go-base/v2",
+          "version": "v2.0.0-beta.72"
+        },
+        {
+          "path": "github.com/hashicorp/errwrap",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/hashicorp/go-cleanhttp",
+          "version": "v0.5.2"
+        },
+        {
+          "path": "github.com/hashicorp/go-getter",
+          "version": "v1.8.6"
+        },
+        {
+          "path": "github.com/hashicorp/go-multierror",
+          "version": "v1.1.1"
+        },
+        {
+          "path": "github.com/hashicorp/go-retryablehttp",
+          "version": "v0.7.8"
+        },
+        {
+          "path": "github.com/hashicorp/go-uuid",
+          "version": "v1.0.3"
+        },
+        {
+          "path": "github.com/hashicorp/go-version",
+          "version": "v1.9.0"
+        },
+        {
+          "path": "github.com/hashicorp/golang-lru/v2",
+          "version": "v2.0.7"
+        },
+        {
+          "path": "github.com/hashicorp/hcl/v2",
+          "version": "v2.24.0"
+        },
+        {
+          "path": "github.com/huandu/xstrings",
+          "version": "v1.5.0"
+        },
+        {
+          "path": "github.com/ianlancetaylor/demangle",
+          "version": "v0.0.0-20240805132620-81f5be970eca"
+        },
+        {
+          "path": "github.com/in-toto/attestation",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/in-toto/in-toto-golang",
+          "version": "v0.11.0"
+        },
+        {
+          "path": "github.com/jbenet/go-context",
+          "version": "v0.0.0-20150711004518-d14ea06fba99"
+        },
+        {
+          "path": "github.com/jedisct1/go-minisign",
+          "version": "v0.0.0-20230811132847-661be99b8267"
+        },
+        {
+          "path": "github.com/jmoiron/sqlx",
+          "version": "v1.4.0"
+        },
+        {
+          "path": "github.com/josephburnett/jd/v2",
+          "version": "v2.3.0"
+        },
+        {
+          "path": "github.com/json-iterator/go",
+          "version": "v1.1.12"
+        },
+        {
+          "path": "github.com/kevinburke/ssh_config",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/klauspost/compress",
+          "version": "v1.19.2"
+        },
+        {
+          "path": "github.com/klauspost/cpuid/v2",
+          "version": "v2.3.0"
+        },
+        {
+          "path": "github.com/knqyf263/go-apk-version",
+          "version": "v0.0.0-20200609155635-041fdbb8563f"
+        },
+        {
+          "path": "github.com/knqyf263/go-deb-version",
+          "version": "v0.0.0-20241115132648-6f4aee6ccd23"
+        },
+        {
+          "path": "github.com/knqyf263/go-rpm-version",
+          "version": "v0.0.0-20220614171824-631e686d1075"
+        },
+        {
+          "path": "github.com/knqyf263/go-rpmdb",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/knqyf263/nested",
+          "version": "v0.0.1"
+        },
+        {
+          "path": "github.com/kylelemons/godebug",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/lann/builder",
+          "version": "v0.0.0-20180802200727-47ae307949d0"
+        },
+        {
+          "path": "github.com/lann/ps",
+          "version": "v0.0.0-20150810152359-62de8c46ede0"
+        },
+        {
+          "path": "github.com/lestrrat-go/blackmagic",
+          "version": "v1.0.4"
+        },
+        {
+          "path": "github.com/lestrrat-go/dsig",
+          "version": "v1.2.1"
+        },
+        {
+          "path": "github.com/lestrrat-go/httpcc",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/lestrrat-go/httprc/v3",
+          "version": "v3.0.5"
+        },
+        {
+          "path": "github.com/lestrrat-go/jwx/v3",
+          "version": "v3.1.1"
+        },
+        {
+          "path": "github.com/lestrrat-go/option/v2",
+          "version": "v2.0.0"
+        },
+        {
+          "path": "github.com/lib/pq",
+          "version": "v1.12.3"
+        },
+        {
+          "path": "github.com/liggitt/tabwriter",
+          "version": "v0.0.0-20181228230101-89fcab3d43de"
+        },
+        {
+          "path": "github.com/lunixbochs/struc",
+          "version": "v0.0.0-20200707160740-784aaebc1d40"
+        },
+        {
+          "path": "github.com/masahiro331/go-disk",
+          "version": "v0.0.0-20260423015231-f7a470ebd472"
+        },
+        {
+          "path": "github.com/masahiro331/go-ebs-file",
+          "version": "v0.0.0-20260422020928-9d24e29aac27"
+        },
+        {
+          "path": "github.com/masahiro331/go-ext4-filesystem",
+          "version": "v0.0.0-20260423010602-fe51f5b5e52b"
+        },
+        {
+          "path": "github.com/masahiro331/go-mvn-version",
+          "version": "v0.0.0-20260119054159-d21fcd2e7de1"
+        },
+        {
+          "path": "github.com/masahiro331/go-vmdk-parser",
+          "version": "v0.0.0-20260423020818-08305fa668d2"
+        },
+        {
+          "path": "github.com/masahiro331/go-xfs-filesystem",
+          "version": "v0.0.0-20260422061116-d21e5e4481bb"
+        },
+        {
+          "path": "github.com/mattn/go-colorable",
+          "version": "v0.1.14"
+        },
+        {
+          "path": "github.com/mattn/go-isatty",
+          "version": "v0.0.22"
+        },
+        {
+          "path": "github.com/mattn/go-runewidth",
+          "version": "v0.0.19"
+        },
+        {
+          "path": "github.com/mattn/go-shellwords",
+          "version": "v1.0.13"
+        },
+        {
+          "path": "github.com/mitchellh/copystructure",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/mitchellh/go-homedir",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/mitchellh/go-wordwrap",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/mitchellh/hashstructure/v2",
+          "version": "v2.0.2"
+        },
+        {
+          "path": "github.com/mitchellh/mapstructure",
+          "version": "v1.5.1-0.20231216201459-8508981c8b6c"
+        },
+        {
+          "path": "github.com/mitchellh/reflectwalk",
+          "version": "v1.0.2"
+        },
+        {
+          "path": "github.com/moby/buildkit",
+          "version": "v0.31.1"
+        },
+        {
+          "path": "github.com/moby/docker-image-spec",
+          "version": "v1.3.1"
+        },
+        {
+          "path": "github.com/moby/locker",
+          "version": "v1.0.1"
+        },
+        {
+          "path": "github.com/moby/moby/api",
+          "version": "v1.55.0"
+        },
+        {
+          "path": "github.com/moby/moby/client",
+          "version": "v0.5.1"
+        },
+        {
+          "path": "github.com/moby/sys/atomicwriter",
+          "version": "v0.1.0"
+        },
+        {
+          "path": "github.com/moby/sys/mountinfo",
+          "version": "v0.7.2"
+        },
+        {
+          "path": "github.com/moby/sys/sequential",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/moby/sys/signal",
+          "version": "v0.7.1"
+        },
+        {
+          "path": "github.com/moby/sys/user",
+          "version": "v0.4.1"
+        },
+        {
+          "path": "github.com/moby/sys/userns",
+          "version": "v0.1.0"
+        },
+        {
+          "path": "github.com/moby/term",
+          "version": "v0.5.2"
+        },
+        {
+          "path": "github.com/modern-go/concurrent",
+          "version": "v0.0.0-20180306012644-bacd9c7ef1dd"
+        },
+        {
+          "path": "github.com/modern-go/reflect2",
+          "version": "v1.0.3-0.20250322232337-35a7c28c31ee"
+        },
+        {
+          "path": "github.com/monochromegane/go-gitignore",
+          "version": "v0.0.0-20200626010858-205db1a8cc00"
+        },
+        {
+          "path": "github.com/morikuni/aec",
+          "version": "v1.1.0"
+        },
+        {
+          "path": "github.com/munnerz/goautoneg",
+          "version": "v0.0.0-20191010083416-a7dc8b61c822"
+        },
+        {
+          "path": "github.com/nikolalohinski/gonja/v2",
+          "version": "v2.8.0"
+        },
+        {
+          "path": "github.com/nozzle/throttler",
+          "version": "v0.0.0-20180817012639-2ea982251481"
+        },
+        {
+          "path": "github.com/oklog/ulid/v2",
+          "version": "v2.1.1"
+        },
+        {
+          "path": "github.com/open-policy-agent/opa",
+          "version": "v1.17.1"
+        },
+        {
+          "path": "github.com/opencontainers/go-digest",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "github.com/opencontainers/image-spec",
+          "version": "v1.1.1"
+        },
+        {
+          "path": "github.com/opencontainers/runtime-spec",
+          "version": "v1.3.0"
+        },
+        {
+          "path": "github.com/openvex/discovery",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/openvex/go-vex",
+          "version": "v0.2.9"
+        },
+        {
+          "path": "github.com/owenrumney/go-sarif/v2",
+          "version": "v2.3.3"
+        },
+        {
+          "path": "github.com/owenrumney/squealer",
+          "version": "v1.2.12"
+        },
+        {
+          "path": "github.com/package-url/packageurl-go",
+          "version": "v0.1.7"
+        },
+        {
+          "path": "github.com/pandatix/go-cvss",
+          "version": "v0.6.2"
+        },
+        {
+          "path": "github.com/pelletier/go-toml/v2",
+          "version": "v2.3.1"
+        },
+        {
+          "path": "github.com/peterbourgon/diskv",
+          "version": "v2.0.1+incompatible"
+        },
+        {
+          "path": "github.com/pjbgf/sha1cd",
+          "version": "v0.6.0"
+        },
+        {
+          "path": "github.com/pkg/browser",
+          "version": "v0.0.0-20240102092130-5ac0b6a4141c"
+        },
+        {
+          "path": "github.com/pkg/errors",
+          "version": "v0.9.1"
+        },
+        {
+          "path": "github.com/planetscale/vtprotobuf",
+          "version": "v0.6.1-0.20240319094008-0393e58bdf10"
+        },
+        {
+          "path": "github.com/pmezard/go-difflib",
+          "version": "v1.0.1-0.20181226105442-5d4384ee4fb2"
+        },
+        {
+          "path": "github.com/rcrowley/go-metrics",
+          "version": "v0.0.0-20250401214520-65e299d6c5c9"
+        },
+        {
+          "path": "github.com/redis/go-redis/v9",
+          "version": "v9.22.0"
+        },
+        {
+          "path": "github.com/remyoudompheng/bigfft",
+          "version": "v0.0.0-20230129092748-24d4a6f8daec"
+        },
+        {
+          "path": "github.com/rubenv/sql-migrate",
+          "version": "v1.8.1"
+        },
+        {
+          "path": "github.com/russross/blackfriday/v2",
+          "version": "v2.1.0"
+        },
+        {
+          "path": "github.com/rust-secure-code/go-rustaudit",
+          "version": "v0.0.0-20250226111315-e20ec32e963c"
+        },
+        {
+          "path": "github.com/sagikazarmark/locafero",
+          "version": "v0.11.0"
+        },
+        {
+          "path": "github.com/samber/lo",
+          "version": "v1.53.0"
+        },
+        {
+          "path": "github.com/samber/oops",
+          "version": "v1.18.1"
+        },
+        {
+          "path": "github.com/santhosh-tekuri/jsonschema/v6",
+          "version": "v6.0.2"
+        },
+        {
+          "path": "github.com/sassoftware/go-rpmutils",
+          "version": "v0.4.0"
+        },
+        {
+          "path": "github.com/sassoftware/relic/v8",
+          "version": "v8.2.0"
+        },
+        {
+          "path": "github.com/secure-systems-lab/go-securesystemslib",
+          "version": "v0.11.0"
+        },
+        {
+          "path": "github.com/sergi/go-diff",
+          "version": "v1.4.0"
+        },
+        {
+          "path": "github.com/shibumi/go-pathspec",
+          "version": "v1.3.0"
+        },
+        {
+          "path": "github.com/shopspring/decimal",
+          "version": "v1.4.0"
+        },
+        {
+          "path": "github.com/sigstore/cosign/v3",
+          "version": "v3.1.3"
+        },
+        {
+          "path": "github.com/sigstore/protobuf-specs",
+          "version": "v0.5.1"
+        },
+        {
+          "path": "github.com/sigstore/rekor",
+          "version": "v1.5.4"
+        },
+        {
+          "path": "github.com/sigstore/rekor-tiles/v2",
+          "version": "v2.3.0"
+        },
+        {
+          "path": "github.com/sigstore/sigstore",
+          "version": "v1.10.9"
+        },
+        {
+          "path": "github.com/sigstore/sigstore-go",
+          "version": "v1.2.2"
+        },
+        {
+          "path": "github.com/sigstore/timestamp-authority/v2",
+          "version": "v2.1.2"
+        },
+        {
+          "path": "github.com/sirupsen/logrus",
+          "version": "v1.9.4"
+        },
+        {
+          "path": "github.com/skeema/knownhosts",
+          "version": "v1.3.1"
+        },
+        {
+          "path": "github.com/sourcegraph/conc",
+          "version": "v0.3.1-0.20240121214520-5f936abd7ae8"
+        },
+        {
+          "path": "github.com/spdx/tools-golang",
+          "version": "v0.5.7"
+        },
+        {
+          "path": "github.com/spf13/afero",
+          "version": "v1.15.0"
+        },
+        {
+          "path": "github.com/spf13/cast",
+          "version": "v1.10.0"
+        },
+        {
+          "path": "github.com/spf13/cobra",
+          "version": "v1.10.2"
+        },
+        {
+          "path": "github.com/spf13/pflag",
+          "version": "v1.0.10"
+        },
+        {
+          "path": "github.com/spf13/viper",
+          "version": "v1.21.0"
+        },
+        {
+          "path": "github.com/spiffe/go-spiffe/v2",
+          "version": "v2.7.0"
+        },
+        {
+          "path": "github.com/stretchr/objx",
+          "version": "v0.5.3"
+        },
+        {
+          "path": "github.com/stretchr/testify",
+          "version": "v1.12.1"
+        },
+        {
+          "path": "github.com/subosito/gotenv",
+          "version": "v1.6.0"
+        },
+        {
+          "path": "github.com/syndtr/goleveldb",
+          "version": "v1.0.1-0.20220721030215-126854af5e6d"
+        },
+        {
+          "path": "github.com/tchap/go-patricia/v2",
+          "version": "v2.3.3"
+        },
+        {
+          "path": "github.com/tetratelabs/wabin",
+          "version": "v0.0.0-20230304001439-f6f874872834"
+        },
+        {
+          "path": "github.com/tetratelabs/wazero",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "github.com/theupdateframework/go-tuf",
+          "version": "v0.7.0"
+        },
+        {
+          "path": "github.com/theupdateframework/go-tuf/v2",
+          "version": "v2.4.2"
+        },
+        {
+          "path": "github.com/tonistiigi/go-csvvalue",
+          "version": "v0.0.0-20240814133006-030d3b2625d0"
+        },
+        {
+          "path": "github.com/toqueteos/webbrowser",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/transparency-dev/formats",
+          "version": "v0.1.1"
+        },
+        {
+          "path": "github.com/transparency-dev/merkle",
+          "version": "v0.0.2"
+        },
+        {
+          "path": "github.com/twitchtv/twirp",
+          "version": "v8.1.3+incompatible"
+        },
+        {
+          "path": "github.com/ulikunitz/xz",
+          "version": "v0.5.15"
+        },
+        {
+          "path": "github.com/valyala/fastjson",
+          "version": "v1.6.10"
+        },
+        {
+          "path": "github.com/vektah/gqlparser/v2",
+          "version": "v2.5.33"
+        },
+        {
+          "path": "github.com/vmihailenco/msgpack/v5",
+          "version": "v5.4.1"
+        },
+        {
+          "path": "github.com/vmihailenco/tagparser/v2",
+          "version": "v2.0.0"
+        },
+        {
+          "path": "github.com/x448/float16",
+          "version": "v0.8.4"
+        },
+        {
+          "path": "github.com/xanzy/ssh-agent",
+          "version": "v0.3.3"
+        },
+        {
+          "path": "github.com/xeipuuv/gojsonpointer",
+          "version": "v0.0.0-20190905194746-02993c407bfb"
+        },
+        {
+          "path": "github.com/xeipuuv/gojsonreference",
+          "version": "v0.0.0-20180127040603-bd5ef7bd5415"
+        },
+        {
+          "path": "github.com/xi2/xz",
+          "version": "v0.0.0-20171230120015-48954b6210f8"
+        },
+        {
+          "path": "github.com/xlab/treeprint",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "github.com/yashtewari/glob-intersection",
+          "version": "v0.2.0"
+        },
+        {
+          "path": "github.com/youmark/pkcs8",
+          "version": "v0.0.0-20240726163527-a2c0da244d78"
+        },
+        {
+          "path": "github.com/zclconf/go-cty",
+          "version": "v1.18.1"
+        },
+        {
+          "path": "github.com/zclconf/go-cty-yaml",
+          "version": "v1.2.0"
+        },
+        {
+          "path": "go.etcd.io/bbolt",
+          "version": "v1.4.3"
+        },
+        {
+          "path": "go.opentelemetry.io/auto/sdk",
+          "version": "v1.2.1"
+        },
+        {
+          "path": "go.opentelemetry.io/contrib/detectors/gcp",
+          "version": "v1.44.0"
+        },
+        {
+          "path": "go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc",
+          "version": "v0.69.0"
+        },
+        {
+          "path": "go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp",
+          "version": "v0.69.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc",
+          "version": "v1.44.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/exporters/otlp/otlptrace",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/metric",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/sdk",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/sdk/metric",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/otel/trace",
+          "version": "v1.45.0"
+        },
+        {
+          "path": "go.opentelemetry.io/proto/otlp",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "go.uber.org/atomic",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "go.uber.org/multierr",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "go.uber.org/zap",
+          "version": "v1.28.0"
+        },
+        {
+          "path": "go.yaml.in/yaml/v2",
+          "version": "v2.4.4"
+        },
+        {
+          "path": "go.yaml.in/yaml/v3",
+          "version": "v3.0.5"
+        },
+        {
+          "path": "go.yaml.in/yaml/v4",
+          "version": "v4.0.0-rc.3"
+        },
+        {
+          "path": "golang.org/x/crypto",
+          "version": "v0.58.0"
+        },
+        {
+          "path": "golang.org/x/exp",
+          "version": "v0.0.0-20260603202125-055de637280b"
+        },
+        {
+          "path": "golang.org/x/mod",
+          "version": "v0.41.0"
+        },
+        {
+          "path": "golang.org/x/net",
+          "version": "v0.62.0"
+        },
+        {
+          "path": "golang.org/x/oauth2",
+          "version": "v0.36.0"
+        },
+        {
+          "path": "golang.org/x/sync",
+          "version": "v0.24.0"
+        },
+        {
+          "path": "golang.org/x/sys",
+          "version": "v0.49.0"
+        },
+        {
+          "path": "golang.org/x/term",
+          "version": "v0.47.0"
+        },
+        {
+          "path": "golang.org/x/text",
+          "version": "v0.43.0"
+        },
+        {
+          "path": "golang.org/x/time",
+          "version": "v0.15.0"
+        },
+        {
+          "path": "golang.org/x/xerrors",
+          "version": "v0.0.0-20240903120638-7835f813f4da"
+        },
+        {
+          "path": "google.golang.org/api",
+          "version": "v0.290.0"
+        },
+        {
+          "path": "google.golang.org/genproto",
+          "version": "v0.0.0-20260622175928-b703f567277d"
+        },
+        {
+          "path": "google.golang.org/genproto/googleapis/api",
+          "version": "v0.0.0-20260803160001-6ac0973c030d"
+        },
+        {
+          "path": "google.golang.org/genproto/googleapis/rpc",
+          "version": "v0.0.0-20260803160001-6ac0973c030d"
+        },
+        {
+          "path": "google.golang.org/grpc",
+          "version": "v1.83.2"
+        },
+        {
+          "path": "google.golang.org/protobuf",
+          "version": "v1.36.12"
+        },
+        {
+          "path": "gopkg.in/evanphx/json-patch.v4",
+          "version": "v4.13.0"
+        },
+        {
+          "path": "gopkg.in/inf.v0",
+          "version": "v0.9.1"
+        },
+        {
+          "path": "gopkg.in/ini.v1",
+          "version": "v1.67.3"
+        },
+        {
+          "path": "gopkg.in/warnings.v0",
+          "version": "v0.1.2"
+        },
+        {
+          "path": "gopkg.in/yaml.v3",
+          "version": "v3.0.1"
+        },
+        {
+          "path": "helm.sh/helm/v4",
+          "version": "v4.2.0"
+        },
+        {
+          "path": "k8s.io/api",
+          "version": "v0.36.3"
+        },
+        {
+          "path": "k8s.io/apiextensions-apiserver",
+          "version": "v0.36.0"
+        },
+        {
+          "path": "k8s.io/apimachinery",
+          "version": "v0.36.3"
+        },
+        {
+          "path": "k8s.io/apiserver",
+          "version": "v0.36.0"
+        },
+        {
+          "path": "k8s.io/cli-runtime",
+          "version": "v0.36.0"
+        },
+        {
+          "path": "k8s.io/client-go",
+          "version": "v0.36.3"
+        },
+        {
+          "path": "k8s.io/component-base",
+          "version": "v0.36.3"
+        },
+        {
+          "path": "k8s.io/klog/v2",
+          "version": "v2.140.0"
+        },
+        {
+          "path": "k8s.io/kube-openapi",
+          "version": "v0.0.0-20260319004828-5883c5ee87b9"
+        },
+        {
+          "path": "k8s.io/kubectl",
+          "version": "v0.36.0"
+        },
+        {
+          "path": "k8s.io/utils",
+          "version": "v0.0.0-20260319190234-28399d86e0b5"
+        },
+        {
+          "path": "modernc.org/libc",
+          "version": "v1.72.3"
+        },
+        {
+          "path": "modernc.org/mathutil",
+          "version": "v1.7.1"
+        },
+        {
+          "path": "modernc.org/memory",
+          "version": "v1.11.0"
+        },
+        {
+          "path": "modernc.org/sqlite",
+          "version": "v1.51.0"
+        },
+        {
+          "path": "mvdan.cc/sh/v3",
+          "version": "v3.12.0"
+        },
+        {
+          "path": "oras.land/oras-go/v2",
+          "version": "v2.6.2"
+        },
+        {
+          "path": "sigs.k8s.io/controller-runtime",
+          "version": "v0.24.0"
+        },
+        {
+          "path": "sigs.k8s.io/json",
+          "version": "v0.0.0-20250730193827-2d320260d730"
+        },
+        {
+          "path": "sigs.k8s.io/kustomize/api",
+          "version": "v0.21.1"
+        },
+        {
+          "path": "sigs.k8s.io/kustomize/kyaml",
+          "version": "v0.21.1"
+        },
+        {
+          "path": "sigs.k8s.io/randfill",
+          "version": "v1.0.0"
+        },
+        {
+          "path": "sigs.k8s.io/structured-merge-diff/v6",
+          "version": "v6.3.3"
+        },
+        {
+          "path": "sigs.k8s.io/yaml",
+          "version": "v1.6.0"
+        },
+        {
+          "path": "stdlib",
+          "version": "go1.26.10-X:jsonv2"
+        }
+      ],
+      "advisories": [
+        {
+          "id": "GO-2026-5932",
+          "module": "golang.org/x/crypto",
+          "version": "v0.58.0",
+          "fixed_version": null,
+          "level": 0,
+          "precision": "module",
+          "package": null,
+          "symbol": null
+        }
+      ],
+      "binary_sha256": "639b6d4cf997bdcc4bf2cfceeb289063cb4cb17c7ee555cefad8722eba8215c6",
+      "scanner_sha256": "5659861a0426ab1da76b51884d6237e2159f94998ea4556781d6ddf8069bd4a1",
+      "source_modules": [
+        {
+          "module": "github.com/aquasecurity/trivy",
+          "upstream_version": "v0.72.0",
+          "upstream_sum": "h1:W3v+NE94olOzk3nSwwha59DTBsbcgLRXa4QNSJpRQQM=",
+          "status": "passed",
+          "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
+          "checked_at": "2026-10-30T16:27:14.932987+00:00",
+          "findings": [
+            {
+              "id": "GO-2026-4919",
+              "summary": "Trivy ecosystem supply chain was briefly compromised in github.com/aquasecurity/trivy",
+              "status": "not-affected",
+              "record": {
+                "id": "GO-2026-4919",
+                "summary": "Trivy ecosystem supply chain was briefly compromised in github.com/aquasecurity/trivy",
+                "details": "On March 19, 2026, a threat actor used compromised credentials to publish a malicious Trivy v0.69.4 release.",
+                "aliases": [
+                  "CVE-2026-33634",
+                  "GHSA-69fq-xp46-6x23"
+                ],
+                "modified": "2026-06-16T13:29:16.436842048Z",
+                "published": "2026-04-01T16:33:18Z",
+                "related": [
+                  "CGA-vv8j-fpcj-x4fm"
+                ],
+                "database_specific": {
+                  "review_status": "REVIEWED",
+                  "url": "https://pkg.go.dev/vuln/GO-2026-4919"
+                },
+                "references": [
+                  {
+                    "type": "ADVISORY",
+                    "url": "https://github.com/aquasecurity/trivy/security/advisories/GHSA-69fq-xp46-6x23"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://docs.litellm.ai/blog/security-update-march-2026"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://futuresearch.ai/blog/litellm-pypi-supply-chain-attack"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://github.com/BerriAI/litellm/issues/24518"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://github.com/BerriAI/litellm/issues/24518#issuecomment-4127436387"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://github.com/aquasecurity/trivy/discussions/10425"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://github.com/pypa/advisory-database/tree/main/vulns/litellm/PYSEC-2026-2.yaml"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://github.com/team-telnyx/telnyx-python/security/advisories/GHSA-955r-262c-33jc"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://inspector.pypi.io/project/litellm/1.82.7/packages/79/5f/b6998d42c6ccd32d36e12661f2734602e72a576d52a51f4245aef0b20b4d/litellm-1.82.7-py3-none-any.whl/litellm/proxy/proxy_server.py#line.130"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://inspector.pypi.io/project/litellm/1.82.8/packages/f6/2c/731b614e6cee0bca1e010a36fd381fba69ee836fe3cb6753ba23ef2b9601/litellm-1.82.8.tar.gz/litellm-1.82.8/litellm_init.pth#line.1"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://rosesecurity.dev/2026/03/20/typosquatting-trivy.html"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-33634"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://www.microsoft.com/en-us/security/blog/2026/03/24/detecting-investigating-defending-against-trivy-supply-chain-compromise"
+                  },
+                  {
+                    "type": "WEB",
+                    "url": "https://www.wiz.io/blog/teampcp-attack-kics-github-action"
+                  }
+                ],
+                "affected": [
+                  {
+                    "package": {
+                      "name": "github.com/aquasecurity/trivy",
+                      "ecosystem": "Go",
+                      "purl": "pkg:golang/github.com/aquasecurity/trivy"
+                    },
+                    "ranges": [
+                      {
+                        "type": "SEMVER",
+                        "events": [
+                          {
+                            "introduced": "0.69.4"
+                          }
+                        ]
+                      }
+                    ],
+                    "ecosystem_specific": {},
+                    "database_specific": {
+                      "source": "https://vuln.go.dev/ID/GO-2026-4919.json"
+                    }
+                  }
+                ],
+                "schema_version": "1.7.5"
+              },
+              "reason": "Verified source build of the exact v0.72.0 module. The primary incident advisory excludes source-built binaries; compromised release artifacts were a separate delivery path.",
+              "reference": "https://github.com/aquasecurity/trivy/security/advisories/GHSA-69fq-xp46-6x23"
+            }
+          ],
+          "response_sha256": "2d12d78f7785295be96273831892224b6d0232b3d98091af30840d591223d19e"
+        }
+      ],
+      "source_provenance_sha256": "b6eb80964ad4f81296622ceb20d5b9fc15990e81a186b0d095d6aaf1b739a773"
     }
   },
-  "image_id": "sha256:03fb40c7c6b671df7e4d2f2a168acd6f1712a4e4970d1640dff720eb833c38a3"
+  "image_id": "sha256:1de46011de2c1c8a833fbfd06441951ff13160bca433d078e898e299bd8ca809"
 }

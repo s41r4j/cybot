@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "source_sha256": "a88ffc8fd48f598d54a367988833e42384aec369099f62e75b8562b544201b47",
-  "checked_at": "2026-10-30T14:58:58.742139+00:00",
+  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
+  "checked_at": "2026-10-30T16:21:30.543985+00:00",
   "profile": "analysis",
   "platform": "linux/arm64",
   "scope": "compiled-go-executables",
@@ -45,7 +45,7 @@
       ],
       "advisories": [],
       "binary_sha256": "ad22df574c4af1e93869f7168b0101fa6b754dc6e1e43135da36d5a8e3403e1f",
-      "scanner_sha256": "5f6886da8157569552b73947ec0ee3107172ca02ef59360f7a520d0111e5c495"
+      "scanner_sha256": "353cecc536785f752584e31187ac303cf172aa45b7e2eec4a8def9ef0e59fccc"
     },
     "cybot": {
       "status": "passed",
@@ -66,7 +66,7 @@
       "modules": [
         {
           "path": "github.com/s41r4j/cybot",
-          "version": "v0.0.0-20261030144120-4d6d87855fed"
+          "version": "v0.0.0-20261030160204-cd68e28beb82"
         },
         {
           "path": "github.com/dustin/go-humanize",
@@ -126,8 +126,8 @@
         }
       ],
       "advisories": [],
-      "binary_sha256": "4a0087caa3d54ffa3445e134f666fac1c4a4b71da38300da818fc2f516299c10",
-      "scanner_sha256": "5f6886da8157569552b73947ec0ee3107172ca02ef59360f7a520d0111e5c495"
+      "binary_sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
+      "scanner_sha256": "353cecc536785f752584e31187ac303cf172aa45b7e2eec4a8def9ef0e59fccc"
     },
     "gf": {
       "status": "passed",
@@ -157,7 +157,7 @@
       ],
       "advisories": [],
       "binary_sha256": "7c99383e0406a6b9e3d9cf6ba3c97704199d930016a2fa8b4fc77728af6c8b67",
-      "scanner_sha256": "5f6886da8157569552b73947ec0ee3107172ca02ef59360f7a520d0111e5c495"
+      "scanner_sha256": "353cecc536785f752584e31187ac303cf172aa45b7e2eec4a8def9ef0e59fccc"
     },
     "gitleaks": {
       "status": "passed",
@@ -450,7 +450,7 @@
         }
       ],
       "binary_sha256": "c84426117283c200adfcdf340c092c7a614f44bb2345c0c50b09230d2719cc31",
-      "scanner_sha256": "5f6886da8157569552b73947ec0ee3107172ca02ef59360f7a520d0111e5c495",
+      "scanner_sha256": "353cecc536785f752584e31187ac303cf172aa45b7e2eec4a8def9ef0e59fccc",
       "source_modules": [
         {
           "module": "github.com/zricethezav/gitleaks/v8",
@@ -458,7 +458,7 @@
           "upstream_sum": "h1:PmEvCfVI7ti9dV3s5aMZUY7sS2GxRvG3yzih7E+cS3w=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T14:59:45.244489+00:00",
+          "checked_at": "2026-10-30T16:22:20.583067+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -489,7 +489,7 @@
       ],
       "advisories": [],
       "binary_sha256": "110394f41cd6ab0a3da928c16753a1fa7e6d53823684d4240508729c4172c280",
-      "scanner_sha256": "5f6886da8157569552b73947ec0ee3107172ca02ef59360f7a520d0111e5c495"
+      "scanner_sha256": "353cecc536785f752584e31187ac303cf172aa45b7e2eec4a8def9ef0e59fccc"
     },
     "gosec": {
       "status": "passed",
@@ -714,7 +714,7 @@
         }
       ],
       "binary_sha256": "cc3fec29a2ffd8c3d6c070c212e8f9ace891997335da18463ba29715128a77a0",
-      "scanner_sha256": "5f6886da8157569552b73947ec0ee3107172ca02ef59360f7a520d0111e5c495",
+      "scanner_sha256": "353cecc536785f752584e31187ac303cf172aa45b7e2eec4a8def9ef0e59fccc",
       "source_modules": [
         {
           "module": "github.com/securego/gosec/v2",
@@ -722,7 +722,7 @@
           "upstream_sum": "h1:ZsSdiDb0AtTpLFVol5z91gbMei9ZiLEPG/pZjZujp7c=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T14:59:47.567182+00:00",
+          "checked_at": "2026-10-30T16:22:22.703011+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -793,7 +793,7 @@
       ],
       "advisories": [],
       "binary_sha256": "3a3109a7edcdfe9477a98654f1ba4b9d392856cd453d3534bed1fbf8052705e9",
-      "scanner_sha256": "5f6886da8157569552b73947ec0ee3107172ca02ef59360f7a520d0111e5c495",
+      "scanner_sha256": "353cecc536785f752584e31187ac303cf172aa45b7e2eec4a8def9ef0e59fccc",
       "source_modules": [
         {
           "module": "github.com/BishopFox/jsluice",
@@ -801,7 +801,7 @@
           "upstream_sum": "h1:xa/dJgg1qpWdIyr7tQcTV2TUPgBK/f0TTMLMmD5GqjQ=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T14:59:48.369806+00:00",
+          "checked_at": "2026-10-30T16:22:23.845376+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -1863,7 +1863,7 @@
         }
       ],
       "binary_sha256": "7aca189f1866513ef18f1420fdf0b5d192b195907d8dfe069763ff9e9302f60e",
-      "scanner_sha256": "5f6886da8157569552b73947ec0ee3107172ca02ef59360f7a520d0111e5c495",
+      "scanner_sha256": "353cecc536785f752584e31187ac303cf172aa45b7e2eec4a8def9ef0e59fccc",
       "source_modules": [
         {
           "module": "github.com/trufflesecurity/trufflehog/v3",
@@ -1871,7 +1871,7 @@
           "upstream_sum": "h1:KO9enwT8Zq5RNEQlTpuSCQb/eRSBc04tyxs/UkPzR2c=",
           "status": "passed",
           "scope": "conservative upstream module-version check; supplements compiled symbol analysis",
-          "checked_at": "2026-10-30T14:59:50.853820+00:00",
+          "checked_at": "2026-10-30T16:22:26.411711+00:00",
           "findings": [],
           "response_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
         }
@@ -1879,5 +1879,5 @@
       "source_provenance_sha256": "c9d072fa900a4d07c1381e31e099b8e6efe9939b3b9bc2da10f87b1bee3f782e"
     }
   },
-  "image_id": "sha256:5824994834927576e798988de844fa7284165756627f1dc5a2151edff040d53a"
+  "image_id": "sha256:166e6ff4d04fd7069e70cdda4e07bc1a89ae17584e702bfa7ab0f25e793127a6"
 }
