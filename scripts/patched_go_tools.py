@@ -76,7 +76,7 @@ def prepare(dest, names=None):
                GOPROXY='https://proxy.golang.org', GOSUMDB='sum.golang.org',
                GONOSUMDB='', GOPRIVATE='', GOFLAGS='', GOWORK='off',
                GOPATH=str(cache/'gopath'), GOMODCACHE=str(cache/'modules'),
-               GOCACHE=str(cache/'build'), GOBIN='')
+               GOCACHE=str(cache/'build'), GOBIN='', GOEXPERIMENT='')
     try:
         source = verified_module(lock['go-github'], env)
         provenance = dest/'share/builds'
@@ -92,6 +92,7 @@ def prepare(dest, names=None):
             writable_copy(source, patched)
             applied = patch_imports(patched, lock['go-github']['files'])
             source_patches = patch_source(root, spec.get('source_patches', {}))
+            tool_env = dict(env, GOEXPERIMENT=spec.get('go_experiment', ''))
             for file in ('go.mod', 'go.sum'):
                 shutil.copyfile(lock_root/name/file, root/file)
             test_files = {}
@@ -101,7 +102,7 @@ def prepare(dest, names=None):
                 shutil.copyfile(lock_root/name/file, target)
                 test_files[file] = hashlib.sha256(target.read_bytes()).hexdigest()
             if spec.get('tests'):
-                toolbox.monitored(['go', '-C', str(root), 'test', '-mod=readonly', '-p', '1', *spec['tests']], env=env, timeout_seconds=300)
+                toolbox.monitored(['go', '-C', str(root), 'test', '-mod=readonly', '-p', '1', *spec['tests']], env=tool_env, timeout_seconds=600)
             # Keep symbols: stripped binaries force govulncheck into conservative
             # module-level fallback and cannot establish absence of affected code.
             args = ['go', '-C', str(root), 'build', '-mod=readonly', '-p', '1', '-trimpath', '-buildvcs=false']
@@ -110,7 +111,7 @@ def prepare(dest, names=None):
             if spec.get('ldflags'):
                 args.append('-ldflags='+spec['ldflags'])
             toolbox.monitored([*args, '-o', str(dest/'bin'/name), spec.get('package', './cmd/'+name)],
-                              env=env, timeout_seconds=1200)
+                              env=tool_env, timeout_seconds=1200)
             notices = dest/'share/licenses'/name/'modules'
             notices.mkdir(parents=True, exist_ok=True)
             for notice in (cache/'modules').rglob('*'):
@@ -121,6 +122,7 @@ def prepare(dest, names=None):
             data = {'kind': 'cybot-patched-upstream', 'upstream_module': spec['module'],
                     'upstream_sum': spec['sum'], 'go_toolchain': toolbox.GO_TOOLCHAIN,
                     'platform': 'linux/'+toolbox.ARCH, 'patch_module': lock['go-github']['module'],
+                    'go_experiment': spec.get('go_experiment', ''),
                     'patch_module_sum': lock['go-github']['sum'], 'patches': applied,
                     'source_patches': source_patches, 'compatibility_tests': test_files,
                     'binary_sha256': hashlib.sha256((dest/'bin'/name).read_bytes()).hexdigest(),

@@ -47,7 +47,7 @@ MIT project license does not relicense third-party components.
 
 ## Patched upstream Go tools
 
-HTTPx, DNSx, Katana, FFUF, Subfinder, Gitleaks, Gosec, Naabu, Nuclei and Syft are rebuilt from checksum-verified
+HTTPx, DNSx, Katana, FFUF, Subfinder, Gitleaks, Gosec, Naabu, Nuclei, Syft, Trivy, Grype and TruffleHog are rebuilt from checksum-verified
 upstream Go modules with Go 1.26.10 and the committed module locks in
 `docker/toolbox/patched-go/`. The original release archive hashes remain as
 upstream provenance; these rebuilt executables have their own measured hashes.
@@ -70,3 +70,10 @@ patch to surface JavaScript syntax failures. Its build retains compiler/package
 metadata and static-runtime notices. The original source licenses, vendored Go
 dependency notices, Python wheel notices, musl copyright, and GCC runtime
 exception accompany the image under `/opt/cybot/share/licenses/`.
+
+Grype's maintained Docker-client compatibility patch and its loopback tests are
+recorded with exact source hashes in the build manifest. TruffleHog retains its
+upstream AGPL-3.0 license; the verified source module, dependency locks and build
+recipe identify its corresponding source. Upstream source and dependency
+licenses accompany the image. Trivy preserves its upstream JSONv2 build mode;
+its VEX and signing dependency updates remove the retired cryptography paths.

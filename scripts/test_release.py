@@ -1,4 +1,5 @@
 import hashlib
+from datetime import datetime, timezone, timedelta
 import json
 import tempfile
 from pathlib import Path
@@ -8,6 +9,16 @@ import public_source
 import release_gate
 
 class PublicationTests(unittest.TestCase):
+    def test_source_digest_binds_release_policy_but_excludes_generated_evidence(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp); (root/'release').mkdir()
+            baseline = root/'release/catalog-baseline.json'; baseline.write_text('{"tools":["fixture"]}')
+            before = public_source.source_digest(root)
+            (root/'release/readiness.json').write_text('{"release_ready":false}')
+            self.assertEqual(public_source.source_digest(root), before)
+            baseline.write_text('{"tools":[]}')
+            self.assertNotEqual(public_source.source_digest(root), before)
+
     def test_export_never_copies_private_state_or_history(self):
         with tempfile.TemporaryDirectory() as source, tempfile.TemporaryDirectory() as output:
             root = Path(source)
@@ -70,5 +81,26 @@ class PublicationTests(unittest.TestCase):
             self.assertTrue(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
             (root/'audit.json').write_text('{}')
             self.assertFalse(release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready'])
+
+    def test_stale_or_unreviewed_local_source_artifacts_cannot_clear_the_gate(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            coverage = {'tools': [], 'capabilities': []}
+            required = {'profile': 'core', 'platform': 'linux/amd64'}
+            baseline = dict(coverage, required_artifact_audits=[required], max_artifact_audit_age_hours=24)
+            report = dict(required, source_sha256='a'*64, status='passed', image_id='sha256:'+'b'*64,
+                          final_security_ready=True, os_packages={'status':'passed'}, checked_at=datetime.now(timezone.utc).isoformat(),
+                          binaries={'cybot':{'status':'passed','binary_sha256':'c'*64},
+                                    'scanner':{'status':'passed','binary_sha256':'d'*64,'modules':[{'path':'fixture.invalid/scanner','version':'(devel)'}]}})
+            evidence = {'source_sha256':'a'*64, 'records':[]}
+            def evaluate():
+                data = json.dumps(report).encode(); (root/'audit.json').write_bytes(data)
+                evidence['artifact_audits'] = [dict(required, report='audit.json', report_sha256=hashlib.sha256(data).hexdigest())]
+                return release_gate.evaluate(coverage, baseline, evidence, 'a'*64, root)['release_ready']
+            self.assertFalse(evaluate())
+            report['binaries']['scanner'].update(source_modules=[{'module':'fixture.invalid/scanner','status':'passed'}], source_provenance_sha256='e'*64)
+            self.assertTrue(evaluate())
+            report['checked_at'] = (datetime.now(timezone.utc)-timedelta(hours=25)).isoformat()
+            self.assertFalse(evaluate())
 
 if __name__ == '__main__': unittest.main()

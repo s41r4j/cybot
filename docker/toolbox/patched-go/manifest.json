@@ -85,6 +85,72 @@
         "-run",
         "^TestCybotExclusiveBoundsCompatibility$"
       ]
+    },
+    "trivy": {
+      "module": "github.com/aquasecurity/trivy@v0.72.0",
+      "sum": "h1:W3v+NE94olOzk3nSwwha59DTBsbcgLRXa4QNSJpRQQM=",
+      "ldflags": "-X github.com/aquasecurity/trivy/pkg/version/app.ver=0.72.0",
+      "go_experiment": "jsonv2"
+    },
+    "grype": {
+      "module": "github.com/anchore/grype@v0.116.1",
+      "sum": "h1:7rEB30cM/eCA8cs7RTs8Li//DWVYNZ+IYh2ogtypde0=",
+      "ldflags": "-X main.version=0.116.1",
+      "source_patches": {
+        "cmd/grype/cli/commands/completion.go": {
+          "sha256": "7c15b4b4db66c060af498f277bd6a09877e3d1f4036245114b1ae7680c3e0a8c",
+          "replacements": [
+            [
+              "\t\"github.com/docker/docker/api/types/filters\"\n",
+              ""
+            ],
+            [
+              "\t\"github.com/docker/docker/api/types/image\"\n",
+              ""
+            ],
+            [
+              "\"github.com/docker/docker/client\"",
+              "\"github.com/moby/moby/client\""
+            ],
+            [
+              "client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())",
+              "client.New(client.FromEnv)"
+            ],
+            [
+              "imageListArgs := filters.NewArgs()",
+              "imageListArgs := client.Filters{}"
+            ],
+            [
+              "image.ListOptions{",
+              "client.ImageListOptions{"
+            ],
+            [
+              "for _, image := range images {",
+              "for _, image := range images.Items {"
+            ],
+            [
+              "// Only want to return tagged images",
+              "defer cli.Close()\n\n\t// Only want to return tagged images"
+            ]
+          ]
+        }
+      },
+      "test_files": [
+        "cmd/grype/cli/commands/cybot_completion_test.go"
+      ],
+      "tests": [
+        "./cmd/grype/cli/commands",
+        "-run",
+        "^TestCybotMaintainedDockerCompletion$",
+        "-timeout",
+        "60s"
+      ]
+    },
+    "trufflehog": {
+      "module": "github.com/trufflesecurity/trufflehog/v3@v3.96.0",
+      "sum": "h1:KO9enwT8Zq5RNEQlTpuSCQb/eRSBc04tyxs/UkPzR2c=",
+      "package": ".",
+      "ldflags": "-X github.com/trufflesecurity/trufflehog/v3/pkg/version.BuildVersion=3.96.0"
     }
   }
 }

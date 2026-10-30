@@ -1,5 +1,6 @@
 """Audit exact installed Go executables without running them on the host."""
 import hashlib
+from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
@@ -7,6 +8,7 @@ import tempfile
 import uuid
 
 import artifact_audit
+import module_audit
 from public_source import source_digest
 import toolbox
 
@@ -19,7 +21,10 @@ def audit_image():
     output.mkdir(parents=True, exist_ok=True)
     excluded = {'core': {'nmap'}, 'analysis': {'semgrep', 'semgrep-core', 'linkfinder', 'linkfinder-engine'}, 'supplychain': set()}[toolbox.PROFILE]
     names = set(measured['binaries']) - excluded
+    lock_root = toolbox.ROOT/'docker/toolbox/patched-go'
+    source_lock = json.loads((lock_root/'manifest.json').read_text())
     report = {'schema_version': 1, 'source_sha256': source_digest(),
+              'checked_at': datetime.now(timezone.utc).isoformat(),
               'profile': toolbox.PROFILE, 'platform': 'linux/'+toolbox.ARCH,
               'scope': 'compiled-go-executables', 'status': 'failed',
               'final_security_ready': False, 'os_packages': {'status': 'not-audited'},
@@ -45,13 +50,43 @@ def audit_image():
                     toolbox.docker('cp', cid+':'+measured['binaries'][name]['path'], str(path))
                     if path.is_symlink() or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != measured['binaries'][name]['sha256']:
                         raise RuntimeError('Copied executable differs from measured image: '+name)
+                    result = None
                     try:
                         result = artifact_audit.audit(path, work/'tools/govulncheck')
-                    except (RuntimeError, OSError) as error:
+                        if name in source_lock['tools']:
+                            provenance_path = work/(name+'-build.json')
+                            toolbox.docker('cp', cid+':/opt/cybot/share/builds/'+name+'.json', str(provenance_path))
+                            if provenance_path.is_symlink() or provenance_path.stat().st_size > 1024**2:
+                                raise RuntimeError('Invalid measured source-build provenance')
+                            expected_locks = {file: hashlib.sha256((lock_root/name/file).read_bytes()).hexdigest() for file in ('go.mod', 'go.sum')}
+                            result['source_modules'] = module_audit.audit_build(source_lock['tools'][name], json.loads(provenance_path.read_text()),
+                                result['binary_sha256'], result['modules'], expected_locks, source_lock['go-github'])
+                            if any(row['status'] != 'passed' for row in result['source_modules']):
+                                result['status'] = 'blocked'
+                            result['source_provenance_sha256'] = hashlib.sha256(provenance_path.read_bytes()).hexdigest()
+                        elif name == 'jsluice':
+                            spec = json.loads((toolbox.ROOT/'docker/toolbox/javascript.lock.json').read_text())['jsluice']
+                            provenance_path = work/'jsluice-build.json'
+                            toolbox.docker('cp', cid+':/opt/cybot/share/builds/jsluice.json', str(provenance_path))
+                            if provenance_path.is_symlink() or provenance_path.stat().st_size > 1024**2:
+                                raise RuntimeError('Invalid JavaScript parser source provenance')
+                            provenance = json.loads(provenance_path.read_text())
+                            expected = {file: hashlib.sha256((toolbox.ROOT/'docker/toolbox/javascript/jsluice'/file).read_bytes()).hexdigest() for file in ('go.mod', 'go.sum')}
+                            if provenance.get('source') != spec or provenance.get('dependency_locks') != expected \
+                                    or {'path': spec['module_path'], 'version': '(devel)'} not in result['modules']:
+                                raise RuntimeError('JavaScript parser source differs from the compiled inventory or source lock')
+                            module, version = spec['module'].rsplit('@', 1)
+                            result['source_modules'] = [module_audit.assess(spec, module_audit.query(module, version), source_build=True)]
+                            result['source_provenance_sha256'] = hashlib.sha256(provenance_path.read_bytes()).hexdigest()
+                            if any(row['status'] != 'passed' for row in result['source_modules']):
+                                result['status'] = 'blocked'
+                    except (RuntimeError, OSError, ValueError) as error:
                         # Missing/stripped build metadata is an audit failure,
                         # never a clean binary. Keep auditing independent tools.
-                        result = {'status': 'failed', 'binary_sha256': measured['binaries'][name]['sha256'],
-                                  'go_version': 'unverified', 'advisories': [], 'error': str(error)}
+                        if result is None:
+                            result = {'binary_sha256': measured['binaries'][name]['sha256'],
+                                      'go_version': 'unverified', 'advisories': []}
+                        result.update(status='failed', error=str(error))
                     report['binaries'][name] = result
                     print(name, result['status'], 'blocking advisories:', sum(row['level'] > 0 for row in result['advisories']), flush=True)
                     path.unlink()

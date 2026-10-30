@@ -196,5 +196,6 @@
       "profile": "supplychain",
       "platform": "linux/arm64"
     }
-  ]
+  ],
+  "max_artifact_audit_age_hours": 24
 }

@@ -1,4 +1,4 @@
-# Release status — 2026-10-29
+# Release status — 2026-10-30
 
 CYBOT is public source in active development. A stable release covering the
 entire catalog is **not yet certified**. The release requirement includes every
@@ -26,10 +26,13 @@ These are source and contract checks, not 84-tool live certification.
 
 The local Docker daemon is unavailable. Historical 2026-10-22 compact-core
 results are retained as historical records and do not certify the changed source.
-The complete [CI run at revision `5944378`](https://github.com/s41r4j/cybot/actions/runs/40814092934)
+The complete [CI run at revision `ca7e0f4`](https://github.com/s41r4j/cybot/actions/runs/40900952021)
 passed source checks on Linux AMD64/ARM64, macOS and Windows, and real-operation
 fixtures in all three native Linux toolbox profiles on both architectures.
-Its source-bound reports certify **16 tools and 13 capabilities** functionally;
+Both compact-core jobs also passed the actual checksummed image backup/restore
+round trip. Installed-CLI, JavaScript extraction and finding-review controls
+passed on both Linux architectures.
+Its source-bound reports certify **18 tools and 20 capabilities** functionally;
 they do not certify the entire 84-tool/71-capability catalog or the security of
 every bundled executable. Later source changes require fresh certificates.
 Windows/AD and account-level cloud tests are explicitly deferred because no
@@ -169,3 +172,28 @@ tag-bearing archives, measures the loaded image and reruns operation fixtures
 before selecting its pin. These image-only backups preserve existing workspace
 state and require separate data backups; they do not claim full data rollback.
 Both Linux core jobs include the actual backup/restore round trip.
+
+
+The supply-chain/secret-scanner repair batch adds locked source builds for Trivy,
+Grype and TruffleHog. Grype migrates its completion client from the deprecated
+Docker SDK to the maintained Moby API, with focused loopback daemon controls.
+Trivy retains upstream JSONv2 compilation and updates VEX discovery, Rekor,
+containerd and telemetry dependencies. TruffleHog is built without UPX packing,
+so compiled metadata can be audited. Diagnostic binaries clear compiled Go
+audits; fresh native Linux runtime reports are required for this new batch.
+
+Security audits now supplement compiled-symbol checks with advisory queries
+for checksum-verified upstream identities hidden by local `(devel)` main modules
+and replacements. The exact binary, dependency locks and source provenance must
+match before a source-module review is accepted. The Trivy incident record
+GO-2026-4919 has an open-ended Go database range; its
+[primary advisory](https://github.com/aquasecurity/trivy/security/advisories/GHSA-69fq-xp46-6x23)
+explicitly excludes source-built binaries. The recorded not-affected review is
+restricted to the exact verified v0.72.0 source input, retains the original
+advisory, and never clears downloaded binaries, altered source or another alert.
+
+Final artifact audits must be less than 24 hours old. Release policy changes
+are included in the product source fingerprint, so changing required platforms,
+audit requirements or inventory cannot reuse earlier certificates. None of
+these Go/source-module checks substitutes for the pending OS/native-component
+security audit.

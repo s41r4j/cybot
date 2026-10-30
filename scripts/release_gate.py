@@ -2,6 +2,7 @@
 """Require artifact-bound operation evidence for the entire CYBOT catalog."""
 import argparse
 import hashlib
+from datetime import datetime, timezone, timedelta
 import json
 from pathlib import Path
 import re
@@ -32,6 +33,11 @@ def evaluate(coverage, baseline, evidence, digest, evidence_root):
             if hashlib.sha256(data).hexdigest() != record.get('report_sha256'):
                 raise ValueError('artifact audit checksum differs')
             audit = json.loads(data)
+            if hours := baseline.get('max_artifact_audit_age_hours'):
+                checked_at = datetime.fromisoformat(audit.get('checked_at', ''))
+                now = datetime.now(timezone.utc)
+                if checked_at.tzinfo is None or checked_at > now + timedelta(minutes=5) or checked_at < now - timedelta(hours=hours):
+                    raise ValueError('artifact security audit is stale or has an invalid timestamp')
             if audit.get('source_sha256') != digest or any(audit.get(key) != required[key] for key in ('profile', 'platform')):
                 raise ValueError('artifact audit source/platform differs')
             if not re.fullmatch('sha256:[a-f0-9]{64}', audit.get('image_id', '')):
@@ -41,6 +47,17 @@ def evaluate(coverage, baseline, evidence, digest, evidence_root):
             binaries = audit.get('binaries', {})
             if not binaries or 'cybot' not in binaries or any(row.get('status') != 'passed' or not re.fullmatch('[a-f0-9]{64}', row.get('binary_sha256', '')) for row in binaries.values()):
                 raise ValueError('compiled executable security evidence is incomplete')
+            for name, binary in binaries.items():
+                local_modules = [row['path'] for row in binary.get('modules', []) if row.get('version') == '(devel)']
+                if name == 'cybot' or not local_modules:
+                    continue
+                reviewed = binary.get('source_modules', [])
+                if not reviewed or any(row.get('status') != 'passed' for row in reviewed) or not re.fullmatch('[a-f0-9]{64}', binary.get('source_provenance_sha256', '')):
+                    raise ValueError('locally rebuilt upstream modules lack source-bound advisory review: '+name)
+                names = {row.get('module') for row in reviewed}
+                local_modules = ['github.com/google/go-github/v30' if path == './.cybot-patches/go-github' else path for path in local_modules]
+                if not set(local_modules).issubset(names):
+                    raise ValueError('source advisory review omits a development/replacement module: '+name)
             bound = False
             for operation in records:
                 if operation.get('platform') != required['platform']:

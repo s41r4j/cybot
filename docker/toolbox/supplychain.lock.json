@@ -16,7 +16,8 @@
           "size": 45264808,
           "sha256": "2ca2c023109c2db6b2b77366b6717291452d4531167377d95c79547f0c8e3467"
         }
-      }
+      },
+      "build": "cybot-patched-go"
     },
     "syft": {
       "version": "1.50.0",
@@ -51,7 +52,8 @@
           "size": 27306814,
           "sha256": "a8d7504a149629324eb5f4ce3dc25dfd211bbfe047e64ee2bf7844b466c3d84d"
         }
-      }
+      },
+      "build": "cybot-patched-go"
     }
   },
   "packages": {},
