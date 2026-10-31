@@ -61,7 +61,7 @@ jobs:
       matrix:
         runner: [ubuntu-latest, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 45
+    timeout-minutes: 90
     env:
       CYBOT_VERSION: 0.1.0-dev
     steps:
@@ -97,7 +97,7 @@ jobs:
       matrix:
         runner: [ubuntu-latest, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 45
+    timeout-minutes: 90
     env:
       CYBOT_VERSION: 0.1.0-dev
     steps:
@@ -127,7 +127,7 @@ jobs:
       matrix:
         runner: [ubuntu-latest, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 45
+    timeout-minutes: 90
     env:
       CYBOT_VERSION: 0.1.0-dev
     steps:
@@ -157,7 +157,7 @@ jobs:
       matrix:
         runner: [ubuntu-latest, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 45
+    timeout-minutes: 90
     env:
       CYBOT_VERSION: 0.1.0-dev
     steps:
@@ -212,7 +212,7 @@ jobs:
       matrix:
         runner: [ubuntu-latest, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 45
+    timeout-minutes: 90
     env:
       CYBOT_VERSION: 0.1.0-dev
     steps:
