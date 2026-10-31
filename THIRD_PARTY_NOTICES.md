@@ -52,7 +52,7 @@ under `/usr/share/doc/nmap/`; CYBOT's MIT license does not cover Nmap.
 
 ## Patched upstream Go tools
 
-HTTPx, DNSx, Katana, FFUF, Subfinder, Gitleaks, Gosec, Naabu, Nuclei, Syft, Trivy, Grype, TruffleHog and Gobuster are rebuilt from checksum-verified
+HTTPx, DNSx, Katana, FFUF, Subfinder, Gitleaks, Gosec, Naabu, Nuclei, Syft, Trivy, Grype, TruffleHog, Gobuster and Git LFS are rebuilt from checksum-verified
 upstream Go modules with Go 1.26.10 and the committed module locks in
 `docker/toolbox/patched-go/`. The original release archive hashes remain as
 upstream provenance; these rebuilt executables have their own measured hashes.
@@ -67,6 +67,13 @@ tests and their hashes accompany the source-build provenance.
 Gitleaks retains the upstream `gore2regex` build mode. Its archive dependency is
 updated together with the fixed RAR decoder; the committed locks record the
 exact resolved versions.
+
+Git LFS 3.8.1 retains its MIT license and dependency notices. Its checked source
+is rebuilt with fixed networking dependencies and Cgo disabled, replacing
+`/usr/bin/git-lfs` from the analysis base image. The original APK package record
+is retained in raw image audits; it does not identify the rebuilt file's version.
+An offline fixture validates local object storage, exact content recovery,
+ordinary-content handling and rejection of malformed pointers.
 
 The JavaScript extraction image also bundles LinkFinder at commit
 `1debac5dace4724fd6187c06f133578dae51c86f`, its pinned Python wheels, and

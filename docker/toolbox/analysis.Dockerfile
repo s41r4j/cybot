@@ -24,6 +24,9 @@ RUN mkdir -p /workspace/.cybot /data /reports /home/cybot/.cache /home/cybot/.co
     && chown -R 10001:10001 /workspace /data /reports /home/cybot
 COPY go/ /opt/go/
 COPY bin/ /opt/cybot/bin/
+# Replace the base image's executable at its real path, including callers
+# outside CYBOT's PATH. Keep the original APK package record for audit review.
+RUN mv /opt/cybot/bin/git-lfs /usr/bin/git-lfs
 COPY --from=javascript-builder /out/jsluice /opt/cybot/bin/jsluice
 COPY share/ /opt/cybot/share/
 COPY --from=javascript-builder /out/jsluice-compiler.txt /opt/cybot/share/builds/jsluice-compiler.txt

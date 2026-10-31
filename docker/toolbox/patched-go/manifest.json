@@ -167,6 +167,11 @@
           ]
         }
       }
+    },
+    "git-lfs": {
+      "module": "github.com/git-lfs/git-lfs/v3@v3.8.1",
+      "sum": "h1:SzfllBjlYuSaswBmhUeDPGgXSA74aIQ3/QHxbZmyyfM=",
+      "package": "."
     }
   }
 }

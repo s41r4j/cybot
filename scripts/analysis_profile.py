@@ -95,6 +95,7 @@ def probe(image):
         'go': ('/opt/go/bin/go', 'version'),
         'gitleaks': ('/opt/cybot/bin/gitleaks', 'version'),
         'trufflehog': ('/opt/cybot/bin/trufflehog', '--version'),
+        'git-lfs': ('/usr/bin/git-lfs', 'version'),
         'jsluice': ('/opt/cybot/bin/jsluice', ''),
         'linkfinder': ('/opt/cybot/bin/linkfinder', '--version'),
         'linkfinder-engine': ('/opt/cybot/lib/linkfinder/linkfinder.py', ''),

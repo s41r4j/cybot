@@ -63,6 +63,12 @@
         }
       },
       "build": "cybot-patched-go"
+    },
+    "git-lfs": {
+      "version": "3.8.1",
+      "source_url": "https://github.com/git-lfs/git-lfs/releases/tag/v3.8.1",
+      "source_commit": "a662a6dbfedf706cfa9fc7a5b7bcc7ba2e2c8a65",
+      "build": "cybot-patched-go"
     }
   },
   "go_tools": {
