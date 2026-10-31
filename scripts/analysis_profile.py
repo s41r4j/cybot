@@ -30,6 +30,14 @@ def prepare(dest):
                 shutil.copyfileobj(src, out)
             target.chmod(0o755 if member.mode & 0o111 else 0o644)
     archive.unlink()
+    import sys
+    sys.path.insert(0,str(toolbox.ROOT/'docker/toolbox'))
+    from sdk_inventory import source_manifest
+    sdk = source_manifest(dest/'go',lock['go']['version'],toolbox.ARCH,lock['go']['assets'][toolbox.ARCH]['sha256'])
+    builds = dest/'share/builds'; builds.mkdir(parents=True,exist_ok=True)
+    (builds/'go-sdk.json').write_text(json.dumps(sdk,indent=2)+'\n')
+    library = dest/'lib'; library.mkdir(exist_ok=True)
+    shutil.copyfile(toolbox.ROOT/'docker/toolbox/sdk_inventory.py',library/'sdk_inventory.py')
     (dest / 'bin').mkdir(exist_ok=True)
     for name, tool in lock['tools'].items():
         if tool.get('build') == 'cybot-patched-go':
@@ -115,6 +123,7 @@ def probe(image):
               "for name, path in {'javascript-source-manifest':'/opt/cybot/manifest/javascript.lock.json', 'jsluice-source-build':'/opt/cybot/share/builds/jsluice.json', 'jsluice-compiler':'/opt/cybot/share/builds/jsluice-compiler.txt'}.items(): result[name] = hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()",
               'sys.path.insert(0, str(root))',
               "print(json.dumps({'data':result, 'packages':{name:importlib.metadata.version(name) for name in ['jsbeautifier','editorconfig','six']}}))", 'PY', "printf 'CYBOT_END\\n'"]
+    lines += ["printf 'CYBOT_SDK_DATA\\n'",'python3 -B /opt/cybot/lib/sdk_inventory.py',"printf 'CYBOT_END\\n'"]
     with tempfile.TemporaryDirectory(prefix='probe-', dir=toolbox.STATE) as temp:
         output = Path(temp) / 'result.txt'
         try:
@@ -150,4 +159,14 @@ def probe(image):
             raise RuntimeError('Analysis runtime version mismatch: '+name)
         report['binaries'][name] = {'path': digest[2], 'sha256': digest[1], 'reported_version': version[1]}
         if name == 'jsluice': report['binaries'][name]['release_version'] = javascript['jsluice']['version']
+    sdk_match = re.search(r'CYBOT_SDK_DATA\n(.*?)\nCYBOT_END',text,re.S)
+    if not sdk_match: raise RuntimeError('Missing complete SDK executable measurements')
+    sdk = json.loads(sdk_match[1])
+    source=sdk['source']
+    if source.get('version')!=lock['go']['version'] or source.get('arch')!=toolbox.ARCH or source.get('os')!='linux' or source.get('asset_sha256')!=lock['go']['assets'][toolbox.ARCH]['sha256']:
+        raise RuntimeError('SDK inventory differs from pinned distribution')
+    for name,row in sdk['binaries'].items():
+        if name in report['binaries'] and report['binaries'][name]!=row: raise RuntimeError('Conflicting SDK measurement')
+        report['binaries'][name]=row
+    report['data'].update({'go-sdk-source':sdk['manifest_sha256'],'go-sdk-inventory-helper':sdk['helper_sha256']})
     return report
