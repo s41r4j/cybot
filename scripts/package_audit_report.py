@@ -106,10 +106,10 @@ def mapped_components(profile, measured, packages, required):
         'supplychain': {},
         'analysis': {'semgrep': [('python','semgrep','1.172.0')]},
         'web': {'wafw00f':[('python','wafw00f','2.4.2')], 'wafw00f-engine':[('python','wafw00f','2.4.2')],
-                'ruby':[('deb','ruby3.1',source_packages.get('ruby3.1'))], 'python':[('deb','python3.11',source_packages.get('python3.11'))]},
+                'ruby':[('deb','ruby3.3',source_packages.get('ruby3.3'))], 'python':[('deb','python3.13',source_packages.get('python3.13'))]},
         'browser': {'chromium':[('deb','chromium',source_packages.get('chromium'))],
                     'chromium-launcher':[('deb','chromium',source_packages.get('chromium'))],
-                    'python':[('deb','python3.11',source_packages.get('python3.11'))]},
+                    'python':[('deb','python3.13',source_packages.get('python3.13'))]},
     }[profile]
     normalize = lambda name: name.lower().replace('_','-')
     for name in required:

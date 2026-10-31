@@ -180,10 +180,55 @@
     }
   },
   "packages": {
-    "nmap": "7.93+dfsg1-1",
-    "nmap-common": "7.93+dfsg1-1",
-    "ca-certificates": "20250419~deb12u2",
-    "jq": "1.6-2.1+deb12u3",
-    "libpcap0.8": "1.10.3-1"
-  }
+    "nmap": "7.95+dfsg-3",
+    "nmap-common": "7.95+dfsg-3",
+    "ca-certificates": "20250419+deb13u1",
+    "jq": "1.7.1-6+deb13u4",
+    "libpcap0.8t64": "1.10.5-2"
+  },
+  "base_image": "debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4",
+  "package_indices": [
+    {
+      "suite": "trixie",
+      "arch": "amd64",
+      "url": "https://deb.debian.org/debian/dists/trixie/main/binary-amd64/Packages.xz",
+      "size": 9678380,
+      "sha256": "7778d3e3f303b7ddb8ce0fe7c8d57473a076c6bf2e8f241f75421d2396352498"
+    },
+    {
+      "suite": "trixie-updates",
+      "arch": "amd64",
+      "url": "https://deb.debian.org/debian/dists/trixie-updates/main/binary-amd64/Packages.xz",
+      "size": 1108,
+      "sha256": "7b52592d46eb9bf694ffd99b90fb521064a6bfd1d0a9f69f22cabf31cb7ea38e"
+    },
+    {
+      "suite": "trixie-security",
+      "arch": "amd64",
+      "url": "https://deb.debian.org/debian-security/dists/trixie-security/main/binary-amd64/Packages.xz",
+      "size": 291668,
+      "sha256": "47c58873c9ab913878036c403e824a34d6afaf63613224e997340c811410763f"
+    },
+    {
+      "suite": "trixie",
+      "arch": "arm64",
+      "url": "https://deb.debian.org/debian/dists/trixie/main/binary-arm64/Packages.xz",
+      "size": 9614192,
+      "sha256": "be16b37b2f740f066ea93d35d56f04f94d63693e5a3eb421b052bf86fae75bcd"
+    },
+    {
+      "suite": "trixie-updates",
+      "arch": "arm64",
+      "url": "https://deb.debian.org/debian/dists/trixie-updates/main/binary-arm64/Packages.xz",
+      "size": 1108,
+      "sha256": "7b52592d46eb9bf694ffd99b90fb521064a6bfd1d0a9f69f22cabf31cb7ea38e"
+    },
+    {
+      "suite": "trixie-security",
+      "arch": "arm64",
+      "url": "https://deb.debian.org/debian-security/dists/trixie-security/main/binary-arm64/Packages.xz",
+      "size": 292012,
+      "sha256": "dca8da04a82609729a9f935df526abb63f79bf51e8c27e00363d97b0c7aa708b"
+    }
+  ]
 }

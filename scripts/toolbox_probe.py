@@ -23,7 +23,7 @@ def script(binaries=None, packages=True):
         lines += [f"printf '\\nCYBOT_HASH {name} '", f'sha256sum {path}',
                   f"printf 'CYBOT_VERSION {name}\\n'", f'{path} {flag} 2>&1', "printf '\\nCYBOT_END\\n'"]
     if packages:
-        lines += ["printf 'CYBOT_PACKAGES\\n'", "dpkg-query -W -f='${Package}=${Version}\\n' nmap nmap-common ca-certificates jq libpcap0.8", "printf 'CYBOT_END\\n'"]
+        lines += ["printf 'CYBOT_PACKAGES\\n'", "dpkg-query -W -f='${Package}=${Version}\\n' nmap nmap-common ca-certificates jq libpcap0.8t64", "printf 'CYBOT_END\\n'"]
     return '\n'.join(lines)
 
 def parse(text, binaries=None, packages=True):
