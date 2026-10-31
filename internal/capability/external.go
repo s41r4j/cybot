@@ -93,6 +93,8 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 	var previous []byte
 	havePrevious := false
 	for _, step := range c.steps {
+		upstream, upstreamOK := previous, havePrevious
+		previous, havePrevious = nil, false
 		if step.ID == "gosec" {
 			if info, err := os.Stat(req.Target); err == nil && !info.IsDir() {
 				combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "DIRECTORY_REQUIRED", Message: "Gosec requires a package directory; scanning a file's parent would expand the requested scope."})
@@ -134,14 +136,26 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 		}
 		var stdin []byte
 		if step.StdinFromPrevious {
-			if !havePrevious {
+			if !upstreamOK {
 				return combined, fmt.Errorf("%s requires a completed upstream stage", step.ID)
 			}
-			stdin = previous
+			stdin = upstream
 		}
 		out, runErr := d.Runner.Run(ctx, execution.Spec{Tool: tool, Args: args, Stdin: stdin, EnvOverrides: toolEnvironment(step.ID), Timeout: d.Timeout, Retries: 0, Network: tool.RequiresNetwork, WorkDir: hostWorkdir, ContainerWorkDir: containerWorkdir, Mounts: mounts, AcceptExitCodes: step.AcceptExitCodes})
 		if runErr != nil {
 			combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "TOOL_EXECUTION_FAILED", Message: runErr.Error(), Retryable: false})
+			combined.Status = "partial"
+			previous, havePrevious = nil, false
+			if normalized, retained, ok := recoverFailedOutput(step.ID, out.Stdout, req); ok {
+				if err := retainToolOutput(&combined, normalized, retained, out.Stdout, step.ID, tool, req, d, true); err != nil {
+					return combined, fmt.Errorf("retain incomplete %s output: %w", step.ID, err)
+				}
+			}
+			combined.Summary = incompleteSummary(c.ID(), combined, completed)
+			combined.Confidence = 0
+			if len(combined.Findings) > 0 {
+				combined.Confidence = resultConfidence(combined)
+			}
 			if step.Required {
 				return combined, runErr
 			}
@@ -163,20 +177,9 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 			normalized.Status = "partial"
 			normalized.Errors = append(normalized.Errors, schema.RunError{Tool: step.ID, Code: "TOOL_REPORTED_ERRORS", Message: "Gobuster reported request errors; retained matched responses are incomplete."})
 		}
-		evidenceBytes, mediaType, redactErr := evidenceOutput(step.ID, out.Stdout)
-		if redactErr != nil {
-			return combined, fmt.Errorf("redact %s evidence: %w", step.ID, redactErr)
+		if err := retainToolOutput(&combined, normalized, out.Stdout, out.Stdout, step.ID, tool, req, d, false); err != nil {
+			return combined, err
 		}
-		ev, evidenceErr := d.Evidence.Put(req.RunID, step.ID+"-structured-output", mediaType, evidenceBytes)
-		if evidenceErr != nil {
-			return combined, evidenceErr
-		}
-		ev.Metadata = map[string]string{"tool": step.ID, "parser": tool.Parser, "version": tool.Version, "target": target}
-		for i := range normalized.Findings {
-			normalized.Findings[i].EvidenceIDs = []string{ev.ID}
-		}
-		normalized.Evidence = append(normalized.Evidence, ev)
-		mergeResult(&combined, normalized)
 		combined.Decisions = append(combined.Decisions, schema.Decision{Stage: "tool-selection", Selected: step.ID, Reason: "Configured adapter completed; evidence records its declared version.", Skipped: []schema.SkippedOption{}})
 		completed++
 		previous, havePrevious = out.Stdout, true
@@ -209,11 +212,16 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 	combined.PossibleFalsePositives = falsePositiveGuidance(c.ID())
 	if len(combined.Errors) > 0 || combined.Status == "partial" {
 		combined.Status = "partial"
+		combined.Summary = incompleteSummary(c.ID(), combined, completed)
 		if len(combined.Findings) == 0 {
 			combined.Confidence = 0
 		}
 	}
 	return combined, nil
+}
+
+func incompleteSummary(id string, result schema.Result, completed int) string {
+	return fmt.Sprintf("%s is incomplete (%d completed tool steps); retained %d asset(s), %d service(s), %d endpoint(s), and %d finding(s). No clean scan is established.", id, completed, len(result.Assets), len(result.Services), len(result.Endpoints), len(result.Findings))
 }
 
 type reportCapability struct{ definition schema.CapabilityDefinition }
