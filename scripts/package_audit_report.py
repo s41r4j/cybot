@@ -112,10 +112,10 @@ def mapped_components(profile, measured, packages, required):
         'web': {'wafw00f':[('python','wafw00f','2.4.2')], 'wafw00f-engine':[('python','wafw00f','2.4.2')],
                 'corscanner':[('python','corscanner','0.9.7')], 'corscanner-engine':[('python','corscanner','0.9.7')],
                 'dirsearch':[('python','dirsearch','0.5.0')], 'dirsearch-engine':[('python','dirsearch','0.5.0')],
-                'ruby':[('deb','ruby3.1',source_packages.get('ruby3.1'))], 'python':[('deb','python3.11',source_packages.get('python3.11'))]},
+                'ruby':[('deb','ruby3.3',source_packages.get('ruby3.3'))], 'python':[('deb','python3.13',source_packages.get('python3.13'))]},
         'browser': {'chromium':[('deb','chromium',source_packages.get('chromium'))],
                     'chromium-launcher':[('deb','chromium',source_packages.get('chromium'))],
-                    'python':[('deb','python3.11',source_packages.get('python3.11'))]},
+                    'python':[('deb','python3.13',source_packages.get('python3.13'))]},
     }[profile]
     normalize = lambda name: name.lower().replace('_','-')
     source_roots={'corscanner':'/opt/cybot/lib/cors/','corscanner-engine':'/opt/cybot/lib/cors/',

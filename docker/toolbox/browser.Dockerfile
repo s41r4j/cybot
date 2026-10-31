@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim@sha256:7ff6ba31527b9e336162fa061746c366c4b2032f4d2cff2078bea43f78efe3f8
+FROM debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4
 LABEL org.opencontainers.image.title="CYBOT Browser Toolbox" \
       org.opencontainers.image.source="https://github.com/s41r4j/cybot" \
       io.cybot.managed="true" io.cybot.profile="browser"

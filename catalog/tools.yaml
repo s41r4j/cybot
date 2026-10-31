@@ -249,7 +249,7 @@
   title: Nmap
   description: Network discovery and security auditing.
   purpose: Comprehensive port scanning, service detection, OS fingerprinting, and NSE script execution.
-  version: 7.93
+  version: 7.95
   kind: native
   supported_os: [linux]
   binary: nmap
