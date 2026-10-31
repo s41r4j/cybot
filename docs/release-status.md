@@ -9,7 +9,7 @@ increase a percentage.
 
 | Area | Source changes | Remaining release evidence |
 | --- | --- | --- |
-| 1. Scope binding | Browser actions require explicit approval even under advisory policy; sessions are anonymous, isolated and restricted to the requested hostname. Remote approval cannot invoke local/interface operations. Explicit local://HOSTNAME and interface://INTERFACE targets require approval. Policy preserves resource kind; unimplemented operations fail explicitly. | Real compatible runtime/lab evidence for every specialist adapter; service-start/status commands are not accepted as complete operations. |
+| 1. Scope binding | Filesystem mapping follows capability kind; URLs, hostnames, IPs and typed host/interface targets cannot become file mounts. This also fixes Windows URL execution. Browser actions require explicit approval even under advisory policy; sessions are anonymous, isolated and restricted to the requested hostname. Explicit local://HOSTNAME and interface://INTERFACE targets require approval. Unimplemented operations fail explicitly. | Fresh Windows source checks and compatible runtime/lab evidence for every specialist adapter; service-start/status commands are not accepted as complete operations. |
 | 2. Scanner errors | Failed scanners retain parser-validated matches and redacted evidence, explicitly marked incomplete. Truncated JSONL recovery stops at the first invalid record; failed or skipped stages cannot feed downstream input. A real Nuclei cancellation control preserves its earlier match. Failures never promote unknown confidence to 100%. Zero-file Semgrep/Gosec and targetless Trivy reports are partial. | Fresh Linux validation of the latest recovery changes, plus full positive/negative/failure fixtures for each installed scanner version. |
 | 3. Heuristic findings | URL classification returns investigation candidates and never creates vulnerability findings. Finding review requires explicit operator assertions and hash-verified stored evidence; prose alone stays UNVERIFIED. | Independent review remains necessary; operator assertions do not prove exploitability. |
 | 4. Toolchain | Go 1.26.10 pinned; source scan and all measured Go executable/source-identity audits pass on both Linux architectures. | Complete OS/native-component artifact audits and release provenance. |
@@ -88,6 +88,10 @@ fixed, and resource/time-limit failures cannot satisfy the invalid-input control
 Supply-chain jobs also reached the former 45-minute job limit; jobs now have a
 90-minute cap while individual command/resource bounds remain enforced. Fresh
 Linux validation is required; these changes do not clear the release block.
+Hosted Linux CI now reclaims only specified unused SDK installations inside its
+disposable job VM when necessary. Local/self-hosted environments are rejected;
+CYBOT images, project state and user directories are not deleted. Admission
+still preserves the 20 GB product budget and 10 GB free-host reserve.
 
 
 The optional `browser` profile pins the official agent-browser 0.40.0 Linux

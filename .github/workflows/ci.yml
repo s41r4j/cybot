@@ -7,7 +7,8 @@ permissions:
   contents: read
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # Preserve costly artifact-audit results when a follow-up fix is pushed.
+  cancel-in-progress: false
 jobs:
   test:
     strategy:
