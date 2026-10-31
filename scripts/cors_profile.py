@@ -45,5 +45,9 @@ def prepare(dest):
     (dest/'bin/corscanner').write_text('#!/bin/sh\nset -eu\nexec python3 -B /opt/cybot/lib/cors/adapter.py "$@"\n')
     (dest/'bin/corscanner').chmod(0o755)
     shutil.copyfile(lock_path,root/'source.lock.json')
+    from library_metadata import install
+    web=json.loads((toolbox.ROOT/'docker/toolbox/web.lock.json').read_text())
+    install(root,'corscanner',lock['version'],lock['engine'],
+            {'requests':web['wafw00f']['wheels']['requests']['version'],'tldextract':lock['wheels']['tldextract']['version']},root/'CORScanner/LICENSE')
     builds = dest/'share/builds';builds.mkdir(parents=True,exist_ok=True)
     (builds/'cors-source.json').write_text(json.dumps({'source_lock_sha256':hashlib.sha256(lock_path.read_bytes()).hexdigest(),'patches':patches},indent=2)+'\n')

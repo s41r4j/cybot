@@ -66,6 +66,7 @@ def prepare(dest):
     prepare_cors(dest)
     from dirsearch_profile import prepare as prepare_dirsearch
     prepare_dirsearch(dest)
+    shutil.copyfile(toolbox.ROOT/'scripts/library_metadata.py',dest/'lib/source_library_metadata.py')
     builds = dest/'share/builds'; builds.mkdir(parents=True, exist_ok=True)
     (builds/'web-source.json').write_text(json.dumps({'source_lock_sha256': hashlib.sha256((toolbox.ROOT/'docker/toolbox/web.lock.json').read_bytes()).hexdigest(), 'patches': patches}, indent=2)+'\n')
     for name, command in {
@@ -117,7 +118,11 @@ def probe(image):
     gems = list(lock['whatweb']['gems'])
     gem_code = 'require "json"; puts '+json.dumps(gems)+'.to_h { |name| [name, Gem::Specification.find_by_name(name).version.to_s] }.to_json'
     # Inventory full interpreted source/dependencies, not only tiny launchers.
-    lines += ["printf 'CYBOT_WEB_DATA\\n'", "python3 -B - <<'PY'", 'import hashlib,json,pathlib,importlib.metadata,subprocess',
+    libraries={name:{'root':'/opt/cybot/lib/'+folder,'version':version,
+                    'lock':hashlib.sha256((toolbox.ROOT/('docker/toolbox/'+lock_name+'.lock.json')).read_bytes()).hexdigest(),
+                    'adapter':hashlib.sha256((toolbox.ROOT/('docker/toolbox/'+adapter_name+'_wrapper.py')).read_bytes()).hexdigest()}
+               for name,folder,lock_name,adapter_name,version in [('corscanner','cors','cors','corscanner','0.9.7'),('dirsearch','dirsearch','dirsearch','dirsearch','0.5.0')]}
+    lines += ["printf 'CYBOT_WEB_DATA\\n'", "python3 -B - <<'PY'", 'import hashlib,json,pathlib,importlib.metadata,subprocess,sys',
               'data={}',
               "for name, directory in {'whatweb-source':'/opt/cybot/lib/whatweb','ruby-gems':'/opt/cybot/lib/gems','python-wheels':'/opt/cybot/lib/python','cors-source':'/opt/cybot/lib/cors','dirsearch-source':'/opt/cybot/lib/dirsearch'}.items():",
               ' digest=hashlib.sha256()', ' for path in sorted(pathlib.Path(directory).rglob("*")):',
@@ -128,7 +133,11 @@ def probe(image):
               'packages=dict(line.split("=",1) for line in subprocess.check_output(["dpkg-query","-W","-f=${Package}=${Version}\\n",*'+repr(list(lock['packages'][toolbox.ARCH]))+'],text=True).splitlines())',
               'gems=json.loads(subprocess.check_output(["ruby","-e",'+repr(gem_code)+'],text=True))',
               'wheels={name:importlib.metadata.version(name) for name in '+repr(list(lock['wafw00f']['wheels'])+list(json.loads((toolbox.ROOT/'docker/toolbox/cors.lock.json').read_text())['wheels']))+'}',
-              'print(json.dumps({"data":data,"packages":packages,"ruby_gems":gems,"python_packages":wheels}))', 'PY', "printf 'CYBOT_END\\n'"]
+              "sys.path.insert(0,'/opt/cybot/lib')",'from source_library_metadata import verify',
+              'libraries='+repr(libraries),
+              "sources={name:verify(pathlib.Path(row['root']),name,row['version'],row['lock'],row['adapter']) for name,row in libraries.items()}",
+              "data['source-metadata-helper']=hashlib.sha256(pathlib.Path('/opt/cybot/lib/source_library_metadata.py').read_bytes()).hexdigest()",
+              'print(json.dumps({"data":data,"packages":packages,"ruby_gems":gems,"python_packages":wheels,"source_libraries":sources}))', 'PY', "printf 'CYBOT_END\\n'"]
     toolbox.STATE.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='probe-', dir=toolbox.STATE) as temp:
         output = Path(temp)/'probe.txt'
@@ -142,6 +151,8 @@ def probe(image):
     if not extra:
         raise RuntimeError('Missing web runtime dependency inventory')
     report = dict(json.loads(extra[1]), binaries={})
+    if report['source_libraries']!={name:row['version'] for name,row in libraries.items()} or report['data']['source-metadata-helper']!=hashlib.sha256((toolbox.ROOT/'scripts/library_metadata.py').read_bytes()).hexdigest():
+        raise RuntimeError('Interpreted source metadata differs from its checked library/adapter')
     wheels = dict(lock['wafw00f']['wheels'], **json.loads((toolbox.ROOT/'docker/toolbox/cors.lock.json').read_text())['wheels'])
     for field, expected in [('packages', lock['packages'][toolbox.ARCH]), ('ruby_gems', {name:row['version'] for name,row in lock['whatweb']['gems'].items()}), ('python_packages', {name:row['version'] for name,row in wheels.items()})]:
         if report[field] != expected: raise RuntimeError('Web runtime dependency versions differ: '+field)

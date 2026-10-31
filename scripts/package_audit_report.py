@@ -53,7 +53,11 @@ def inventory(sbom, image_id, arch):
             raise RuntimeError('Package inventory contains an incomplete package identity')
         if row['id'] in seen: raise RuntimeError('Package inventory contains duplicate identities')
         seen.add(row['id'])
-        packages.append({key:row.get(key, '') for key in ('id','name','version','type','purl')})
+        package={key:row.get(key, '') for key in ('id','name','version','type','purl')}
+        package['found_by']=row.get('foundBy','')
+        package['scope']='declared-source' if package['found_by']=='rust-cargo-lock-cataloger' else 'installed'
+        package['locations']=[location.get('path','') for location in row.get('locations',[]) if isinstance(location,dict)]
+        packages.append(package)
         native = row.get('metadata') or {}
         if isinstance(native,dict) and native.get('goCompiledVersion'):
             settings = native.get('goBuildSettings') or {}
@@ -106,26 +110,32 @@ def mapped_components(profile, measured, packages, required):
         'supplychain': {},
         'analysis': {'semgrep': [('python','semgrep','1.172.0')]},
         'web': {'wafw00f':[('python','wafw00f','2.4.2')], 'wafw00f-engine':[('python','wafw00f','2.4.2')],
+                'corscanner':[('python','corscanner','0.9.7')], 'corscanner-engine':[('python','corscanner','0.9.7')],
+                'dirsearch':[('python','dirsearch','0.5.0')], 'dirsearch-engine':[('python','dirsearch','0.5.0')],
                 'ruby':[('deb','ruby3.1',source_packages.get('ruby3.1'))], 'python':[('deb','python3.11',source_packages.get('python3.11'))]},
         'browser': {'chromium':[('deb','chromium',source_packages.get('chromium'))],
                     'chromium-launcher':[('deb','chromium',source_packages.get('chromium'))],
                     'python':[('deb','python3.11',source_packages.get('python3.11'))]},
     }[profile]
     normalize = lambda name: name.lower().replace('_','-')
+    source_roots={'corscanner':'/opt/cybot/lib/cors/','corscanner-engine':'/opt/cybot/lib/cors/',
+                  'dirsearch':'/opt/cybot/lib/dirsearch/','dirsearch-engine':'/opt/cybot/lib/dirsearch/'}
     for name in required:
         constraints = expectations.get(name, [])
         identities = []
         for kind, package, version in constraints:
-            identities += [row['id'] for row in packages if row['type']==kind and normalize(row['name'])==normalize(package) and row['version']==version and version]
+            identities += [row['id'] for row in packages if row['type']==kind and normalize(row['name'])==normalize(package) and row['version']==version and version
+                           and row.get('scope','installed')=='installed'
+                           and (name not in source_roots or any(path.startswith(source_roots[name]) for path in row.get('locations',[])))]
         mapped = bool(constraints) and len(identities)>=len(constraints)
         rows.append({'component':name,'binary_sha256':measured['binaries'][name]['sha256'],
                      'status':'mapped' if mapped else 'unmapped', 'package_ids':sorted(identities),
                      'scope':'Installed distribution-package advisory coverage' if mapped else 'Standalone/native dependency coverage still requires review'})
-    for field, kind in [('python_packages','python'),('ruby_gems','gem')]:
+    for field, kind in [('python_packages','python'),('source_libraries','python'),('ruby_gems','gem')]:
         for name, version in measured.get(field, {}).items():
             identities = [row['id'] for row in packages if row['type']==kind and normalize(row['name'])==normalize(name) and row['version']==version]
             rows.append({'component':kind+':'+name,'status':'mapped' if identities else 'unmapped','package_ids':identities,
-                         'scope':'Measured interpreted dependency package'})
+                         'scope':'Source-checked interpreted library variant' if field=='source_libraries' else 'Measured interpreted dependency package'})
     return rows
 
 
@@ -139,7 +149,7 @@ def summarize(sbom, scan, image_id, arch, profile, measured, lock):
     unknown = [row['id'] for row in packages if not row['version'] or row['version'].lower() in ('unknown','unresolved')]
     ready = not matches and not unmapped and not unmeasured_go and not unknown and not cgo_files
     return {'schema_version':1,'status':'passed' if ready else 'blocked','image_id':image_id,'profile':profile,'platform':'linux/'+arch,
-        'scope':'Installed OS and language-package advisories; standalone/native coverage gaps remain explicit',
+        'scope':'Installed OS/language advisories plus explicitly labeled declared Rust locks; standalone/native coverage gaps remain explicit',
         'distro':distro,'package_counts':dict(Counter(row['type'] for row in packages)),
         'inventory':packages,'findings':matches,'components':components,
         'unmapped_components':unmapped,'unmeasured_go_binaries':unmeasured_go,'unknown_version_packages':unknown,
@@ -160,6 +170,23 @@ def validate_clear_report(report, policy, image_id, profile):
         if not re.fullmatch('[a-f0-9]{64}',report.get(key,'')): raise ValueError('package audit input/report checksum is missing')
     if report.get('controls')!={'positive':'passed','negative':'passed','failure':'passed'}:
         raise ValueError('package audit lacks real positive, negative and failure controls')
+    if report.get('cataloger_additions',[])!=policy.get('additional_catalogers',[]):
+        raise ValueError('package cataloger scope differs from the required policy')
+    required={(kind,name) for kind,names in policy.get('positive_control_packages',{}).items() for name in names}
+    if required:
+        detected=report.get('positive_control_detections',[])
+        if not isinstance(detected,list) or any(not isinstance(row,dict) for row in detected) or {(row.get('type'),row.get('name')) for row in detected}!=required or len(detected)!=len(required):
+            raise ValueError('positive controls omit a required package ecosystem')
+        for row in detected:
+            if not isinstance(row.get('advisories'),list) or not row['advisories'] or any(not isinstance(value,str) or not value or len(value)>128 for value in row['advisories']):
+                raise ValueError('positive control lacks detected advisory identities')
+        for name in ('positive','negative'):
+            proofs=report.get('control_evidence',{})
+            if not isinstance(proofs,dict):raise ValueError('control evidence must be an object')
+            control=proofs.get(name,{})
+            if not isinstance(control,dict):raise ValueError('control evidence must be an object')
+            if not re.fullmatch('sha256:[a-f0-9]{64}',control.get('image_id','')) or any(not re.fullmatch('[a-f0-9]{64}',control.get(key,'')) for key in ('sbom_sha256','matches_sha256')):
+                raise ValueError('control lacks immutable image/report identities')
     for key in ('findings','unmapped_components','unmeasured_go_binaries','unknown_version_packages','unscanned_cgo_binaries'):
         if not isinstance(report.get(key),list) or report[key]: raise ValueError('package audit contains findings or incomplete dependency coverage')
     rows = report.get('inventory')
