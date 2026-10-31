@@ -12,3 +12,17 @@ id = "generic-api-key"
   regexTarget = "secret"
   regexes = ['''^09231bc03589c7206ee5cce13dd2b204d8bcfb0b82c111f15758dce393d76854$''']
   paths = ['''(^|/)internal/packs/builtin/provenance\.json$''']
+
+# The pinned scanner's legacy Sourcegraph rule also matches bare SHA-1 values
+# when the same Git diff contains "sourcegraph". All 560 reviewed matches were
+# complete upstream fix-commit URLs in retained advisory records. Restrict this
+# exception to that rule, these report paths, and a complete JSON URL line for
+# the observed upstream repositories. Credentials and other URL forms still fail.
+[[rules]]
+id = "sourcegraph-access-token"
+  [[rules.allowlists]]
+  description = "Upstream fix-commit URLs in retained package advisories"
+  condition = "AND"
+  regexTarget = "line"
+  paths = ['''(^|/)release/validation/artifact-audit-[0-9]+\.json$''']
+  regexes = ['''^\s*"https://github\.com/(?:getkin/kin-openapi|go-chi/chi|go-jose/go-jose|jaraco/jaraco\.context|jpadilla/pyjwt|modelcontextprotocol/python-sdk|nghttp2/nghttp2|open-telemetry/opentelemetry-python|openssl/openssl|pyca/cryptography|pypa/pip|pypa/setuptools|pypa/wheel|python/cpython|ruby/net-imap|ruby/resolv|ruby/rexml|ruby/uri|urllib3/urllib3|yuin/goldmark)/commit/[a-f0-9]{40}",?\s*$''']

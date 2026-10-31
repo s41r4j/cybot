@@ -13,6 +13,35 @@ import urllib.request
 
 ROOT=Path(__file__).resolve().parents[1]
 
+
+def validate_controls(binary, config):
+    """A report-URL exception must never hide actual credential-shaped values."""
+    with tempfile.TemporaryDirectory(prefix='cybot-secret-controls-') as temp:
+        work=Path(temp);source=work/'source'
+        report=source/'release/validation/artifact-audit-0.json'
+        report.parent.mkdir(parents=True)
+        # Generated test data, never a service-issued credential.
+        value=hashlib.sha1(b'CYBOT synthetic secret scanner control').hexdigest()
+        url='"https://github.com/openssl/openssl/commit/'+value+'",\n'
+        report.write_text(url+'sourcegraph advisory context\n')
+        def check(expected):
+            output=work/'report.json'
+            result=subprocess.run([str(binary),'dir',str(source),'--config',str(config),
+                '--redact=100','--no-banner','--report-format=json','--report-path',str(output)],
+                capture_output=True,text=True,timeout=30)
+            if not output.is_file() or output.is_symlink() or output.stat().st_size>1024*1024:
+                raise RuntimeError('Secret-scanner control report is missing or oversized')
+            rows=json.loads(output.read_bytes())
+            if result.returncode!=(1 if expected else 0) or not isinstance(rows,list) or len(rows)!=expected or any(row.get('RuleID')!='sourcegraph-access-token' for row in rows):
+                raise RuntimeError('Secret-scanner positive/negative control failed')
+        check(0)
+        report.write_text(report.read_text()+'sourcegraph_token = "sgp_'+value+'"\n'
+            +'sourcegraph_token = "'+value+'"\n'
+            +'"https://github.com/openssl/openssl/commit/'+value+'?token=sgp_'+value+'"\n')
+        check(3)
+        (source/'other.txt').write_text(url+'sourcegraph advisory context\n')
+        check(4)
+
 def scanner(archive=None):
     lock=json.loads((ROOT/'release/secret-scanner.lock.json').read_text())
     arch={'aarch64':'arm64','arm64':'arm64','x86_64':'amd64','AMD64':'amd64'}.get(platform.machine())
@@ -38,6 +67,7 @@ def scan(source,history=False,archive=None):
             if len(members)!=1 or members[0].size>200*1024*1024: raise RuntimeError('Invalid scanner archive')
             binary.write_bytes(archive.extractfile(members[0]).read())
         binary.chmod(0o700)
+        validate_controls(binary,ROOT/'.gitleaks.toml')
         command=[str(binary),'git' if history else 'dir',str(source.resolve()),'--config',str(ROOT/'.gitleaks.toml'),'--redact=100','--no-banner','--report-format=json','--report-path',str(root/'report.json')]
         subprocess.run(command,check=True,timeout=120)
 

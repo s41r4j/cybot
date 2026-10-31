@@ -9,10 +9,10 @@ increase a percentage.
 
 | Area | Source changes | Remaining release evidence |
 | --- | --- | --- |
-| 1. Scope binding | Filesystem mapping follows capability kind; URLs, hostnames, IPs and typed host/interface targets cannot become file mounts. This also fixes Windows URL execution. Browser actions require explicit approval even under advisory policy; sessions are anonymous, isolated and restricted to the requested hostname. Explicit local://HOSTNAME and interface://INTERFACE targets require approval. Unimplemented operations fail explicitly. | Fresh Windows source checks and compatible runtime/lab evidence for every specialist adapter; service-start/status commands are not accepted as complete operations. |
-| 2. Scanner errors | Failed scanners retain parser-validated matches and redacted evidence, explicitly marked incomplete. Truncated JSONL recovery stops at the first invalid record; failed or skipped stages cannot feed downstream input. A real Nuclei cancellation control preserves its earlier match. Failures never promote unknown confidence to 100%. Zero-file Semgrep/Gosec and targetless Trivy reports are partial. | Fresh Linux validation of the latest recovery changes, plus full positive/negative/failure fixtures for each installed scanner version. |
+| 1. Scope binding | Filesystem mapping follows capability kind; URLs, hostnames, IPs and typed host/interface targets cannot become file mounts. This also fixes Windows URL execution. Browser actions require explicit approval even under advisory policy; sessions are anonymous, isolated and restricted to the requested hostname. Explicit local://HOSTNAME and interface://INTERFACE targets require approval. Unimplemented operations fail explicitly. Windows and other source checks pass at the Debian 13 candidate. | Compatible runtime/lab evidence for every specialist adapter; service-start/status commands are not accepted as complete operations. |
+| 2. Scanner errors | Failed scanners retain parser-validated matches and redacted evidence, explicitly marked incomplete. Truncated JSONL recovery stops at the first invalid record; failed or skipped stages cannot feed downstream input. A real Nuclei cancellation control preserves its earlier match. Failures never promote unknown confidence to 100%. Zero-file Semgrep/Gosec and targetless Trivy reports are partial. Recovery fixtures pass on both Linux architectures at the last green checkpoint. | Full positive/negative/failure fixtures for remaining scanners and fresh evidence after runtime changes. |
 | 3. Heuristic findings | URL classification returns investigation candidates and never creates vulnerability findings. Finding review requires explicit operator assertions and hash-verified stored evidence; prose alone stays UNVERIFIED. | Independent review remains necessary; operator assertions do not prove exploitability. |
-| 4. Toolchain | Go 1.26.10 pinned; source and measured executable/source-identity audits pass on both Linux architectures, including all operational SDK executables. Full package scans now complete and retain their findings. | OS/library findings, the newly discovered Git LFS binary, source-version reconciliation, native-component coverage and release provenance still block certification. |
+| 4. Toolchain | Go 1.26.10 pinned; source and measured executable/source-identity audits pass on both Linux architectures, including all operational SDK executables. Full package scans now complete and retain their findings. Git LFS is now rebuilt from checked 3.8.1 source with fixed networking dependencies; native operation and Linux ARM64 binary/provenance checks pass. | Fresh image evidence for the Git LFS repair and Debian 13 migration, OS/library findings, source-version reconciliation, native-component coverage and release provenance still block certification. |
 | 5. Distribution | Public repository and website, release gate, immutable image pull/validation, local pins, and verified core image backup/restore on both Linux architectures. | Successful publishing pipeline, clean-machine installation and compatible image evidence. No completed stable release is claimed. |
 | 6. Publication hygiene | MIT license, security policy, third-party notices, strict example, and allowlisted clean source export. Private research remains locally preserved and is excluded from public source/history. | Ongoing secret scanning and third-party asset/license review for each release. |
 
@@ -121,6 +121,14 @@ unused SDKs inside its disposable VM; local/self-hosted environments are
 rejected. The 20 GB product budget and 10 GB host reserve remain in place.
 Image cataloging has a separate 4 GB temporary-file bound for real layers;
 parsed scanner reports remain capped at 64 MiB.
+
+The public-history scan exposed a legacy Sourcegraph-rule false positive:
+560 matches were full upstream fix-commit URLs in the retained advisory reports.
+The exception requires that rule, the exact report-path form and a complete JSON
+URL line for the reviewed upstream repositories. The official scanner still
+detects generated prefixed/unprefixed token controls, query-string credentials
+and the same hash URL outside those reports. All 41 public commits pass with
+the reviewed configuration; private local branches are not scanned or exported.
 
 
 The optional `browser` profile pins the official agent-browser 0.40.0 Linux
