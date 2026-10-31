@@ -99,6 +99,7 @@ def audit(image, measured, work, govulncheck, output):
     if not hydrated.is_file() or hydrated.is_symlink() or hydrated.stat().st_size>6*1024**3:
         raise RuntimeError('Imported package database is missing or oversized')
     database_hash = file_hash(hydrated)
+    control_evidence={}
     def scan(subject, name, image_id):
         sbom_path = '/validation/package-data/'+name+'-sbom.json'
         result_path = '/validation/package-data/'+name+'-matches.json'
@@ -106,7 +107,8 @@ def audit(image, measured, work, govulncheck, output):
         # report limit would reject legitimate Chromium/Go layers before scan.
         # The immutable archive/image bounds and monitored total-disk reserve
         # remain enforced; parsed scanner reports are still capped at 64 MiB.
-        run(['/validation/tools/syft','--config','/validation/package-config.yaml','docker-archive:'+subject,'--scope','squashed','-o','syft-json='+sbom_path],name+'-catalog.txt',file_limit=4*toolbox.GB)
+        selection=[value for name in lock.get('additional_catalogers',[]) for value in ('--select-catalogers','+'+name)]
+        run(['/validation/tools/syft','--config','/validation/package-config.yaml','docker-archive:'+subject,'--scope','squashed',*selection,'-o','syft-json='+sbom_path],name+'-catalog.txt',file_limit=4*toolbox.GB)
         run(['/validation/tools/grype','--config','/validation/package-config.yaml','sbom:'+sbom_path,'-o','json','--file',result_path],name+'-scan.txt')
         sbom, matches = read_json(data/(name+'-sbom.json')),read_json(data/(name+'-matches.json'))
         packages,_,_,_ = inventory(sbom,image_id,toolbox.ARCH)
@@ -114,9 +116,14 @@ def audit(image, measured, work, govulncheck, output):
         status = matches.get('descriptor',{}).get('db',{}).get('status',{})
         if status.get('valid') is not True or status.get('built')!=lock['database']['created'] or status.get('schemaVersion')!=lock['database']['schema_version']:
             raise RuntimeError('Package scanner used an invalid or different database')
+        if name in ('positive','negative'):
+            control_evidence[name]={'image_id':image_id,'sbom_sha256':file_hash(data/(name+'-sbom.json')),'matches_sha256':file_hash(data/(name+'-matches.json'))}
+            for suffix in ('sbom','matches'):shutil.copyfile(data/(name+'-'+suffix+'.json'),output/('control-'+name+'-'+suffix+'.json'))
         return sbom,matches,rows
     _,_,positive = scan('/validation/package-controls/positive.tar','positive',identities['positive'])
-    if not {'libssl3','lodash'}.issubset({row['package'] for row in positive}):
+    required={(kind,name) for kind,names in lock['positive_control_packages'].items() for name in names}
+    detected={(row['type'],row['package']) for row in positive}
+    if not required.issubset(detected):
         raise RuntimeError('Package audit failed to detect known vulnerable OS and language controls')
     _,_,negative = scan('/validation/package-controls/negative.tar','negative',identities['negative'])
     if negative: raise RuntimeError('Clean synthetic package fixture produced invented vulnerability matches')
@@ -134,6 +141,9 @@ def audit(image, measured, work, govulncheck, output):
         sbom_sha256=file_hash(data/'image-sbom.json'),scanner_report_sha256=file_hash(data/'image-matches.json'),
         controls={'positive':'passed','negative':'passed','failure':'passed'},network='none',
         source_sha256=source_digest(),checked_at=datetime.now(timezone.utc).isoformat())
+    result['cataloger_additions']=lock.get('additional_catalogers',[])
+    result['positive_control_detections']=[{'type':kind,'name':name,'advisories':sorted({row['advisory']['id'] for row in positive if (row['type'],row['package'])==(kind,name)})} for kind,name in sorted(required)]
+    result['control_evidence']=control_evidence
     shutil.copyfile(data/'image-sbom.json',output/'package-sbom.json')
     shutil.copyfile(data/'image-matches.json',output/'package-matches.json')
     (output/'package-audit.json').write_text(json.dumps(result,indent=2)+'\n')

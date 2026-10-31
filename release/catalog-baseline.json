@@ -221,11 +221,11 @@
       "grype": "0.116.1"
     },
     "database": {
-      "url": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-10-30T00:25:15Z_1793341408.tar.zst",
-      "size": 197159249,
-      "sha256": "1e1b9cf2cbfaf16b770e4d75d7beb4840dc4254ca2281682fe5ec3700a4251a8",
+      "url": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-10-31T00:20:28Z_1793427497.tar.zst",
+      "size": 197876517,
+      "sha256": "d574583126b3b0eb72bf49ea72ee382bbfb3adff4358105540a303e9f41b874c",
       "user_agent": "grype/0.116.1",
-      "created": "2026-10-30T06:23:28Z",
+      "created": "2026-10-31T06:18:17Z",
       "schema_version": "v6.1.10"
     },
     "max_database_age_hours": 72,
@@ -257,6 +257,26 @@
         "chromium",
         "chromium-launcher",
         "python"
+      ]
+    },
+    "additional_catalogers": [
+      "rust-cargo-lock-cataloger"
+    ],
+    "positive_control_packages": {
+      "deb": [
+        "libssl3"
+      ],
+      "npm": [
+        "lodash"
+      ],
+      "python": [
+        "urllib3"
+      ],
+      "gem": [
+        "addressable"
+      ],
+      "rust-crate": [
+        "smallvec"
       ]
     }
   }

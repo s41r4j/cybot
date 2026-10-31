@@ -36,4 +36,7 @@ def prepare(dest):
     shutil.copyfile(root/'dirsearch/README.md',notices/'upstream-README.md')
     shutil.copyfile(toolbox.ROOT/'docker/toolbox/dirsearch_wrapper.py',root/'adapter.py')
     shutil.copyfile(lock_path,root/'source.lock.json')
+    from library_metadata import install
+    web=json.loads((toolbox.ROOT/'docker/toolbox/web.lock.json').read_text())
+    install(root,'dirsearch',lock['version'],lock['source'],{'requests':web['wafw00f']['wheels']['requests']['version']},notices/'GPL-2.0.txt')
     binary=dest/'bin/dirsearch';binary.write_text('#!/bin/sh\nset -eu\nexec python3 -B /opt/cybot/lib/dirsearch/adapter.py "$@"\n');binary.chmod(0o755)

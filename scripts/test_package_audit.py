@@ -93,6 +93,24 @@ class PackageAuditTests(unittest.TestCase):
         with self.assertRaises(ValueError):audit.validate_clear_report(invalid,policy,identity,'supplychain')
         invalid=copy.deepcopy(report);invalid['scanners']['grype']['source_modules']=[]
         with self.assertRaisesRegex(ValueError,'source advisory'):audit.validate_clear_report(invalid,policy,identity,'supplychain')
+        policy['positive_control_packages']={'python':['urllib3']}
+        with self.assertRaisesRegex(ValueError,'ecosystem'):audit.validate_clear_report(report,policy,identity,'supplychain')
+        report['positive_control_detections']=[{'type':'python','name':'urllib3','advisories':['GHSA-fixture-positive']}]
+        report['control_evidence']={name:{'image_id':'sha256:'+marker*64,'sbom_sha256':marker*64,'matches_sha256':marker*64} for name,marker in [('positive','3'),('negative','4')]}
+        audit.validate_clear_report(report,policy,identity,'supplychain')
+        invalid=copy.deepcopy(report);invalid['positive_control_detections'][0]['advisories']=[]
+        with self.assertRaisesRegex(ValueError,'advisory identities'):audit.validate_clear_report(invalid,policy,identity,'supplychain')
+        policy['additional_catalogers']=['rust-cargo-lock-cataloger']
+        with self.assertRaisesRegex(ValueError,'cataloger scope'):audit.validate_clear_report(report,policy,identity,'supplychain')
+
+    def test_source_library_identity_must_locate_the_measured_runtime_tree(self):
+        measured={'binaries':{'corscanner':{'sha256':'0'*64}}}
+        packages=[{'id':'library','type':'python','name':'corscanner','version':'0.9.7','scope':'installed','locations':['/other/METADATA']}]
+        self.assertEqual(audit.mapped_components('web',measured,packages,['corscanner'])[0]['status'],'unmapped')
+        packages[0]['locations']=['/opt/cybot/lib/cors/corscanner-0.9.7.dist-info/METADATA']
+        self.assertEqual(audit.mapped_components('web',measured,packages,['corscanner'])[0]['status'],'mapped')
+        packages[0]['scope']='declared-source'
+        self.assertEqual(audit.mapped_components('web',measured,packages,['corscanner'])[0]['status'],'unmapped')
 
 
 if __name__=='__main__':unittest.main()
