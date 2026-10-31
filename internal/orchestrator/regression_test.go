@@ -104,6 +104,19 @@ func TestPersistenceFailureDoesNotHideCapabilityFailure(t *testing.T) {
 		t.Fatal("missing persistence diagnostic")
 	}
 }
+
+func TestFailureDoesNotPromoteUnknownConfidence(t *testing.T) {
+	o, stub := testCore(t, "suggestive")
+	stub.failure = errors.New("scanner failed")
+	r, err := o.Run(context.Background(), schema.RunRequest{Capability: "fixture.run", Target: "example.test", Input: json.RawMessage(`{}`)})
+	if err == nil || r.Status != "failed" || r.Confidence != 0 {
+		t.Fatalf("failure became confident result: %+v %v", r, err)
+	}
+	saved, err := o.Memory.Result(context.Background(), r.RunID)
+	if err != nil || saved.Confidence != 0 || saved.Status != "failed" {
+		t.Fatalf("failure confidence was not persisted: %+v %v", saved, err)
+	}
+}
 func TestPlanRejectsInvalidTargetWithoutClaimingHealth(t *testing.T) {
 	o, _ := testCore(t, "suggestive")
 	if err := capability.RegisterBuiltins(o.Capabilities); err != nil {

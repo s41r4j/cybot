@@ -157,9 +157,6 @@ func (o *Orchestrator) Run(ctx context.Context, req schema.RunRequest) (schema.R
 		if r.Summary == "" {
 			r.Summary = "Capability execution failed before producing a complete normalized result."
 		}
-		if r.Confidence == 0 {
-			r.Confidence = 1
-		}
 	} else if r.Status == "" {
 		r.Status = "completed"
 	}
@@ -187,7 +184,7 @@ func (o *Orchestrator) Run(ctx context.Context, req schema.RunRequest) (schema.R
 	return r, evidence.RedactError(err)
 }
 func schemaFailureResult(runID, capabilityID, target string, started, finished time.Time, cause error) schema.Result {
-	r := schema.Result{RunID: runID, Capability: capabilityID, Target: target, Status: "failed", Summary: "Capability output failed strict CYBOT result-schema validation.", Confidence: 1, StartedAt: started, FinishedAt: finished, Errors: []schema.RunError{{Code: "OUTPUT_SCHEMA_FAILED", Message: cause.Error(), Retryable: false}}}
+	r := schema.Result{RunID: runID, Capability: capabilityID, Target: target, Status: "failed", Summary: "Capability output failed strict CYBOT result-schema validation.", Confidence: 0, StartedAt: started, FinishedAt: finished, Errors: []schema.RunError{{Code: "OUTPUT_SCHEMA_FAILED", Message: cause.Error(), Retryable: false}}}
 	normalizeCollections(&r)
 	return r
 }

@@ -211,6 +211,72 @@ http:
 		passedCase("failure", "Real Nuclei rejects a nonexistent template."),
 	})
 }
+
+func TestLiveCoreNucleiRetainsFindingAfterCancellation(t *testing.T) {
+	d := liveDeps(t)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	var marker, blocked atomic.Int64
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/marker":
+			marker.Add(1)
+			fmt.Fprint(w, "cybot-partial-marker")
+		case "/blocked":
+			blocked.Add(1)
+			// The first request already matched. Cancel the owned scanner while
+			// its second request is still pending, allowing its JSONL to flush.
+			time.AfterFunc(500*time.Millisecond, cancel)
+			select {
+			case <-r.Context().Done():
+			case <-ctx.Done():
+			}
+		default:
+			http.NotFound(w, r)
+		}
+	}))
+	defer server.Close()
+	template := filepath.Join(t.TempDir(), "partial.yaml")
+	content := `id: cybot-partial-marker
+info:
+  name: CYBOT partial fixture marker
+  author: cybot
+  severity: info
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/marker"
+    matchers:
+      - type: word
+        words:
+          - "cybot-partial-marker"
+  - method: GET
+    path:
+      - "{{BaseURL}}/blocked"
+    matchers:
+      - type: word
+        words:
+          - "never-a-match"
+`
+	if err := os.WriteFile(template, []byte(content), 0600); err != nil {
+		t.Fatal(err)
+	}
+	c := liveCapability(t, "web.scan")
+	c.steps[0].Args = func(target string, req schema.RunRequest) []string {
+		args := replaceArgument(nucleiArgs(target, req), "-templates", template)
+		return append(args, "-timeout", "30", "-retries", "0")
+	}
+	d.Timeout = 20 * time.Second
+	result, err := c.Run(ctx, liveRequest(server.URL), d)
+	if err == nil || marker.Load() != 1 || blocked.Load() != 1 || result.Status != "partial" || len(result.Errors) == 0 || len(result.Findings) != 1 || len(result.Evidence) != 1 {
+		t.Fatalf("cancelled scanner lost its real match or failure: marker=%d blocked=%d result=%+v err=%v", marker.Load(), blocked.Load(), result, err)
+	}
+	if result.Evidence[0].Metadata["execution_status"] != "failed" || !strings.Contains(result.Summary, "incomplete") {
+		t.Fatal("cancelled scan advertises completion", result)
+	}
+	validateFixtureResult(t, result)
+}
+
 func TestLiveCoreNmap(t *testing.T) {
 	d := liveDeps(t)
 	server := fixtureHTTP(t)
