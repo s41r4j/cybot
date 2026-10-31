@@ -254,7 +254,7 @@
   supported_os: [linux]
   binary: nmap
   source_url: https://github.com/nmap/nmap
-  license: GPL-2.0
+  license: NPSL
   capabilities: [port.scan, service.enumerate]
   default_args: [-sV, -sC, -oX, -]
   output_format: xml

@@ -105,8 +105,14 @@ These are scanner match records, including repeated binary/source-package
 matches and conservative results; they are not counts of independently verified
 exploitable vulnerabilities. The release-specific Debian tracker still marks checked Chromium records as
 vulnerable on Bookworm while marking Trixie fixed; the generic upstream version
-description is insufficient to clear them. Moving to a maintained Debian 13
-base and fresh package pins is the next remediation. Raw matches remain retained. Critical Ruby/OS findings and unresolved native coverage still
+description is insufficient to clear them. The next validation candidate moves
+the core, web, browser and supply-chain images to checksum-pinned Debian 13,
+with package versions verified against both architecture indexes. This updates
+Python, Ruby, Nmap and the Chromium security packages. It also records checked
+CORScanner/Dirsearch source-library identities and tests advisory detection for
+Debian, npm, Python, Ruby and Rust dependency records against a fresh pinned
+database. These changes still require fresh Linux image results; the figures
+above remain the last green checkpoint. Raw matches remain retained. Critical Ruby/OS findings and unresolved native coverage still
 block release; no blanket suppression is applied.
 
 Runtime jobs have a 90-minute limit. Individual memory, CPU, process, output and

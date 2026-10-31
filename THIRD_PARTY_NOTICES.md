@@ -45,6 +45,11 @@ tool in the catalog does not redistribute it or grant rights to its source.
 Release validation must inspect the actual shipped assets and notices. An
 MIT project license does not relicense third-party components.
 
+The compact image includes Debian's Nmap 7.95 packages. Nmap uses the
+[Nmap Public Source License (NPSL)](https://nmap.org/npsl/), which includes
+additional terms beyond GPL-2.0. Its packaged copyright/license notices remain
+under `/usr/share/doc/nmap/`; CYBOT's MIT license does not cover Nmap.
+
 ## Patched upstream Go tools
 
 HTTPx, DNSx, Katana, FFUF, Subfinder, Gitleaks, Gosec, Naabu, Nuclei, Syft, Trivy, Grype, TruffleHog and Gobuster are rebuilt from checksum-verified
