@@ -103,9 +103,10 @@ package and native-coverage findings prevent a security certificate:
 
 These are scanner match records, including repeated binary/source-package
 matches and conservative results; they are not counts of independently verified
-exploitable vulnerabilities. Some Chromium records conflict with the current
-Debian fixed-version tracker and need a fresh vendor-backed review. Raw matches
-remain retained. Critical Ruby/OS findings and unresolved native coverage still
+exploitable vulnerabilities. The release-specific Debian tracker still marks checked Chromium records as
+vulnerable on Bookworm while marking Trixie fixed; the generic upstream version
+description is insufficient to clear them. Moving to a maintained Debian 13
+base and fresh package pins is the next remediation. Raw matches remain retained. Critical Ruby/OS findings and unresolved native coverage still
 block release; no blanket suppression is applied.
 
 Runtime jobs have a 90-minute limit. Individual memory, CPU, process, output and
