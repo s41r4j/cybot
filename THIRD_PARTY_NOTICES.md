@@ -87,6 +87,17 @@ transports and WAFW00F's request engine. Gobuster's quiet-mode patch preserves
 request-error diagnostics; explicit error suppression remains an upstream option.
 The committed patch recipes and dependency locks identify corresponding source.
 
+The web profile also includes CORScanner 0.9.7's MIT-licensed single-target
+library engine and origins data, selected by exact hashes from its pinned PyPI
+wheel. `docker/toolbox/cors.lock.json` records source and dependency inputs.
+The sequential adapter retains the full ten-check list and upstream early-stop
+behavior. Hash-checked changes remove unused gevent/Python-2 compatibility
+imports, disable suffix-list network refresh, verify TLS, disable redirects,
+avoid response-body downloads and propagate transport/HTTP failures. Unused
+CLI concurrency code, build copies and the embedded older egg are not shipped.
+The engine license, modified source, patch records and dependency wheel notices
+are retained under `/opt/cybot/lib/cors` and `/opt/cybot/share/licenses`.
+
 The browser profile uses the official Apache-2.0 agent-browser 0.40.0 static
 Linux release for each architecture, with exact asset checksums and source
 commit `c3880a7de9be3b075c8779e8aaca4b530b7f0e10`. Its upstream license and

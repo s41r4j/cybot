@@ -76,6 +76,12 @@ func (c externalCapability) Definition() schema.CapabilityDefinition {
 	if c.ID() == "container.scan" {
 		d.Documentation.Limitations = append(d.Documentation.Limitations, "Local sources must be Docker-save archive files or OCI image-layout directories; unpack OCI tarballs into a layout before scanning.", "Registry references require reachable registries and any necessary credentials; offline profiles support local archives/layouts.")
 	}
+	if c.ID() == "cors.audit" {
+		d.Stability = "experimental"
+		d.Version = "1.1.0"
+		d.Documentation.Description = "Probe one HTTP(S) target using CORScanner's sequential policy checks and retain structured header candidates."
+		d.Documentation.Limitations = append(d.Documentation.Limitations, "Anonymous GET requests only; stops at the first policy candidate, verifies TLS and does not follow redirects. No browser credential access or data exfiltration is performed.", "Policy candidates remain observations; response sensitivity and exploitability require independent review. Transport failures and HTTP errors never establish a clean assessment.")
+	}
 	return d
 }
 

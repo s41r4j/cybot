@@ -44,9 +44,6 @@ func TestNegativeMessagesAreNotFindings(t *testing.T) {
 	for _, tc := range []struct{ tool, output string }{
 		{"sqlmap", "all tested parameters do not appear to be injectable"},
 		{"sqlmap", "parameter 'id' is not vulnerable"},
-		{"corscanner", "Target is not vulnerable"},
-		{"corscanner", "no CORS misconfigurations were found"},
-		{"corscanner", "connection failed"},
 	} {
 		t.Run(tc.tool+tc.output, func(t *testing.T) {
 			r, err := parseTool(tc.tool, []byte(tc.output), schema.RunRequest{Target: "https://example.test"})
@@ -74,10 +71,6 @@ Parameter: id (GET)
 	r, err := parseSQLMap([]byte(sql), schema.RunRequest{Target: "https://example.test"})
 	if err != nil || len(r.Findings) != 1 {
 		t.Fatalf("positive block: %#v %v", r, err)
-	}
-	cors, err := parseCORS([]byte("Target is not vulnerable\nhttps://example.test is vulnerable"), schema.RunRequest{Target: "https://example.test"})
-	if err != nil || len(cors.Findings) != 1 {
-		t.Fatalf("explicit positive: %#v %v", cors, err)
 	}
 }
 

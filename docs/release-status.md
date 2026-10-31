@@ -67,6 +67,14 @@ created by the offline validation workflow.
 
 ## Expanded operation evidence
 
+The next web-profile integration uses CORScanner 0.9.7's pinned library engine
+for one target at a time. Strict JSON retains CORS header candidates without
+creating vulnerability findings. Verified TLS, no redirects, offline suffix data,
+anonymous sessions and explicit transport/HTTP errors replace keyword parsing.
+Native loopback positive/negative/failure, trusted/untrusted TLS and redirect
+controls pass. Linux container validation remains required before adding this
+tool/capability to the functional checkpoint.
+
 The image audit now also builds source-checked Syft/Grype scanners, exports the
 immutable operation-tested image and inspects installed OS/language packages
 inside network-isolated containers. A separately pinned database is checked for
