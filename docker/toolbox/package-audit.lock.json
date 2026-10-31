@@ -34,7 +34,10 @@
       "corscanner",
       "corscanner-engine",
       "dirsearch",
-      "dirsearch-engine"
+      "dirsearch-engine",
+      "testssl",
+      "testssl-engine",
+      "openssl"
     ],
     "browser": [
       "agent-browser",

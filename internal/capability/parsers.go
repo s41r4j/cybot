@@ -743,45 +743,6 @@ func parseTextLines(data []byte, req schema.RunRequest) (schema.Result, error) {
 	return r, nil
 }
 
-func parseTestSSL(data []byte, req schema.RunRequest) (schema.Result, error) {
-	var doc map[string]any
-	if err := json.Unmarshal(data, &doc); err != nil {
-		return emptyResult(), fmt.Errorf("testssl: %w", err)
-	}
-	if _, ok := doc["scanResult"].([]any); !ok {
-		return emptyResult(), fmt.Errorf("testssl: missing scanResult array")
-	}
-	r := emptyResult()
-	for _, scan := range array(doc["scanResult"]) {
-		if m, ok := scan.(map[string]any); ok {
-			id := text(m["id"])
-			finding := text(m["finding"])
-			severity := text(m["severity"])
-			if id != "" && finding != "" {
-				sev := schema.SeverityInfo
-				switch strings.ToUpper(severity) {
-				case "CRITICAL":
-					sev = schema.SeverityCritical
-				case "HIGH":
-					sev = schema.SeverityHigh
-				case "MEDIUM":
-					sev = schema.SeverityMedium
-				case "LOW":
-					sev = schema.SeverityLow
-				}
-				h := sha256.Sum256([]byte("testssl" + id))
-				r.Findings = append(r.Findings, schema.Finding{
-					ID: hex.EncodeToString(h[:])[:8], Title: id,
-					Description: finding, Severity: sev, Confidence: 0.9,
-				})
-			}
-		}
-	}
-	r.Summary = fmt.Sprintf("TLS audit completed with %d finding(s).", len(r.Findings))
-	r.Confidence = 0.85
-	return r, nil
-}
-
 func parseSQLMap(data []byte, req schema.RunRequest) (schema.Result, error) {
 	// Only a completed parameter block is positive evidence. Words in progress,
 	// negative, and error messages are not findings.

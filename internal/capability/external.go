@@ -64,6 +64,13 @@ func (c externalCapability) Definition() schema.CapabilityDefinition {
 		d.Documentation.Description = "Extract HTTP(S) URL candidates from a bounded local text file using the pinned cybot-urls GF pattern, then deduplicate with Anew."
 		d.Documentation.Limitations = append(d.Documentation.Limitations, "Only the bundled URL pattern is selected; candidates do not establish endpoint reachability or a vulnerability.", "Target must be a regular local text file no larger than 1 MiB.")
 	}
+	if c.ID() == "tls.audit" {
+		d.Stability = "experimental"
+		d.Documentation.Description = "Audit one authorized TLS endpoint using TestSSL 3.2.1. Select full checks or protocol negotiation only."
+		d.Documentation.Arguments = append(d.Documentation.Arguments, schema.Argument{Name: "checks", Type: "string", Required: false, Description: "full (default) or protocols; provide in an input JSON object."})
+		d.Documentation.Limitations = append(d.Documentation.Limitations, "Only the first selected DNS address is tested. Optional cipher-engine/client limitations remain explicit and prevent complete full-scan assurance.", "External revocation services are not contacted. Findings require deployment-context review.")
+		d.InputSchema = jsonRaw(`{"type":"object","additionalProperties":false,"required":["target"],"properties":{"target":{"type":"string","minLength":1},"checks":{"type":"string","enum":["full","protocols"],"default":"full"}}}`)
+	}
 	if c.ID() == "js.extract" {
 		d.Stability = "experimental"
 		d.Documentation.Description = "Extract HTTP(S) endpoint candidates and unresolved relative paths from one bounded local JavaScript file using JSLuice and LinkFinder."
@@ -96,6 +103,9 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 	req.Capability = c.ID()
 	target := strings.TrimSpace(req.Target)
 	if err := validateCapabilityTarget(c.ID(), target); err != nil {
+		return emptyResult(), err
+	}
+	if err := c.ValidateRequest(req); err != nil {
 		return emptyResult(), err
 	}
 	combined := emptyResult()
@@ -328,10 +338,8 @@ func validateCapabilityTarget(id, target string) error {
 	case "web.map", "web.scan", "web.content.discover", "api.audit", "tech.fingerprint", "waf.detect", "dir.bruteforce", "vuln.scan", "sql.inject", "xss.detect", "cors.audit", "cms.detect":
 		return validateBrowserTarget(target)
 	case "tls.audit":
-		if net.ParseIP(target) != nil {
-			return nil
-		}
-		return validateHostname(target)
+		_, _, err := tlsEndpoint(target)
+		return err
 	case "code.audit", "secret.scan", "dependency.scan", "cloud.review", "js.analyse":
 		if _, err := os.Stat(target); err != nil {
 			return fmt.Errorf("target must be an existing local path: %w", err)
@@ -618,8 +626,9 @@ func gobusterArgs(target string, _ schema.RunRequest) []string {
 	base := strings.TrimRight(target, "/")
 	return []string{"dir", "-u", base, "-w", "/opt/cybot/share/seclists/Discovery/Web-Content/common.txt", "--expanded", "--no-color", "--no-progress", "--threads", "2", "--delay", "200ms", "--timeout", "5s", "-q"}
 }
-func testsslArgs(target string, _ schema.RunRequest) []string {
-	return []string{"--jsonfile-pretty", "/dev/stdout", "--quiet", target}
+func testsslArgs(target string, req schema.RunRequest) []string {
+	checks, _ := tlsChecks(req) // ValidateRequest rejects invalid input before execution.
+	return []string{"--target", target, "--checks", checks}
 }
 func niktoArgs(target string, _ schema.RunRequest) []string {
 	return []string{"-h", target, "-Format", "json", "-nointeractive"}

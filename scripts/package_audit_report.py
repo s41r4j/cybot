@@ -110,6 +110,8 @@ def mapped_components(profile, measured, packages, required):
         'supplychain': {},
         'analysis': {'semgrep': [('python','semgrep','1.172.0')]},
         'web': {'wafw00f':[('python','wafw00f','2.4.2')], 'wafw00f-engine':[('python','wafw00f','2.4.2')],
+                'testssl':[('deb','testssl.sh',source_packages.get('testssl.sh'))], 'testssl-engine':[('deb','testssl.sh',source_packages.get('testssl.sh'))],
+                'openssl':[('deb','openssl',source_packages.get('openssl'))],
                 'corscanner':[('python','corscanner','0.9.7')], 'corscanner-engine':[('python','corscanner','0.9.7')],
                 'dirsearch':[('python','dirsearch','0.5.0')], 'dirsearch-engine':[('python','dirsearch','0.5.0')],
                 'ruby':[('deb','ruby3.3',source_packages.get('ruby3.3'))], 'python':[('deb','python3.13',source_packages.get('python3.13'))]},

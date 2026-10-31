@@ -313,15 +313,16 @@
   title: testssl.sh
   description: TLS/SSL protocol and cipher suite testing.
   purpose: Audit TLS configuration, detect weak ciphers, protocol downgrades, and certificate issues.
-  version: 3.2.0
+  version: 3.2.1
   kind: native
-  binary: testssl.sh
+  binary: testssl
+  supported_os: [linux]
   source_url: https://github.com/drwetter/testssl.sh
   license: GPL-2.0
   capabilities: [tls.audit]
-  default_args: [--jsonfile-pretty, /dev/stdout, --quiet]
+  default_args: []
   output_format: json
-  parser: testssl.json.v1
+  parser: cybot.testssl.json.v1
   risk: active-network
   requires_network: true
 - id: nikto

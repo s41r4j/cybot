@@ -66,6 +66,11 @@ def prepare(dest):
     prepare_cors(dest)
     from dirsearch_profile import prepare as prepare_dirsearch
     prepare_dirsearch(dest)
+    tls=dest/'lib/testssl';tls.mkdir()
+    shutil.copyfile(toolbox.ROOT/'docker/toolbox/testssl_wrapper.py',tls/'adapter.py')
+    shutil.copyfile(toolbox.ROOT/'docker/toolbox/testssl_metadata.py',tls/'metadata.py')
+    shutil.copyfile(toolbox.ROOT/'docker/toolbox/testssl.lock.json',tls/'source.lock.json')
+    binary=dest/'bin/testssl';binary.write_text('#!/bin/sh\nset -eu\nexec python3 -B /opt/cybot/lib/testssl/adapter.py "$@"\n');binary.chmod(0o755)
     shutil.copyfile(toolbox.ROOT/'scripts/library_metadata.py',dest/'lib/source_library_metadata.py')
     builds = dest/'share/builds'; builds.mkdir(parents=True, exist_ok=True)
     (builds/'web-source.json').write_text(json.dumps({'source_lock_sha256': hashlib.sha256((toolbox.ROOT/'docker/toolbox/web.lock.json').read_bytes()).hexdigest(), 'patches': patches}, indent=2)+'\n')
@@ -105,13 +110,16 @@ def probe(image):
         'corscanner-engine': ('/opt/cybot/lib/cors/CORScanner/common/corscheck.py', ''),
         'dirsearch': ('/opt/cybot/bin/dirsearch', '--version'),
         'dirsearch-engine': ('/opt/cybot/lib/dirsearch/dirsearch/lib/core/api.py', ''),
+        'testssl': ('/opt/cybot/bin/testssl','--version'),
+        'testssl-engine': ('/usr/bin/testssl','--version'),
+        'openssl': ('/usr/bin/openssl','version'),
         'ruby': ('/usr/bin/ruby', '-e "puts RUBY_VERSION"'),
         'python': ('/usr/bin/python3', '-c "import platform; print(platform.python_version())"'),
     }
     lines = ['set -eu']
     for name, (path, flag) in commands.items():
         command = path+' '+flag
-        if name.endswith('-engine'):
+        if name.endswith('-engine') and name!='testssl-engine':
             command = commands[name.removesuffix('-engine')][0]+' --version'
         lines += [f"printf '\\nCYBOT_HASH {name} '", 'sha256sum '+path,
                   f"printf 'CYBOT_VERSION {name}\\n'", command+' 2>&1', "printf '\\nCYBOT_END\\n'"]
@@ -137,6 +145,9 @@ def probe(image):
               'libraries='+repr(libraries),
               "sources={name:verify(pathlib.Path(row['root']),name,row['version'],row['lock'],row['adapter']) for name,row in libraries.items()}",
               "data['source-metadata-helper']=hashlib.sha256(pathlib.Path('/opt/cybot/lib/source_library_metadata.py').read_bytes()).hexdigest()",
+              "sys.path.insert(0,'/opt/cybot/lib/testssl')",'from metadata import verify as verify_testssl',
+              "data['testssl-files']=verify_testssl(json.loads(pathlib.Path('/opt/cybot/lib/testssl/source.lock.json').read_bytes()))",
+              "for name in ['adapter.py','metadata.py','source.lock.json']:data['testssl-'+name]=hashlib.sha256((pathlib.Path('/opt/cybot/lib/testssl')/name).read_bytes()).hexdigest()",
               'print(json.dumps({"data":data,"packages":packages,"ruby_gems":gems,"python_packages":wheels,"source_libraries":sources}))', 'PY', "printf 'CYBOT_END\\n'"]
     toolbox.STATE.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='probe-', dir=toolbox.STATE) as temp:
@@ -151,6 +162,9 @@ def probe(image):
     if not extra:
         raise RuntimeError('Missing web runtime dependency inventory')
     report = dict(json.loads(extra[1]), binaries={})
+    for target,source in [('adapter.py','testssl_wrapper.py'),('metadata.py','testssl_metadata.py'),('source.lock.json','testssl.lock.json')]:
+        if report['data'].get('testssl-'+target)!=hashlib.sha256((toolbox.ROOT/'docker/toolbox'/source).read_bytes()).hexdigest():
+            raise RuntimeError('TestSSL adapter/source manifest differs from the checked build')
     if report['source_libraries']!={name:row['version'] for name,row in libraries.items()} or report['data']['source-metadata-helper']!=hashlib.sha256((toolbox.ROOT/'scripts/library_metadata.py').read_bytes()).hexdigest():
         raise RuntimeError('Interpreted source metadata differs from its checked library/adapter')
     wheels = dict(lock['wafw00f']['wheels'], **json.loads((toolbox.ROOT/'docker/toolbox/cors.lock.json').read_text())['wheels'])
@@ -164,6 +178,8 @@ def probe(image):
         expected = lock['go_tools'].get(name) or lock.get(name.removesuffix('-engine'), {}).get('version')
         if name in ('corscanner','corscanner-engine'): expected = '0.9.7'
         if name in ('dirsearch','dirsearch-engine'): expected = '0.5.0'
+        if name in ('testssl','testssl-engine'): expected = '3.2.1'
+        if name=='openssl':expected=lock['packages'][toolbox.ARCH]['openssl'].split('-')[0]
         if expected and version[1] != expected: raise RuntimeError('Web runtime version mismatch: '+name)
         report['binaries'][name] = {'path':digest[2], 'sha256':digest[1], 'reported_version':version[1]}
     return report

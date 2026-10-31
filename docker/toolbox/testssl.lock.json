@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "version": "3.2.1",
+  "package": {
+    "name": "testssl.sh",
+    "version": "3.2.1+dfsg-1",
+    "url": "https://deb.debian.org/debian/pool/main/t/testssl.sh/testssl.sh_3.2.1+dfsg-1_all.deb",
+    "size": 846272,
+    "sha256": "c6920c9565820e25db2d991ea8c9db882ea339773b126e47e26d623624a6cbe3"
+  },
+  "runtime_files": [
+    {
+      "path": "/usr/bin/testssl",
+      "sha256": "68077696b3220745851dd061d337531744255c580c4ccec53b12e1f02561c7e0",
+      "size": 1257772
+    },
+    {
+      "path": "/etc/testssl/Apple.pem",
+      "sha256": "2db2490ebe7cef949addd87b7259aa3831affdda17f31daf6686e6a3771f7d03",
+      "size": 234615
+    },
+    {
+      "path": "/etc/testssl/DST Root CA X3.txt",
+      "sha256": "139a5e4a4e0fa505378c72c5f700934ce8333f4e6b1b508886c4b0eb14f4be99",
+      "size": 1200
+    },
+    {
+      "path": "/etc/testssl/Java.pem",
+      "sha256": "48b13b7934e542fd873fddb01a7e0f88cdc20f6a54c70c7d50acf23c82105295",
+      "size": 170495
+    },
+    {
+      "path": "/etc/testssl/Linux.pem",
+      "sha256": "d21b08e596d2ddc24fa66563a1fdf6fb80456b1d5bab1f2efb983d0cd55cca74",
+      "size": 213777
+    },
+    {
+      "path": "/etc/testssl/Microsoft.pem",
+      "sha256": "b2e104face67d028aeab3635beebd88d3cf4c20351b8a8240c57f8e79472c2e2",
+      "size": 837043
+    },
+    {
+      "path": "/etc/testssl/Mozilla.pem",
+      "sha256": "50a6277ec69113f00c5fd45f09e8b97a4b3e32daa35d3a95ab30137a55386cef",
+      "size": 233263
+    },
+    {
+      "path": "/etc/testssl/README.md",
+      "sha256": "7f2411afd384441e8a5b433fd218ab02693e8e9aa625991243c0836487ead287",
+      "size": 4385
+    },
+    {
+      "path": "/etc/testssl/SSLSocketClient.java",
+      "sha256": "7c966961a20b8bd2bd53ca941bda7b32cde235289533230158e87253b6b3a7f3",
+      "size": 3425
+    },
+    {
+      "path": "/etc/testssl/ca_hashes.txt",
+      "sha256": "7238e645585c9beb5ee17f4b7f970330cdd41648f79091a64d3932dad8838b65",
+      "size": 40887
+    },
+    {
+      "path": "/etc/testssl/cipher-mapping.txt",
+      "sha256": "7a5efe10907d68de2c4c9ac29e9944817fa647e6c4e5673e16ec9cf20b54d944",
+      "size": 71389
+    },
+    {
+      "path": "/etc/testssl/client-simulation.txt",
+      "sha256": "d80415728b267a1ca91d996f94d024847611dac24f8f6bb064c1b70d976d2dd9",
+      "size": 299435
+    },
+    {
+      "path": "/etc/testssl/client-simulation.wiresharked.md",
+      "sha256": "543eb79a1344276b57f20ecf2f5f0063cd817289845accd1561017b486dbf779",
+      "size": 3824
+    },
+    {
+      "path": "/etc/testssl/client-simulation.wiresharked.txt",
+      "sha256": "3ab9b97091173e17ee5c57ec360655f2e327164299145947d2e9129fd7d03bd9",
+      "size": 113832
+    },
+    {
+      "path": "/etc/testssl/common-primes.txt",
+      "sha256": "b8463ee06af11c3934cfdb6766a646b98db01779ee93161317ee98417066f305",
+      "size": 52655
+    },
+    {
+      "path": "/etc/testssl/curves-mapping.txt",
+      "sha256": "448fbc8ff0e20af3eeae5e0702895b89affdba4b1aa324b1b460eaeb3c2ca476",
+      "size": 2394
+    },
+    {
+      "path": "/etc/testssl/curves.txt",
+      "sha256": "4119b7a279d68b98397479b157517920dbda2f2cbf5b85762208210071349fc6",
+      "size": 688
+    },
+    {
+      "path": "/etc/testssl/openssl.cnf",
+      "sha256": "1f877b6a065b7f0147e3d0fcb5c93383cb3f1082bb5bfb4934f49385e898bc2c",
+      "size": 10771
+    },
+    {
+      "path": "/etc/testssl/tls_data.txt",
+      "sha256": "631112806887978e524f4ce9d2c2e41c393ab5973347fa8e5ca0b5e2a0e3cd83",
+      "size": 78196
+    }
+  ]
+}
