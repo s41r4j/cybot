@@ -102,7 +102,11 @@ def audit(image, measured, work, govulncheck, output):
     def scan(subject, name, image_id):
         sbom_path = '/validation/package-data/'+name+'-sbom.json'
         result_path = '/validation/package-data/'+name+'-matches.json'
-        run(['/validation/tools/syft','--config','/validation/package-config.yaml','docker-archive:'+subject,'--scope','squashed','-o','syft-json='+sbom_path],name+'-catalog.txt')
+        # Docker-save layers are temporary files too. The ordinary 64 MiB
+        # report limit would reject legitimate Chromium/Go layers before scan.
+        # The immutable archive/image bounds and monitored total-disk reserve
+        # remain enforced; parsed scanner reports are still capped at 64 MiB.
+        run(['/validation/tools/syft','--config','/validation/package-config.yaml','docker-archive:'+subject,'--scope','squashed','-o','syft-json='+sbom_path],name+'-catalog.txt',file_limit=4*toolbox.GB)
         run(['/validation/tools/grype','--config','/validation/package-config.yaml','sbom:'+sbom_path,'-o','json','--file',result_path],name+'-scan.txt')
         sbom, matches = read_json(data/(name+'-sbom.json')),read_json(data/(name+'-matches.json'))
         packages,_,_,_ = inventory(sbom,image_id,toolbox.ARCH)
