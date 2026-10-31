@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --uid 10001 --shell /bin/sh cybot \
     && mkdir -p /workspace/.cybot /data /reports /home/cybot/.cache /home/cybot/.config \
-    && chown -R 10001:10001 /workspace /data /reports /home/cybot
+    && chown -R 10001:10001 /workspace /data /reports /home/cybot \
+    && chmod 0755 /home/cybot
 COPY bin/ /opt/cybot/bin/
 COPY share/ /opt/cybot/share/
 COPY rules/ /opt/cybot/rules/
