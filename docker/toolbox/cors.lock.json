@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "version": "0.9.7",
+  "engine": {
+    "url": "https://files.pythonhosted.org/packages/79/9d/c85bd6b978dab87e072d39348b0d98d5f16bd3494dc76ef2286d5d78e00a/corscanner-0.9.7-py3-none-any.whl",
+    "size": 2280015,
+    "sha256": "40fbe2cd67696b4896a18eb8b6c7a049e7846c4836a818037fe62b19f41c1917"
+  },
+  "files": {
+    "CORScanner/common/corscheck.py": "2698deadfe652199a342454d1c3c688294cba6e83746ee3e43e2dfd6d73eb986",
+    "CORScanner/origins.json": "29e3975a3fc569965e427f7a9efa7f82054061c09a401eef4d5eda11fd06ebc9",
+    "CORScanner/LICENSE": "3d6f2416a4011d19e18037a2f643de38f01506387c3f8e2786b2609a1f3a3aec"
+  },
+  "patches": {
+    "CORScanner/common/corscheck.py": {
+      "sha256": "2698deadfe652199a342454d1c3c688294cba6e83746ee3e43e2dfd6d73eb986",
+      "replacements": [
+        [
+          "import gevent.monkey\ngevent.monkey.patch_all()",
+          ""
+        ],
+        [
+          "from future.utils import iteritems",
+          ""
+        ],
+        [
+          "iteritems(resp.headers)",
+          "resp.headers.items()"
+        ],
+        [
+          "import requests, json, os, inspect, tldextract",
+          "import requests, json, os, inspect, tldextract\n_extract = tldextract.TLDExtract(suffix_list_urls=(), cache_dir=None)"
+        ],
+        [
+          "tldextract.extract(",
+          "_extract(",
+          6
+        ],
+        [
+          ".registered_domain",
+          ".top_domain_under_public_suffix",
+          6
+        ],
+        [
+          "        self.cfg = cfg",
+          "        self.cfg = cfg\n        self.result = {}\n        self.request_count = 0\n        self.status_codes = []\n        self.session = requests.Session()\n        self.session.trust_env = False\n        self.session.verify = cfg.get(\"ca_file\", True)"
+        ],
+        [
+          "            resp = requests.get(self.url, timeout=5, headers=headers, verify=False, allow_redirects=True)",
+          "            resp = self.session.get(self.url, timeout=5, headers=headers, verify=self.session.verify, allow_redirects=False, stream=True)\n            self.request_count += 1\n            self.status_codes.append(resp.status_code)\n            resp.close()\n            if resp.status_code >= 400:\n                raise RuntimeError(\"CORS target returned an HTTP error\")"
+        ],
+        [
+          "        except Exception as e:\n            resp = None",
+          "        except Exception:\n            raise"
+        ]
+      ]
+    }
+  },
+  "wheels": {
+    "tldextract": {
+      "version": "5.4.0",
+      "url": "https://files.pythonhosted.org/packages/b8/e0/d5760e222a7e3f3aec7ef59f6dff952af27d09ec168bcca50751d9698151/tldextract-5.4.0-py3-none-any.whl",
+      "size": 107482,
+      "sha256": "7f02aed30bd3b6ad5717192eb859a39b20aafc7caf3917d9cf6cb00a58efb34f"
+    },
+    "filelock": {
+      "version": "4.2.5",
+      "url": "https://files.pythonhosted.org/packages/14/2d/2cf36eca330b7a97c0e9076e8fc4272127c29398fa2bb7b24d4321b8b476/filelock-4.2.5-py3-none-any.whl",
+      "size": 163877,
+      "sha256": "46ce42d27e5cdde09ee7197349663e97cb106679bd9e75db3a09679fbc7aa1a8"
+    },
+    "requests-file": {
+      "version": "3.0.1",
+      "url": "https://files.pythonhosted.org/packages/e1/d5/de8f089119205a09da657ed4784c584ede8381a0ce6821212a6d4ca47054/requests_file-3.0.1-py2.py3-none-any.whl",
+      "size": 4514,
+      "sha256": "d0f5eb94353986d998f80ac63c7f146a307728be051d4d1cd390dbdb59c10fa2"
+    }
+  }
+}

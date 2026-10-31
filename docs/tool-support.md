@@ -18,7 +18,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `cloud_enum` | adapter | undeclared | cloud.enum |
 | `cloudfox` | adapter | undeclared | **no executable mapping** |
 | `cmseek` | adapter | undeclared | cms.detect |
-| `corscanner` | adapter | undeclared | cors.audit |
+| `corscanner` | adapter | linux | cors.audit |
 | `covenant` | not-implemented | windows | c2.covenant |
 | `crackmapexec` | adapter | undeclared | smb.test |
 | `dirsearch` | adapter | undeclared | **no executable mapping** |

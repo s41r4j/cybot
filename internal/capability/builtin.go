@@ -132,7 +132,7 @@ func RegisterBuiltins(r *Registry) error {
 		external("vuln.scan", "Vulnerability Scan", "offensive-assessment", []string{"nuclei", "nikto"}, []string{"report.generate", "sql.inject", "xss.detect"}, toolStep{ID: "nuclei", Args: nucleiArgs}, toolStep{ID: "nikto", Args: niktoArgs}),
 		external("sql.inject", "SQL Injection Test", "offensive-assessment", []string{"sqlmap"}, []string{"report.generate"}, toolStep{ID: "sqlmap", Args: sqlmapArgs}),
 		external("dns.enum", "DNS Enumeration", "offensive-recon", []string{"subfinder", "amass", "massdns", "dnsrecon"}, []string{"dns.analyse", "service.enumerate", "port.scan"}, toolStep{ID: "subfinder", Args: subfinderArgs}, toolStep{ID: "amass"}, toolStep{ID: "dnsrecon", Args: dnsreconArgs}),
-		external("cors.audit", "CORS Audit", "web-security", []string{"corscanner"}, []string{"web.scan", "report.generate"}, toolStep{ID: "corscanner", Args: corscannerArgs}),
+		external("cors.audit", "CORS Audit", "web-security", []string{"corscanner"}, []string{"web.scan", "report.generate"}, toolStep{ID: "corscanner", Args: corscannerArgs, Required: true}),
 		external("cloud.enum", "Cloud Enumeration", "offensive-recon", []string{"cloud_enum"}, []string{"cloud.review", "asset.discover"}, toolStep{ID: "cloud_enum", Args: cloudEnumArgs}),
 		external("cms.detect", "CMS Detection", "offensive-recon", []string{"cmseek", "whatweb", "wpscan"}, []string{"tech.fingerprint", "vuln.scan"}, toolStep{ID: "cmseek", Args: cmseekArgs}, toolStep{ID: "wpscan", Args: wpscanArgs}),
 		external("xss.detect", "XSS Detection", "offensive-assessment", []string{"xsstrike"}, []string{"report.generate"}, toolStep{ID: "xsstrike", Args: xsstrikeArgs}),

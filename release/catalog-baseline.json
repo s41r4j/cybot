@@ -246,7 +246,9 @@
         "wafw00f",
         "wafw00f-engine",
         "ruby",
-        "python"
+        "python",
+        "corscanner",
+        "corscanner-engine"
       ],
       "browser": [
         "agent-browser",

@@ -873,31 +873,6 @@ func appendJavaScriptCandidate(r *schema.Result, value, method string) error {
 	return nil
 }
 
-func parseCORS(data []byte, req schema.RunRequest) (schema.Result, error) {
-	// Never infer a clean result or a vulnerability from a keyword alone.
-	r := emptyResult()
-	negative := regexp.MustCompile(`(?i)\b(?:not vulnerable|not misconfigured|no (?:cors )?(?:vulnerabilities|misconfigurations)(?: were)? (?:found|detected))\b`)
-	positive := regexp.MustCompile(`(?i)^\s*(?:https?://\S+|target)\s+is\s+(?:potentially\s+)?(?:vulnerable|misconfigured)\b`)
-	sawNegative, sawPositive := false, false
-	for _, line := range strings.Split(string(data), "\n") {
-		if negative.MatchString(line) {
-			sawNegative = true
-			continue
-		}
-		if positive.MatchString(line) {
-			sawPositive = true
-		}
-	}
-	if sawPositive {
-		r.Findings = append(r.Findings, finding("corscanner", req.Target, "Potential CORS misconfiguration", "The scanner explicitly reported a potentially vulnerable target; verify the response headers and credential behavior.", "medium", .7))
-	} else if !sawNegative {
-		return parseTextLines(data, req)
-	}
-	r.Summary = fmt.Sprintf("CORS report contains %d potential finding(s).", len(r.Findings))
-	r.Confidence = .7
-	return r, nil
-}
-
 func parseWPScan(data []byte, req schema.RunRequest) (schema.Result, error) {
 	var root map[string]any
 	if err := json.Unmarshal(data, &root); err != nil {

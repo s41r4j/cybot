@@ -101,7 +101,7 @@ func TestLiveWebVerifiedTLS(t *testing.T) {
 	if err := os.WriteFile(ca, pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: server.Certificate().Raw}), 0600); err != nil {
 		t.Fatal(err)
 	}
-	for _, id := range []string{"tech.fingerprint", "waf.detect"} {
+	for _, id := range []string{"tech.fingerprint", "waf.detect", "cors.audit"} {
 		t.Run(id, func(t *testing.T) {
 			c := liveCapability(t, id)
 			// HTTPx is independently tested; this control covers the two patched engines.
@@ -130,7 +130,7 @@ func TestLiveWebDoesNotFollowRedirects(t *testing.T) {
 	defer destination.Close()
 	redirect := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { http.Redirect(w, r, destination.URL, http.StatusFound) }))
 	defer redirect.Close()
-	for _, id := range []string{"tech.fingerprint", "waf.detect"} {
+	for _, id := range []string{"tech.fingerprint", "waf.detect", "cors.audit"} {
 		c := liveCapability(t, id)
 		c.steps = c.steps[:1]
 		r, err := c.Run(context.Background(), liveRequest(redirect.URL), d)
