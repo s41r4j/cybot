@@ -1,4 +1,4 @@
-# Release status — 2026-10-30
+# Release status — 2026-10-31
 
 CYBOT is public source in active development. A stable release covering the
 entire catalog is **not yet certified**. The release requirement includes every
@@ -10,7 +10,7 @@ increase a percentage.
 | Area | Source changes | Remaining release evidence |
 | --- | --- | --- |
 | 1. Scope binding | Browser actions require explicit approval even under advisory policy; sessions are anonymous, isolated and restricted to the requested hostname. Remote approval cannot invoke local/interface operations. Explicit local://HOSTNAME and interface://INTERFACE targets require approval. Policy preserves resource kind; unimplemented operations fail explicitly. | Real compatible runtime/lab evidence for every specialist adapter; service-start/status commands are not accepted as complete operations. |
-| 2. Scanner errors | Tool diagnostics are preserved; zero-file Semgrep/Gosec reports and targetless Trivy reports are partial. Partial scans retain genuine findings. | Full positive/negative/failure fixture coverage for each installed scanner version. |
+| 2. Scanner errors | Failed scanners retain parser-validated matches and redacted evidence, explicitly marked incomplete. Truncated JSONL recovery stops at the first invalid record; failed or skipped stages cannot feed downstream input. A real Nuclei cancellation control preserves its earlier match. Failures never promote unknown confidence to 100%. Zero-file Semgrep/Gosec and targetless Trivy reports are partial. | Fresh Linux validation of the latest recovery changes, plus full positive/negative/failure fixtures for each installed scanner version. |
 | 3. Heuristic findings | URL classification returns investigation candidates and never creates vulnerability findings. Finding review requires explicit operator assertions and hash-verified stored evidence; prose alone stays UNVERIFIED. | Independent review remains necessary; operator assertions do not prove exploitability. |
 | 4. Toolchain | Go 1.26.10 pinned; source scan and all measured Go executable/source-identity audits pass on both Linux architectures. | Complete OS/native-component artifact audits and release provenance. |
 | 5. Distribution | Public repository and website, release gate, immutable image pull/validation, local pins, and verified core image backup/restore on both Linux architectures. | Successful publishing pipeline, clean-machine installation and compatible image evidence. No completed stable release is claimed. |
@@ -73,8 +73,13 @@ inside network-isolated containers. A separately pinned database is checked for
 age and integrity. Real synthetic image controls cover affected OpenSSL/Lodash
 versions, an empty-match fixture and a malformed archive. Findings, suppressed
 matches, unlisted Go executables, Cgo dependencies and unmapped standalone
-components prevent a clean result. These package checks are undergoing their
-first Linux pipeline validation; they do not clear the existing release block.
+components prevent a clean result. The first Linux run passed affected-package
+and empty-match controls, but archive-error diagnostics were written to stderr
+and were not captured; the gate correctly stayed blocked. The capture is now
+fixed, and resource/time-limit failures cannot satisfy the invalid-input control.
+Supply-chain jobs also reached the former 45-minute job limit; jobs now have a
+90-minute cap while individual command/resource bounds remain enforced. Fresh
+Linux validation is required; these changes do not clear the release block.
 
 
 The optional `browser` profile pins the official agent-browser 0.40.0 Linux
