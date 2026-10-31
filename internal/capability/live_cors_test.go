@@ -5,8 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"sync/atomic"
 	"testing"
+	"time"
 )
 
 func TestLiveWebCORS(t *testing.T) {
@@ -52,4 +55,42 @@ func TestLiveWebCORS(t *testing.T) {
 		passedCase("negative", "Full sequential check list against a neutral reachable server produces no policy candidate or vulnerability."),
 		passedCase("failure", "Closed target and HTTP 500 cannot produce a complete negative assessment."),
 	})
+}
+
+func TestLiveWebCORSAnonymousHeadersOnly(t *testing.T) {
+	d := liveWebDeps(t)
+	var proxyRequests, authHeaders atomic.Int64
+	proxy := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		proxyRequests.Add(1)
+		http.Error(w, "unexpected proxy use", 502)
+	}))
+	defer proxy.Close()
+	t.Setenv("HTTP_PROXY", proxy.URL)
+	t.Setenv("HTTPS_PROXY", proxy.URL)
+	t.Setenv("ALL_PROXY", proxy.URL)
+	t.Setenv("NO_PROXY", "")
+	netrc := filepath.Join(t.TempDir(), "netrc")
+	if err := os.WriteFile(netrc, []byte("machine 127.0.0.1 login fixture-user password fixture-value\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("NETRC", netrc)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("Authorization") != "" {
+			authHeaders.Add(1)
+		}
+		w.Header().Set("Access-Control-Allow-Origin", r.Header.Get("Origin"))
+		w.Header().Set("Content-Length", "1048576")
+		w.WriteHeader(200)
+		w.(http.Flusher).Flush()
+		// A header-only engine closes the response without waiting for a body.
+		select {
+		case <-r.Context().Done():
+		case <-time.After(10 * time.Second):
+		}
+	}))
+	defer server.Close()
+	r, err := liveCapability(t, "cors.audit").Run(context.Background(), liveRequest(server.URL), d)
+	if err != nil || len(r.Errors) != 0 || !hasTechnology(r, "CORS candidate: reflect_origin") || proxyRequests.Load() != 0 || authHeaders.Load() != 0 {
+		t.Fatalf("anonymous/header-only boundary failed: %+v %v proxy=%d auth=%d", r, err, proxyRequests.Load(), authHeaders.Load())
+	}
 }
