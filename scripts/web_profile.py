@@ -64,6 +64,8 @@ def prepare(dest):
     patches['wafw00f'] = patch_source(python, lock['wafw00f']['patches'])
     from cors_profile import prepare as prepare_cors
     prepare_cors(dest)
+    from dirsearch_profile import prepare as prepare_dirsearch
+    prepare_dirsearch(dest)
     builds = dest/'share/builds'; builds.mkdir(parents=True, exist_ok=True)
     (builds/'web-source.json').write_text(json.dumps({'source_lock_sha256': hashlib.sha256((toolbox.ROOT/'docker/toolbox/web.lock.json').read_bytes()).hexdigest(), 'patches': patches}, indent=2)+'\n')
     for name, command in {
@@ -100,6 +102,8 @@ def probe(image):
         'wafw00f-engine': ('/opt/cybot/lib/python/wafw00f/main.py', ''),
         'corscanner': ('/opt/cybot/bin/corscanner', '--version'),
         'corscanner-engine': ('/opt/cybot/lib/cors/CORScanner/common/corscheck.py', ''),
+        'dirsearch': ('/opt/cybot/bin/dirsearch', '--version'),
+        'dirsearch-engine': ('/opt/cybot/lib/dirsearch/dirsearch/lib/core/api.py', ''),
         'ruby': ('/usr/bin/ruby', '-e "puts RUBY_VERSION"'),
         'python': ('/usr/bin/python3', '-c "import platform; print(platform.python_version())"'),
     }
@@ -115,7 +119,7 @@ def probe(image):
     # Inventory full interpreted source/dependencies, not only tiny launchers.
     lines += ["printf 'CYBOT_WEB_DATA\\n'", "python3 -B - <<'PY'", 'import hashlib,json,pathlib,importlib.metadata,subprocess',
               'data={}',
-              "for name, directory in {'whatweb-source':'/opt/cybot/lib/whatweb','ruby-gems':'/opt/cybot/lib/gems','python-wheels':'/opt/cybot/lib/python','cors-source':'/opt/cybot/lib/cors'}.items():",
+              "for name, directory in {'whatweb-source':'/opt/cybot/lib/whatweb','ruby-gems':'/opt/cybot/lib/gems','python-wheels':'/opt/cybot/lib/python','cors-source':'/opt/cybot/lib/cors','dirsearch-source':'/opt/cybot/lib/dirsearch'}.items():",
               ' digest=hashlib.sha256()', ' for path in sorted(pathlib.Path(directory).rglob("*")):',
               '  if path.is_symlink(): raise RuntimeError("Unexpected runtime dependency symlink")',
               '  if path.is_file(): digest.update(str(path.relative_to(directory)).encode()+b"\\0"+hashlib.sha256(path.read_bytes()).digest())',
@@ -148,6 +152,7 @@ def probe(image):
         if not digest or not version: raise RuntimeError('Incomplete web runtime measurement: '+name+'\n'+text[-4000:])
         expected = lock['go_tools'].get(name) or lock.get(name.removesuffix('-engine'), {}).get('version')
         if name in ('corscanner','corscanner-engine'): expected = '0.9.7'
+        if name in ('dirsearch','dirsearch-engine'): expected = '0.5.0'
         if expected and version[1] != expected: raise RuntimeError('Web runtime version mismatch: '+name)
         report['binaries'][name] = {'path':digest[2], 'sha256':digest[1], 'reported_version':version[1]}
     return report

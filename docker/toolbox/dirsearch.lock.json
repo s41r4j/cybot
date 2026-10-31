@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "version": "0.5.0",
+  "source": {
+    "commit": "b08e8b42efb822bf0b4bda87bd00cb04e6116a2d",
+    "url": "https://codeload.github.com/maurosoria/dirsearch/tar.gz/b08e8b42efb822bf0b4bda87bd00cb04e6116a2d",
+    "size": 372873,
+    "sha256": "e635f2f4563d7a9d3d04d9738f0cdc2e2238dc3d2b6560b8367059550ed438ad"
+  },
+  "files": [
+    {
+      "path": "__init__.py",
+      "sha256": "d1725c368e33811d264c2946eda8654f4084d1aa470bca38b91910f541603fef"
+    },
+    {
+      "path": "lib/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "lib/core/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "lib/core/api.py",
+      "sha256": "3b7317bb5388e123020d4bcdb711354bbc083a65d509a7815aeaad65fed90f77"
+    },
+    {
+      "path": "lib/core/data.py",
+      "sha256": "969f928c9a496510b65ed90f8361c8c20e1df393dc5c46f59d0632be16de7ba8"
+    },
+    {
+      "path": "lib/core/exceptions.py",
+      "sha256": "4d1d9d90d28579dec9572baff4020fc83e4d70a2e7e2c2c984e5dba3789d9e06"
+    },
+    {
+      "path": "lib/core/logger.py",
+      "sha256": "3fbb7ed89045ccc392b206ec28ae5434e7a7848b2d0415cad450872331a03edd"
+    },
+    {
+      "path": "lib/core/settings.py",
+      "sha256": "66d1b11d7a984e932b85e49b78256b77fbb1c8d6bc11adc7c26e0178ef473a04"
+    },
+    {
+      "path": "lib/core/structures.py",
+      "sha256": "425d8d5fd509a53bb4c2561e8432fd3c93ce415dee5fa00039a9a24ac0daabcd"
+    },
+    {
+      "path": "lib/core/wordlist_template.py",
+      "sha256": "100b017cf1e28f441cdbd5c91d08af1fb4fd4d26db26f8540faf0c5299a74a6a"
+    },
+    {
+      "path": "lib/parse/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "lib/parse/headers.py",
+      "sha256": "2b1cf4d90da8495910e643e5cd90e0eacc618ec32c8333eb6b6105afcea4c4f5"
+    },
+    {
+      "path": "lib/parse/rawrequest.py",
+      "sha256": "a9ad7d1e608d9c5829efcdc3a0421da700d69e8cf5d78803ca5d5b048b0ab006"
+    },
+    {
+      "path": "lib/parse/url.py",
+      "sha256": "80dd76a794fa56d270c08f2d414aecc7d3589a8692ef118490c8f9e2baacc948"
+    },
+    {
+      "path": "lib/utils/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "lib/utils/common.py",
+      "sha256": "9b4ed4e42cb33587a95ae34feb41248d880807e17e6885ab210a98f6b1fb5673"
+    },
+    {
+      "path": "lib/utils/file.py",
+      "sha256": "230d37e2af066fe20c50fc094c8ec4ab89df386d6b4acae014391588e1ba0ed9"
+    },
+    {
+      "path": "README.md",
+      "sha256": "25e620492d0b832d129f8a34738589e3f9cbdaa490d432d9ae410bc0dab1574d"
+    }
+  ],
+  "interface": "sequential Python library API; standard requests transport, no CLI backend",
+  "notice": {
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/b8d6af45ad2fcfed61bb85a8ad068aa4a77eadf9/text/GPL-2.0-only.txt",
+    "size": 17337,
+    "sha256": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3"
+  }
+}

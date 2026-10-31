@@ -73,6 +73,10 @@ func (c externalCapability) Definition() schema.CapabilityDefinition {
 		d.Stability = "experimental"
 		d.Documentation.Limitations = append(d.Documentation.Limitations, "Technology and WAF matches are signature candidates; content-discovery responses do not establish a vulnerability.", "The profile's patched WhatWeb and WAFW00F engines verify TLS certificates. These web adapters do not follow redirects; unsupported certificates fail explicitly.")
 	}
+	if c.ID() == "dir.bruteforce" {
+		d.Version = "1.1.0"
+		d.Documentation.Limitations = append(d.Documentation.Limitations, "The Dirsearch adapter uses its sequential Python library API with anonymous GET requests, a bounded wordlist, no redirects, verified TLS, a 1 MiB response limit and streamed progress. CLI recursion, authenticated scans, native backends and session resumption are not exposed.", "A missing completion marker or transport failure leaves the scan incomplete; earlier valid responses are retained. Matches are observed HTTP responses and may include wildcard/soft-404 pages.")
+	}
 	if c.ID() == "container.scan" {
 		d.Documentation.Limitations = append(d.Documentation.Limitations, "Local sources must be Docker-save archive files or OCI image-layout directories; unpack OCI tarballs into a layout before scanning.", "Registry references require reachable registries and any necessary credentials; offline profiles support local archives/layouts.")
 	}
@@ -153,7 +157,7 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 			combined.Status = "partial"
 			previous, havePrevious = nil, false
 			if normalized, retained, ok := recoverFailedOutput(step.ID, out.Stdout, req); ok {
-				if err := retainToolOutput(&combined, normalized, retained, out.Stdout, step.ID, tool, req, d, true); err != nil {
+				if err := retainToolOutput(&combined, normalized, retained, out.Stdout, step.ID, tool, req, d, "execution"); err != nil {
 					return combined, fmt.Errorf("retain incomplete %s output: %w", step.ID, err)
 				}
 			}
@@ -174,6 +178,17 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 		normalized, parseErr := parseTool(step.ID, out.Stdout, req)
 		if parseErr != nil {
 			combined.Errors = append(combined.Errors, schema.RunError{Tool: step.ID, Code: "OUTPUT_CONTRACT_FAILED", Message: parseErr.Error(), Retryable: false})
+			combined.Status = "partial"
+			if recovered, retained, ok := recoverFailedOutput(step.ID, out.Stdout, req); ok {
+				if err := retainToolOutput(&combined, recovered, retained, out.Stdout, step.ID, tool, req, d, "normalization"); err != nil {
+					return combined, err
+				}
+			}
+			combined.Summary = incompleteSummary(c.ID(), combined, completed)
+			combined.Confidence = 0
+			if len(combined.Findings) > 0 {
+				combined.Confidence = resultConfidence(combined)
+			}
 			if step.Required {
 				return combined, fmt.Errorf("normalize %s output: %w", step.ID, parseErr)
 			}
@@ -183,7 +198,7 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 			normalized.Status = "partial"
 			normalized.Errors = append(normalized.Errors, schema.RunError{Tool: step.ID, Code: "TOOL_REPORTED_ERRORS", Message: "Gobuster reported request errors; retained matched responses are incomplete."})
 		}
-		if err := retainToolOutput(&combined, normalized, out.Stdout, out.Stdout, step.ID, tool, req, d, false); err != nil {
+		if err := retainToolOutput(&combined, normalized, out.Stdout, out.Stdout, step.ID, tool, req, d, ""); err != nil {
 			return combined, err
 		}
 		combined.Decisions = append(combined.Decisions, schema.Decision{Stage: "tool-selection", Selected: step.ID, Reason: "Configured adapter completed; evidence records its declared version.", Skipped: []schema.SkippedOption{}})
@@ -613,7 +628,7 @@ func sqlmapArgs(target string, _ schema.RunRequest) []string {
 	return []string{"-u", target, "--batch", "--random-agent", "--level", "1", "--risk", "1"}
 }
 func dirsearchArgs(target string, _ schema.RunRequest) []string {
-	return []string{"-u", target, "--format", "json", "-q"}
+	return []string{"-u", target, "-w", "/opt/cybot/share/seclists/Discovery/Web-Content/common.txt"}
 }
 func xsstrikeArgs(target string, _ schema.RunRequest) []string {
 	return []string{"-u", target, "--crawl", "--blind"}

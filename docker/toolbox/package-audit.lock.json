@@ -32,7 +32,9 @@
       "ruby",
       "python",
       "corscanner",
-      "corscanner-engine"
+      "corscanner-engine",
+      "dirsearch",
+      "dirsearch-engine"
     ],
     "browser": [
       "agent-browser",

@@ -263,18 +263,19 @@
     },
     {
       "id": "dirsearch",
-      "version": "0.4.3",
-      "platforms": [],
-      "normalization": "observations-only",
+      "version": "0.5.0",
+      "platforms": [
+        "linux"
+      ],
+      "normalization": "tool-specific",
       "implementation": "adapter",
       "resource_scope": "target",
-      "capabilities": [],
+      "capabilities": [
+        "dir.bruteforce"
+      ],
       "validation": "not-certified",
       "blockers": [
-        "pinned binary/version and fresh real-operation evidence are required",
-        "supported operating systems have not been explicitly declared",
-        "catalog tool has no executable capability mapping",
-        "operation-specific normalization is unverified"
+        "pinned binary/version and fresh real-operation evidence are required"
       ]
     },
     {
@@ -1736,6 +1737,7 @@
       "id": "dir.bruteforce",
       "implementation": "adapter",
       "tools": [
+        "dirsearch",
         "ffuf",
         "gobuster"
       ],

@@ -75,6 +75,15 @@ Native loopback positive/negative/failure, trusted/untrusted TLS and redirect
 controls pass. Linux container validation remains required before adding this
 tool/capability to the functional checkpoint.
 
+Dirsearch 0.5.0 is now mapped to `dir.bruteforce` alongside Gobuster and FFUF.
+The upstream sequential API emits structured progress through the CYBOT wrapper;
+no completion marker means incomplete coverage. Earlier HTTP matches survive
+request errors and malformed-output failures. The adapter enforces the target
+origin/base path, verified TLS, no redirects, a 1 MiB response bound and a bounded
+wordlist. CLI recursion/authentication/native backends are not exposed. Native
+positive/negative/failure and boundary controls pass for all three engines;
+Linux container certification remains pending. The 84/71 baseline is unchanged.
+
 The image audit now also builds source-checked Syft/Grype scanners, exports the
 immutable operation-tested image and inspects installed OS/language packages
 inside network-isolated containers. A separately pinned database is checked for

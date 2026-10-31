@@ -110,11 +110,23 @@ func TestRecoveredSecretOutputIsRedacted(t *testing.T) {
 		t.Fatal("valid secret match lost", r)
 	}
 	combined := emptyResult()
-	if err := retainToolOutput(&combined, r, retained, output, "trufflehog", schema.Tool{Version: "fixture"}, liveRequest(t.TempDir()), Dependencies{Evidence: evidence.New(t.TempDir())}, true); err != nil {
+	if err := retainToolOutput(&combined, r, retained, output, "trufflehog", schema.Tool{Version: "fixture"}, liveRequest(t.TempDir()), Dependencies{Evidence: evidence.New(t.TempDir())}, "execution"); err != nil {
 		t.Fatal(err)
 	}
 	stored, err := os.ReadFile(combined.Evidence[0].Path)
 	if err != nil || strings.Contains(string(stored), secret) || strings.Contains(string(stored), "incomplete-secret") {
 		t.Fatalf("unredacted partial evidence: %s %v", stored, err)
+	}
+}
+
+func TestZeroExitMalformedTailRetainsEarlierFindingAsIncomplete(t *testing.T) {
+	tools := registry.NewTools()
+	if err := tools.Register(schema.Tool{ID: "nuclei", Kind: "native", Binary: "nuclei", Version: "fixture"}); err != nil {
+		t.Fatal(err)
+	}
+	runner := &fixtureRunner{outputs: map[string][]byte{"nuclei": []byte(partialNucleiMatch + "\n" + `{"template-id":"truncated`)}}
+	r, err := liveCapability(t, "web.scan").Run(context.Background(), liveRequest("http://fixture.invalid"), Dependencies{Tools: tools, Runner: runner, Evidence: evidence.New(t.TempDir())})
+	if err == nil || r.Status != "partial" || len(r.Errors) != 1 || r.Errors[0].Code != "OUTPUT_CONTRACT_FAILED" || len(r.Findings) != 1 || len(r.Evidence) != 1 || r.Evidence[0].Metadata["execution_status"] != "completed" || r.Evidence[0].Metadata["failure_stage"] != "normalization" {
+		t.Fatalf("normalization failure lost match or became clean: %+v %v", r, err)
 	}
 }

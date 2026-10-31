@@ -21,7 +21,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `corscanner` | adapter | linux | cors.audit |
 | `covenant` | not-implemented | windows | c2.covenant |
 | `crackmapexec` | adapter | undeclared | smb.test |
-| `dirsearch` | adapter | undeclared | **no executable mapping** |
+| `dirsearch` | adapter | linux | dir.bruteforce |
 | `dnschef` | not-implemented | undeclared | c2.setup |
 | `dnsrecon` | adapter | undeclared | dns.enum |
 | `dnsx` | adapter | linux | dns.analyse |
@@ -116,7 +116,7 @@ Generated from the executable command surface. All entries remain in the full-re
 | `credential.harvest` | adapter | evilginx, pcredz |
 | `cve.lookup` | built-in | built-in |
 | `dependency.scan` | adapter | grype, trivy |
-| `dir.bruteforce` | adapter | ffuf, gobuster |
+| `dir.bruteforce` | adapter | dirsearch, ffuf, gobuster |
 | `dns.analyse` | adapter | dnsx |
 | `dns.enum` | partial | amass, dnsrecon, subfinder |
 | `email.harvest` | adapter | theharvester |

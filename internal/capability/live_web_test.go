@@ -160,15 +160,18 @@ func TestLiveWebDirectoryDiscovery(t *testing.T) {
 	c.steps[1].Args = func(target string, r schema.RunRequest) []string {
 		return replaceArgument(ffufArgs(target, r), "-w", words)
 	}
+	c.steps[2].Args = func(target string, r schema.RunRequest) []string {
+		return replaceArgument(dirsearchArgs(target, r), "-w", words)
+	}
 	write("admin\nmissing-fixture\n")
 	r, err := c.Run(context.Background(), liveRequest(server.URL), d)
-	if err != nil || len(r.Errors) != 0 || len(r.Evidence) != 2 || len(r.Endpoints) != 1 || r.Endpoints[0].URL != server.URL+"/admin" || r.Endpoints[0].Status != 200 || len(r.Findings) != 0 {
+	if err != nil || len(r.Errors) != 0 || len(r.Evidence) != 3 || len(r.Endpoints) != 1 || r.Endpoints[0].URL != server.URL+"/admin" || r.Endpoints[0].Status != 200 || len(r.Findings) != 0 {
 		t.Fatalf("directory discovery failed: %+v %v", r, err)
 	}
 	validateFixtureResult(t, r)
 	write("missing-fixture\n")
 	r, err = c.Run(context.Background(), liveRequest(server.URL), d)
-	if err != nil || len(r.Errors) != 0 || len(r.Evidence) != 2 || len(r.Endpoints) != 0 {
+	if err != nil || len(r.Errors) != 0 || len(r.Evidence) != 3 || len(r.Endpoints) != 0 {
 		t.Fatalf("missing path invented: %+v %v", r, err)
 	}
 	requireToolFailure(t, d, "gobuster", replaceArgument(gobusterArgs(server.URL, schema.RunRequest{}), "-w", words+".absent"))
@@ -197,8 +200,8 @@ func TestLiveWebDirectoryDiscovery(t *testing.T) {
 		t.Fatalf("Gobuster request failures lost partial matches or became clean: %+v %v", r, err)
 	}
 	certifyOperation(t, "gobuster", "dir.bruteforce", []operationCase{
-		passedCase("positive", "Both real directory engines discover /admin HTTP 200 and exclude nonexistent HTTP 404 paths."),
-		passedCase("negative", "An all-missing fixture wordlist yields zero endpoints with both engines complete."),
+		passedCase("positive", "All three real directory engines discover /admin HTTP 200 and exclude nonexistent HTTP 404 paths."),
+		passedCase("negative", "An all-missing fixture wordlist yields zero endpoints with all three engines complete."),
 		passedCase("failure", "Real Gobuster rejects a nonexistent wordlist; zero-exit request errors retain genuine matches as incomplete."),
 	})
 }

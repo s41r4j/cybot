@@ -98,6 +98,15 @@ CLI concurrency code, build copies and the embedded older egg are not shipped.
 The engine license, modified source, patch records and dependency wheel notices
 are retained under `/opt/cybot/lib/cors` and `/opt/cybot/share/licenses`.
 
+Dirsearch 0.5.0's sequential Python API is selected from upstream release commit
+`b08e8b42efb822bf0b4bda87bd00cb04e6116a2d`. Every selected library file is
+hash-checked against `docker/toolbox/dirsearch.lock.json`; the release-wheel
+library bytes were also compared with this commit. Original source copyright
+and GPL headers remain intact. The runtime includes the full GPL-2 text and
+release README under `/opt/cybot/share/licenses/dirsearch`. The checked Python
+source and CYBOT API wrapper are shipped with the image. The CLI backends and
+their unrelated dependencies are not part of this bounded API adapter.
+
 The browser profile uses the official Apache-2.0 agent-browser 0.40.0 static
 Linux release for each architecture, with exact asset checksums and source
 commit `c3880a7de9be3b075c8779e8aaca4b530b7f0e10`. Its upstream license and

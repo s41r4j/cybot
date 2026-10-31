@@ -127,7 +127,7 @@ func RegisterBuiltins(r *Registry) error {
 		external("port.scan", "Port Scan", "offensive-recon", []string{"nmap", "naabu"}, []string{"service.enumerate", "web.map", "vuln.scan"}, toolStep{ID: "nmap", Args: nmapArgs}, toolStep{ID: "naabu", Args: naabuArgs}),
 		external("tech.fingerprint", "Technology Fingerprint", "offensive-recon", []string{"whatweb", "httpx"}, []string{"web.map", "cms.detect", "waf.detect"}, toolStep{ID: "whatweb", Args: whatwebArgs}, toolStep{ID: "httpx", Args: httpxArgs}),
 		external("waf.detect", "WAF Detection", "offensive-recon", []string{"wafw00f"}, []string{"web.scan", "vuln.scan"}, toolStep{ID: "wafw00f", Args: wafw00fArgs}),
-		external("dir.bruteforce", "Directory Brute Force", "offensive-recon", []string{"gobuster", "ffuf"}, []string{"web.scan", "web.content.discover"}, toolStep{ID: "gobuster", Args: gobusterArgs}, toolStep{ID: "ffuf", Args: ffufArgs}),
+		external("dir.bruteforce", "Directory Brute Force", "offensive-recon", []string{"gobuster", "ffuf", "dirsearch"}, []string{"web.scan", "web.content.discover"}, toolStep{ID: "gobuster", Args: gobusterArgs}, toolStep{ID: "ffuf", Args: ffufArgs}, toolStep{ID: "dirsearch", Args: dirsearchArgs}),
 		external("tls.audit", "TLS Audit", "offensive-recon", []string{"testssl"}, []string{"vuln.scan", "report.generate"}, toolStep{ID: "testssl", Args: testsslArgs}),
 		external("vuln.scan", "Vulnerability Scan", "offensive-assessment", []string{"nuclei", "nikto"}, []string{"report.generate", "sql.inject", "xss.detect"}, toolStep{ID: "nuclei", Args: nucleiArgs}, toolStep{ID: "nikto", Args: niktoArgs}),
 		external("sql.inject", "SQL Injection Test", "offensive-assessment", []string{"sqlmap"}, []string{"report.generate"}, toolStep{ID: "sqlmap", Args: sqlmapArgs}),

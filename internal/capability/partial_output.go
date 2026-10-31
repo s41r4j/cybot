@@ -22,7 +22,7 @@ func recoverFailedOutput(tool string, captured []byte, req schema.RunRequest) (s
 	result, err := parseTool(tool, retained, req)
 	if err != nil {
 		switch tool {
-		case "subfinder", "dnsx", "naabu", "httpx", "katana", "ffuf", "nuclei", "trufflehog", "jsluice":
+		case "subfinder", "dnsx", "naabu", "httpx", "katana", "ffuf", "nuclei", "trufflehog", "jsluice", "dirsearch":
 		default:
 			return emptyResult(), nil, false
 		}
@@ -33,20 +33,23 @@ func recoverFailedOutput(tool string, captured []byte, req schema.RunRequest) (s
 				if trimmed[0] != '{' || !json.Valid(trimmed) || validateReportShape(tool, trimmed) != nil {
 					break
 				}
+				if _, err := parseTool(tool, trimmed, req); err != nil {
+					break
+				}
 			}
 			end += len(line)
 		}
 		retained = captured[:end]
 		result, err = parseTool(tool, retained, req)
 	}
-	if err != nil || len(result.Findings)+len(result.Assets)+len(result.Services)+len(result.Endpoints)+len(result.Observations) == 0 {
+	if err != nil || len(result.Findings)+len(result.Assets)+len(result.Services)+len(result.Endpoints)+len(result.Observations)+len(result.Errors) == 0 {
 		return emptyResult(), nil, false
 	}
 	result.Status = "partial"
 	return result, retained, true
 }
 
-func retainToolOutput(combined *schema.Result, normalized schema.Result, retained, captured []byte, id string, tool schema.Tool, req schema.RunRequest, d Dependencies, failed bool) error {
+func retainToolOutput(combined *schema.Result, normalized schema.Result, retained, captured []byte, id string, tool schema.Tool, req schema.RunRequest, d Dependencies, failureStage string) error {
 	data, mediaType, err := evidenceOutput(id, retained)
 	if err != nil {
 		return fmt.Errorf("redact %s evidence: %w", id, err)
@@ -56,9 +59,16 @@ func retainToolOutput(combined *schema.Result, normalized schema.Result, retaine
 		return err
 	}
 	ev.Metadata = map[string]string{"tool": id, "parser": tool.Parser, "version": tool.Version, "target": req.Target}
-	if failed {
+	if normalized.Status == "partial" {
+		ev.Metadata["coverage"] = "incomplete"
+	}
+	if failureStage != "" {
 		digest := sha256.Sum256(captured)
 		ev.Metadata["execution_status"] = "failed"
+		if failureStage == "normalization" {
+			ev.Metadata["execution_status"] = "completed"
+		}
+		ev.Metadata["failure_stage"] = failureStage
 		ev.Metadata["coverage"] = "incomplete"
 		ev.Metadata["captured_bytes"] = strconv.Itoa(len(captured))
 		ev.Metadata["retained_bytes"] = strconv.Itoa(len(retained))

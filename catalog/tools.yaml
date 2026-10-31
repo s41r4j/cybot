@@ -341,17 +341,18 @@
   requires_network: true
 - id: dirsearch
   title: Dirsearch
-  description: Web path brute forcing with advanced features.
+  description: Bounded single-target path discovery using the upstream Python API.
   purpose: Discover hidden directories and files through intelligent wordlist-based enumeration.
-  version: 0.4.3
+  version: 0.5.0
+  supported_os: [linux]
   kind: native
   binary: dirsearch
   source_url: https://github.com/maurosoria/dirsearch
   license: GPL-2.0
-  capabilities: [dir.bruteforce, web.content.discover]
-  default_args: [--format, json, -q]
-  output_format: json
-  parser: dirsearch.json.v1
+  capabilities: [dir.bruteforce]
+  default_args: []
+  output_format: jsonl
+  parser: cybot.dirsearch.jsonl.v1
   risk: active-http-high
   requires_network: true
 - id: sqlmap

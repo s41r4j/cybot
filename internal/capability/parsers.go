@@ -44,7 +44,7 @@ var parsers = map[string]toolParser{
 	"wafw00f":       parseWafw00f,
 	"gobuster":      parseGobuster,
 	"testssl":       parseTestSSL,
-	"dirsearch":     parseEndpoints,
+	"dirsearch":     parseDirsearch,
 	"sqlmap":        parseSQLMap,
 	"xsstrike":      parseTextLines,
 	"cloud_enum":    parseTextLines,
