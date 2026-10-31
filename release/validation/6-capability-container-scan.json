@@ -1,5 +1,5 @@
 {
-  "binary_sha256": "d8024dab523e0c7a194fa6cfeb72726bc723e9419e7236aa1162f4ddb96b310c",
+  "binary_sha256": "47cfa1a026a155c66acfc2ce16157422c3bc9b7efa109492425d8ef3831606d2",
   "cases": [
     {
       "type": "positive",
@@ -22,31 +22,31 @@
   ],
   "id": "container.scan",
   "kind": "capability",
-  "platform": "linux/arm64",
-  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
+  "platform": "linux/amd64",
+  "source_sha256": "8cbb7c9ec5a8248652b4bb22e28486aa4e9b398bbd160bd3d5715fb84628c073",
   "tool": "grype",
   "runtime": {
     "binaries": {
       "cybot": {
         "path": "/opt/cybot/bin/cybot",
-        "sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
+        "sha256": "a610920c5c999bab22c9dad9cbbf71d116bb1e9e9da2ed621f21c5431d1e01fc",
         "reported_version": "0.1.0"
       },
       "trivy": {
         "path": "/opt/cybot/bin/trivy",
-        "sha256": "254ac5660a960c9b16b0a417bdfa26ec64853e232b43e736026bf68c446c84a5",
+        "sha256": "639b6d4cf997bdcc4bf2cfceeb289063cb4cb17c7ee555cefad8722eba8215c6",
         "reported_version": "0.72.0",
         "release_version": "0.72.0"
       },
       "grype": {
         "path": "/opt/cybot/bin/grype",
-        "sha256": "d8024dab523e0c7a194fa6cfeb72726bc723e9419e7236aa1162f4ddb96b310c",
+        "sha256": "47cfa1a026a155c66acfc2ce16157422c3bc9b7efa109492425d8ef3831606d2",
         "reported_version": "0.116.1",
         "release_version": "0.116.1"
       },
       "syft": {
         "path": "/opt/cybot/bin/syft",
-        "sha256": "b3ed2cc578b896ce04902254b64c8a22a2f96cd93ff45048e47488f2630a9590",
+        "sha256": "502ea88d583cea3828903dedf85079a64de159cde419128bee1959e1c91882bd",
         "reported_version": "1.50.0",
         "release_version": "1.50.0"
       }
@@ -75,7 +75,7 @@
         }
       }
     },
-    "image_id": "sha256:4aec7f07a9b781c1ee94a277c8a3ff319c0fd46b8f52db64b69a3df928dc249a",
+    "image_id": "sha256:ee56d84400e5e538c4fc47f01ca25996d164fcdcf570c0fb9bced51bdd3ab5e5",
     "profile": "supplychain"
   }
 }

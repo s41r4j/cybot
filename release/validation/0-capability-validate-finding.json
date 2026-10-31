@@ -1,5 +1,5 @@
 {
-  "binary_sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
+  "binary_sha256": "a610920c5c999bab22c9dad9cbbf71d116bb1e9e9da2ed621f21c5431d1e01fc",
   "cases": [
     {
       "type": "positive",
@@ -22,15 +22,17 @@
   ],
   "id": "validate.finding",
   "kind": "capability",
-  "platform": "linux/arm64",
-  "source_sha256": "a6a238e026a55c1a8d15016b64d78687ef535a47beb31139d372a4674d8bc286",
+  "platform": "linux/amd64",
+  "source_sha256": "8cbb7c9ec5a8248652b4bb22e28486aa4e9b398bbd160bd3d5715fb84628c073",
   "tool": "cybot",
   "runtime": {
     "data": {
       "linkfinder-python": "6f58830a1ae8d6e58d6ce82374dcec57932f9bad262ff8834b0be89f0eb22d2c",
       "javascript-source-manifest": "0a7f28f96f071a4f9a1f0bda65ca66cd2691358352b261b5a361726903eb309f",
       "jsluice-source-build": "0303e1400d70b2ebc7b4c134876a1b4e985184088881930556c5df52dc33c59e",
-      "jsluice-compiler": "178ab26afdcbc0bb8ec3224ed010811e84293e9bb672e274851c60d2abe1035e"
+      "jsluice-compiler": "1e00f65a37b357682eb4a561ad6c873759f176a693a90f664167a0f204a2b2d2",
+      "go-sdk-source": "ba118aca9e24d3fd7554a4207d38f0c0c5e9e839e74437785fefc1b264a14719",
+      "go-sdk-inventory-helper": "d0858467ccf63e7eb0904a5ec746bd97ec6b0b89f05d1e6d8285dec71dc6f0b0"
     },
     "packages": {
       "jsbeautifier": "1.15.4",
@@ -40,12 +42,12 @@
     "binaries": {
       "cybot": {
         "path": "/opt/cybot/bin/cybot",
-        "sha256": "443db662abda0a5ee5899898900352d2516cbe32b0a3285fad0faddb41412f8a",
+        "sha256": "a610920c5c999bab22c9dad9cbbf71d116bb1e9e9da2ed621f21c5431d1e01fc",
         "reported_version": "0.1.0"
       },
       "gosec": {
         "path": "/opt/cybot/bin/gosec",
-        "sha256": "cc3fec29a2ffd8c3d6c070c212e8f9ace891997335da18463ba29715128a77a0",
+        "sha256": "98c9b20c06ce1bbcb5ccd3ef2138043bddfc7d0871bbdd297457797220bfd787",
         "reported_version": "2.28.0"
       },
       "semgrep": {
@@ -55,27 +57,27 @@
       },
       "semgrep-core": {
         "path": "/usr/lib/python3.12/site-packages/semgrep/bin/semgrep-core",
-        "sha256": "617cde91d142f3b15bef27f1d2dd9fc3ee34fe84ea0fa9edb310e88d3660cabb",
+        "sha256": "dd1ccdaa7ef2b6191f6fcee31a0b70880de3ba4bfe2d834250f715a767744651",
         "reported_version": "1.172.0"
       },
       "go": {
         "path": "/opt/go/bin/go",
-        "sha256": "110394f41cd6ab0a3da928c16753a1fa7e6d53823684d4240508729c4172c280",
+        "sha256": "9c2a37ae5b21ba1d5a004bb9ab4d0c64de6fc5778e9d30487adccea62678b8b5",
         "reported_version": "1.26.10"
       },
       "gitleaks": {
         "path": "/opt/cybot/bin/gitleaks",
-        "sha256": "c84426117283c200adfcdf340c092c7a614f44bb2345c0c50b09230d2719cc31",
+        "sha256": "601dbd0ed31535bb1c7ec69a3937bee3e80aba610fe1b68adf767aeba3031f06",
         "reported_version": "8.30.1"
       },
       "trufflehog": {
         "path": "/opt/cybot/bin/trufflehog",
-        "sha256": "7aca189f1866513ef18f1420fdf0b5d192b195907d8dfe069763ff9e9302f60e",
+        "sha256": "95afdf21ecb3546d2081cf5249447df09061fbcfd151f67e8bf1f13a4167bc30",
         "reported_version": "3.96.0"
       },
       "jsluice": {
         "path": "/opt/cybot/bin/jsluice",
-        "sha256": "3a3109a7edcdfe9477a98654f1ba4b9d392856cd453d3534bed1fbf8052705e9",
+        "sha256": "b474da92146c89f149f26e37af085b04c26ab7f4c26e830e07a52fe0736e4f8a",
         "reported_version": "(devel)",
         "release_version": "0.0.0-20240110145140-0ddfab153e06"
       },
@@ -91,16 +93,61 @@
       },
       "gf": {
         "path": "/opt/cybot/bin/gf",
-        "sha256": "7c99383e0406a6b9e3d9cf6ba3c97704199d930016a2fa8b4fc77728af6c8b67",
+        "sha256": "3794f69684cc06f3158f6f958085d5dd6fa2cea25c5c036332c2384e873fac60",
         "reported_version": "0.0.0-20200618134122-dcd4c361f9f5"
       },
       "anew": {
         "path": "/opt/cybot/bin/anew",
-        "sha256": "ad22df574c4af1e93869f7168b0101fa6b754dc6e1e43135da36d5a8e3403e1f",
+        "sha256": "6c55f826aa0de7d8e9929e5034adce6a195eafa784a4b7c898ba815ecb5477e8",
         "reported_version": "0.1.1"
+      },
+      "go-sdk-bin-gofmt": {
+        "path": "/opt/go/bin/gofmt",
+        "sha256": "3cdd3788a0a53f11d4b7552a601d4b81ed8705979313427f4a0103c3a5b0bfd9",
+        "reported_version": "1.26.10"
+      },
+      "go-sdk-pkg-tool-linux-amd64-asm": {
+        "path": "/opt/go/pkg/tool/linux_amd64/asm",
+        "sha256": "8d3cf7bd474c6d8f782e5cf6b2cba84f7216d1dd8529208fc31dcbddcf5ca243",
+        "reported_version": "1.26.10"
+      },
+      "go-sdk-pkg-tool-linux-amd64-cgo": {
+        "path": "/opt/go/pkg/tool/linux_amd64/cgo",
+        "sha256": "bbf5f930a5928d704bbe54cca01f927a99baf86de4ec054042a1adf198b9f07f",
+        "reported_version": "1.26.10"
+      },
+      "go-sdk-pkg-tool-linux-amd64-compile": {
+        "path": "/opt/go/pkg/tool/linux_amd64/compile",
+        "sha256": "b426da26640e8069dc35162c9900496d9a03bea90bf771236067fb8cae86d285",
+        "reported_version": "1.26.10"
+      },
+      "go-sdk-pkg-tool-linux-amd64-cover": {
+        "path": "/opt/go/pkg/tool/linux_amd64/cover",
+        "sha256": "1c640dc692adeee15f088ed06791898d202825d92473f56b0257fcdc62f2becd",
+        "reported_version": "1.26.10"
+      },
+      "go-sdk-pkg-tool-linux-amd64-fix": {
+        "path": "/opt/go/pkg/tool/linux_amd64/fix",
+        "sha256": "b9b4c73fdc356485f181941c974ab8419abaacda085477ab1cf2b643be8e8289",
+        "reported_version": "1.26.10"
+      },
+      "go-sdk-pkg-tool-linux-amd64-link": {
+        "path": "/opt/go/pkg/tool/linux_amd64/link",
+        "sha256": "8dd7e821587beabeb255e36fce17f659ef967e2eb5d3898a599c2df494fb5fd3",
+        "reported_version": "1.26.10"
+      },
+      "go-sdk-pkg-tool-linux-amd64-preprofile": {
+        "path": "/opt/go/pkg/tool/linux_amd64/preprofile",
+        "sha256": "b6b80321f0f4a47fe4cbff42862fac7a87eea8ee70532b927bfe27aaa1308932",
+        "reported_version": "1.26.10"
+      },
+      "go-sdk-pkg-tool-linux-amd64-vet": {
+        "path": "/opt/go/pkg/tool/linux_amd64/vet",
+        "sha256": "f424b9d79d5fef44a6b8a3ee0e6eaa012703ce896aee87d18b78b50056ab4599",
+        "reported_version": "1.26.10"
       }
     },
-    "image_id": "sha256:166e6ff4d04fd7069e70cdda4e07bc1a89ae17584e702bfa7ab0f25e793127a6",
+    "image_id": "sha256:992cc7acd0c99804a24aba0c7b2a81bce3400afa90290633b15a2e354f6b21ca",
     "profile": "analysis"
   }
 }

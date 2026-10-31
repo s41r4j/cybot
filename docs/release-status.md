@@ -12,7 +12,7 @@ increase a percentage.
 | 1. Scope binding | Filesystem mapping follows capability kind; URLs, hostnames, IPs and typed host/interface targets cannot become file mounts. This also fixes Windows URL execution. Browser actions require explicit approval even under advisory policy; sessions are anonymous, isolated and restricted to the requested hostname. Explicit local://HOSTNAME and interface://INTERFACE targets require approval. Unimplemented operations fail explicitly. | Fresh Windows source checks and compatible runtime/lab evidence for every specialist adapter; service-start/status commands are not accepted as complete operations. |
 | 2. Scanner errors | Failed scanners retain parser-validated matches and redacted evidence, explicitly marked incomplete. Truncated JSONL recovery stops at the first invalid record; failed or skipped stages cannot feed downstream input. A real Nuclei cancellation control preserves its earlier match. Failures never promote unknown confidence to 100%. Zero-file Semgrep/Gosec and targetless Trivy reports are partial. | Fresh Linux validation of the latest recovery changes, plus full positive/negative/failure fixtures for each installed scanner version. |
 | 3. Heuristic findings | URL classification returns investigation candidates and never creates vulnerability findings. Finding review requires explicit operator assertions and hash-verified stored evidence; prose alone stays UNVERIFIED. | Independent review remains necessary; operator assertions do not prove exploitability. |
-| 4. Toolchain | Go 1.26.10 pinned; source scan and measured Go executable/source-identity audits pass at the retained Linux checkpoint. The analysis inventory now binds every operational SDK executable to the checked distribution and sends each through binary audit; all ten native diagnostic audits pass. | Fresh Linux SDK/image evidence, complete OS/native-component artifact audits and release provenance. |
+| 4. Toolchain | Go 1.26.10 pinned; source and measured executable/source-identity audits pass on both Linux architectures, including all operational SDK executables. Full package scans now complete and retain their findings. | OS/library findings, the newly discovered Git LFS binary, source-version reconciliation, native-component coverage and release provenance still block certification. |
 | 5. Distribution | Public repository and website, release gate, immutable image pull/validation, local pins, and verified core image backup/restore on both Linux architectures. | Successful publishing pipeline, clean-machine installation and compatible image evidence. No completed stable release is claimed. |
 | 6. Publication hygiene | MIT license, security policy, third-party notices, strict example, and allowlisted clean source export. Private research remains locally preserved and is excluded from public source/history. | Ongoing secret scanning and third-party asset/license review for each release. |
 
@@ -26,13 +26,13 @@ These are source and contract checks, not 84-tool live certification.
 
 The local Docker daemon is unavailable. Historical 2026-10-22 compact-core
 results are retained as historical records and do not certify the changed source.
-The complete [CI run at revision `cd68e28`](https://github.com/s41r4j/cybot/actions/runs/41086212546)
+The complete [CI run at revision `2fdc975`](https://github.com/s41r4j/cybot/actions/runs/41170012156)
 passed source checks on Linux AMD64/ARM64, macOS and Windows, and real-operation
 fixtures in all five native Linux toolbox profiles on both architectures.
 Both compact-core jobs also passed the actual checksummed image backup/restore
 round trip. Installed-CLI, JavaScript extraction and finding-review controls
 passed on both Linux architectures.
-Its source-bound reports certify **22 tools and 26 capabilities** functionally;
+Its source-bound reports certify **24 tools and 27 capabilities** functionally;
 they do not certify the entire 84-tool/71-capability catalog or the security of
 every bundled executable. Later source changes require fresh certificates.
 Windows/AD and account-level cloud tests are explicitly deferred because no
@@ -67,13 +67,12 @@ created by the offline validation workflow.
 
 ## Expanded operation evidence
 
-The next web-profile integration uses CORScanner 0.9.7's pinned library engine
+The web profile uses CORScanner 0.9.7's pinned library engine
 for one target at a time. Strict JSON retains CORS header candidates without
 creating vulnerability findings. Verified TLS, no redirects, offline suffix data,
 anonymous sessions and explicit transport/HTTP errors replace keyword parsing.
 Native loopback positive/negative/failure, trusted/untrusted TLS and redirect
-controls pass. Linux container validation remains required before adding this
-tool/capability to the functional checkpoint.
+controls pass on both Linux architectures at revision `2fdc975`.
 
 Dirsearch 0.5.0 is now mapped to `dir.bruteforce` alongside Gobuster and FFUF.
 The upstream sequential API emits structured progress through the CYBOT wrapper;
@@ -81,32 +80,40 @@ no completion marker means incomplete coverage. Earlier HTTP matches survive
 request errors and malformed-output failures. The adapter enforces the target
 origin/base path, verified TLS, no redirects, a 1 MiB response bound and a bounded
 wordlist. CLI recursion/authentication/native backends are not exposed. Native
-positive/negative/failure and boundary controls pass for all three engines;
-Linux container certification remains pending. The 84/71 baseline is unchanged.
+positive/negative/failure and boundary controls pass for all three engines on
+both Linux architectures at revision `2fdc975`. The 84/71 baseline is unchanged.
 
-The image audit now also builds source-checked Syft/Grype scanners, exports the
-immutable operation-tested image and inspects installed OS/language packages
-inside network-isolated containers. A separately pinned database is checked for
-age and integrity. Real synthetic image controls cover affected OpenSSL/Lodash
-versions, an empty-match fixture and a malformed archive. Findings, suppressed
-matches, unlisted Go executables, Cgo dependencies and unmapped standalone
-components prevent a clean result. The first Linux run passed affected-package
-and empty-match controls, but archive-error diagnostics were written to stderr
-and were not captured; the gate correctly stayed blocked. The capture is now
-fixed, and resource/time-limit failures cannot satisfy the invalid-input control.
-Supply-chain jobs also reached the former 45-minute job limit; jobs now have a
-90-minute cap while individual command/resource bounds remain enforced. Fresh
-Linux validation is required; these changes do not clear the release block.
-Hosted Linux CI now reclaims only specified unused SDK installations inside its
-disposable job VM when necessary. Local/self-hosted environments are rejected;
-CYBOT images, project state and user directories are not deleted. Admission
-still preserves the 20 GB product budget and 10 GB free-host reserve.
-The next full-image scan exposed a separate layer-extraction limit: the ordinary
-64 MiB report-file cap also applied to legitimate image layers. Cataloging now
-has a separate 4 GB per-file bound within the unchanged total storage/image
-limits; parsed reports remain limited to 64 MiB. A real native Syft control
-reproduces the old failure with a 70 MiB layer and completes under the corrected
-bound. Full Linux image security results are still pending.
+The image audit builds source-checked Syft/Grype scanners and inspects the
+immutable operation-tested image inside network-isolated containers. Database
+age/hash, affected OpenSSL/Lodash controls, an empty-match fixture and an invalid
+archive are checked. The stderr, image-layer file-limit and CI-capacity repairs
+now pass on both Linux architectures; source checks also pass on Windows/macOS.
+
+All ten full image audits complete at this checkpoint, and all remain blocked.
+The compiled Go checks pass (including every operational SDK executable), while
+package and native-coverage findings prevent a security certificate:
+
+| Profile | Matches per architecture | Additional coverage gaps |
+| --- | ---: | --- |
+| Core | 269 | Source-built module versions need source-identity reconciliation. |
+| Analysis | 394 | Bundled Git LFS was not measured; Cgo and standalone-engine coverage, plus source-built version reconciliation. |
+| Supply chain | 237 | Source-built module versions need source-identity reconciliation. |
+| Web | 417 | Source-library/WhatWeb identities and source-built module version reconciliation. |
+| Browser | 750 | Standalone Rust/native dependency coverage for agent-browser. |
+
+These are scanner match records, including repeated binary/source-package
+matches and conservative results; they are not counts of independently verified
+exploitable vulnerabilities. Some Chromium records conflict with the current
+Debian fixed-version tracker and need a fresh vendor-backed review. Raw matches
+remain retained. Critical Ruby/OS findings and unresolved native coverage still
+block release; no blanket suppression is applied.
+
+Runtime jobs have a 90-minute limit. Individual memory, CPU, process, output and
+storage bounds remain enforced. Hosted Linux setup may reclaim only listed
+unused SDKs inside its disposable VM; local/self-hosted environments are
+rejected. The 20 GB product budget and 10 GB host reserve remain in place.
+Image cataloging has a separate 4 GB temporary-file bound for real layers;
+parsed scanner reports remain capped at 64 MiB.
 
 
 The optional `browser` profile pins the official agent-browser 0.40.0 Linux
@@ -262,13 +269,13 @@ advisory, and never clears downloaded binaries, altered source or another alert.
 Final artifact audits must be less than 24 hours old. Release policy changes
 are included in the product source fingerprint, so changing required platforms,
 audit requirements or inventory cannot reuse earlier certificates. None of
-these Go/source-module checks substitutes for the pending OS/native-component
+these Go/source-module checks substitutes for the blocked OS/native-component
 security audit.
 
 
-The checked-in `release/validation/` directory now retains all 96 platform-specific
-operation reports plus ten measured-Go audit reports from revision `cd68e28`.
+The checked-in `release/validation/` directory now retains all 102 platform-specific
+operation reports plus ten full image audit reports from revision `2fdc975`.
 `release/readiness.json` is regenerated against the current product digest; it
-records 22 tools and 26 capabilities with passing functional proof and keeps the
+records 24 tools and 27 capabilities with passing functional proof and keeps the
 full release blocked. The website displays that snapshot per entry, including
 tested platforms and the remaining release checks.
