@@ -126,7 +126,7 @@ func (c externalCapability) Run(ctx context.Context, req schema.RunRequest, d De
 		if tool.Version == "unresolved" || strings.HasSuffix(tool.DockerImage, ":latest") || strings.HasSuffix(tool.DockerImage, ":stable") {
 			combined.Warnings = append(combined.Warnings, step.ID+": floating or unresolved version; reproducibility is unverified")
 		}
-		toolTarget, hostWorkdir, containerWorkdir, mounts, targetErr := executionTarget(target, tool.Kind == "docker")
+		toolTarget, hostWorkdir, containerWorkdir, mounts, targetErr := executionTarget(c.ID(), target, tool.Kind == "docker")
 		if targetErr != nil {
 			return combined, targetErr
 		}
@@ -255,10 +255,17 @@ func (c reportCapability) Run(ctx context.Context, req schema.RunRequest, d Depe
 	return result, nil
 }
 
-func executionTarget(target string, docker bool) (string, string, string, []execution.Mount, error) {
+func executionTarget(capabilityID, target string, docker bool) (string, string, string, []execution.Mount, error) {
+	// Only filesystem operations inspect/mount paths. URL, hostname, IP and
+	// typed host/interface targets are data even if a same-named local file exists.
+	switch capabilityID {
+	case "code.audit", "secret.scan", "dependency.scan", "cloud.review", "js.analyse", "pattern.detect", "js.extract", "container.scan":
+	default:
+		return target, "", "", nil, nil
+	}
 	info, err := os.Stat(target)
 	if err != nil {
-		if os.IsNotExist(err) {
+		if os.IsNotExist(err) || capabilityID == "container.scan" && !filepath.IsAbs(target) && !strings.HasPrefix(target, ".") {
 			return target, "", "", nil, nil
 		}
 		return "", "", "", nil, fmt.Errorf("inspect target: %w", err)

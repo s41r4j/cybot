@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, windows-latest]
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -26,7 +26,7 @@ jobs:
       - run: go build ./cmd/cybot
       - run: go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./...
   contracts:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
@@ -59,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 90
     env:
@@ -69,6 +69,8 @@ jobs:
       - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
         with:
           go-version: '1.26.10'
+      - name: Prepare disposable hosted runner capacity
+        run: python3 scripts/prepare_hosted_runner.py
       - name: Build and validate before promoting a runtime pin
         run: python3 scripts/toolbox.py build
       - name: Audit measured Go and installed image packages
@@ -95,7 +97,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 90
     env:
@@ -105,6 +107,8 @@ jobs:
       - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
         with:
           go-version: '1.26.10'
+      - name: Prepare disposable hosted runner capacity
+        run: python3 scripts/prepare_hosted_runner.py
       - run: python3 scripts/toolbox.py --profile analysis build
       - name: Audit measured Go and installed image packages
         continue-on-error: true
@@ -125,7 +129,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 90
     env:
@@ -135,6 +139,8 @@ jobs:
       - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
         with:
           go-version: '1.26.10'
+      - name: Prepare disposable hosted runner capacity
+        run: python3 scripts/prepare_hosted_runner.py
       - run: python3 scripts/toolbox.py --profile web build
       - name: Audit measured Go and installed image packages
         continue-on-error: true
@@ -155,7 +161,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 90
     env:
@@ -165,6 +171,8 @@ jobs:
       - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
         with:
           go-version: '1.26.10'
+      - name: Prepare disposable hosted runner capacity
+        run: python3 scripts/prepare_hosted_runner.py
       - run: python3 scripts/toolbox.py --profile browser build
       - name: Audit measured Go and installed image packages
         continue-on-error: true
@@ -183,7 +191,7 @@ jobs:
   operation-readiness:
     needs: [compact-runtime, analysis-runtime, supplychain-runtime, web-runtime, browser-runtime]
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
       - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
@@ -210,7 +218,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, ubuntu-24.04-arm]
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 90
     env:
@@ -220,6 +228,8 @@ jobs:
       - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
         with:
           go-version: '1.26.10'
+      - name: Prepare disposable hosted runner capacity
+        run: python3 scripts/prepare_hosted_runner.py
       - run: python3 scripts/toolbox.py --profile supplychain build
       - name: Audit measured Go and installed image packages
         continue-on-error: true
