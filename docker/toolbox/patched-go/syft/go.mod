@@ -1,4 +1,4 @@
-module github.com/anchore/syft
+module github.com/s41r4j/cybot-build/syft
 
 go 1.26.8
 
@@ -336,3 +336,5 @@ retract (
 )
 
 replace github.com/google/go-github/v30 => ./.cybot-patches/go-github
+
+require github.com/anchore/syft v1.50.0

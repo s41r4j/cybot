@@ -1,4 +1,4 @@
-module github.com/projectdiscovery/subfinder/v2
+module github.com/s41r4j/cybot-build/subfinder
 
 go 1.26.0
 
@@ -138,3 +138,5 @@ require (
 )
 
 replace github.com/google/go-github/v30 => ./.cybot-patches/go-github
+
+require github.com/projectdiscovery/subfinder/v2 v2.14.0

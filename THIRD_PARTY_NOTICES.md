@@ -60,6 +60,12 @@ The go-github v30 dependency's two OpenPGP imports are migrated to the maintaine
 ProtonMail implementation using exact input-file hashes. Binary symbols are
 retained for artifact vulnerability analysis. Build manifests and copied upstream
 dependency licenses are included under `/opt/cybot/share/` in the image.
+Twelve tools whose release source is unchanged use locked driver modules so
+Go records the real upstream module version and checksum in each executable.
+Dependency overrides and any local go-github patch remain recorded separately.
+The three tools with release-source patches retain their copied-source recipes
+and explicit source-identity review; their unknown main-module versions are not
+silently excused.
 Nuclei's OpenAPI example generator has an exact-input compatibility patch for
 the fixed kin-openapi API. It preserves supported OpenAPI 3.0 boolean bounds and
 explicitly rejects unsupported 3.1 numeric exclusive bounds; focused compatibility

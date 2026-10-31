@@ -1,4 +1,4 @@
-module github.com/projectdiscovery/dnsx
+module github.com/s41r4j/cybot-build/dnsx
 
 go 1.26.0
 
@@ -119,3 +119,5 @@ require (
 )
 
 replace github.com/google/go-github/v30 => ./.cybot-patches/go-github
+
+require github.com/projectdiscovery/dnsx v1.3.0

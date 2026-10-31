@@ -1,4 +1,4 @@
-module github.com/projectdiscovery/httpx
+module github.com/s41r4j/cybot-build/httpx
 
 go 1.26.0
 
@@ -174,3 +174,5 @@ require (
 )
 
 replace github.com/google/go-github/v30 => ./.cybot-patches/go-github
+
+require github.com/projectdiscovery/httpx v1.10.0

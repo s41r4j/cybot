@@ -115,6 +115,26 @@ database. These changes still require fresh Linux image results; the figures
 above remain the last green checkpoint. Raw matches remain retained. Critical Ruby/OS findings and unresolved native coverage still
 block release; no blanket suppression is applied.
 
+The first Debian 13 browser candidate passes both native operation suites and
+the five-ecosystem scanner controls. Its AMD64 package audit retains 562 match
+records (551 Debian and 11 declared Rust dependency matches), including newly
+reported Chromium issues that Debian still marks unfixed. This candidate is
+not a security certificate. The web/core/supply-chain jobs exposed a changed
+Debian home-directory permission; the next candidate makes that parent
+traversable while retaining user-owned ephemeral cache/config mounts.
+
+Twelve unchanged upstream Go releases now build through locked driver modules,
+which preserve their actual release version and checksum in Go build metadata.
+All twelve Linux ARM64 diagnostic builds match those identities. This removes
+unknown main-module versions by correcting the build, without inventing versions
+or suppressing findings. Source-patched releases and local dependency replacements
+still require their explicit source reviews and fresh image audits.
+Eleven of these diagnostic binaries pass symbol-level vulnerability analysis.
+Versioned Trivy now surfaces five GO-2026-4919 incident-advisory matches across
+the linked Aqua modules. The existing exact-source incident review does not
+automatically clear every linked module; these matches remain blocked pending
+their source-provenance review.
+
 Runtime jobs have a 90-minute limit. Individual memory, CPU, process, output and
 storage bounds remain enforced. Hosted Linux setup may reclaim only listed
 unused SDKs inside its disposable VM; local/self-hosted environments are

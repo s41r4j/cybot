@@ -51,7 +51,13 @@ def audit_build(spec, provenance, binary_sha256, modules, expected_locks, replac
             or provenance.get('dependency_locks') != expected_locks:
         raise RuntimeError('Source-build provenance differs from the measured executable or committed dependency locks')
     module, version = spec['module'].rsplit('@', 1)
-    if {'path': module, 'version': '(devel)'} not in modules:
+    mode = spec.get('build_mode', 'copied-module')
+    if provenance.get('build_mode', 'copied-module') != mode or mode not in ('copied-module','versioned-module'):
+        raise RuntimeError('Source-build mode differs from the committed recipe')
+    compiled_version = version if mode == 'versioned-module' else '(devel)'
+    if mode == 'versioned-module' and provenance.get('compiled_identity')!={'module':module,'version':version,'sum':spec['sum']}:
+        raise RuntimeError('Compiled upstream checksum identity differs from verified source')
+    if {'path': module, 'version': compiled_version} not in modules:
         raise RuntimeError('Source-built main module differs from the compiled inventory')
     reports = [assess(spec, query(module, version), source_build=True)]
     if {'path': './.cybot-patches/go-github', 'version': '(devel)'} in modules:

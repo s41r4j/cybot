@@ -1,4 +1,4 @@
-module github.com/trufflesecurity/trufflehog/v3
+module github.com/s41r4j/cybot-build/trufflehog
 
 go 1.26.0
 
@@ -315,3 +315,5 @@ require (
 )
 
 replace github.com/google/go-github/v30 => ./.cybot-patches/go-github
+
+require github.com/trufflesecurity/trufflehog/v3 v3.96.0

@@ -44,5 +44,23 @@ class ModuleAuditTests(unittest.TestCase):
         self.assertEqual(module_audit.assess(dict(spec, module='github.com/aquasecurity/trivy@v0.69.4'), advisory, True)['status'], 'blocked')
         self.assertEqual(module_audit.assess(spec, {'vulns': [{'id': 'GO-new-unreviewed'}]}, True)['status'], 'blocked')
 
+    def test_versioned_source_requires_the_exact_compiled_module_and_build_mode(self):
+        spec={'module':'fixture.invalid/tool@v1.2.3','sum':'h1:fixture','build_mode':'versioned-module'}
+        provenance={'kind':'cybot-patched-upstream','binary_sha256':'a'*64,'upstream_module':spec['module'],
+                    'upstream_sum':spec['sum'],'dependency_locks':{},'build_mode':'versioned-module',
+                    'compiled_identity':{'module':'fixture.invalid/tool','version':'v1.2.3','sum':spec['sum']}}
+        with patch.object(module_audit,'query',return_value={}) as query:
+            rows=module_audit.audit_build(spec,provenance,'a'*64,[{'path':'fixture.invalid/tool','version':'v1.2.3'}],{},{})
+            self.assertEqual(rows[0]['status'],'passed')
+            query.reset_mock()
+            for version in ('(devel)','v1.2.4'):
+                with self.assertRaisesRegex(RuntimeError,'compiled inventory'):
+                    module_audit.audit_build(spec,provenance,'a'*64,[{'path':'fixture.invalid/tool','version':version}],{},{})
+            with self.assertRaisesRegex(RuntimeError,'build mode'):
+                module_audit.audit_build(spec,dict(provenance,build_mode='copied-module'),'a'*64,[],{},{})
+            with self.assertRaisesRegex(RuntimeError,'checksum identity'):
+                module_audit.audit_build(spec,dict(provenance,compiled_identity={}), 'a'*64,[],{},{})
+            query.assert_not_called()
+
 
 if __name__ == '__main__': unittest.main()

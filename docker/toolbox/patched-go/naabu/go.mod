@@ -1,4 +1,4 @@
-module github.com/projectdiscovery/naabu/v2
+module github.com/s41r4j/cybot-build/naabu
 
 go 1.26.0
 
@@ -139,3 +139,5 @@ require (
 )
 
 replace github.com/google/go-github/v30 => ./.cybot-patches/go-github
+
+require github.com/projectdiscovery/naabu/v2 v2.6.1

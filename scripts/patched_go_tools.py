@@ -66,6 +66,17 @@ def patch_source(root, files):
     return applied
 
 
+def versioned_identity(binary, spec, env):
+    module, version = spec['module'].rsplit('@', 1)
+    output = subprocess.check_output(['go','version','-m',str(binary)],env=env,text=True,timeout=30)
+    compiler = toolbox.GO_TOOLCHAIN+('-X:'+spec['go_experiment'] if spec.get('go_experiment') else '')
+    if len(output)>2*1024**2 or not output.splitlines() or output.splitlines()[0]!=str(binary)+': '+compiler:
+        raise RuntimeError('Versioned executable compiler identity differs')
+    if ['mod',module,version,spec['sum']] not in [line.split() for line in output.splitlines()]:
+        raise RuntimeError('Versioned executable does not retain its verified upstream version and checksum')
+    return {'module':module,'version':version,'sum':spec['sum']}
+
+
 def prepare(dest, names=None):
     lock_root = toolbox.ROOT/'docker/toolbox/patched-go'
     lock = json.loads((lock_root/'manifest.json').read_text())
@@ -90,12 +101,25 @@ def prepare(dest, names=None):
                 continue
             print('Rebuilding patched upstream release', name, spec['module'], flush=True)
             root = cache/name
-            writable_copy(verified_module(spec, env), root)
+            upstream = verified_module(spec, env)
+            mode = spec.get('build_mode', 'copied-module')
+            if mode == 'versioned-module':
+                # Build the verified cached release as a dependency of a locked
+                # driver module. Go records its genuine version and checksum;
+                # no linker metadata or post-build binary rewriting is used.
+                if any(spec.get(key) for key in ('source_patches','test_files','tests')):
+                    raise RuntimeError('Versioned module mode does not support source patches')
+                root.mkdir()
+                source_patches = []
+            elif mode == 'copied-module':
+                writable_copy(upstream, root)
+                source_patches = patch_source(root, spec.get('source_patches', {}))
+            else:
+                raise RuntimeError('Unknown source-build mode: '+mode)
             patched = root/'.cybot-patches/go-github'
             patched.parent.mkdir()
             writable_copy(source, patched)
             applied = patch_imports(patched, lock['go-github']['files'])
-            source_patches = patch_source(root, spec.get('source_patches', {}))
             tool_env = dict(env, GOEXPERIMENT=spec.get('go_experiment', ''))
             for file in ('go.mod', 'go.sum'):
                 shutil.copyfile(lock_root/name/file, root/file)
@@ -116,6 +140,7 @@ def prepare(dest, names=None):
                 args.append('-ldflags='+spec['ldflags'])
             toolbox.monitored([*args, '-o', str(dest/'bin'/name), spec.get('package', './cmd/'+name)],
                               env=tool_env, timeout_seconds=1200)
+            identity = versioned_identity(dest/'bin'/name,spec,tool_env) if mode=='versioned-module' else None
             notices = dest/'share/licenses'/name/'modules'
             notices.mkdir(parents=True, exist_ok=True)
             for notice in (cache/'modules').rglob('*'):
@@ -124,6 +149,8 @@ def prepare(dest, names=None):
                     target.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(notice, target)
             data = {'kind': 'cybot-patched-upstream', 'upstream_module': spec['module'],
+                    'build_mode': mode,
+                    'compiled_identity': identity,
                     'upstream_sum': spec['sum'], 'go_toolchain': toolbox.GO_TOOLCHAIN,
                     'platform': 'linux/'+toolbox.ARCH, 'patch_module': lock['go-github']['module'],
                     'go_experiment': spec.get('go_experiment', ''),

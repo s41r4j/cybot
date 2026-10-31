@@ -1,4 +1,4 @@
-module github.com/securego/gosec/v2
+module github.com/s41r4j/cybot-build/gosec
 
 require (
 	github.com/BurntSushi/toml v1.6.0
@@ -73,3 +73,5 @@ require (
 go 1.26.0
 
 replace github.com/google/go-github/v30 => ./.cybot-patches/go-github
+
+require github.com/securego/gosec/v2 v2.28.0

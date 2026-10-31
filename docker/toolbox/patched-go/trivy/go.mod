@@ -1,4 +1,4 @@
-module github.com/aquasecurity/trivy
+module github.com/s41r4j/cybot-build/trivy
 
 go 1.26.8
 
@@ -511,3 +511,5 @@ tool (
 )
 
 replace github.com/google/go-github/v30 => ./.cybot-patches/go-github
+
+require github.com/aquasecurity/trivy v0.72.0

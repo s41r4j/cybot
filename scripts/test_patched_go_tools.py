@@ -2,11 +2,26 @@ import hashlib
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import patched_go_tools
 
 
 class PatchedGoToolTests(unittest.TestCase):
+    def test_version_text_cannot_replace_the_compiled_module_checksum(self):
+        binary=Path('/fixture/tool')
+        spec={'module':'fixture.invalid/tool@v1.2.3','sum':'h1:verified'}
+        expected='/fixture/tool: go1.26.10\n\tmod\tfixture.invalid/tool\tv1.2.3\th1:verified\n'
+        with patch.object(patched_go_tools.subprocess,'check_output',return_value=expected):
+            self.assertEqual(patched_go_tools.versioned_identity(binary,spec,{})['sum'],'h1:verified')
+        for invalid in (expected.replace('h1:verified','h1:other'),expected.replace('v1.2.3','(devel)'),expected.replace('go1.26.10','go1.25.0')):
+            with patch.object(patched_go_tools.subprocess,'check_output',return_value=invalid):
+                with self.assertRaises(RuntimeError):patched_go_tools.versioned_identity(binary,spec,{})
+        experimental=expected.replace('go1.26.10','go1.26.10-X:jsonv2')
+        with patch.object(patched_go_tools.subprocess,'check_output',return_value=experimental):
+            with self.assertRaises(RuntimeError):patched_go_tools.versioned_identity(binary,spec,{})
+            self.assertEqual(patched_go_tools.versioned_identity(binary,dict(spec,go_experiment='jsonv2'),{})['version'],'v1.2.3')
+
     def test_exact_patch_input_is_required_and_provenance_matches_output(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp); source = root/'fixture.go'

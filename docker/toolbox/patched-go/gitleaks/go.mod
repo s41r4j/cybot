@@ -1,4 +1,4 @@
-module github.com/zricethezav/gitleaks/v8
+module github.com/s41r4j/cybot-build/gitleaks
 
 go 1.26.0
 
@@ -91,3 +91,5 @@ require (
 )
 
 replace github.com/google/go-github/v30 => ./.cybot-patches/go-github
+
+require github.com/zricethezav/gitleaks/v8 v8.30.1
