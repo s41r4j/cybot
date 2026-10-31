@@ -3,6 +3,7 @@ import hashlib
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import re
 import shutil
 
 import artifact_audit
@@ -20,6 +21,14 @@ def file_hash(path):
     with path.open('rb') as source:
         while chunk := source.read(1024*1024): value.update(chunk)
     return value.hexdigest()
+
+
+def validate_failure_control(error, diagnostic):
+    # A reserve/timeout/OOM failure must never satisfy a scanner input control.
+    exited = re.fullmatch(r'Command failed with exit 1: docker', str(error))
+    text = diagnostic.lower()
+    if not exited or 'archive' not in text or not any(word in text for word in ('error', 'failed', 'unable', 'could not')):
+        raise RuntimeError('Package failure control did not establish a scanner input error') from error
 
 
 def prepare_scanners(root, govulncheck, lock):
@@ -75,7 +84,7 @@ def audit(image, measured, work, govulncheck, output):
     def run(args, log, timeout=300, file_limit=None):
         options = {} if file_limit is None else {'file_size_limit':file_limit}
         toolbox.run(['exec','env',*env,*args],image=image,network='none',mounts=mounts,
-            writable_mounts=[(data,'/validation/package-data')],output=output/log,timeout_seconds=timeout,**options)
+            writable_mounts=[(data,'/validation/package-data')],output=output/log,timeout_seconds=timeout,capture_stderr=True,**options)
     probe = output/'package-scanner-versions.txt'
     run(['sh','-c',toolbox_probe.script({'syft':('/validation/tools/syft','version'),'grype':('/validation/tools/grype','version')},packages=False)],probe.name,120)
     observed = toolbox_probe.parse(probe.read_text(),{'syft':('/validation/tools/syft','version'),'grype':('/validation/tools/grype','version')},packages=False)
@@ -109,10 +118,8 @@ def audit(image, measured, work, govulncheck, output):
     if negative: raise RuntimeError('Clean synthetic package fixture produced invented vulnerability matches')
     try:
         run(['/validation/tools/syft','--config','/validation/package-config.yaml','docker-archive:/validation/package-controls/invalid.tar','-o','syft-json'], 'package-failure-control.txt',60)
-    except RuntimeError:
-        diagnostic = (output/'package-failure-control.txt').read_text().lower()
-        if 'archive' not in diagnostic or not any(word in diagnostic for word in ('error','failed','unable','could not')):
-            raise RuntimeError('Package failure control did not establish a scanner input error')
+    except RuntimeError as error:
+        validate_failure_control(error, (output/'package-failure-control.txt').read_text())
     else:
         raise RuntimeError('Package cataloger accepted a malformed Docker archive')
     sbom, matches, _ = scan('/validation/image.tar','image',image)

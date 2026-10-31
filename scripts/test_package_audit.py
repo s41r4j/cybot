@@ -9,9 +9,20 @@ import unittest
 
 from package_audit_controls import image_fixture
 import package_audit_report as audit
+from native_package_audit import validate_failure_control
 
 
 class PackageAuditTests(unittest.TestCase):
+    def test_failure_control_requires_input_error_and_scanner_exit(self):
+        diagnostic = 'ERROR docker-archive: unable to provide image from tarball: unexpected EOF'
+        validate_failure_control(RuntimeError('Command failed with exit 1: docker'), diagnostic)
+        for error, output in [('CYBOT operation exceeded its time limit', diagnostic),
+                              ('Storage reserve reached', diagnostic),
+                              ('Command failed with exit 137: docker', diagnostic),
+                              ('Command failed with exit 1: docker', '')]:
+            with self.assertRaisesRegex(RuntimeError, 'input error'):
+                validate_failure_control(RuntimeError(error), output)
+
     def fixture(self):
         config=json.dumps({'architecture':'amd64','os':'linux'}).encode()
         identity='sha256:'+hashlib.sha256(config).hexdigest()

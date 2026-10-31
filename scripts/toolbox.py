@@ -263,8 +263,8 @@ def prepare_cli(dest):
         raise RuntimeError('Prepared context exceeds 2 GB')
 
 
-def monitored(args, reserve=GB, stop=None, env=None, stdout=None, timeout_seconds=None):
-    process = subprocess.Popen(args, cwd=ROOT, env=env, stdout=stdout)
+def monitored(args, reserve=GB, stop=None, env=None, stdout=None, timeout_seconds=None, stderr=None):
+    process = subprocess.Popen(args, cwd=ROOT, env=env, stdout=stdout, stderr=stderr)
     started = time.monotonic()
     try:
         while process.poll() is None:
@@ -352,7 +352,7 @@ def build():
             subprocess.run(['docker', 'image', 'rm', 'moby/buildkit:buildx-stable-1'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
-def run(args, image=None, network=None, mounts=(), writable_mounts=(), output=None, timeout_seconds=1800, file_size_limit=67108864, extra_hosts=()):
+def run(args, image=None, network=None, mounts=(), writable_mounts=(), output=None, timeout_seconds=1800, file_size_limit=67108864, extra_hosts=(), capture_stderr=False):
     if network is None:
         network = 'bridge' if PROFILE == 'core' else 'none'
     if image is None:
@@ -396,7 +396,8 @@ def run(args, image=None, network=None, mounts=(), writable_mounts=(), output=No
                  '--mount', f'type=bind,src={runtime_state},dst=/workspace/.cybot', image, *args).strip()
     try:
         with output.open('w') if output else nullcontext(None) as destination:
-            monitored(['docker', 'start', '-a', cid], stop=lambda: docker('stop', '--time', '2', cid), stdout=destination, timeout_seconds=timeout_seconds)
+            monitored(['docker', 'start', '-a', cid], stop=lambda: docker('stop', '--time', '2', cid), stdout=destination, timeout_seconds=timeout_seconds,
+                      stderr=subprocess.STDOUT if capture_stderr else None)
         status = json.loads(docker('inspect', cid))[0]['State']
         if status['OOMKilled'] or status['ExitCode']:
             raise RuntimeError(f'CYBOT container exited: {status["ExitCode"]}; memory limit reached: {status["OOMKilled"]}')

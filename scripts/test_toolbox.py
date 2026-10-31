@@ -16,6 +16,16 @@ toolbox = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(toolbox)
 
 class BudgetTests(unittest.TestCase):
+    def test_failed_process_stderr_can_be_captured_with_stdout(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp)/'log'
+            with path.open('w') as output, patch.object(toolbox.time, 'sleep'), \
+                 patch.object(toolbox, 'disk_usage', return_value={'accounted_bytes':0,'host_free_bytes':100*toolbox.GB}):
+                with self.assertRaisesRegex(RuntimeError, 'exit 1'):
+                    toolbox.monitored([sys.executable, '-c', 'import sys; print("archive error", file=sys.stderr); sys.exit(1)'],
+                                      stdout=output, stderr=toolbox.subprocess.STDOUT)
+            self.assertIn('archive error', path.read_text())
+
     def test_pull_rejects_mutable_or_local_only_references(self):
         with patch.object(toolbox, 'docker') as docker, patch.object(toolbox, 'monitored') as monitored:
             for ref in ('cybotainer:latest', 'sha256:'+'a'*64, 'ghcr.io/s41r4j/cybot:stable'):
